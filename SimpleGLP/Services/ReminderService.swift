@@ -1,0 +1,44 @@
+import Foundation
+import UserNotifications
+
+enum ReminderService {
+    static let shotReminderIdentifier = "simpleglp.next-shot"
+
+    static func scheduleNextShotReminder(for plan: MedicationPlan) async {
+        let center = UNUserNotificationCenter.current()
+        guard plan.reminderEnabled, let next = ScheduleEngine.nextExpectedDate(plan: plan) else {
+            center.removePendingNotificationRequests(withIdentifiers: [shotReminderIdentifier])
+            return
+        }
+
+        let granted = await ensureAuthorization()
+        guard granted else { return }
+
+        center.removePendingNotificationRequests(withIdentifiers: [shotReminderIdentifier])
+        let fireDate = next.addingTimeInterval(TimeInterval(-plan.reminderLeadMinutes * 60))
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
+        let content = UNMutableNotificationContent()
+        content.title = "Shot day"
+        content.body = "Your \(plan.displayMedicationName) dose is planned for today. One tap when it’s done."
+        content.sound = .default
+        content.threadIdentifier = "shot-reminders"
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let request = UNNotificationRequest(identifier: shotReminderIdentifier, content: content, trigger: trigger)
+        try? await center.add(request)
+    }
+
+    static func ensureAuthorization() async -> Bool {
+        let center = UNUserNotificationCenter.current()
+        let settings = await center.notificationSettings()
+        switch settings.authorizationStatus {
+        case .authorized, .provisional, .ephemeral:
+            return true
+        case .denied:
+            return false
+        case .notDetermined:
+            return (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
+        @unknown default:
+            return false
+        }
+    }
+}

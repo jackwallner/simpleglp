@@ -1,0 +1,899 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423148D3B21BF730934FCC05 /* ImportService.swift */; };
+		1062CD6D096B5D82A413377F /* SimpleGLPWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		14CC3D6A7B622FAB190AFEAA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B9237CCE5AC5A79262C60E27 /* PrivacyInfo.xcprivacy */; };
+		172A474BC883B050D2C1F939 /* GLPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */; };
+		2114D69BA3942C095AE857A1 /* SimpleGLPWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */; };
+		22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E965069DAB46F2FADF4DE9 /* ReminderService.swift */; };
+		3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
+		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
+		33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72BB2053E8DC8186F41B380 /* SettingsView.swift */; };
+		3CB495635750C499935D1F28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 89D51D7C41B4EE64885B9B1C /* RevenueCat */; };
+		4F526E1E6E9E7826F145AFD1 /* ShotCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */; };
+		54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
+		54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
+		56EFD4B03252E0FEE54858E7 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 667B064F7D4BAA7DDA8CAC79 /* RevenueCatUI */; };
+		581A969FA5943DB620BF86DF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB2CBF9F536FFD8DF927366 /* HomeView.swift */; };
+		5FED014126C39C1020F61215 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125328ACA62290EB451989A /* StoreService.swift */; };
+		65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */; };
+		68D824C248A40FD0BFDEEE27 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E45ECA8A326A07DCE47612 /* HealthKitService.swift */; };
+		7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */; };
+		7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
+		75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */; };
+		766BA777284D5C9A638DC548 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CACE598976ED5713C9175CC /* InsightsView.swift */; };
+		78E2C974D8DF1344D2D12D1B /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
+		81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADB560B88F76955016CB54 /* WatchRootView.swift */; };
+		842F394A2FDFF256CE375F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7E3863B993311209064780D /* Assets.xcassets */; };
+		8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45946CD3F5007081C43A4A8 /* AppAppearance.swift */; };
+		8C167B317D477E68C9420934 /* SimpleGLPWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A971E826B1D07DAAEBB0A89D /* RootTabView.swift */; };
+		8CA67D29F54C70F50B3E998D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */; };
+		911A7CEBC2DDC9A040D743E5 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
+		954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */; };
+		991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCD0B8C21771506297243B /* ProactiveAlertsEngine.swift */; };
+		A3D0CAA4A81500344B41E8DD /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397B9E408E138DCFE4202926 /* SharedViews.swift */; };
+		A6D6B2A9F6E579C00836D706 /* LogShotIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26137BA20E643D043938541 /* LogShotIntent.swift */; };
+		AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */; };
+		B765FE4D49B6CD1835A785FB /* ProAlertPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */; };
+		B96AA1A3092E0EFF473AEFC9 /* LogHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8B24B5C3201692DE399FAD /* LogHubView.swift */; };
+		BCCF302932E3459DF0010239 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */; };
+		C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */; };
+		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
+		CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
+		D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B87891F3FE471993E42C3C /* ExportService.swift */; };
+		DCE9E5DE3F9C6AAC6B91131C /* GLPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */; };
+		DDC4DE405BE0B804662DC390 /* WatchConnectivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEC7E7DB112BAA8CA725913 /* WatchConnectivityController.swift */; };
+		E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */; };
+		E658BD595B6DB73ACC16E862 /* SimplePaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */; };
+		EA96773E480A686C74C0E88E /* PhoneWatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */; };
+		ED6140C151900191E0F43AF6 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
+		F0B996BE6BBC4F5C7D93B090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AC085A89924894C85B1ED76 /* Assets.xcassets */; };
+		FC83063DC185217F6D5D1F58 /* ScheduleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		2ACFF7C6BCF5141CA0A9B837 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 771A76F57C7541A3EF727F3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FD4BC72106554E1C639CC7D2;
+			remoteInfo = SimpleGLPWidget;
+		};
+		3BEAD2927FB005F233EF2E66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 771A76F57C7541A3EF727F3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31B2F5C41AC77F7BC5ADA96F;
+			remoteInfo = SimpleGLP;
+		};
+		DA4C3A2842A17E3C25769E54 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 771A76F57C7541A3EF727F3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = DD43B5A9662029B8C35C8B8B;
+			remoteInfo = SimpleGLPWatch;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0AE54954FF22CE5FFA3BBE5D /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				8C167B317D477E68C9420934 /* SimpleGLPWatch.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C70824DADC3321D563700163 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				1062CD6D096B5D82A413377F /* SimpleGLPWidget.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		008BE86A6ABA09E92A2C103B /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		051EB15D1CA10D7846D38B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPApp.swift; sourceTree = "<group>"; };
+		0DADB560B88F76955016CB54 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
+		181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPAppGroup.swift; sourceTree = "<group>"; };
+		1F8D51AD66946F59E77221EE /* GLPModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModelStore.swift; sourceTree = "<group>"; };
+		28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		2982A1D0CD628DDEBED03EBB /* SimpleGLPWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWatch.entitlements; sourceTree = "<group>"; };
+		31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertPreferences.swift; sourceTree = "<group>"; };
+		387787E8879F0FAF2CF2AAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		397B9E408E138DCFE4202926 /* SharedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
+		3E7D005F349F97C0D11B64C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		423148D3B21BF730934FCC05 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
+		4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		59BCD0B8C21771506297243B /* ProactiveAlertsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProactiveAlertsEngine.swift; sourceTree = "<group>"; };
+		5AC085A89924894C85B1ED76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertsConfigView.swift; sourceTree = "<group>"; };
+		66C73FE3C2F5DE3B0CAFE7EB /* SimpleGLP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLP.entitlements; sourceTree = "<group>"; };
+		6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPTests.swift; sourceTree = "<group>"; };
+		74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePaywallView.swift; sourceTree = "<group>"; };
+		7D390C19714B2F9313020B6F /* SimpleGLP.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimpleGLP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEngine.swift; sourceTree = "<group>"; };
+		82E45ECA8A326A07DCE47612 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
+		892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWidget.entitlements; sourceTree = "<group>"; };
+		985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SimpleGLPWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotCaptureCoordinator.swift; sourceTree = "<group>"; };
+		9CACE598976ED5713C9175CC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
+		9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWidget.swift; sourceTree = "<group>"; };
+		A971E826B1D07DAAEBB0A89D /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWatchApp.swift; sourceTree = "<group>"; };
+		AE8B24B5C3201692DE399FAD /* LogHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHubView.swift; sourceTree = "<group>"; };
+		B45946CD3F5007081C43A4A8 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
+		B9237CCE5AC5A79262C60E27 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		BDB19EDB4D888D537799BF2B /* PlanStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanStore.swift; sourceTree = "<group>"; };
+		BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
+		C1B87891F3FE471993E42C3C /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleGLPWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAEC7E7DB112BAA8CA725913 /* WatchConnectivityController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchConnectivityController.swift; sourceTree = "<group>"; };
+		CEB2CBF9F536FFD8DF927366 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		D26137BA20E643D043938541 /* LogShotIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogShotIntent.swift; sourceTree = "<group>"; };
+		D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModels.swift; sourceTree = "<group>"; };
+		D7E3863B993311209064780D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E125328ACA62290EB451989A /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
+		E72BB2053E8DC8186F41B380 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWatchSession.swift; sourceTree = "<group>"; };
+		F3E965069DAB46F2FADF4DE9 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B9ACF3EB6D20141932A14527 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CB495635750C499935D1F28 /* RevenueCat in Frameworks */,
+				56EFD4B03252E0FEE54858E7 /* RevenueCatUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		09F15B42BF66591E51218E33 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */,
+				31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		15E9BA6BFBA5158B3668DB91 /* SimpleGLP */ = {
+			isa = PBXGroup;
+			children = (
+				D7E3863B993311209064780D /* Assets.xcassets */,
+				387787E8879F0FAF2CF2AAD4 /* Info.plist */,
+				CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */,
+				66C73FE3C2F5DE3B0CAFE7EB /* SimpleGLP.entitlements */,
+				0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */,
+				09F15B42BF66591E51218E33 /* Models */,
+				93CEF8EA51D0E1AA116A6544 /* Services */,
+				B5DB09E495F4D960C357CEFB /* Utilities */,
+				D5FE7F599B2748A59E0E825B /* Views */,
+			);
+			path = SimpleGLP;
+			sourceTree = "<group>";
+		};
+		3FEBE512D3F36912E79DFB19 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				7D390C19714B2F9313020B6F /* SimpleGLP.app */,
+				892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */,
+				C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */,
+				985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		55E9795E1325CF104395D5C0 = {
+			isa = PBXGroup;
+			children = (
+				63DBBFFC04AFB2E8BAF5A29B /* SharedGLP */,
+				15E9BA6BFBA5158B3668DB91 /* SimpleGLP */,
+				89BE1FEAE66EA5A643506A09 /* SimpleGLPTests */,
+				5AB5927F5E6C528AF10B124A /* SimpleGLPWatch */,
+				C5D4CEFE83A9C4D7550AD3A2 /* SimpleGLPWidget */,
+				3FEBE512D3F36912E79DFB19 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5AB5927F5E6C528AF10B124A /* SimpleGLPWatch */ = {
+			isa = PBXGroup;
+			children = (
+				5AC085A89924894C85B1ED76 /* Assets.xcassets */,
+				051EB15D1CA10D7846D38B94 /* Info.plist */,
+				ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */,
+				2982A1D0CD628DDEBED03EBB /* SimpleGLPWatch.entitlements */,
+				ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */,
+				CAEC7E7DB112BAA8CA725913 /* WatchConnectivityController.swift */,
+				0DADB560B88F76955016CB54 /* WatchRootView.swift */,
+			);
+			path = SimpleGLPWatch;
+			sourceTree = "<group>";
+		};
+		63DBBFFC04AFB2E8BAF5A29B /* SharedGLP */ = {
+			isa = PBXGroup;
+			children = (
+				181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */,
+			);
+			path = SharedGLP;
+			sourceTree = "<group>";
+		};
+		89BE1FEAE66EA5A643506A09 /* SimpleGLPTests */ = {
+			isa = PBXGroup;
+			children = (
+				6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */,
+			);
+			path = SimpleGLPTests;
+			sourceTree = "<group>";
+		};
+		93CEF8EA51D0E1AA116A6544 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C1B87891F3FE471993E42C3C /* ExportService.swift */,
+				1F8D51AD66946F59E77221EE /* GLPModelStore.swift */,
+				82E45ECA8A326A07DCE47612 /* HealthKitService.swift */,
+				423148D3B21BF730934FCC05 /* ImportService.swift */,
+				EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */,
+				BDB19EDB4D888D537799BF2B /* PlanStore.swift */,
+				59BCD0B8C21771506297243B /* ProactiveAlertsEngine.swift */,
+				F3E965069DAB46F2FADF4DE9 /* ReminderService.swift */,
+				7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */,
+				9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */,
+				E125328ACA62290EB451989A /* StoreService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		B5DB09E495F4D960C357CEFB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				B45946CD3F5007081C43A4A8 /* AppAppearance.swift */,
+				BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */,
+				008BE86A6ABA09E92A2C103B /* AppTheme.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		C5D4CEFE83A9C4D7550AD3A2 /* SimpleGLPWidget */ = {
+			isa = PBXGroup;
+			children = (
+				3E7D005F349F97C0D11B64C3 /* Info.plist */,
+				D26137BA20E643D043938541 /* LogShotIntent.swift */,
+				B9237CCE5AC5A79262C60E27 /* PrivacyInfo.xcprivacy */,
+				8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */,
+				9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */,
+			);
+			path = SimpleGLPWidget;
+			sourceTree = "<group>";
+		};
+		D5FE7F599B2748A59E0E825B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */,
+				CEB2CBF9F536FFD8DF927366 /* HomeView.swift */,
+				9CACE598976ED5713C9175CC /* InsightsView.swift */,
+				AE8B24B5C3201692DE399FAD /* LogHubView.swift */,
+				28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */,
+				5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */,
+				A971E826B1D07DAAEBB0A89D /* RootTabView.swift */,
+				E72BB2053E8DC8186F41B380 /* SettingsView.swift */,
+				397B9E408E138DCFE4202926 /* SharedViews.swift */,
+				74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0C1256B66D297A1B7BA76F63 /* Build configuration list for PBXNativeTarget "SimpleGLP" */;
+			buildPhases = (
+				8B7681CF128D4B44FF3F7240 /* Sources */,
+				0EFB1F47469CE7D2620F5F7B /* Resources */,
+				B9ACF3EB6D20141932A14527 /* Frameworks */,
+				C70824DADC3321D563700163 /* Embed Foundation Extensions */,
+				0AE54954FF22CE5FFA3BBE5D /* Embed Watch Content */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EBCA73F4353ECCED8BF1DE7B /* PBXTargetDependency */,
+				8660E06887B51C040DCC60C9 /* PBXTargetDependency */,
+			);
+			name = SimpleGLP;
+			packageProductDependencies = (
+				89D51D7C41B4EE64885B9B1C /* RevenueCat */,
+				667B064F7D4BAA7DDA8CAC79 /* RevenueCatUI */,
+			);
+			productName = SimpleGLP;
+			productReference = 7D390C19714B2F9313020B6F /* SimpleGLP.app */;
+			productType = "com.apple.product-type.application";
+		};
+		5A639435245201099AFFB34A /* SimpleGLPTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7D14FB10AE1581AEA519D9EE /* Build configuration list for PBXNativeTarget "SimpleGLPTests" */;
+			buildPhases = (
+				FCE28766E945EEE16778CE8A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7A34F1ADD507BF4BC35642C4 /* PBXTargetDependency */,
+			);
+			name = SimpleGLPTests;
+			packageProductDependencies = (
+			);
+			productName = SimpleGLPTests;
+			productReference = 892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		DD43B5A9662029B8C35C8B8B /* SimpleGLPWatch */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 82F27139B47950D8142E54C0 /* Build configuration list for PBXNativeTarget "SimpleGLPWatch" */;
+			buildPhases = (
+				7E048635FCCA2B0CD00CE71E /* Sources */,
+				7CB81120DF70131DCDE4E0A7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleGLPWatch;
+			packageProductDependencies = (
+			);
+			productName = SimpleGLPWatch;
+			productReference = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2610D6622984D0AF9EC1E72B /* Build configuration list for PBXNativeTarget "SimpleGLPWidget" */;
+			buildPhases = (
+				1E554D476A476A43CFFF63B8 /* Sources */,
+				FD49C670D100E6886D519FD4 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimpleGLPWidget;
+			packageProductDependencies = (
+			);
+			productName = SimpleGLPWidget;
+			productReference = 985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		771A76F57C7541A3EF727F3F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					31B2F5C41AC77F7BC5ADA96F = {
+						DevelopmentTeam = YXG4MP6W39;
+						ProvisioningStyle = Automatic;
+					};
+					5A639435245201099AFFB34A = {
+						DevelopmentTeam = YXG4MP6W39;
+						ProvisioningStyle = Automatic;
+					};
+					DD43B5A9662029B8C35C8B8B = {
+						DevelopmentTeam = YXG4MP6W39;
+						ProvisioningStyle = Automatic;
+					};
+					FD4BC72106554E1C639CC7D2 = {
+						DevelopmentTeam = YXG4MP6W39;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 2D7AFAF4445756700EB13271 /* Build configuration list for PBXProject "SimpleGLP" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 55E9795E1325CF104395D5C0;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				06AD712F25DD53F805978922 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 3FEBE512D3F36912E79DFB19 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */,
+				5A639435245201099AFFB34A /* SimpleGLPTests */,
+				DD43B5A9662029B8C35C8B8B /* SimpleGLPWatch */,
+				FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0EFB1F47469CE7D2620F5F7B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				842F394A2FDFF256CE375F97 /* Assets.xcassets in Resources */,
+				C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7CB81120DF70131DCDE4E0A7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F0B996BE6BBC4F5C7D93B090 /* Assets.xcassets in Resources */,
+				BCCF302932E3459DF0010239 /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FD49C670D100E6886D519FD4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				14CC3D6A7B622FAB190AFEAA /* PrivacyInfo.xcprivacy in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1E554D476A476A43CFFF63B8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */,
+				78E2C974D8DF1344D2D12D1B /* GLPAppGroup.swift in Sources */,
+				7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */,
+				DCE9E5DE3F9C6AAC6B91131C /* GLPModels.swift in Sources */,
+				A6D6B2A9F6E579C00836D706 /* LogShotIntent.swift in Sources */,
+				FC83063DC185217F6D5D1F58 /* ScheduleEngine.swift in Sources */,
+				2114D69BA3942C095AE857A1 /* SimpleGLPWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		7E048635FCCA2B0CD00CE71E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */,
+				ED6140C151900191E0F43AF6 /* GLPAppGroup.swift in Sources */,
+				C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */,
+				DDC4DE405BE0B804662DC390 /* WatchConnectivityController.swift in Sources */,
+				81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8B7681CF128D4B44FF3F7240 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */,
+				75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */,
+				3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */,
+				D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */,
+				54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */,
+				911A7CEBC2DDC9A040D743E5 /* GLPModelStore.swift in Sources */,
+				172A474BC883B050D2C1F939 /* GLPModels.swift in Sources */,
+				68D824C248A40FD0BFDEEE27 /* HealthKitService.swift in Sources */,
+				8CA67D29F54C70F50B3E998D /* HistoryView.swift in Sources */,
+				581A969FA5943DB620BF86DF /* HomeView.swift in Sources */,
+				0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */,
+				766BA777284D5C9A638DC548 /* InsightsView.swift in Sources */,
+				B96AA1A3092E0EFF473AEFC9 /* LogHubView.swift in Sources */,
+				7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */,
+				EA96773E480A686C74C0E88E /* PhoneWatchSession.swift in Sources */,
+				32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */,
+				B765FE4D49B6CD1835A785FB /* ProAlertPreferences.swift in Sources */,
+				E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */,
+				991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */,
+				22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */,
+				8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */,
+				954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */,
+				33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */,
+				A3D0CAA4A81500344B41E8DD /* SharedViews.swift in Sources */,
+				4F526E1E6E9E7826F145AFD1 /* ShotCaptureCoordinator.swift in Sources */,
+				65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */,
+				E658BD595B6DB73ACC16E862 /* SimplePaywallView.swift in Sources */,
+				5FED014126C39C1020F61215 /* StoreService.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FCE28766E945EEE16778CE8A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7A34F1ADD507BF4BC35642C4 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */;
+			targetProxy = 3BEAD2927FB005F233EF2E66 /* PBXContainerItemProxy */;
+		};
+		8660E06887B51C040DCC60C9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = DD43B5A9662029B8C35C8B8B /* SimpleGLPWatch */;
+			targetProxy = DA4C3A2842A17E3C25769E54 /* PBXContainerItemProxy */;
+		};
+		EBCA73F4353ECCED8BF1DE7B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */;
+			targetProxy = 2ACFF7C6BCF5141CA0A9B837 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2B77A72E0D18E238407096D8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = YXG4MP6W39;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		2DDDA5330429334D2C344269 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = YXG4MP6W39;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		3CD82748ED1C6EB5B1DFCA0B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimpleGLPWidget/SimpleGLPWidget.entitlements;
+				INFOPLIST_FILE = SimpleGLPWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		421606BB465EB4729C2EFEB1 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleGLP.app/SimpleGLP";
+			};
+			name = Debug;
+		};
+		5057651B74C37B037BFFE3B5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleGLP/SimpleGLP.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = SimpleGLP/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp;
+				PRODUCT_NAME = SimpleGLP;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		AA9F23890401C2AB328BD796 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleGLPWatch/SimpleGLPWatch.entitlements;
+				INFOPLIST_FILE = SimpleGLPWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.watch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		AD79373539ADCD70B92797C0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleGLPWatch/SimpleGLPWatch.entitlements;
+				INFOPLIST_FILE = SimpleGLPWatch/Info.plist;
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.watch;
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		BB868211664591C313AA160B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SimpleGLP.app/SimpleGLP";
+			};
+			name = Release;
+		};
+		CFFEDBEA37B371F56C3FD31A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SimpleGLP/SimpleGLP.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_FILE = SimpleGLP/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp;
+				PRODUCT_NAME = SimpleGLP;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+		E204C9E654FF8F253B910182 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = SimpleGLPWidget/SimpleGLPWidget.entitlements;
+				INFOPLIST_FILE = SimpleGLPWidget/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.widget;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0C1256B66D297A1B7BA76F63 /* Build configuration list for PBXNativeTarget "SimpleGLP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5057651B74C37B037BFFE3B5 /* Debug */,
+				CFFEDBEA37B371F56C3FD31A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2610D6622984D0AF9EC1E72B /* Build configuration list for PBXNativeTarget "SimpleGLPWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CD82748ED1C6EB5B1DFCA0B /* Debug */,
+				E204C9E654FF8F253B910182 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		2D7AFAF4445756700EB13271 /* Build configuration list for PBXProject "SimpleGLP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2DDDA5330429334D2C344269 /* Debug */,
+				2B77A72E0D18E238407096D8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		7D14FB10AE1581AEA519D9EE /* Build configuration list for PBXNativeTarget "SimpleGLPTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				421606BB465EB4729C2EFEB1 /* Debug */,
+				BB868211664591C313AA160B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		82F27139B47950D8142E54C0 /* Build configuration list for PBXNativeTarget "SimpleGLPWatch" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AA9F23890401C2AB328BD796 /* Debug */,
+				AD79373539ADCD70B92797C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		06AD712F25DD53F805978922 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RevenueCat/purchases-ios-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.72.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		667B064F7D4BAA7DDA8CAC79 /* RevenueCatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06AD712F25DD53F805978922 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCatUI;
+		};
+		89D51D7C41B4EE64885B9B1C /* RevenueCat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 06AD712F25DD53F805978922 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
+			productName = RevenueCat;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 771A76F57C7541A3EF727F3F /* Project object */;
+}

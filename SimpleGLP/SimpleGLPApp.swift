@@ -1,0 +1,72 @@
+import SwiftData
+import SwiftUI
+import UserNotifications
+
+@main
+struct SimpleGLPApp: App {
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @StateObject private var shotCoordinator = ShotCaptureCoordinator()
+    @StateObject private var storeService = StoreService.shared
+
+    init() {
+        StoreService.shared.start()
+    }
+
+    var body: some Scene {
+        WindowGroup {
+            SimpleGLPRootContent()
+                .environmentObject(shotCoordinator)
+                .environmentObject(storeService)
+        }
+        .modelContainer(GLPModelStore.sharedModelContainer)
+    }
+}
+
+final class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
+    ) -> Bool {
+        UNUserNotificationCenter.current().delegate = self
+        return true
+    }
+}
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        willPresent notification: UNNotification,
+        withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
+    ) {
+        completionHandler([.banner, .sound])
+    }
+}
+
+private struct SimpleGLPRootContent: View {
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.scenePhase) private var scenePhase
+    @EnvironmentObject private var shotCoordinator: ShotCaptureCoordinator
+    @AppStorage(GLPStorageKey.hasCompletedOnboarding.rawValue, store: GLPAppGroup.userDefaults) private var hasCompletedOnboarding = false
+
+    var body: some View {
+        Group {
+            if hasCompletedOnboarding || AppEnvironment.bypassOnboarding {
+                RootTabView()
+            } else {
+                OnboardingView()
+            }
+        }
+        .onAppear {
+            PhoneWatchSession.shared.start()
+            PhoneWatchSession.shared.onWatchRequestedCapture = { date in
+                shotCoordinator.captureShot(in: modelContext, tapDate: date)
+            }
+            shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
+        }
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .active {
+                shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
+            }
+        }
+    }
+}

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="256x256" href="icon_256.png">
+    <link rel="apple-touch-icon" href="icon_256.png">
+    <title>Simple GLP - GLP-1 Shot Tracker for iPhone & Apple Watch</title>
+    <meta name="description" content="Simple GLP is a private GLP-1 shot tracker for iPhone, Apple Watch, and widgets. Log shots in one tap, track your weekly schedule, add optional Health context, and keep everything on device.">
+    <link rel="canonical" href="https://jackwallner.github.io/simpleglp/">
+    <meta name="keywords" content="GLP-1 tracker, shot tracker, injection tracker, semaglutide, tirzepatide, Ozempic, Wegovy, Mounjaro, Zepbound, iPhone, Apple Watch, HealthKit">
+    <meta property="og:title" content="Simple GLP - Private GLP-1 Shot Tracker">
+    <meta property="og:description" content="One-tap GLP-1 shot logging for iPhone, Apple Watch, and widgets. Private by design and built around your weekly routine.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackwallner.github.io/simpleglp/">
+    <meta property="og:image" content="https://jackwallner.github.io/simpleglp/icon_256.png">
+    <meta property="og:site_name" content="Simple GLP">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Simple GLP - GLP-1 Shot Tracker">
+    <meta name="twitter:description" content="Log GLP-1 shots in one tap. Private, on-device, and made for iPhone, Apple Watch, and widgets.">
+    <meta name="twitter:image" content="https://jackwallner.github.io/simpleglp/icon_256.png">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Simple GLP",
+        "operatingSystem": "iOS",
+        "applicationCategory": "HealthApplication",
+        "offers": [
+            {
+                "@type": "Offer",
+                "price": "0",
+                "priceCurrency": "USD",
+                "description": "Free GLP-1 shot logging, history, reminders, widget, and Apple Watch capture"
+            },
+            {
+                "@type": "Offer",
+                "price": "2.99",
+                "priceCurrency": "USD",
+                "description": "Simple GLP Pro monthly with proactive alerts and pattern insights"
+            }
+        ],
+        "description": "Private one-tap GLP-1 shot tracking for iPhone, Apple Watch, and widgets.",
+        "url": "https://jackwallner.github.io/simpleglp/",
+        "softwareVersion": "0.1.0",
+        "author": {
+            "@type": "Person",
+            "name": "Jack Wallner"
+        }
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif;
+            color: #1a1a1a;
+            background: #faf8f4;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .container { max-width: 980px; margin: 0 auto; padding: 0 24px; }
+        nav {
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+            background: rgba(250,248,244,0.86);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        nav .container { display: flex; align-items: center; justify-content: space-between; }
+        .nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: #1a1a1a; }
+        .nav-brand img { width: 32px; height: 32px; border-radius: 7px; }
+        .nav-brand span { font-size: 15px; font-weight: 600; }
+        .nav-link {
+            font-size: 14px;
+            text-decoration: none;
+            background: #1a1a1a;
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 980px;
+            font-weight: 500;
+        }
+        .hero { text-align: center; padding: 100px 24px 72px; }
+        .hero img { width: 96px; height: 96px; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 16px 42px rgba(21, 122, 73, 0.18); }
+        .hero h1 { font-size: 54px; font-weight: 730; letter-spacing: -1.7px; line-height: 1.06; margin-bottom: 16px; }
+        .hero h1 span {
+            background: linear-gradient(135deg, #2fb86f, #157a49);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero .tagline { font-size: 19px; color: #666; line-height: 1.5; max-width: 520px; margin: 0 auto 12px; }
+        .hero .platforms { font-size: 13px; color: #8a857d; letter-spacing: 0.3px; margin-bottom: 34px; }
+        .download-btn {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            font-size: 15px;
+            font-weight: 500;
+            padding: 14px 34px;
+            border-radius: 980px;
+            text-decoration: none;
+        }
+        .features {
+            padding: 80px 0;
+            background: #fff;
+            border-top: 1px solid rgba(0,0,0,0.06);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .features-header { text-align: center; margin-bottom: 56px; }
+        .features-header h2 { font-size: 36px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 8px; }
+        .features-header p { font-size: 17px; color: #6e6e73; }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1px;
+            background: rgba(0,0,0,0.06);
+            border-top: 1px solid rgba(0,0,0,0.06);
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .feature-card { background: #fff; padding: 36px 32px; }
+        .feature-card .label {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #8a857d;
+            margin-bottom: 10px;
+        }
+        .feature-card .label.pro { color: #1f9d5b; }
+        .feature-card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.2px; margin-bottom: 8px; }
+        .feature-card p { font-size: 14px; color: #6e6e73; line-height: 1.55; }
+        .privacy { padding: 80px 0; }
+        .privacy .container { max-width: 650px; text-align: center; }
+        .privacy .lockup {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: rgba(47,184,111,0.11);
+            margin-bottom: 20px;
+        }
+        .privacy .lockup svg { width: 22px; height: 22px; fill: none; stroke: #157a49; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+        .privacy h2, .more-info-header h2, .cta h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 12px; }
+        .privacy p { font-size: 17px; color: #6e6e73; line-height: 1.6; margin-bottom: 20px; }
+        .privacy a, footer a { color: #157a49; text-decoration: none; font-weight: 500; }
+        .more-info { padding: 64px 24px; background: #fff; border-top: 1px solid rgba(0,0,0,0.06); }
+        .more-info-header { text-align: center; margin-bottom: 48px; }
+        .more-info-header p { font-size: 17px; color: #6e6e73; }
+        .more-info-content { max-width: 720px; margin: 0 auto; }
+        .more-info-section { margin-bottom: 40px; }
+        .more-info-section h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #8a857d; margin-bottom: 12px; }
+        .more-info-section p { font-size: 15px; line-height: 1.6; color: #1a1a1a; margin-bottom: 12px; }
+        .specs-table { width: 100%; font-size: 14px; border-collapse: collapse; margin-top: 16px; }
+        .specs-table td { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
+        .specs-table td:first-child { color: #8a857d; width: 140px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .cta { text-align: center; padding: 64px 24px 80px; background: #fff; border-top: 1px solid rgba(0,0,0,0.06); }
+        .cta p { font-size: 15px; color: #86868b; margin-bottom: 28px; }
+        footer { text-align: center; padding: 20px 24px; font-size: 12px; color: #8a857d; }
+        footer a { margin: 0 10px; color: #8a857d; }
+        @media (max-width: 768px) {
+            .hero { padding: 72px 20px 48px; }
+            .hero h1 { font-size: 36px; letter-spacing: -1px; }
+            .hero .tagline { font-size: 17px; }
+            .features-grid { grid-template-columns: 1fr; }
+            .features-header h2, .privacy h2, .more-info-header h2, .cta h2 { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a class="nav-brand" href="./">
+                <img src="icon_256.png" alt="Simple GLP">
+                <span>Simple GLP</span>
+            </a>
+            <a class="nav-link" href="#download">Coming soon</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <img src="icon_256.png" alt="Simple GLP app icon">
+        <h1>Your GLP-1 routine, <span>one tap away</span></h1>
+        <p class="tagline">Simple GLP logs shots fast, remembers your schedule, and captures optional Health context without turning your treatment routine into a spreadsheet.</p>
+        <p class="platforms">iPhone &middot; Apple Watch &middot; Widget &middot; HealthKit</p>
+        <a class="download-btn" id="download" href="support.html">Contact for TestFlight</a>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="features-header">
+                <h2>Built for the weekly shot</h2>
+                <p>Fast capture first. Deeper context only when you want it.</p>
+            </div>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card">
+                <span class="label">One Tap</span>
+                <h3>Log instantly</h3>
+                <p>Open the app, tap the widget, or use Apple Watch to save a shot timestamp immediately.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label">Schedule</span>
+                <h3>Know what is next</h3>
+                <p>Set your medication, dose, preferred weekday, time, and reminder lead time.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label">History</span>
+                <h3>See the pattern</h3>
+                <p>Review shot timing, dose, injection site, notes, symptoms, and schedule status.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label">HealthKit</span>
+                <h3>Optional context</h3>
+                <p>Read weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein when available.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label">Privacy</span>
+                <h3>On-device by design</h3>
+                <p>Your shot history and Health context are stored locally using SwiftData and an App Group.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label pro">Simple GLP Pro</span>
+                <h3>Proactive alerts</h3>
+                <p>Optional pattern-based alerts help you anticipate dose days and timing changes.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="privacy">
+        <div class="container">
+            <div class="lockup">
+                <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h2>Private health tracking</h2>
+            <p>Simple GLP does not create accounts, sell data, or use advertising tracking. HealthKit data is read-only, optional, and used only to show your own context inside the app.</p>
+            <a href="privacy-policy.html">Privacy Policy &rarr;</a>
+        </div>
+    </section>
+
+    <section class="more-info">
+        <div class="container">
+            <div class="more-info-header">
+                <h2>More info</h2>
+                <p>How Simple GLP is built and what it is not.</p>
+            </div>
+            <div class="more-info-content">
+                <div class="more-info-section">
+                    <h3>The Pitch</h3>
+                    <p>GLP-1 treatment already has enough friction. Simple GLP focuses on one practical job: log the shot now, enrich it later if useful.</p>
+                    <p>It is not a medical device and does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations.</p>
+                </div>
+                <div class="more-info-section">
+                    <h3>Specs</h3>
+                    <table class="specs-table">
+                        <tr><td>Platform</td><td>iOS 17+, watchOS 10+</td></tr>
+                        <tr><td>Language</td><td>Swift 6 with strict concurrency</td></tr>
+                        <tr><td>Frameworks</td><td>SwiftUI · SwiftData · HealthKit · WidgetKit · WatchConnectivity</td></tr>
+                        <tr><td>Data</td><td>Local shot history and read-only optional HealthKit context</td></tr>
+                        <tr><td>Storage</td><td>SwiftData shared with widget and watch workflows through App Group</td></tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <h2>Made for real routines</h2>
+        <p>One tap, once a week, with context when it matters.</p>
+        <a class="download-btn" href="support.html">Contact for TestFlight</a>
+    </section>
+
+    <footer>
+        <div>&copy; 2026 Jack Wallner</div>
+        <div>
+            <a href="support.html">Support</a>
+            <a href="privacy-policy.html">Privacy</a>
+            <a href="terms.html">Terms</a>
+        </div>
+    </footer>
+</body>
+</html>
