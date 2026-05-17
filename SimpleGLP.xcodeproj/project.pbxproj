@@ -17,6 +17,8 @@
 		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
 		33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72BB2053E8DC8186F41B380 /* SettingsView.swift */; };
 		3CB495635750C499935D1F28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 89D51D7C41B4EE64885B9B1C /* RevenueCat */; };
+		46937D2C98E89CF4B6350D25 /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
+		4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		4F526E1E6E9E7826F145AFD1 /* ShotCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */; };
 		54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
@@ -25,6 +27,7 @@
 		5FED014126C39C1020F61215 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125328ACA62290EB451989A /* StoreService.swift */; };
 		65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */; };
 		68D824C248A40FD0BFDEEE27 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E45ECA8A326A07DCE47612 /* HealthKitService.swift */; };
+		6979784B6EDA92FE61041C0F /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */; };
 		7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
 		75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */; };
@@ -139,6 +142,7 @@
 		9CACE598976ED5713C9175CC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWidget.swift; sourceTree = "<group>"; };
 		A971E826B1D07DAAEBB0A89D /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
+		AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentShotsStore.swift; sourceTree = "<group>"; };
 		ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWatchApp.swift; sourceTree = "<group>"; };
 		AE8B24B5C3201692DE399FAD /* LogHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHubView.swift; sourceTree = "<group>"; };
 		B45946CD3F5007081C43A4A8 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
@@ -239,6 +243,7 @@
 			isa = PBXGroup;
 			children = (
 				181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */,
+				AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */,
 			);
 			path = SharedGLP;
 			sourceTree = "<group>";
@@ -481,6 +486,7 @@
 				7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */,
 				DCE9E5DE3F9C6AAC6B91131C /* GLPModels.swift in Sources */,
 				A6D6B2A9F6E579C00836D706 /* LogShotIntent.swift in Sources */,
+				6979784B6EDA92FE61041C0F /* RecentShotsStore.swift in Sources */,
 				FC83063DC185217F6D5D1F58 /* ScheduleEngine.swift in Sources */,
 				2114D69BA3942C095AE857A1 /* SimpleGLPWidget.swift in Sources */,
 			);
@@ -492,6 +498,7 @@
 			files = (
 				54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */,
 				ED6140C151900191E0F43AF6 /* GLPAppGroup.swift in Sources */,
+				46937D2C98E89CF4B6350D25 /* RecentShotsStore.swift in Sources */,
 				C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */,
 				DDC4DE405BE0B804662DC390 /* WatchConnectivityController.swift in Sources */,
 				81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */,
@@ -521,6 +528,7 @@
 				B765FE4D49B6CD1835A785FB /* ProAlertPreferences.swift in Sources */,
 				E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */,
 				991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */,
+				4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */,
 				22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */,
 				8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */,
 				954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */,

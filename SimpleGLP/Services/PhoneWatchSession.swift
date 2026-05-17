@@ -22,6 +22,32 @@ final class PhoneWatchSession: NSObject, ObservableObject {
         guard WCSession.default.isReachable else { return }
         WCSession.default.sendMessage(message, replyHandler: nil) { _ in }
     }
+
+    func syncRecentShots() {
+        guard WCSession.isSupported() else { return }
+        let session = WCSession.default
+        guard session.activationState == .activated else { return }
+        let shots = RecentShotsStore.load()
+        let payload: [[String: Any]] = shots.map { shot in
+            var entry: [String: Any] = [
+                "id": shot.id.uuidString,
+                "timestamp": shot.timestamp.timeIntervalSince1970,
+                "scheduleStatusRaw": shot.scheduleStatusRaw
+            ]
+            if let medicationName = shot.medicationName { entry["medicationName"] = medicationName }
+            if let doseMg = shot.doseMg { entry["doseMg"] = doseMg }
+            return entry
+        }
+        let context: [String: Any] = [
+            "recentShots": payload,
+            "updatedAt": Date().timeIntervalSince1970
+        ]
+        do {
+            try session.updateApplicationContext(context)
+        } catch {
+            // Best-effort sync; ignore failures.
+        }
+    }
 }
 
 extension PhoneWatchSession: WCSessionDelegate {

@@ -74,6 +74,17 @@ final class ShotCaptureCoordinator: ObservableObject {
             return false
         }
 
+        RecentShotsStore.record(
+            RecentShot(
+                id: event.id,
+                timestamp: event.timestamp,
+                scheduleStatusRaw: event.scheduleStatusRaw,
+                medicationName: event.medicationName,
+                doseMg: event.doseMg
+            )
+        )
+        PhoneWatchSession.shared.syncRecentShots()
+
         isCapturing = true
         bannerMessage = "Saved. Adding Health context…"
         let eventID = event.id
@@ -127,6 +138,8 @@ final class ShotCaptureCoordinator: ObservableObject {
             context.delete(event)
             try? context.save()
         }
+        RecentShotsStore.remove(id: eventID)
+        PhoneWatchSession.shared.syncRecentShots()
         lastCapturedEventID = nil
         bannerMessage = "Last shot undone."
         WidgetCenter.shared.reloadAllTimelines()

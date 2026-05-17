@@ -13,6 +13,7 @@ struct LogShotIntent: AppIntent {
         defaults.set(timestamp.timeIntervalSince1970, forKey: "pendingWidgetShotTimestamp")
         defaults.set(GLPWidgetQuickLog.healthMessagePending, forKey: "pendingWidgetShotMessage")
         defaults.set(timestamp, forKey: GLPStorageKey.widgetLastLoggedAt.rawValue)
+        RecentShotsStore.record(RecentShot(timestamp: timestamp))
         WidgetCenter.shared.reloadAllTimelines()
         return .result()
     }
