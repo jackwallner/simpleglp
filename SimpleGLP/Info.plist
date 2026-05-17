@@ -26,10 +26,6 @@
 	<false/>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a shot. The app never writes Health data.</string>
-	<key>NSHealthUpdateUsageDescription</key>
-	<string>Simple GLP does not write data to Apple Health.</string>
-	<key>NSUserNotificationsUsageDescription</key>
-	<string>Simple GLP uses notifications for weekly shot reminders and optional Pro pattern alerts.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

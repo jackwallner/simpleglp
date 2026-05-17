@@ -2,23 +2,51 @@ opt_out_usage
 
 default_platform(:ios)
 
-platform :ios do
-  desc "Upload screenshots and metadata to App Store Connect"
-  lane :upload_metadata do
-    api_key = app_store_connect_api_key(
-      key_id: ENV["ASC_API_KEY_ID"],
-      issuer_id: ENV["ASC_ISSUER_ID"],
-      key_filepath: ENV["ASC_KEY_PATH"]
-    )
+APP_BUNDLE_ID    = "com.jackwallner.glp"
+WIDGET_BUNDLE_ID = "com.jackwallner.glp.widget"
+WATCH_BUNDLE_ID  = "com.jackwallner.glp.watch"
+APP_GROUP_ID     = "group.com.jackwallner.glp"
+TEAM_ID          = "YXG4MP6W39"
 
+def asc_api_key
+  app_store_connect_api_key(
+    key_id: ENV["ASC_API_KEY_ID"],
+    issuer_id: ENV["ASC_ISSUER_ID"],
+    key_filepath: ENV["ASC_KEY_PATH"]
+  )
+end
+
+platform :ios do
+  desc "Create the App Store Connect app record + bundle IDs (idempotent)"
+  lane :register_app do
+    produce(
+      api_key: asc_api_key,
+      app_identifier: APP_BUNDLE_ID,
+      app_name: "Simple GLP",
+      language: "English",
+      app_version: "1.0",
+      sku: "simpleglp-1",
+      team_id: TEAM_ID,
+      skip_itc: false,
+      skip_devcenter: false,
+      enable_services: {
+        healthkit: "on",
+        app_group: "on"
+      }
+    )
+  end
+
+  desc "Upload metadata to App Store Connect (no screenshots, no binary, no submit)"
+  lane :upload_metadata do
     deliver(
-      api_key: api_key,
+      api_key: asc_api_key,
       force: true,
       precheck_include_in_app_purchases: false,
       version_check_wait_retry_limit: 1,
       skip_binary_upload: true,
-      skip_screenshots: false,
-      overwrite_screenshots: true,
+      skip_screenshots: true,
+      skip_metadata: false,
+      overwrite_screenshots: false,
       submit_for_review: false,
       automatic_release: false,
       run_precheck_before_submit: false,
