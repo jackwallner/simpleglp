@@ -24,7 +24,14 @@ struct LogHubView: View {
                                     .foregroundStyle(.secondary)
                             }
                             Spacer()
-                            StatusPill(label: latest.scheduleStatus.label, tint: latest.scheduleStatus == .onSchedule ? AppTheme.brand : AppTheme.warm)
+                            VStack(alignment: .trailing, spacing: 4) {
+                                StatusPill(label: latest.scheduleStatus.label, tint: latest.scheduleStatus == .onSchedule ? AppTheme.brand : AppTheme.warm)
+                                if let rationale = latest.scheduleRationale {
+                                    Text(rationale)
+                                        .font(.caption2)
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
                         }
                     }
                 }
@@ -228,7 +235,9 @@ struct EditEventSheet: View {
 
         if timestampChanged {
             let plan = PlanStore.currentPlan(in: modelContext)
-            let match = ScheduleEngine.match(timestamp: timestamp, plan: plan)
+            let others = ((try? modelContext.fetch(FetchDescriptor<ShotEvent>())) ?? [])
+                .filter { $0.id != event.id }
+            let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: others)
             event.scheduledDate = match.scheduledDate
             event.scheduleStatus = match.status
             event.minutesFromSchedule = match.minutesFromSchedule

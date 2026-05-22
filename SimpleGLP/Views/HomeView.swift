@@ -91,7 +91,7 @@ struct HomeView: View {
                     Button {
                         selectedEvent = event
                     } label: {
-                        RecentShotRow(timestamp: event.timestamp, status: event.scheduleStatus)
+                        RecentShotRow(event: event)
                     }
                     .buttonStyle(.plain)
                 }
@@ -187,8 +187,7 @@ struct HomeView: View {
 }
 
 struct RecentShotRow: View {
-    let timestamp: Date
-    let status: ScheduleMatchStatus
+    let event: ShotEvent
 
     var body: some View {
         HStack(spacing: 14) {
@@ -196,20 +195,27 @@ struct RecentShotRow: View {
                 .font(.title2)
                 .foregroundStyle(tint)
             VStack(alignment: .leading, spacing: 2) {
-                Text(timestamp, style: .date)
+                Text(event.timestamp, style: .date)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(AppTheme.text)
-                Text(timestamp, style: .time)
+                Text(event.timestamp, style: .time)
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
             }
             Spacer()
-            Text(status.label)
-                .font(.caption.weight(.semibold))
-                .foregroundStyle(tint)
-                .padding(.horizontal, 10)
-                .padding(.vertical, 6)
-                .background(tint.opacity(0.14), in: Capsule())
+            VStack(alignment: .trailing, spacing: 4) {
+                Text(event.scheduleStatus.label)
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(tint)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(tint.opacity(0.14), in: Capsule())
+                if let rationale = event.scheduleRationale {
+                    Text(rationale)
+                        .font(.caption2)
+                        .foregroundStyle(AppTheme.muted)
+                }
+            }
         }
         .padding(.vertical, 14)
         .padding(.horizontal, 18)
@@ -222,7 +228,7 @@ struct RecentShotRow: View {
     }
 
     private var tint: Color {
-        switch status {
+        switch event.scheduleStatus {
         case .onSchedule: AppTheme.brand
         case .early, .late: AppTheme.warm
         case .extra, .unknown: AppTheme.muted

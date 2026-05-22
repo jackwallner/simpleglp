@@ -248,6 +248,28 @@ final class ShotEvent {
         set { injectionSiteRaw = newValue?.rawValue }
     }
 
+    var scheduleRationale: String? {
+        guard let scheduled = scheduledDate, let minutes = minutesFromSchedule else { return nil }
+        switch scheduleStatus {
+        case .onSchedule, .extra, .unknown: return nil
+        case .early, .late: break
+        }
+        let absMin = abs(minutes)
+        let amount: String
+        if absMin >= 1440 {
+            let days = absMin / 1440
+            amount = days == 1 ? "1 day" : "\(days) days"
+        } else if absMin >= 60 {
+            let hours = absMin / 60
+            amount = hours == 1 ? "1 hr" : "\(hours) hrs"
+        } else {
+            amount = "\(absMin) min"
+        }
+        let direction = scheduleStatus == .late ? "after" : "before"
+        let slot = scheduled.formatted(.dateTime.weekday(.abbreviated).hour().minute())
+        return "\(amount) \(direction) \(slot)"
+    }
+
     var weekdayIndex: Int { Calendar.current.component(.weekday, from: timestamp) }
     var hourOfDay: Int { Calendar.current.component(.hour, from: timestamp) }
 
