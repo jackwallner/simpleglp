@@ -58,7 +58,7 @@ platform :ios do
   end
 
   desc "Build and upload to TestFlight"
-  lane :testflight do
+  lane :ship_testflight do
     increment_build_number(
       build_number: number_of_commits,
       xcodeproj: "SimpleGLP.xcodeproj"
@@ -66,11 +66,9 @@ platform :ios do
 
     build_app(
       scheme: "SimpleGLP",
-      workspace: nil,
       project: "SimpleGLP.xcodeproj",
       export_method: "app-store",
-      include_bitcode: false,
-      include_on_demand_resources: false
+      include_bitcode: false
     )
 
     upload_to_testflight(
@@ -92,8 +90,7 @@ platform :ios do
       scheme: "SimpleGLP",
       project: "SimpleGLP.xcodeproj",
       export_method: "app-store",
-      include_bitcode: false,
-      include_on_demand_resources: false
+      include_bitcode: false
     )
 
     upload_to_testflight(
