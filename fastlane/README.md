@@ -31,6 +31,22 @@ Create the App Store Connect app record + bundle IDs (idempotent)
 
 Upload metadata to App Store Connect (no screenshots, no binary, no submit)
 
+### ios ship_testflight
+
+```sh
+[bundle exec] fastlane ios ship_testflight
+```
+
+Build and upload to TestFlight
+
+### ios push
+
+```sh
+[bundle exec] fastlane ios push
+```
+
+Build, upload to TestFlight, then tag and push to GitHub
+
 ----
 
 This README.md is auto-generated and will be re-generated every time [_fastlane_](https://fastlane.tools) is run.

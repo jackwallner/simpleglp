@@ -19,13 +19,15 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<string>5</string>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a shot. The app never writes Health data.</string>
+	<string>Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a shot.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Simple GLP writes shot timestamps to Apple Health so your data is available alongside other health metrics.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
