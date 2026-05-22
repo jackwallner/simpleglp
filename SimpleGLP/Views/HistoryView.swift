@@ -6,6 +6,7 @@ struct HistoryView: View {
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
     @State private var selectedEvent: ShotEvent?
     @State private var showEdit = false
+    @State private var pendingDeletion: [ShotEvent] = []
 
     var body: some View {
         List {
@@ -20,7 +21,7 @@ struct HistoryView: View {
                         }
                     }
                     .onDelete { indexSet in
-                        deleteEvents(at: indexSet, in: month)
+                        requestDelete(at: indexSet, in: month)
                     }
                 }
             }
@@ -31,6 +32,23 @@ struct HistoryView: View {
         .sheet(item: $selectedEvent) { event in
             EditEventSheet(event: event)
         }
+        .confirmationDialog(
+            confirmDeleteTitle,
+            isPresented: Binding(
+                get: { !pendingDeletion.isEmpty },
+                set: { if !$0 { pendingDeletion = [] } }
+            ),
+            titleVisibility: .visible
+        ) {
+            Button("Delete", role: .destructive) { performPendingDeletion() }
+            Button("Cancel", role: .cancel) { pendingDeletion = [] }
+        } message: {
+            Text("Deleting a shot removes its dose, schedule status, and any logged details and Health context. This can't be undone.")
+        }
+    }
+
+    private var confirmDeleteTitle: String {
+        pendingDeletion.count == 1 ? "Delete this shot?" : "Delete \(pendingDeletion.count) shots?"
     }
 
     private var groupedEvents: [String: [ShotEvent]] {
@@ -40,33 +58,37 @@ struct HistoryView: View {
     }
 
     private func historyRow(event: ShotEvent) -> some View {
-        HStack(spacing: 12) {
+        let pillTint: Color = event.scheduleStatus == .onSchedule ? AppTheme.brand : AppTheme.warm
+        let doseText = String(format: "%.2f mg", event.doseMg)
+        return HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(event.timestamp, style: .date)
-                    .font(.headline)
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(AppTheme.text)
                 Text(event.timestamp, style: .time)
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            Spacer()
-            VStack(alignment: .trailing, spacing: 4) {
-                Text("\(event.doseMg, specifier: "%.2f") mg")
-                    .font(.subheadline.weight(.semibold))
-                StatusPill(label: event.scheduleStatus.label, tint: event.scheduleStatus == .onSchedule ? AppTheme.brand : AppTheme.warm)
-                if event.captureStatus == .complete {
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundStyle(AppTheme.brand)
-                        .font(.caption)
-                }
-            }
+            Spacer(minLength: 12)
+            Text(doseText)
+                .font(.subheadline.weight(.semibold))
+                .monospacedDigit()
+                .foregroundStyle(AppTheme.text)
+            StatusPill(label: event.scheduleStatus.label, tint: pillTint)
         }
+        .padding(.vertical, 4)
     }
 
-    private func deleteEvents(at offsets: IndexSet, in month: String) {
+    private func requestDelete(at offsets: IndexSet, in month: String) {
         guard let items = groupedEvents[month] else { return }
-        for index in offsets {
-            modelContext.delete(items[index])
+        pendingDeletion = offsets.map { items[$0] }
+    }
+
+    private func performPendingDeletion() {
+        for event in pendingDeletion {
+            modelContext.delete(event)
         }
         try? modelContext.save()
+        pendingDeletion = []
     }
 }

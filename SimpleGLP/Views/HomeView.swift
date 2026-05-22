@@ -5,15 +5,16 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var coordinator: ShotCaptureCoordinator
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
-    @State private var showUndo = false
+    @AppStorage(GLPStorageKey.promptForDetails.rawValue, store: GLPAppGroup.userDefaults) private var promptForDetails = false
     @State private var showConfirmation = false
     @State private var confirmationTask: Task<Void, Never>?
+    @State private var selectedEvent: ShotEvent?
 
     private var recentEvents: [ShotEvent] { Array(events.prefix(5)) }
 
     var body: some View {
         ScrollView {
-            VStack(spacing: 24) {
+            VStack(spacing: 20) {
                 if let message = coordinator.bannerMessage, !message.isEmpty {
                     Text(message)
                         .font(.subheadline)
@@ -27,10 +28,9 @@ struct HomeView: View {
 
                 shotButton
 
-                if showUndo, coordinator.lastCapturedEventID != nil {
+                if coordinator.showUndoOption, coordinator.lastCapturedEventID != nil {
                     Button("Undo") {
                         coordinator.undoLastCapture(in: modelContext)
-                        showUndo = false
                         showConfirmation = false
                         confirmationTask?.cancel()
                     }
@@ -40,18 +40,24 @@ struct HomeView: View {
 
                 recentShotsSection
 
-                Spacer(minLength: 40)
+                Spacer(minLength: 32)
             }
-            .padding(.top, 16)
+            .padding(.top, 12)
         }
         .background(AppTheme.bg.ignoresSafeArea())
+        .sheet(item: $selectedEvent) { event in
+            EditEventSheet(event: event)
+        }
     }
 
     private var shotButton: some View {
         Button {
-            coordinator.captureShot(in: modelContext)
-            showUndo = true
+            let ok = coordinator.captureShot(in: modelContext)
             triggerConfirmation()
+            if ok, promptForDetails, let id = coordinator.lastCapturedEventID,
+               let event = events.first(where: { $0.id == id }) {
+                selectedEvent = event
+            }
         } label: {
             ZStack {
                 Circle()
@@ -70,7 +76,7 @@ struct HomeView: View {
         }
         .buttonStyle(.plain)
         .disabled(coordinator.isCapturing && !showConfirmation)
-        .padding(.vertical, 24)
+        .padding(.vertical, 8)
         .animation(.easeInOut(duration: 0.2), value: showConfirmation)
     }
 
@@ -82,7 +88,12 @@ struct HomeView: View {
                     .font(.headline)
                     .foregroundStyle(AppTheme.text)
                 ForEach(recentEvents) { event in
-                    RecentShotRow(timestamp: event.timestamp, status: event.scheduleStatus)
+                    Button {
+                        selectedEvent = event
+                    } label: {
+                        RecentShotRow(timestamp: event.timestamp, status: event.scheduleStatus)
+                    }
+                    .buttonStyle(.plain)
                 }
             }
             .padding(.horizontal)
@@ -93,15 +104,16 @@ struct HomeView: View {
     private var nextShotSection: some View {
         if let plan = PlanStore.currentPlan(in: modelContext),
            let next = ScheduleEngine.nextExpectedDate(plan: plan) {
+            let copy = relativeShotCopy(plan: plan, nextExpected: next)
             Card {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Next shot")
+                        Text(copy.headline)
                             .font(.caption.weight(.semibold))
-                            .foregroundStyle(AppTheme.muted)
-                        Text(next, style: .date)
+                            .foregroundStyle(copy.isOverdue ? AppTheme.warm : AppTheme.muted)
+                        Text(copy.dateToShow, style: .date)
                             .font(.headline)
-                        Text(next, style: .time)
+                        Text(copy.dateToShow, style: .time)
                             .font(.subheadline)
                             .foregroundStyle(AppTheme.muted)
                     }
@@ -110,7 +122,7 @@ struct HomeView: View {
                         Text("Dose")
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(AppTheme.muted)
-                        Text("\(ScheduleEngine.dose(on: next, plan: plan), specifier: "%.2f") mg")
+                        Text("\(ScheduleEngine.dose(on: copy.dateToShow, plan: plan), specifier: "%.2f") mg")
                             .font(.headline)
                     }
                 }
@@ -118,12 +130,50 @@ struct HomeView: View {
             .padding(.horizontal)
         } else {
             Card {
-                Text("Set up your plan in Settings to see upcoming shots.")
-                    .font(.subheadline)
-                    .foregroundStyle(AppTheme.muted)
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("No plan yet")
+                        .font(.headline)
+                        .foregroundStyle(AppTheme.text)
+                    Text("Add your medication and shot day in Settings to see what’s next.")
+                        .font(.subheadline)
+                        .foregroundStyle(AppTheme.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             .padding(.horizontal)
         }
+    }
+
+    private struct ShotCopy {
+        var headline: String
+        var dateToShow: Date
+        var isOverdue: Bool
+    }
+
+    private func relativeShotCopy(plan: MedicationPlan, nextExpected: Date) -> ShotCopy {
+        let calendar = Calendar.current
+        let now = Date()
+        let lastShot = events.first?.timestamp
+        if let prior = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
+           prior >= plan.scheduleStartDate,
+           (lastShot ?? .distantPast) < prior {
+            let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: prior), to: calendar.startOfDay(for: now)).day ?? 0
+            let headline: String
+            switch days {
+            case 0: headline = "Due today"
+            case 1: headline = "Overdue by 1 day"
+            default: headline = "Overdue by \(days) days"
+            }
+            return ShotCopy(headline: headline, dateToShow: prior, isOverdue: true)
+        }
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: nextExpected)).day ?? 0
+        let headline: String
+        switch days {
+        case 0: headline = "Due today"
+        case 1: headline = "Tomorrow"
+        default: headline = "In \(days) days"
+        }
+        return ShotCopy(headline: headline, dateToShow: nextExpected, isOverdue: false)
     }
 
     private func triggerConfirmation() {
@@ -161,12 +211,12 @@ struct RecentShotRow: View {
                 .padding(.vertical, 6)
                 .background(tint.opacity(0.14), in: Capsule())
         }
-        .padding(.vertical, 12)
-        .padding(.horizontal, 16)
+        .padding(.vertical, 14)
+        .padding(.horizontal, 18)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
         .overlay(
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .strokeBorder(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
         )
     }
