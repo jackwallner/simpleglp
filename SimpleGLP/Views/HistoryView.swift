@@ -74,7 +74,14 @@ struct HistoryView: View {
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
                 .foregroundStyle(AppTheme.text)
-            StatusPill(label: event.scheduleStatus.label, tint: pillTint)
+            VStack(alignment: .trailing, spacing: 2) {
+                StatusPill(label: event.scheduleStatus.label, tint: pillTint)
+                if let rationale = event.scheduleRationale {
+                    Text(rationale)
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
         .padding(.vertical, 4)
     }

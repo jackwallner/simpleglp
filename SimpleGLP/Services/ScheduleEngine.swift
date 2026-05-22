@@ -25,6 +25,14 @@ enum ScheduleEngine {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }
 
+        let alreadyClaimed = existingEvents.contains { event in
+            guard let scheduled = event.scheduledDate else { return false }
+            return abs(scheduled.timeIntervalSince(closest.0)) < 60
+        }
+        if alreadyClaimed {
+            return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
+        }
+
         let delta = timestamp.timeIntervalSince(closest.0)
         let status: ScheduleMatchStatus
         if abs(delta) <= onScheduleWindow {
