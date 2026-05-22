@@ -23,12 +23,20 @@ struct SimpleGLPApp: App {
 }
 
 final class AppDelegate: NSObject, UIApplicationDelegate {
+    private let backgroundShotCoordinator = ShotCaptureCoordinator()
+
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         UNUserNotificationCenter.current().delegate = self
         DiagnosticsService.shared.start()
+        let fallbackCoordinator = backgroundShotCoordinator
+        PhoneWatchSession.shared.start()
+        PhoneWatchSession.shared.onWatchRequestedCapture = { date in
+            let context = ModelContext(GLPModelStore.sharedModelContainer)
+            fallbackCoordinator.captureShot(in: context, tapDate: date)
+        }
         return true
     }
 }
@@ -62,10 +70,12 @@ private struct SimpleGLPRootContent: View {
             PhoneWatchSession.shared.onWatchRequestedCapture = { date in
                 shotCoordinator.captureShot(in: modelContext, tapDate: date)
             }
+            shotCoordinator.ingestPendingWidgetShot(in: modelContext)
             shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                shotCoordinator.ingestPendingWidgetShot(in: modelContext)
                 shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
             }
         }

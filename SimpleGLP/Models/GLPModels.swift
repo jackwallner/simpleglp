@@ -25,6 +25,15 @@ enum GLPMedication: String, Codable, CaseIterable, Identifiable, Sendable {
     case other = "Other"
 
     var id: String { rawValue }
+
+    var standardDoseStepsMg: [Double] {
+        switch self {
+        case .ozempic: [0.25, 0.5, 1.0, 2.0]
+        case .wegovy, .compoundedSemaglutide: [0.25, 0.5, 1.0, 1.7, 2.4]
+        case .mounjaro, .zepbound, .compoundedTirzepatide: [2.5, 5.0, 7.5, 10.0, 12.5, 15.0]
+        case .other: []
+        }
+    }
 }
 
 enum InjectionSite: String, Codable, CaseIterable, Identifiable, Sendable {

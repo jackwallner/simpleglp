@@ -1,1 +1,1 @@
-One-tap GLP-1 shot tracker
+Private one-tap shot logging

@@ -1,1 +1,1 @@
-GLP-1,shot,injection,tracker,semaglutide,tirzepatide,ozempic,wegovy,mounjaro,zepbound,weight,health,reminder
+shot,injection,semaglutide,tirzepatide,ozempic,wegovy,mounjaro,zepbound,weight,health,reminder,dose

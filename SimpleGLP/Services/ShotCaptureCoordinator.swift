@@ -7,8 +7,47 @@ final class ShotCaptureCoordinator: ObservableObject {
     @Published var bannerMessage: String?
     @Published var isCapturing = false
     @Published var lastCapturedEventID: UUID?
+    @Published var showUndoOption = false
 
     private var isEnrichingPendingLogs = false
+
+    /// Pulls a shot logged from the Home Screen widget into SwiftData. The widget only writes a
+    /// timestamp into the app group (it has no database access), so the shot isn't real until the
+    /// app ingests it here. Returns true if a pending widget shot was captured.
+    @discardableResult
+    func ingestPendingWidgetShot(in context: ModelContext) -> Bool {
+        let defaults = GLPAppGroup.userDefaults
+        let key = "pendingWidgetShotTimestamp"
+        let raw = defaults.double(forKey: key)
+        guard raw > 0 else { return false }
+        defaults.removeObject(forKey: key)
+        defaults.removeObject(forKey: "pendingWidgetShotMessage")
+
+        let captured = captureShot(in: context, tapDate: Date(timeIntervalSince1970: raw))
+        if captured {
+            rebuildRecentShots(in: context)
+        }
+        return captured
+    }
+
+    /// Rebuilds the shared recent-shots cache from SwiftData so widget/watch displays match the
+    /// real history (and any placeholder entry the widget wrote gets replaced).
+    func rebuildRecentShots(in context: ModelContext) {
+        var descriptor = FetchDescriptor<ShotEvent>(sortBy: [SortDescriptor(\.timestamp, order: .reverse)])
+        descriptor.fetchLimit = RecentShotsStore.maxEntries
+        let events = (try? context.fetch(descriptor)) ?? []
+        let shots = events.map {
+            RecentShot(
+                id: $0.id,
+                timestamp: $0.timestamp,
+                scheduleStatusRaw: $0.scheduleStatusRaw,
+                medicationName: $0.medicationName,
+                doseMg: $0.doseMg
+            )
+        }
+        RecentShotsStore.replaceAll(shots)
+        PhoneWatchSession.shared.syncRecentShots()
+    }
 
     func enrichPendingCapturesIfNeeded(in context: ModelContext) {
         guard !isCapturing, !isEnrichingPendingLogs else { return }
@@ -73,6 +112,8 @@ final class ShotCaptureCoordinator: ObservableObject {
             bannerMessage = "Could not save your shot. Try again."
             return false
         }
+
+        showUndoOption = true
 
         RecentShotsStore.record(
             RecentShot(
@@ -141,6 +182,7 @@ final class ShotCaptureCoordinator: ObservableObject {
         RecentShotsStore.remove(id: eventID)
         PhoneWatchSession.shared.syncRecentShots()
         lastCapturedEventID = nil
+        showUndoOption = false
         bannerMessage = "Last shot undone."
         WidgetCenter.shared.reloadAllTimelines()
     }
