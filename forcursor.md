@@ -2,7 +2,7 @@
 
 ## What’s done
 
-- **XcodeGen project** (`project.yml`): iOS app, widget, watch, tests. SPM includes RevenueCat + RevenueCatUI.
+- **XcodeGen project** (`project.yml`): iOS app, widget, watch, tests. SPM includes RevenueCat only (native paywall).
 - **Release scripts**: `scripts/testflight.sh`, `upload-testflight.sh`, `upload-testflight-api.sh`, `fastlane/Fastfile`, `AppStoreUploadOptions.plist`, `ExportOptions-AppStore.plist`.
 - **Target resources**: Info.plists, entitlements, privacy manifests, asset catalogs for app/widget/watch.
 - **Shared storage**: `SharedGLP/GLPAppGroup.swift` with app group `group.com.jackwallner.glp`.

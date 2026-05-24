@@ -22,7 +22,6 @@
 		4F526E1E6E9E7826F145AFD1 /* ShotCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */; };
 		54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
-		56EFD4B03252E0FEE54858E7 /* RevenueCatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 667B064F7D4BAA7DDA8CAC79 /* RevenueCatUI */; };
 		581A969FA5943DB620BF86DF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB2CBF9F536FFD8DF927366 /* HomeView.swift */; };
 		5FED014126C39C1020F61215 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125328ACA62290EB451989A /* StoreService.swift */; };
 		65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */; };
@@ -172,7 +171,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CB495635750C499935D1F28 /* RevenueCat in Frameworks */,
-				56EFD4B03252E0FEE54858E7 /* RevenueCatUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,7 +336,6 @@
 			name = SimpleGLP;
 			packageProductDependencies = (
 				89D51D7C41B4EE64885B9B1C /* RevenueCat */,
-				667B064F7D4BAA7DDA8CAC79 /* RevenueCatUI */,
 			);
 			productName = SimpleGLP;
 			productReference = 7D390C19714B2F9313020B6F /* SimpleGLP.app */;
@@ -609,7 +606,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -670,7 +667,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -895,11 +892,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		667B064F7D4BAA7DDA8CAC79 /* RevenueCatUI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 06AD712F25DD53F805978922 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;
-			productName = RevenueCatUI;
-		};
 		89D51D7C41B4EE64885B9B1C /* RevenueCat */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 06AD712F25DD53F805978922 /* XCRemoteSwiftPackageReference "purchases-ios-spm" */;

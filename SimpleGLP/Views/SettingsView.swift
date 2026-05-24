@@ -63,7 +63,8 @@ struct SettingsView: View {
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("Settings")
         .sheet(isPresented: $showPaywall) {
-            SimplePaywallView()
+            SimplePaywallView(paywallImpressionId: "simpleglp_settings_sheet")
+                .environmentObject(store)
         }
         .sheet(isPresented: $showProAlerts) {
             ProAlertsConfigView()

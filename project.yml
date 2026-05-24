@@ -66,8 +66,6 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
     dependencies:
       - package: RevenueCat
-      - package: RevenueCat
-        product: RevenueCatUI
       - target: SimpleGLPWidget
       - target: SimpleGLPWatch
         embed: true
