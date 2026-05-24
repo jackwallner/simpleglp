@@ -81,6 +81,25 @@ extension Package {
         }
         return "\(storeProduct.localizedPriceString) / \(period.value) \(unit)"
     }
+
+    var glpProIntroOfferLabel: String? {
+        guard let intro = storeProduct.introductoryDiscount, intro.paymentMode == .freeTrial else {
+            return nil
+        }
+        let period = intro.subscriptionPeriod
+        let unit: String
+        switch period.unit {
+        case .day: unit = period.value == 1 ? "day" : "days"
+        case .week: unit = period.value == 1 ? "week" : "weeks"
+        case .month: unit = period.value == 1 ? "month" : "months"
+        case .year: unit = period.value == 1 ? "year" : "years"
+        @unknown default: unit = ""
+        }
+        if period.unit == .week {
+            return "\(period.value * 7)-day free trial"
+        }
+        return "\(period.value)-\(unit.dropLast(period.value == 1 ? 0 : 1)) free trial"
+    }
 }
 
 extension CustomerInfo {
@@ -121,6 +140,7 @@ final class StoreService: NSObject, ObservableObject {
     @Published private(set) var purchaseInFlight: Bool = false
     @Published private(set) var isLoadingProducts: Bool = false
     @Published var lastError: String?
+    @Published private(set) var introEligibility: [String: Bool] = [:]
 
     var monthlyPackage: Package? { products.first { $0.glpProPackageKind == .monthly } }
     var yearlyPackage: Package? { products.first { $0.glpProPackageKind == .yearly } }
@@ -128,6 +148,7 @@ final class StoreService: NSObject, ObservableObject {
 
     private let logger = Logger(subsystem: "com.jackwallner.glp", category: "Store")
     private var isConfigured = false
+    private var paywallImpressionsThisSession: Set<String> = []
 
     private override init() {}
 
@@ -147,10 +168,40 @@ final class StoreService: NSObject, ObservableObject {
             currentOffering = offering
             products = offering?.glpProSortedPackages ?? []
             lastError = nil
+            await refreshIntroEligibility()
         } catch {
             logger.error("Product fetch failed: \(String(describing: error), privacy: .public)")
             lastError = "Couldn't load purchase options. Check your connection and try again."
         }
+    }
+
+    private func refreshIntroEligibility() async {
+        let identifiers = products
+            .filter { $0.storeProduct.introductoryDiscount != nil }
+            .map(\.storeProduct.productIdentifier)
+        guard !identifiers.isEmpty else {
+            introEligibility = [:]
+            return
+        }
+        let result = await Purchases.shared.checkTrialOrIntroDiscountEligibility(productIdentifiers: identifiers)
+        introEligibility = result.mapValues { $0.status == .eligible }
+    }
+
+    func isEligibleForIntroOffer(_ package: Package) -> Bool {
+        guard package.glpProIntroOfferLabel != nil else { return false }
+        return introEligibility[package.storeProduct.productIdentifier] ?? true
+    }
+
+    func trackPaywallImpression(id: String, oncePerSession: Bool = false) {
+        configureIfNeeded()
+        if AppEnvironment.isUITesting { return }
+        if oncePerSession {
+            guard !paywallImpressionsThisSession.contains(id) else { return }
+            paywallImpressionsThisSession.insert(id)
+        }
+        Purchases.shared.trackCustomPaywallImpression(
+            CustomPaywallImpressionParams(paywallId: id)
+        )
     }
 
     @discardableResult

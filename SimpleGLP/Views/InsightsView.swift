@@ -59,7 +59,8 @@ struct InsightsView: View {
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("Patterns")
         .sheet(isPresented: $showPaywall) {
-            SimplePaywallView()
+            SimplePaywallView(paywallImpressionId: "simpleglp_insights_sheet")
+                .environmentObject(store)
         }
     }
 
