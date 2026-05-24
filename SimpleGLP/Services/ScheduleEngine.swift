@@ -53,8 +53,18 @@ enum ScheduleEngine {
 
     static func nextExpectedDate(after date: Date = .now, plan: MedicationPlan?, calendar: Calendar = .current) -> Date? {
         guard let plan else { return nil }
-        let seed = scheduledDate(onOrBefore: max(date, plan.scheduleStartDate), plan: plan, calendar: calendar) ?? plan.scheduleStartDate
-        var candidate = seed
+        // Anchor on the first canonical scheduled occurrence: preferred
+        // weekday/hour/minute, on or after the plan's start date.
+        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: plan.scheduleStartDate)
+        components.weekday = plan.preferredWeekday
+        components.hour = plan.preferredHour
+        components.minute = plan.preferredMinute
+        components.second = 0
+        guard var candidate = calendar.date(from: components) else { return nil }
+        while candidate < plan.scheduleStartDate {
+            guard let next = calendar.date(byAdding: .day, value: 7, to: candidate) else { return nil }
+            candidate = next
+        }
         while candidate <= date {
             guard let next = calendar.date(byAdding: .day, value: 7, to: candidate) else { return nil }
             candidate = next
@@ -87,6 +97,12 @@ enum ScheduleEngine {
         }
         while let c = candidate, c < plan.scheduleStartDate {
             candidate = calendar.date(byAdding: .day, value: 7, to: c)
+        }
+        // If pushing past the start date moved us past `date`, there is no
+        // scheduled occurrence on or before `date` yet — return nil rather
+        // than a future date.
+        if let c = candidate, c > date {
+            return nil
         }
         return candidate
     }
