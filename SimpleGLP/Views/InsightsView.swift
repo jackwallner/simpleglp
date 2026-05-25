@@ -88,7 +88,7 @@ struct InsightsView: View {
         let counts = Dictionary(grouping: days, by: { $0 }).mapValues(\.count)
         let top = counts.max { $0.value < $1.value }
         let symbols = Calendar.current.weekdaySymbols
-        let name = top.map { symbols[max(0, min(symbols.count - 1, $0.key - 1))] } ?? "—"
+        let name = top.map { symbols[max(0, min(symbols.count - 1, $0.key - 1))] } ?? "-"
         return Card {
             VStack(alignment: .leading, spacing: 8) {
                 Text("Timing pattern")

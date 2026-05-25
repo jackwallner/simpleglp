@@ -24,26 +24,20 @@ struct SimplePaywallView: View {
     private let benefits: [(icon: String, title: String, detail: String)] = [
         ("bell.badge.fill",
          "Never miss a dose",
-         "Proactive alerts catch schedule drift before it costs you a week of progress."),
+         "Proactive alerts catch schedule drift before it costs a week of progress."),
         ("waveform.path.ecg",
          "See what's working",
-         "Personalized pattern insights surface trends across timing, adherence, and consistency."),
+         "Personalized pattern insights surface trends across timing and adherence."),
         ("calendar.badge.clock",
          "Stay on track on autopilot",
-         "Smart timing nudges adapt to your real life — not a rigid weekly calendar.")
+         "Smart timing nudges adapt to your real life, not a rigid weekly calendar.")
     ]
 
     var body: some View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            if store.isLoadingProducts && store.products.isEmpty {
-                loadingState
-            } else if store.products.isEmpty {
-                emptyState
-            } else {
-                content
-            }
+            content
 
             if displayCloseButton {
                 closeButton
@@ -62,93 +56,76 @@ struct SimplePaywallView: View {
         .onChange(of: store.products.count) { _, _ in selectDefaultPackageIfNeeded() }
     }
 
-    private var loadingState: some View {
-        VStack(spacing: 14) {
-            ProgressView()
-                .scaleEffect(1.2)
-            Text("Loading plans…")
-                .font(.footnote)
-                .foregroundStyle(AppTheme.muted)
-        }
-    }
-
-    private var emptyState: some View {
-        VStack(spacing: 12) {
-            Image(systemName: "wifi.exclamationmark")
-                .font(.system(size: 40))
-                .foregroundStyle(AppTheme.muted)
-            Text("Couldn't Load Plans")
-                .font(.headline)
-                .foregroundStyle(AppTheme.text)
-            Text(store.lastError ?? "Check your connection and try again.")
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.muted)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 32)
-            Button("Try Again") {
-                Task {
-                    await store.fetchProducts()
-                    selectDefaultPackageIfNeeded()
-                }
-            }
-            .font(.subheadline.weight(.semibold))
-            .foregroundStyle(AppTheme.brand)
-        }
-    }
-
     private var content: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 24) {
-                header
-                benefitList
-                if showTrialTimeline {
-                    trialTimeline
-                }
+        VStack(spacing: 0) {
+            Spacer(minLength: displayCloseButton ? 44 : 16)
+
+            header
+                .padding(.horizontal, 22)
+
+            Spacer(minLength: 12)
+
+            benefitList
+                .padding(.horizontal, 22)
+
+            Spacer(minLength: 12)
+
+            if store.products.isEmpty {
+                planPlaceholder
+                    .padding(.horizontal, 22)
+            } else {
                 planCards
-                purchaseSection
-                trustRow
-                footerLinks
+                    .padding(.horizontal, 22)
             }
-            .padding(.horizontal, 22)
-            .padding(.top, displayCloseButton ? 52 : 28)
-            .padding(.bottom, 32)
+
+            Spacer(minLength: 12)
+
+            purchaseSection
+                .padding(.horizontal, 22)
+
+            Spacer(minLength: 8)
+
+            footerLinks
+                .padding(.horizontal, 22)
+                .padding(.bottom, 16)
         }
     }
 
     private var header: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             ZStack {
                 Circle()
                     .fill(AppTheme.brand)
-                    .frame(width: 68, height: 68)
-                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
+                    .frame(width: 56, height: 56)
+                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 12, x: 0, y: 5)
                 Image(systemName: "sparkles")
-                    .font(.system(size: 28, weight: .bold))
+                    .font(.system(size: 24, weight: .bold))
                     .foregroundStyle(.white)
             }
             Text("Simple GLP Pro")
-                .font(.title.weight(.bold))
+                .font(.title2.weight(.bold))
                 .foregroundStyle(AppTheme.text)
             Text("Get the most out of every dose.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
         }
+        .frame(maxWidth: .infinity)
     }
 
     private var benefitList: some View {
-        VStack(spacing: 14) {
+        VStack(spacing: 12) {
             ForEach(benefits, id: \.title) { benefit in
-                HStack(alignment: .top, spacing: 14) {
+                HStack(alignment: .top, spacing: 12) {
                     ZStack {
                         Circle()
                             .fill(AppTheme.brandSoft)
-                            .frame(width: 32, height: 32)
+                            .frame(width: 30, height: 30)
                         Image(systemName: benefit.icon)
-                            .font(.system(size: 14, weight: .bold))
+                            .font(.system(size: 13, weight: .bold))
                             .foregroundStyle(AppTheme.brand)
                     }
-                    VStack(alignment: .leading, spacing: 2) {
+                    VStack(alignment: .leading, spacing: 1) {
                         Text(benefit.title)
                             .font(.subheadline.weight(.semibold))
                             .foregroundStyle(AppTheme.text)
@@ -164,68 +141,31 @@ struct SimplePaywallView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
-    private var showTrialTimeline: Bool {
-        guard let package = selectedPackage else { return false }
-        return store.isEligibleForIntroOffer(package) && package.glpProIntroOfferLabel != nil
-    }
-
-    private var trialTimeline: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text("How your free trial works")
-                .font(.footnote.weight(.semibold))
-                .foregroundStyle(AppTheme.text)
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            VStack(spacing: 0) {
-                TrialTimelineRow(
-                    icon: "lock.open.fill",
-                    title: "Today",
-                    detail: "Full access to alerts and insights. No charge.",
-                    showsConnector: true
-                )
-                TrialTimelineRow(
-                    icon: "bell.fill",
-                    title: trialReminderTitle,
-                    detail: "We'll remind you before your trial ends.",
-                    showsConnector: true
-                )
-                TrialTimelineRow(
-                    icon: "checkmark.seal.fill",
-                    title: trialBillingTitle,
-                    detail: "You're billed only if you stay. Cancel anytime in Settings.",
-                    showsConnector: false
-                )
+    private var planPlaceholder: some View {
+        VStack(spacing: 10) {
+            ForEach(0..<2, id: \.self) { _ in
+                RoundedRectangle(cornerRadius: 20, style: .continuous)
+                    .fill(AppTheme.surface)
+                    .frame(height: 64)
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 20, style: .continuous)
+                            .stroke(AppTheme.surfaceStroke.opacity(0.4), lineWidth: 1)
+                    }
+                    .overlay {
+                        if store.isLoadingProducts {
+                            ProgressView()
+                                .tint(AppTheme.muted)
+                        }
+                    }
+            }
+            if !store.isLoadingProducts {
+                Text(store.lastError ?? "Hang tight, plans are loading.")
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 2)
             }
         }
-        .padding(16)
-        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 18, style: .continuous)
-                .stroke(AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
-        }
-    }
-
-    private var trialDays: Int {
-        guard let package = selectedPackage,
-              let intro = package.storeProduct.introductoryDiscount,
-              intro.paymentMode == .freeTrial else { return 7 }
-        let period = intro.subscriptionPeriod
-        switch period.unit {
-        case .day: return period.value
-        case .week: return period.value * 7
-        case .month: return period.value * 30
-        case .year: return period.value * 365
-        @unknown default: return 7
-        }
-    }
-
-    private var trialReminderTitle: String {
-        let reminder = max(trialDays - 2, 1)
-        return "Day \(reminder) · Reminder"
-    }
-
-    private var trialBillingTitle: String {
-        "Day \(trialDays) · Subscription begins"
     }
 
     private var planCards: some View {
@@ -263,10 +203,10 @@ struct SimplePaywallView: View {
     }
 
     private var purchaseSection: some View {
-        VStack(spacing: 10) {
-            Button(action: startPurchase) {
+        VStack(spacing: 8) {
+            Button(action: primaryButtonAction) {
                 ZStack {
-                    Text(ctaTitle)
+                    Text(primaryButtonTitle)
                         .font(.headline.weight(.bold))
                         .foregroundStyle(.white)
                         .opacity(isPurchasing ? 0 : 1)
@@ -280,7 +220,7 @@ struct SimplePaywallView: View {
                 .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
             }
             .buttonStyle(.plain)
-            .disabled(isPurchasing || selectedPackage == nil)
+            .disabled(isPurchasing || (store.products.isEmpty == false && selectedPackage == nil))
 
             if let assurance = assuranceText {
                 Text(assurance)
@@ -295,39 +235,28 @@ struct SimplePaywallView: View {
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 2)
             }
 
             if let errorMessage {
                 Text(errorMessage)
-                    .font(.footnote)
+                    .font(.caption)
                     .foregroundStyle(.red)
                     .multilineTextAlignment(.center)
             }
             if let restoreMessage {
                 Text(restoreMessage)
-                    .font(.footnote)
+                    .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
             }
         }
     }
 
-    private var trustRow: some View {
-        HStack(spacing: 18) {
-            TrustChip(icon: "xmark.circle", text: "Cancel\nanytime")
-            TrustChip(icon: "lock.shield", text: "Private &\nencrypted")
-            TrustChip(icon: "applelogo", text: "Billed via\nApple ID")
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.top, 4)
-    }
-
     private var footerLinks: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 6) {
             Button(action: startRestore) {
                 Text(isRestoring ? "Restoring…" : "Restore Purchases")
-                    .font(.footnote.weight(.semibold))
+                    .font(.caption.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
             }
             .buttonStyle(.plain)
@@ -360,18 +289,32 @@ struct SimplePaywallView: View {
         }
     }
 
-    private var ctaTitle: String {
+    private var primaryButtonTitle: String {
+        if store.products.isEmpty {
+            return store.isLoadingProducts ? "Loading…" : "Try Again"
+        }
         guard let package = selectedPackage else { return "Continue" }
         if package.glpProPackageKind == .lifetime { return "Unlock Lifetime Access" }
         if store.isEligibleForIntroOffer(package) { return "Start My Free Trial" }
         return "Subscribe & Continue"
     }
 
+    private func primaryButtonAction() {
+        if store.products.isEmpty {
+            Task {
+                await store.fetchProducts()
+                selectDefaultPackageIfNeeded()
+            }
+        } else {
+            startPurchase()
+        }
+    }
+
     private var assuranceText: String? {
         guard let package = selectedPackage else { return nil }
         if package.glpProPackageKind == .lifetime { return nil }
         if store.isEligibleForIntroOffer(package) {
-            return "No payment today — cancel anytime."
+            return "No payment today."
         }
         return nil
     }
@@ -380,13 +323,12 @@ struct SimplePaywallView: View {
         guard let package = selectedPackage else { return nil }
         let price = package.glpProPriceLabel
         if package.glpProPackageKind == .lifetime {
-            return "\(price). One-time purchase. Lifetime access, no subscription."
+            return "\(price). One-time purchase. Lifetime access."
         }
-        let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings."
         if store.isEligibleForIntroOffer(package), let trial = package.glpProIntroOfferLabel {
-            return "\(trial.capitalized), then \(price). \(renew)"
+            return "\(trial.capitalized), then \(price). Auto-renews."
         }
-        return "\(price). \(renew)"
+        return "\(price). Auto-renews."
     }
 
     private var monthlyReferencePrice: Decimal? {
@@ -464,63 +406,6 @@ struct SimplePaywallView: View {
                 restoreMessage = store.lastError ?? "No previous Simple GLP Pro purchase was found on this Apple ID."
             }
         }
-    }
-}
-
-private struct TrialTimelineRow: View {
-    let icon: String
-    let title: String
-    let detail: String
-    let showsConnector: Bool
-
-    var body: some View {
-        HStack(alignment: .top, spacing: 14) {
-            VStack(spacing: 0) {
-                ZStack {
-                    Circle()
-                        .fill(AppTheme.brand)
-                        .frame(width: 28, height: 28)
-                    Image(systemName: icon)
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(.white)
-                }
-                if showsConnector {
-                    Rectangle()
-                        .fill(AppTheme.brand.opacity(0.35))
-                        .frame(width: 2, height: 22)
-                }
-            }
-            VStack(alignment: .leading, spacing: 2) {
-                Text(title)
-                    .font(.footnote.weight(.semibold))
-                    .foregroundStyle(AppTheme.text)
-                Text(detail)
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(.bottom, showsConnector ? 8 : 0)
-            Spacer(minLength: 0)
-        }
-    }
-}
-
-private struct TrustChip: View {
-    let icon: String
-    let text: String
-
-    var body: some View {
-        VStack(spacing: 6) {
-            Image(systemName: icon)
-                .font(.system(size: 16, weight: .semibold))
-                .foregroundStyle(AppTheme.muted)
-            Text(text)
-                .font(.caption2.weight(.medium))
-                .foregroundStyle(AppTheme.muted)
-                .multilineTextAlignment(.center)
-                .lineLimit(2)
-        }
-        .frame(maxWidth: .infinity)
     }
 }
 
