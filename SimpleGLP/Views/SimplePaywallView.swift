@@ -21,10 +21,16 @@ struct SimplePaywallView: View {
     @State private var restoreMessage: String?
     @State private var isRestoring = false
 
-    private let features: [(icon: String, title: String)] = [
-        ("bell.badge.fill", "Proactive alerts when your schedule drifts"),
-        ("chart.bar.xaxis", "Deeper pattern insights from your shot history"),
-        ("calendar.badge.clock", "Personalized timing and adherence trends")
+    private let benefits: [(icon: String, title: String, detail: String)] = [
+        ("bell.badge.fill",
+         "Never miss a dose",
+         "Proactive alerts catch schedule drift before it costs you a week of progress."),
+        ("waveform.path.ecg",
+         "See what's working",
+         "Personalized pattern insights surface trends across timing, adherence, and consistency."),
+        ("calendar.badge.clock",
+         "Stay on track on autopilot",
+         "Smart timing nudges adapt to your real life — not a rigid weekly calendar.")
     ]
 
     var body: some View {
@@ -92,51 +98,65 @@ struct SimplePaywallView: View {
 
     private var content: some View {
         ScrollView(showsIndicators: false) {
-            VStack(spacing: 22) {
+            VStack(spacing: 24) {
                 header
-                featureList
+                benefitList
+                if showTrialTimeline {
+                    trialTimeline
+                }
                 planCards
                 purchaseSection
+                trustRow
+                footerLinks
             }
-            .padding(.horizontal, 24)
-            .padding(.top, displayCloseButton ? 56 : 32)
+            .padding(.horizontal, 22)
+            .padding(.top, displayCloseButton ? 52 : 28)
             .padding(.bottom, 32)
         }
     }
 
     private var header: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 12) {
             ZStack {
                 Circle()
                     .fill(AppTheme.brand)
-                    .frame(width: 64, height: 64)
-                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 12, x: 0, y: 4)
+                    .frame(width: 68, height: 68)
+                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
                 Image(systemName: "sparkles")
-                    .font(.system(size: 26, weight: .bold))
+                    .font(.system(size: 28, weight: .bold))
                     .foregroundStyle(.white)
             }
             Text("Simple GLP Pro")
                 .font(.title.weight(.bold))
                 .foregroundStyle(AppTheme.text)
-            Text("Unlock proactive alerts and personalized pattern insights.")
+            Text("Get the most out of every dose.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
         }
     }
 
-    private var featureList: some View {
-        VStack(alignment: .leading, spacing: 12) {
-            ForEach(features, id: \.title) { feature in
-                HStack(spacing: 12) {
-                    Image(systemName: feature.icon)
-                        .font(.system(size: 15, weight: .semibold))
-                        .foregroundStyle(AppTheme.brand)
-                        .frame(width: 24)
-                    Text(feature.title)
-                        .font(.subheadline)
-                        .foregroundStyle(AppTheme.text)
-                        .fixedSize(horizontal: false, vertical: true)
+    private var benefitList: some View {
+        VStack(spacing: 14) {
+            ForEach(benefits, id: \.title) { benefit in
+                HStack(alignment: .top, spacing: 14) {
+                    ZStack {
+                        Circle()
+                            .fill(AppTheme.brandSoft)
+                            .frame(width: 32, height: 32)
+                        Image(systemName: benefit.icon)
+                            .font(.system(size: 14, weight: .bold))
+                            .foregroundStyle(AppTheme.brand)
+                    }
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(benefit.title)
+                            .font(.subheadline.weight(.semibold))
+                            .foregroundStyle(AppTheme.text)
+                        Text(benefit.detail)
+                            .font(.footnote)
+                            .foregroundStyle(AppTheme.muted)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     Spacer(minLength: 0)
                 }
             }
@@ -144,14 +164,81 @@ struct SimplePaywallView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
+    private var showTrialTimeline: Bool {
+        guard let package = selectedPackage else { return false }
+        return store.isEligibleForIntroOffer(package) && package.glpProIntroOfferLabel != nil
+    }
+
+    private var trialTimeline: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            Text("How your free trial works")
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(AppTheme.text)
+                .frame(maxWidth: .infinity, alignment: .leading)
+
+            VStack(spacing: 0) {
+                TrialTimelineRow(
+                    icon: "lock.open.fill",
+                    title: "Today",
+                    detail: "Full access to alerts and insights. No charge.",
+                    showsConnector: true
+                )
+                TrialTimelineRow(
+                    icon: "bell.fill",
+                    title: trialReminderTitle,
+                    detail: "We'll remind you before your trial ends.",
+                    showsConnector: true
+                )
+                TrialTimelineRow(
+                    icon: "checkmark.seal.fill",
+                    title: trialBillingTitle,
+                    detail: "You're billed only if you stay. Cancel anytime in Settings.",
+                    showsConnector: false
+                )
+            }
+        }
+        .padding(16)
+        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .stroke(AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
+        }
+    }
+
+    private var trialDays: Int {
+        guard let package = selectedPackage,
+              let intro = package.storeProduct.introductoryDiscount,
+              intro.paymentMode == .freeTrial else { return 7 }
+        let period = intro.subscriptionPeriod
+        switch period.unit {
+        case .day: return period.value
+        case .week: return period.value * 7
+        case .month: return period.value * 30
+        case .year: return period.value * 365
+        @unknown default: return 7
+        }
+    }
+
+    private var trialReminderTitle: String {
+        let reminder = max(trialDays - 2, 1)
+        return "Day \(reminder) · Reminder"
+    }
+
+    private var trialBillingTitle: String {
+        "Day \(trialDays) · Subscription begins"
+    }
+
     private var planCards: some View {
         VStack(spacing: 10) {
-            ForEach(store.products, id: \.identifier) { package in
+            let monthlyPrice = monthlyReferencePrice
+            ForEach(orderedPackages, id: \.identifier) { package in
                 GLPProPlanCard(
                     package: package,
                     isSelected: selectedPackage?.identifier == package.identifier,
                     showsTrialBadge: store.isEligibleForIntroOffer(package),
-                    isBestValue: package.glpProPackageKind == .yearly
+                    isBestValue: package.glpProPackageKind == .yearly,
+                    perMonthLabel: perMonthLabel(for: package),
+                    savingsLabel: savingsLabel(for: package, monthlyReference: monthlyPrice)
                 ) {
                     selectedPackage = package
                 }
@@ -159,8 +246,24 @@ struct SimplePaywallView: View {
         }
     }
 
+    private var orderedPackages: [Package] {
+        // Yearly first (highest conversion default), then monthly, then lifetime, then anything else.
+        store.products.sorted { lhs, rhs in
+            rank(for: lhs) < rank(for: rhs)
+        }
+    }
+
+    private func rank(for package: Package) -> Int {
+        switch package.glpProPackageKind {
+        case .yearly: return 0
+        case .monthly: return 1
+        case .lifetime: return 2
+        case .other: return 3
+        }
+    }
+
     private var purchaseSection: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 10) {
             Button(action: startPurchase) {
                 ZStack {
                     Text(ctaTitle)
@@ -172,18 +275,27 @@ struct SimplePaywallView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 15)
+                .padding(.vertical, 17)
                 .background(AppTheme.brand, in: Capsule())
+                .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
             }
             .buttonStyle(.plain)
             .disabled(isPurchasing || selectedPackage == nil)
 
+            if let assurance = assuranceText {
+                Text(assurance)
+                    .font(.footnote.weight(.medium))
+                    .foregroundStyle(AppTheme.brand)
+                    .multilineTextAlignment(.center)
+            }
+
             if let disclosure = disclosureText {
                 Text(disclosure)
-                    .font(.caption)
+                    .font(.caption2)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 2)
             }
 
             if let errorMessage {
@@ -198,18 +310,32 @@ struct SimplePaywallView: View {
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
             }
+        }
+    }
 
+    private var trustRow: some View {
+        HStack(spacing: 18) {
+            TrustChip(icon: "xmark.circle", text: "Cancel\nanytime")
+            TrustChip(icon: "lock.shield", text: "Private &\nencrypted")
+            TrustChip(icon: "applelogo", text: "Billed via\nApple ID")
+        }
+        .frame(maxWidth: .infinity)
+        .padding(.top, 4)
+    }
+
+    private var footerLinks: some View {
+        VStack(spacing: 10) {
             Button(action: startRestore) {
                 Text(isRestoring ? "Restoring…" : "Restore Purchases")
-                    .font(.subheadline.weight(.semibold))
+                    .font(.footnote.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
             }
             .buttonStyle(.plain)
             .disabled(isRestoring || isPurchasing)
 
-            HStack(spacing: 4) {
+            HStack(spacing: 6) {
                 Link("Terms", destination: PaywallLinks.standardEULA)
-                Text("·")
+                Text("·").foregroundStyle(AppTheme.muted)
                 Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
             }
             .font(.caption2)
@@ -228,6 +354,7 @@ struct SimplePaywallView: View {
                         .padding(16)
                 }
                 .buttonStyle(.plain)
+                .accessibilityLabel("Close")
             }
             Spacer()
         }
@@ -235,9 +362,18 @@ struct SimplePaywallView: View {
 
     private var ctaTitle: String {
         guard let package = selectedPackage else { return "Continue" }
-        if package.glpProPackageKind == .lifetime { return "Unlock Lifetime" }
-        if store.isEligibleForIntroOffer(package) { return "Start Free Trial" }
-        return "Subscribe"
+        if package.glpProPackageKind == .lifetime { return "Unlock Lifetime Access" }
+        if store.isEligibleForIntroOffer(package) { return "Start My Free Trial" }
+        return "Subscribe & Continue"
+    }
+
+    private var assuranceText: String? {
+        guard let package = selectedPackage else { return nil }
+        if package.glpProPackageKind == .lifetime { return nil }
+        if store.isEligibleForIntroOffer(package) {
+            return "No payment today — cancel anytime."
+        }
+        return nil
     }
 
     private var disclosureText: String? {
@@ -253,9 +389,47 @@ struct SimplePaywallView: View {
         return "\(price). \(renew)"
     }
 
+    private var monthlyReferencePrice: Decimal? {
+        store.products
+            .first { $0.glpProPackageKind == .monthly }?
+            .storeProduct.price
+    }
+
+    private func perMonthLabel(for package: Package) -> String? {
+        guard package.glpProPackageKind == .yearly,
+              let period = package.storeProduct.subscriptionPeriod,
+              period.unit == .year else { return nil }
+        let months = Decimal(period.value * 12)
+        let perMonth = NSDecimalNumber(decimal: package.storeProduct.price / months)
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = package.storeProduct.priceFormatter?.locale ?? .current
+        formatter.currencyCode = package.storeProduct.currencyCode
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        guard let formatted = formatter.string(from: perMonth) else { return nil }
+        return "\(formatted) / month"
+    }
+
+    private func savingsLabel(for package: Package, monthlyReference: Decimal?) -> String? {
+        guard package.glpProPackageKind == .yearly,
+              let monthlyReference,
+              monthlyReference > 0,
+              let period = package.storeProduct.subscriptionPeriod,
+              period.unit == .year else { return nil }
+        let months = Decimal(period.value * 12)
+        let yearlyEquivalent = monthlyReference * months
+        guard yearlyEquivalent > package.storeProduct.price else { return nil }
+        let saved = (yearlyEquivalent - package.storeProduct.price) / yearlyEquivalent
+        let percent = NSDecimalNumber(decimal: saved * 100).intValue
+        guard percent > 0 else { return nil }
+        return "SAVE \(percent)%"
+    }
+
     private func selectDefaultPackageIfNeeded() {
         guard selectedPackage == nil, !store.products.isEmpty else { return }
         selectedPackage = store.products.first { $0.glpProPackageKind == .yearly }
+            ?? store.products.first { $0.glpProPackageKind == .monthly }
             ?? store.products.first
     }
 
@@ -293,11 +467,70 @@ struct SimplePaywallView: View {
     }
 }
 
+private struct TrialTimelineRow: View {
+    let icon: String
+    let title: String
+    let detail: String
+    let showsConnector: Bool
+
+    var body: some View {
+        HStack(alignment: .top, spacing: 14) {
+            VStack(spacing: 0) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.brand)
+                        .frame(width: 28, height: 28)
+                    Image(systemName: icon)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+                if showsConnector {
+                    Rectangle()
+                        .fill(AppTheme.brand.opacity(0.35))
+                        .frame(width: 2, height: 22)
+                }
+            }
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(AppTheme.text)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.bottom, showsConnector ? 8 : 0)
+            Spacer(minLength: 0)
+        }
+    }
+}
+
+private struct TrustChip: View {
+    let icon: String
+    let text: String
+
+    var body: some View {
+        VStack(spacing: 6) {
+            Image(systemName: icon)
+                .font(.system(size: 16, weight: .semibold))
+                .foregroundStyle(AppTheme.muted)
+            Text(text)
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(AppTheme.muted)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+        }
+        .frame(maxWidth: .infinity)
+    }
+}
+
 private struct GLPProPlanCard: View {
     let package: Package
     let isSelected: Bool
     let showsTrialBadge: Bool
     let isBestValue: Bool
+    let perMonthLabel: String?
+    let savingsLabel: String?
     let onTap: () -> Void
 
     var body: some View {
@@ -314,14 +547,21 @@ private struct GLPProPlanCard: View {
                     }
                 }
 
-                VStack(alignment: .leading, spacing: 2) {
+                VStack(alignment: .leading, spacing: 4) {
                     HStack(spacing: 6) {
                         Text(package.glpProDisplayName)
                             .font(.subheadline.weight(.bold))
                             .foregroundStyle(AppTheme.text)
-                        if isBestValue {
+                        if let savingsLabel {
+                            Text(savingsLabel)
+                                .font(.system(size: 9, weight: .heavy))
+                                .foregroundStyle(.white)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(AppTheme.brand, in: Capsule())
+                        } else if isBestValue {
                             Text("BEST VALUE")
-                                .font(.system(size: 9, weight: .bold))
+                                .font(.system(size: 9, weight: .heavy))
                                 .foregroundStyle(.white)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
@@ -332,21 +572,33 @@ private struct GLPProPlanCard: View {
                         Text(trial.capitalized)
                             .font(.caption2.weight(.semibold))
                             .foregroundStyle(AppTheme.calm)
+                    } else if let perMonthLabel {
+                        Text(perMonthLabel)
+                            .font(.caption2.weight(.medium))
+                            .foregroundStyle(AppTheme.muted)
                     }
                 }
 
                 Spacer(minLength: 8)
 
-                Text(package.glpProPriceLabel)
-                    .font(.subheadline.weight(.semibold).monospacedDigit())
-                    .foregroundStyle(AppTheme.muted)
+                VStack(alignment: .trailing, spacing: 2) {
+                    Text(package.glpProPriceLabel)
+                        .font(.subheadline.weight(.semibold).monospacedDigit())
+                        .foregroundStyle(AppTheme.text)
+                    if showsTrialBadge, let perMonthLabel {
+                        Text(perMonthLabel)
+                            .font(.caption2)
+                            .foregroundStyle(AppTheme.muted)
+                    }
+                }
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .stroke(isSelected ? AppTheme.brand : Color.clear, lineWidth: 2)
+                    .stroke(isSelected ? AppTheme.brand : AppTheme.surfaceStroke.opacity(0.5),
+                            lineWidth: isSelected ? 2 : 1)
             }
         }
         .buttonStyle(.plain)
