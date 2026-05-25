@@ -10,6 +10,7 @@ struct SimpleGLPApp: App {
 
     init() {
         StoreService.shared.start()
+        ReviewPromptTracker.recordAppLaunch()
     }
 
     var body: some Scene {

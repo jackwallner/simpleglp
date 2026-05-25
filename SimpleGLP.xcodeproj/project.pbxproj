@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C50968E42448580FC0564CF /* ReviewPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277F143457A552933D07C4FB /* ReviewPromptSheet.swift */; };
 		0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423148D3B21BF730934FCC05 /* ImportService.swift */; };
 		1062CD6D096B5D82A413377F /* SimpleGLPWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		14CC3D6A7B622FAB190AFEAA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B9237CCE5AC5A79262C60E27 /* PrivacyInfo.xcprivacy */; };
@@ -17,9 +18,11 @@
 		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
 		33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72BB2053E8DC8186F41B380 /* SettingsView.swift */; };
 		3CB495635750C499935D1F28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 89D51D7C41B4EE64885B9B1C /* RevenueCat */; };
+		45127D8C4C2A8DF86390D905 /* AppStoreReviewLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */; };
 		46937D2C98E89CF4B6350D25 /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		4F526E1E6E9E7826F145AFD1 /* ShotCaptureCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */; };
+		50B7C83B435EB3DF0A133D8E /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
 		54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
 		581A969FA5943DB620BF86DF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB2CBF9F536FFD8DF927366 /* HomeView.swift */; };
@@ -27,17 +30,20 @@
 		65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */; };
 		68D824C248A40FD0BFDEEE27 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E45ECA8A326A07DCE47612 /* HealthKitService.swift */; };
 		6979784B6EDA92FE61041C0F /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
+		69CB6A3015D875CDDF875255 /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
 		7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */; };
 		7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
 		75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */; };
 		766BA777284D5C9A638DC548 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CACE598976ED5713C9175CC /* InsightsView.swift */; };
 		78E2C974D8DF1344D2D12D1B /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
+		797EEEF5E4C611DE7FE5E90C /* AppStoreReviewLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */; };
 		81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADB560B88F76955016CB54 /* WatchRootView.swift */; };
 		842F394A2FDFF256CE375F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7E3863B993311209064780D /* Assets.xcassets */; };
 		8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45946CD3F5007081C43A4A8 /* AppAppearance.swift */; };
 		8C167B317D477E68C9420934 /* SimpleGLPWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A971E826B1D07DAAEBB0A89D /* RootTabView.swift */; };
 		8CA67D29F54C70F50B3E998D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */; };
+		9088FB634ABFC6A93658E3FB /* AppStoreReviewLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */; };
 		911A7CEBC2DDC9A040D743E5 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
 		954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */; };
 		991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BCD0B8C21771506297243B /* ProactiveAlertsEngine.swift */; };
@@ -51,6 +57,7 @@
 		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
 		CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B87891F3FE471993E42C3C /* ExportService.swift */; };
+		DBE478B5D061071769E92CBE /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
 		DCE9E5DE3F9C6AAC6B91131C /* GLPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */; };
 		DDC4DE405BE0B804662DC390 /* WatchConnectivityController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAEC7E7DB112BAA8CA725913 /* WatchConnectivityController.swift */; };
 		E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */; };
@@ -118,6 +125,7 @@
 		0DADB560B88F76955016CB54 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
 		181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPAppGroup.swift; sourceTree = "<group>"; };
 		1F8D51AD66946F59E77221EE /* GLPModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModelStore.swift; sourceTree = "<group>"; };
+		277F143457A552933D07C4FB /* ReviewPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptSheet.swift; sourceTree = "<group>"; };
 		28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2982A1D0CD628DDEBED03EBB /* SimpleGLPWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWatch.entitlements; sourceTree = "<group>"; };
 		31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertPreferences.swift; sourceTree = "<group>"; };
@@ -126,6 +134,7 @@
 		3E7D005F349F97C0D11B64C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		423148D3B21BF730934FCC05 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
 		4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptTracker.swift; sourceTree = "<group>"; };
 		59BCD0B8C21771506297243B /* ProactiveAlertsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProactiveAlertsEngine.swift; sourceTree = "<group>"; };
 		5AC085A89924894C85B1ED76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertsConfigView.swift; sourceTree = "<group>"; };
@@ -137,6 +146,7 @@
 		80224F926658DE5F12BDF68F /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
 		82E45ECA8A326A07DCE47612 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewLinks.swift; sourceTree = "<group>"; };
 		8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWidget.entitlements; sourceTree = "<group>"; };
 		985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SimpleGLPWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotCaptureCoordinator.swift; sourceTree = "<group>"; };
@@ -213,6 +223,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		4410CABB34BFABEBC5FC7BE9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		55E9795E1325CF104395D5C0 = {
 			isa = PBXGroup;
 			children = (
@@ -244,6 +262,8 @@
 			children = (
 				181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */,
 				AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */,
+				4410CABB34BFABEBC5FC7BE9 /* Services */,
+				C69C12C87C97D89F44B69728 /* Utilities */,
 			);
 			path = SharedGLP;
 			sourceTree = "<group>";
@@ -297,6 +317,14 @@
 			path = SimpleGLPWidget;
 			sourceTree = "<group>";
 		};
+		C69C12C87C97D89F44B69728 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		D5FE7F599B2748A59E0E825B /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -306,6 +334,7 @@
 				AE8B24B5C3201692DE399FAD /* LogHubView.swift */,
 				28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */,
 				5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */,
+				277F143457A552933D07C4FB /* ReviewPromptSheet.swift */,
 				A971E826B1D07DAAEBB0A89D /* RootTabView.swift */,
 				E72BB2053E8DC8186F41B380 /* SettingsView.swift */,
 				397B9E408E138DCFE4202926 /* SharedViews.swift */,
@@ -481,12 +510,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9088FB634ABFC6A93658E3FB /* AppStoreReviewLinks.swift in Sources */,
 				CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */,
 				78E2C974D8DF1344D2D12D1B /* GLPAppGroup.swift in Sources */,
 				7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */,
 				DCE9E5DE3F9C6AAC6B91131C /* GLPModels.swift in Sources */,
 				A6D6B2A9F6E579C00836D706 /* LogShotIntent.swift in Sources */,
 				6979784B6EDA92FE61041C0F /* RecentShotsStore.swift in Sources */,
+				DBE478B5D061071769E92CBE /* ReviewPromptTracker.swift in Sources */,
 				FC83063DC185217F6D5D1F58 /* ScheduleEngine.swift in Sources */,
 				2114D69BA3942C095AE857A1 /* SimpleGLPWidget.swift in Sources */,
 			);
@@ -496,9 +527,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				45127D8C4C2A8DF86390D905 /* AppStoreReviewLinks.swift in Sources */,
 				54B3C5F39ABD4872BEF8C197 /* AppTheme.swift in Sources */,
 				ED6140C151900191E0F43AF6 /* GLPAppGroup.swift in Sources */,
 				46937D2C98E89CF4B6350D25 /* RecentShotsStore.swift in Sources */,
+				69CB6A3015D875CDDF875255 /* ReviewPromptTracker.swift in Sources */,
 				C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */,
 				DDC4DE405BE0B804662DC390 /* WatchConnectivityController.swift in Sources */,
 				81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */,
@@ -511,6 +544,7 @@
 			files = (
 				8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */,
 				75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */,
+				797EEEF5E4C611DE7FE5E90C /* AppStoreReviewLinks.swift in Sources */,
 				3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */,
 				F20C4780AF8C9986003EE891 /* DiagnosticsService.swift in Sources */,
 				D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */,
@@ -531,6 +565,8 @@
 				991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */,
 				4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */,
 				22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */,
+				0C50968E42448580FC0564CF /* ReviewPromptSheet.swift in Sources */,
+				50B7C83B435EB3DF0A133D8E /* ReviewPromptTracker.swift in Sources */,
 				8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */,
 				954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */,
 				33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */,
