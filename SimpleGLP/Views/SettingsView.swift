@@ -53,6 +53,12 @@ struct SettingsView: View {
                 }
             }
 
+            Section("Help") {
+                Button("Rate or Send Feedback") {
+                    ReviewPromptCoordinator.shared.requestEnjoymentPrompt()
+                }
+            }
+
             Section("About") {
                 Text("Simple GLP does not provide medical advice. Always follow your prescriber’s instructions.")
                     .font(.caption)
@@ -418,6 +424,8 @@ struct ExportView: View {
         do {
             fileURL = try ExportService.exportEvents(from: modelContext)
             errorMessage = nil
+            ReviewPromptTracker.recordPositiveMoment()
+            NotificationCenter.default.post(name: .glpPositiveMomentForReview, object: nil)
         } catch {
             errorMessage = "Could not generate export: \(error.localizedDescription)"
         }

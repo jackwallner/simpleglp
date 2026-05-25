@@ -1,7 +1,1 @@
-Initial release.
 
-- One-tap shot logging from iPhone, Home Screen widget, and Apple Watch
-- Weekly schedule with early/on-time/late detection
-- Optional read-only HealthKit context
-- Local history with import/export
-- Simple GLP Pro: pattern-based proactive alerts

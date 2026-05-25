@@ -113,6 +113,9 @@ final class ShotCaptureCoordinator: ObservableObject {
             return false
         }
 
+        ReviewPromptTracker.recordPositiveMoment()
+        NotificationCenter.default.post(name: .glpPositiveMomentForReview, object: nil)
+
         showUndoOption = true
 
         RecentShotsStore.record(

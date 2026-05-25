@@ -1,1 +1,1 @@
-shot,injection,semaglutide,tirzepatide,ozempic,wegovy,mounjaro,zepbound,weight,health,reminder,dose
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,peptide,reminder,injection,private,dose

@@ -1,10 +1,1 @@
-Simple GLP is a private, on-device GLP-1 shot tracker. No account required — the app launches straight into onboarding.
 
-Testing the core flow:
-1. Open the app, accept onboarding (HealthKit prompt is optional and may be declined).
-2. Tap the large shot button on the Home tab to log a shot. A toast confirms with an Undo action.
-3. The Home Screen widget and Apple Watch app provide the same one-tap log via App Intents and WatchConnectivity.
-
-Simple GLP Pro is an auto-renewing subscription that unlocks proactive pattern alerts. It is not required to use the app.
-
-The app does not provide medical advice or dosing instructions. The "GLP-1" terminology refers to a category of medications the user is prescribed; the app only records timestamps and user-entered context.
