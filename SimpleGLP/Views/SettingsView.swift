@@ -229,7 +229,7 @@ struct DoseScheduleView: View {
     var body: some View {
         List {
             Section {
-                Text("Schedule your titration in advance. On each step's start date, new shots automatically use that dose — so you don't have to remember to change it.")
+                Text("Schedule your titration in advance. On each step's start date, new shots automatically use that dose, so you don't have to remember to change it.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -441,7 +441,7 @@ struct ImportView: View {
     var body: some View {
         Form {
             Section {
-                Text("Import a Simple GLP CSV export to restore your shot history. Imported shots are added — they don't replace existing entries.")
+                Text("Import a Simple GLP CSV export to restore your shot history. Imported shots are added; they don't replace existing entries.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }

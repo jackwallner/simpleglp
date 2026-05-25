@@ -17,16 +17,27 @@ struct OnboardingView: View {
     @State private var reminderLeadMinutes = 0
     @State private var enableHealth = true
 
+    private static let totalSteps = 5
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 0) {
                 progressBar
-                Spacer().frame(height: 24)
-                contentView
-                Spacer()
+                    .padding(.horizontal, 24)
+                    .padding(.top, 8)
+                    .padding(.bottom, 20)
+
+                ScrollView(showsIndicators: false) {
+                    contentView
+                        .padding(.horizontal, 24)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+
                 bottomBar
+                    .padding(.horizontal, 24)
+                    .padding(.top, 12)
+                    .padding(.bottom, 20)
             }
-            .padding(.horizontal, 24)
             .background(AppTheme.bg.ignoresSafeArea())
             .navigationTitle("Simple GLP")
             .navigationBarTitleDisplayMode(.inline)
@@ -34,11 +45,11 @@ struct OnboardingView: View {
     }
 
     private var progressBar: some View {
-        HStack(spacing: 4) {
-            ForEach(0..<5) { i in
-                RoundedRectangle(cornerRadius: 2)
-                    .fill(i <= step ? AppTheme.brand : Color(.systemGray5))
-                    .frame(height: 4)
+        HStack(spacing: 6) {
+            ForEach(0..<Self.totalSteps, id: \.self) { i in
+                Capsule()
+                    .fill(i <= step ? AppTheme.brand : AppTheme.surfaceStroke.opacity(0.5))
+                    .frame(height: 6)
             }
         }
     }
@@ -59,30 +70,58 @@ struct OnboardingView: View {
         }
     }
 
-    private var welcomeStep: some View {
+    private func stepHeader(icon: String, iconColor: Color, title: String, subtitle: String?) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("One big button.")
-                .font(.largeTitle.weight(.bold))
+            ZStack {
+                Circle()
+                    .fill(iconColor.opacity(0.15))
+                    .frame(width: 76, height: 76)
+                Image(systemName: icon)
+                    .font(.system(size: 36, weight: .bold))
+                    .foregroundStyle(iconColor)
+            }
+            Text(title)
+                .font(.system(size: 32, weight: .bold))
                 .foregroundStyle(AppTheme.text)
-            Text("Tap it when you take your shot. That’s it.")
-                .font(.title3)
-                .foregroundStyle(AppTheme.text)
+                .fixedSize(horizontal: false, vertical: true)
+            if let subtitle {
+                Text(subtitle)
+                    .font(.title3)
+                    .foregroundStyle(AppTheme.muted)
+                    .lineSpacing(4)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+    }
+
+    private var welcomeStep: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            stepHeader(
+                icon: "syringe.fill",
+                iconColor: AppTheme.brand,
+                title: "One big button.",
+                subtitle: "Tap it when you take your shot. That's it."
+            )
             Text("Optional details, history, and reminders are there if you want them.")
                 .font(.body)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.muted)
                 .lineSpacing(4)
                 .fixedSize(horizontal: false, vertical: true)
-            Spacer()
         }
     }
 
     private var medicationStep: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("What are you taking?")
-                .font(.title2.weight(.semibold))
-            VStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 24) {
+            stepHeader(
+                icon: "pills.fill",
+                iconColor: AppTheme.brand,
+                title: "What are you taking?",
+                subtitle: "Pick your medication and current dose."
+            )
+            VStack(spacing: 14) {
                 HStack {
                     Text("Medication")
+                        .font(.body)
                     Spacer()
                     Picker("Medication", selection: $medication) {
                         ForEach(GLPMedication.allCases) { med in
@@ -107,9 +146,8 @@ struct OnboardingView: View {
                 }
                 doseField
             }
-            .padding(16)
-            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            Spacer()
+            .padding(18)
+            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
     }
 
@@ -119,6 +157,7 @@ struct OnboardingView: View {
         if !presets.isEmpty && !useCustomDose {
             HStack {
                 Text("Current dose")
+                    .font(.body)
                 Spacer()
                 Picker("Current dose", selection: $doseMg) {
                     ForEach(presets, id: \.self) { value in
@@ -133,6 +172,7 @@ struct OnboardingView: View {
         } else {
             HStack {
                 Text("Current dose (mg)")
+                    .font(.body)
                 Spacer()
                 TextField("0.25", value: $doseMg, format: .number)
                     .keyboardType(.decimalPad)
@@ -159,12 +199,17 @@ struct OnboardingView: View {
     }
 
     private var scheduleStep: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("When is your shot day?")
-                .font(.title2.weight(.semibold))
-            VStack(alignment: .leading, spacing: 16) {
+        VStack(alignment: .leading, spacing: 24) {
+            stepHeader(
+                icon: "calendar",
+                iconColor: AppTheme.calm,
+                title: "When is your shot day?",
+                subtitle: "We'll line up your weekly rhythm from here."
+            )
+            VStack(alignment: .leading, spacing: 18) {
                 DatePicker("Start date", selection: $startDate, displayedComponents: .date)
-                VStack(alignment: .leading, spacing: 8) {
+                    .font(.body)
+                VStack(alignment: .leading, spacing: 10) {
                     Text("Day of week")
                         .foregroundStyle(.secondary)
                         .font(.subheadline)
@@ -180,10 +225,10 @@ struct OnboardingView: View {
                     selection: timeOfDay,
                     displayedComponents: .hourAndMinute
                 )
+                .font(.body)
             }
-            .padding(16)
-            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            Spacer()
+            .padding(18)
+            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
     }
 
@@ -201,16 +246,22 @@ struct OnboardingView: View {
     }
 
     private var reminderStep: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Reminders")
-                .font(.title2.weight(.semibold))
-            VStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 24) {
+            stepHeader(
+                icon: "bell.fill",
+                iconColor: AppTheme.warm,
+                title: "Reminders",
+                subtitle: "A gentle nudge so a busy week doesn't push your shot."
+            )
+            VStack(spacing: 14) {
                 Toggle("Remind me on shot day", isOn: $reminderEnabled)
+                    .font(.body)
                 if reminderEnabled {
                     Divider()
                     Stepper(value: $reminderLeadMinutes, in: 0...180, step: 15) {
                         HStack {
                             Text("Lead time")
+                                .font(.body)
                             Spacer()
                             Text("\(reminderLeadMinutes) min before")
                                 .foregroundStyle(.secondary)
@@ -218,48 +269,60 @@ struct OnboardingView: View {
                     }
                 }
             }
-            .padding(16)
-            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            Spacer()
+            .padding(18)
+            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
     }
 
     private var healthStep: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            Text("Health context")
-                .font(.title2.weight(.semibold))
-            VStack(alignment: .leading, spacing: 12) {
+        VStack(alignment: .leading, spacing: 24) {
+            stepHeader(
+                icon: "heart.text.square.fill",
+                iconColor: .pink,
+                title: "Health context",
+                subtitle: "See how each dose lands against your real data."
+            )
+            VStack(alignment: .leading, spacing: 14) {
                 Toggle("Auto-capture Health context", isOn: $enableHealth)
+                    .font(.body)
                 Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a shot. You can change this later in Settings.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(16)
-            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-            Spacer()
+            .padding(18)
+            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
     }
 
     private var bottomBar: some View {
-        HStack {
+        VStack(spacing: 10) {
+            Button(action: handlePrimary) {
+                Text(step == Self.totalSteps - 1 ? "Finish" : "Continue")
+                    .font(.headline.weight(.bold))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(AppTheme.brand, in: Capsule())
+                    .shadow(color: AppTheme.brand.opacity(0.3), radius: 12, x: 0, y: 6)
+            }
+            .buttonStyle(.plain)
+
             if step > 0 {
                 Button("Back") { step -= 1 }
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(AppTheme.muted)
                     .buttonStyle(.plain)
-                    .foregroundStyle(.secondary)
             }
-            Spacer()
-            Button(step == 4 ? "Finish" : "Next") {
-                if step == 4 {
-                    finishOnboarding()
-                } else {
-                    step += 1
-                }
-            }
-            .buttonStyle(.borderedProminent)
-            .tint(AppTheme.brand)
         }
-        .padding(.vertical, 12)
+    }
+
+    private func handlePrimary() {
+        if step == Self.totalSteps - 1 {
+            finishOnboarding()
+        } else {
+            step += 1
+        }
     }
 
     private func finishOnboarding() {

@@ -130,7 +130,7 @@ struct ReviewPromptSheet: View {
 
     private var reviewPitchContent: some View {
         VStack(spacing: 18) {
-            Text("Simple GLP is built by one indie developer — no ads, no accounts, and your shot history stays on your device.")
+            Text("Simple GLP is built by one indie developer. No ads, no accounts, and your shot history stays on your device.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
@@ -180,7 +180,7 @@ struct ReviewPromptSheet: View {
                 .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 12))
                 .focused($feedbackFocused)
 
-            Text("Opens your mail app with a draft to the developer. No analytics — just your words.")
+            Text("Opens your mail app with a draft to the developer. No analytics, just your words.")
                 .font(.caption)
                 .foregroundStyle(AppTheme.muted)
 
