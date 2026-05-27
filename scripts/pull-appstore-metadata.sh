@@ -41,17 +41,19 @@ key_id, issuer_id, p8, out = sys.argv[1:5]
 json.dump({"key_id": key_id, "issuer_id": issuer_id, "key": p8, "in_house": False}, open(out, "w"))
 PY
 
-# deliver defaults to MARKETING_VERSION from Xcode (1.0.0); ASC uses 1.0 for this app.
 DELIVER_EXTRA=()
-if grep -q 'com.jackwallner.glp' fastlane/Appfile 2>/dev/null; then
-  DELIVER_EXTRA=(--app_version "1.0")
+if [[ -n "${ASC_APP_VERSION:-}" ]]; then
+  DELIVER_EXTRA+=(--app_version "$ASC_APP_VERSION")
 fi
 
-if command -v fastlane >/dev/null; then
-  exec fastlane deliver download_metadata \
+FL="$(dirname "$0")/fastlane-bin.sh"
+chmod +x "$FL"
+if [[ -x "$FL" ]] || command -v fastlane >/dev/null; then
+  exec "$FL" deliver download_metadata \
     --api_key_path "$TMPKEY" \
     --metadata_path ./fastlane/metadata \
     --force true \
+    --skip_screenshots true \
     "${DELIVER_EXTRA[@]}" \
     "$@"
 else

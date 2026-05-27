@@ -1,0 +1,34 @@
+{
+  "scannedAt": "2026-05-26T02:17:29Z",
+  "stores": {
+    "us": {
+      "term": "glp-1 tracker",
+      "error": "unhashable type: 'slice'"
+    },
+    "gb": {
+      "term": "glp-1 tracker",
+      "error": "unhashable type: 'slice'"
+    },
+    "de": {
+      "term": "glp-1 tracker",
+      "error": "unhashable type: 'slice'"
+    },
+    "fr": {
+      "term": "suivi glp-1",
+      "competitors": []
+    },
+    "es": {
+      "term": "registro glp-1",
+      "error": "unhashable type: 'slice'"
+    },
+    "jp": {
+      "term": "glp-1 記録",
+      "error": "unhashable type: 'slice'"
+    },
+    "br": {
+      "term": "rastreador glp-1",
+      "error": "unhashable type: 'slice'"
+    }
+  },
+  "note": "tier1 quick scan"
+}

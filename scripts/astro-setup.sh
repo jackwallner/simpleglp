@@ -44,12 +44,9 @@ for f in "$META_DIR/name.txt" fastlane/Appfile; do
 done
 
 BUNDLE_ID="$(grep -E '^app_identifier' fastlane/Appfile | head -1 | sed 's/.*"\(.*\)".*/\1/')"
-ASC_NAME="$(tr -d '\n' < "$META_DIR/name.txt")"
-# Prelaunch: Astro temporary app may use a short name (e.g. SimpleGLP) vs ASC display name.
-APP_NAME="${ASTRO_APP_NAME:-$ASC_NAME}"
+APP_NAME="$(tr -d '\n' < "$META_DIR/name.txt")"
 
-echo "==> ASC name: $ASC_NAME"
-echo "    Astro name: $APP_NAME"
+echo "==> App: $APP_NAME"
 echo "    Bundle: $BUNDLE_ID"
 echo "    Store:  $STORE"
 

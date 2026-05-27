@@ -84,6 +84,26 @@ def add_keywords(
     return {"batches": results}
 
 
+def remove_keywords(
+    mcp_url: str,
+    app_id: str,
+    store: str,
+    keywords: list[str],
+) -> dict[str, Any]:
+    results: list[Any] = []
+    for i in range(0, len(keywords), 100):
+        batch = keywords[i : i + 100]
+        results.append(
+            call(
+                mcp_url,
+                "remove_keywords",
+                {"appId": app_id, "store": store, "keywords": batch},
+                req_id=200 + i,
+            )
+        )
+    return {"batches": results}
+
+
 def ensure_tag(mcp_url: str, name: str, color: str) -> None:
     try:
         call(mcp_url, "manage_tag", {"action": "create", "name": name, "color": color})
