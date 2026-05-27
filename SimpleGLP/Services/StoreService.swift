@@ -124,8 +124,16 @@ extension Offering {
 }
 
 extension Offerings {
+    /// Try `default` (our RC-dashboard key), then `current`, then any offering that actually
+    /// has packages attached. This rescues installs from a mis-configured offering identifier.
     var glpProPaywallOffering: Offering? {
-        offering(identifier: "default") ?? current
+        if let named = offering(identifier: "default"), !named.availablePackages.isEmpty {
+            return named
+        }
+        if let current, !current.availablePackages.isEmpty {
+            return current
+        }
+        return all.values.first { !$0.availablePackages.isEmpty }
     }
 }
 
@@ -145,6 +153,15 @@ final class StoreService: NSObject, ObservableObject {
     var monthlyPackage: Package? { products.first { $0.glpProPackageKind == .monthly } }
     var yearlyPackage: Package? { products.first { $0.glpProPackageKind == .yearly } }
     var lifetimePackage: Package? { products.first { $0.glpProPackageKind == .lifetime } }
+
+    /// True when Pro is from a recurring subscription (not lifetime).
+    var hasSubscription: Bool {
+        guard let info = customerInfo else { return false }
+        return info.entitlements.active.values.contains { entitlement in
+            let id = entitlement.productIdentifier
+            return id == GLPProProduct.yearly || id == GLPProProduct.monthly
+        }
+    }
 
     private let logger = Logger(subsystem: "com.jackwallner.glp", category: "Store")
     private var isConfigured = false
@@ -166,12 +183,27 @@ final class StoreService: NSObject, ObservableObject {
             let offerings = try await Purchases.shared.offerings()
             let offering = offerings.glpProPaywallOffering
             currentOffering = offering
-            products = offering?.glpProSortedPackages ?? []
-            lastError = nil
+            let packages = offering?.glpProSortedPackages ?? []
+            products = packages
+            if packages.isEmpty {
+                let availableCount = offerings.all.count
+                logger.error("Offerings returned no packages. offerings.all.count=\(availableCount, privacy: .public) current=\(offerings.current?.identifier ?? "nil", privacy: .public)")
+                #if DEBUG
+                lastError = "Offerings loaded but no packages attached (count=\(availableCount)). Check RevenueCat dashboard."
+                #else
+                lastError = "Purchase options aren't available right now. Please try again shortly."
+                #endif
+            } else {
+                lastError = nil
+            }
             await refreshIntroEligibility()
         } catch {
             logger.error("Product fetch failed: \(String(describing: error), privacy: .public)")
+            #if DEBUG
+            lastError = "Offerings fetch failed: \(error.localizedDescription)"
+            #else
             lastError = "Couldn't load purchase options. Check your connection and try again."
+            #endif
         }
     }
 

@@ -1,5 +1,7 @@
+import StoreKit
 import SwiftData
 import SwiftUI
+import UIKit
 import UniformTypeIdentifiers
 
 struct SettingsView: View {
@@ -39,6 +41,11 @@ struct SettingsView: View {
                 } else {
                     Button("Upgrade to Pro") { showPaywall = true }
                 }
+                if store.isProUnlocked && store.hasSubscription {
+                    Button("Manage subscription") {
+                        Task { await openManageSubscriptions() }
+                    }
+                }
                 Button("Restore purchases") {
                     Task { await store.restorePurchases() }
                 }
@@ -57,6 +64,9 @@ struct SettingsView: View {
                 Button("Rate or Send Feedback") {
                     ReviewPromptCoordinator.shared.requestEnjoymentPrompt()
                 }
+                Link("Support", destination: PaywallLinks.support)
+                Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
+                Link("Terms of Use", destination: PaywallLinks.termsOfUse)
             }
 
             Section("About") {
@@ -75,6 +85,15 @@ struct SettingsView: View {
         .sheet(isPresented: $showProAlerts) {
             ProAlertsConfigView()
         }
+    }
+
+    private func openManageSubscriptions() async {
+        guard let scene = UIApplication.shared.connectedScenes
+            .compactMap({ $0 as? UIWindowScene })
+            .first(where: { $0.activationState == .foregroundActive })
+            ?? UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first
+        else { return }
+        try? await AppStore.showManageSubscriptions(in: scene)
     }
 }
 
