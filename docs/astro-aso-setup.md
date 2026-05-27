@@ -2,7 +2,9 @@
 
 > **Repeat this setup:** follow [`astro-setup-process.md`](astro-setup-process.md) and say **"go"**.
 
-Last synced: **2026-05-25** (ASC pull + Astro keyword research on **SimpleGLP**)
+Last synced: **2026-05-26** (50-locale **native** metadata + ASC draft upload)
+
+**Localization:** [`localization-aso.md`](localization-aso.md) · [`astro-phase-b-report.md`](astro-phase-b-report.md)
 
 **Strategy doc:** [`aso-keyword-strategy.md`](aso-keyword-strategy.md) — attack/siege mix, ASC copy, screenshots.
 
@@ -60,7 +62,9 @@ During automated setup, extra temporary apps may have been created while matchin
 - **Easy GLP - Simple GLP1 Tracker** (app `109`) — duplicate; safe to delete if you only use **SimpleGLP**
 - **Temporary App 110** — stray duplicate from MCP tests
 
-Astro MCP has no delete-keyword / delete-app tool — remove in the Astro app.
+**Prune pass (2026-05-26):** If US still shows junk (`health app`, `weight loss tracker`, `headache tracker`, `calorie counter`), delete manually in Astro — MCP `remove_keywords` returned HTTP 500 for US batch.
+
+Astro MCP has no delete-app tool — remove stray apps in the Astro app.
 
 ## When the app goes live
 
