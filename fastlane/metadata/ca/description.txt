@@ -1,0 +1,19 @@
+Simple GLP és la manera més ràpida de registrar una injecció setmanal de GLP-1 — per a qui vol capturar el moment sense convertir el tractament en un full de càlcul.
+
+UN TOQUE PER REGISTRAR
+Obre l'app, toca el widget de la pantalla d'inici o aixeca el canell amb l'Apple Watch. La injecció queda registrada a l'instant. Afegeix dosi, lloc, notes i símptomes després si vols.
+
+UN HORARI QUE CONEIX LA TEVA SETMANA
+Configura medicació, pla de dosi, dia i hora. Simple GLP detecta si cada injecció va ser avançada, a punt o tard i et recorda la següent.
+
+CONTEXT HEALTHKIT (OPCIONAL)
+Amb el teu permís, Simple GLP pot adjuntar context d'Apple Health — pes, glucosa, activitat, son, freqüència cardíaca, entrenaments, aigua, cafeïna, calories i proteïna. Només lectura.
+
+PRIVACITAT
+Sense comptes. Sense anuncis. Sense analítica. Sense venda de dades. L'historial roman al dispositiu, compartit entre app, widget i rellotge.
+
+SIMPLE GLP PRO (OPCIONAL)
+Pro afegeix alertes proactives si l'horari es desvia. Subscripció a l'app. Cancel·la a Configuració.
+
+NO ÉS UN DISPOSITIU MÈDIC
+Simple GLP no ofereix consell mèdic, instruccions de dosi, diagnòstic ni recomanacions de tractament. Segueix sempre el teu prescriptor.
