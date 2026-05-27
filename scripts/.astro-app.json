@@ -4,8 +4,11 @@
   "ascName": "Easy GLP - Simple GLP1 Tracker",
   "bundleId": "com.jackwallner.glp",
   "store": "us",
-  "syncedAt": "2026-05-25T16:30:00Z",
+  "syncedAt": "2026-05-26T16:13:26Z",
   "keywordCount": 116,
   "strategyDoc": "docs/aso-keyword-strategy.md",
-  "note": "Temporary prelaunch app; swap appId for public trackId when live"
+  "note": "Temporary prelaunch app; swap appId for public trackId when live",
+  "allAstroStores": [
+    "pk"
+  ]
 }

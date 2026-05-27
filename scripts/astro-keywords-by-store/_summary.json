@@ -1,0 +1,679 @@
+{
+  "syncedAt": "2026-05-26T16:21:54Z",
+  "appId": "105",
+  "storeCount": 91,
+  "stores": {
+    "us": {
+      "keywordCount": 45,
+      "locales": [
+        "en-US"
+      ]
+    },
+    "ca": {
+      "keywordCount": 37,
+      "locales": [
+        "en-CA",
+        "fr-CA",
+        "en-US"
+      ]
+    },
+    "mx": {
+      "keywordCount": 38,
+      "locales": [
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "br": {
+      "keywordCount": 38,
+      "locales": [
+        "pt-BR",
+        "en-US"
+      ]
+    },
+    "ar": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "bo": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "cl": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "co": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "cr": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "do": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "ec": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "sv": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "gt": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "hn": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "pa": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "py": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "pe": {
+      "keywordCount": 40,
+      "locales": [
+        "es-ES",
+        "es-MX",
+        "en-US"
+      ]
+    },
+    "gb": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "de": {
+      "keywordCount": 41,
+      "locales": [
+        "de-DE",
+        "en-US"
+      ]
+    },
+    "fr": {
+      "keywordCount": 38,
+      "locales": [
+        "fr-FR",
+        "en-US"
+      ]
+    },
+    "es": {
+      "keywordCount": 45,
+      "locales": [
+        "es-ES",
+        "ca",
+        "en-US"
+      ]
+    },
+    "it": {
+      "keywordCount": 35,
+      "locales": [
+        "it",
+        "en-US"
+      ]
+    },
+    "nl": {
+      "keywordCount": 36,
+      "locales": [
+        "nl-NL",
+        "en-US"
+      ]
+    },
+    "at": {
+      "keywordCount": 41,
+      "locales": [
+        "de-DE",
+        "en-US"
+      ]
+    },
+    "be": {
+      "keywordCount": 45,
+      "locales": [
+        "fr-FR",
+        "nl-NL",
+        "de-DE",
+        "en-US"
+      ]
+    },
+    "ch": {
+      "keywordCount": 45,
+      "locales": [
+        "de-DE",
+        "fr-FR",
+        "it",
+        "en-US"
+      ]
+    },
+    "se": {
+      "keywordCount": 39,
+      "locales": [
+        "sv",
+        "en-US"
+      ]
+    },
+    "no": {
+      "keywordCount": 38,
+      "locales": [
+        "no",
+        "en-US"
+      ]
+    },
+    "dk": {
+      "keywordCount": 37,
+      "locales": [
+        "da",
+        "en-US"
+      ]
+    },
+    "fi": {
+      "keywordCount": 38,
+      "locales": [
+        "fi",
+        "en-US"
+      ]
+    },
+    "pl": {
+      "keywordCount": 39,
+      "locales": [
+        "pl",
+        "en-US"
+      ]
+    },
+    "pt": {
+      "keywordCount": 38,
+      "locales": [
+        "pt-PT",
+        "en-US"
+      ]
+    },
+    "ie": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "ru": {
+      "keywordCount": 40,
+      "locales": [
+        "ru",
+        "en-US"
+      ]
+    },
+    "ua": {
+      "keywordCount": 45,
+      "locales": [
+        "uk",
+        "ru",
+        "en-US"
+      ]
+    },
+    "cz": {
+      "keywordCount": 40,
+      "locales": [
+        "cs",
+        "en-US"
+      ]
+    },
+    "sk": {
+      "keywordCount": 45,
+      "locales": [
+        "sk",
+        "cs",
+        "en-US"
+      ]
+    },
+    "hu": {
+      "keywordCount": 38,
+      "locales": [
+        "hu",
+        "en-US"
+      ]
+    },
+    "ro": {
+      "keywordCount": 39,
+      "locales": [
+        "ro",
+        "en-US"
+      ]
+    },
+    "gr": {
+      "keywordCount": 39,
+      "locales": [
+        "el",
+        "en-US"
+      ]
+    },
+    "hr": {
+      "keywordCount": 40,
+      "locales": [
+        "hr",
+        "en-US"
+      ]
+    },
+    "bg": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "si": {
+      "keywordCount": 45,
+      "locales": [
+        "hr",
+        "it",
+        "en-US"
+      ]
+    },
+    "ee": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "lv": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "lu": {
+      "keywordCount": 45,
+      "locales": [
+        "fr-FR",
+        "de-DE",
+        "en-US"
+      ]
+    },
+    "is": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "cy": {
+      "keywordCount": 39,
+      "locales": [
+        "el",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "tr": {
+      "keywordCount": 38,
+      "locales": [
+        "tr",
+        "en-US"
+      ]
+    },
+    "az": {
+      "keywordCount": 45,
+      "locales": [
+        "tr",
+        "ru",
+        "en-US"
+      ]
+    },
+    "kz": {
+      "keywordCount": 40,
+      "locales": [
+        "ru",
+        "en-US"
+      ]
+    },
+    "kg": {
+      "keywordCount": 40,
+      "locales": [
+        "ru",
+        "en-US"
+      ]
+    },
+    "uz": {
+      "keywordCount": 40,
+      "locales": [
+        "ru",
+        "en-US"
+      ]
+    },
+    "al": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "au": {
+      "keywordCount": 27,
+      "locales": [
+        "en-AU",
+        "en-US"
+      ]
+    },
+    "nz": {
+      "keywordCount": 27,
+      "locales": [
+        "en-AU",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "jp": {
+      "keywordCount": 41,
+      "locales": [
+        "ja",
+        "en-US"
+      ]
+    },
+    "kr": {
+      "keywordCount": 41,
+      "locales": [
+        "ko",
+        "en-US"
+      ]
+    },
+    "cn": {
+      "keywordCount": 41,
+      "locales": [
+        "zh-Hans",
+        "en-US"
+      ]
+    },
+    "hk": {
+      "keywordCount": 41,
+      "locales": [
+        "zh-Hant",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "tw": {
+      "keywordCount": 41,
+      "locales": [
+        "zh-Hant",
+        "en-US"
+      ]
+    },
+    "mo": {
+      "keywordCount": 41,
+      "locales": [
+        "zh-Hant",
+        "en-US"
+      ]
+    },
+    "sg": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "my": {
+      "keywordCount": 38,
+      "locales": [
+        "ms",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "th": {
+      "keywordCount": 36,
+      "locales": [
+        "th",
+        "en-US"
+      ]
+    },
+    "vn": {
+      "keywordCount": 38,
+      "locales": [
+        "vi",
+        "en-US"
+      ]
+    },
+    "id": {
+      "keywordCount": 38,
+      "locales": [
+        "id",
+        "en-US"
+      ]
+    },
+    "ph": {
+      "keywordCount": 27,
+      "locales": [
+        "en-US",
+        "en-GB"
+      ]
+    },
+    "in": {
+      "keywordCount": 35,
+      "locales": [
+        "hi",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "kh": {
+      "keywordCount": 36,
+      "locales": [
+        "en-US",
+        "th"
+      ]
+    },
+    "mn": {
+      "keywordCount": 27,
+      "locales": [
+        "en-US"
+      ]
+    },
+    "np": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "lk": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "sa": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "ae": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "eg": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "il": {
+      "keywordCount": 40,
+      "locales": [
+        "he",
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "jo": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "kw": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "lb": {
+      "keywordCount": 45,
+      "locales": [
+        "ar-SA",
+        "fr-FR",
+        "en-US"
+      ]
+    },
+    "om": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "qa": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "bh": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "iq": {
+      "keywordCount": 41,
+      "locales": [
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "ma": {
+      "keywordCount": 45,
+      "locales": [
+        "fr-FR",
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "dz": {
+      "keywordCount": 45,
+      "locales": [
+        "fr-FR",
+        "ar-SA",
+        "en-US"
+      ]
+    },
+    "gh": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "ke": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "za": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "pk": {
+      "keywordCount": 27,
+      "locales": [
+        "en-GB",
+        "en-US"
+      ]
+    },
+    "am": {
+      "keywordCount": 40,
+      "locales": [
+        "ru",
+        "en-GB",
+        "en-US"
+      ]
+    }
+  },
+  "missing": []
+}
