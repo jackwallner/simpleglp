@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0AAF01DFEED9B922085DF7D0 /* EditEventSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EFA633DF7EE0F692370926 /* EditEventSheet.swift */; };
 		0C50968E42448580FC0564CF /* ReviewPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277F143457A552933D07C4FB /* ReviewPromptSheet.swift */; };
 		0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423148D3B21BF730934FCC05 /* ImportService.swift */; };
 		1062CD6D096B5D82A413377F /* SimpleGLPWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -51,7 +52,6 @@
 		A6D6B2A9F6E579C00836D706 /* LogShotIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26137BA20E643D043938541 /* LogShotIntent.swift */; };
 		AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */; };
 		B765FE4D49B6CD1835A785FB /* ProAlertPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */; };
-		B96AA1A3092E0EFF473AEFC9 /* LogHubView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE8B24B5C3201692DE399FAD /* LogHubView.swift */; };
 		BCCF302932E3459DF0010239 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */; };
 		C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */; };
 		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
@@ -129,6 +129,7 @@
 		28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2982A1D0CD628DDEBED03EBB /* SimpleGLPWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWatch.entitlements; sourceTree = "<group>"; };
 		31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertPreferences.swift; sourceTree = "<group>"; };
+		35EFA633DF7EE0F692370926 /* EditEventSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventSheet.swift; sourceTree = "<group>"; };
 		387787E8879F0FAF2CF2AAD4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		397B9E408E138DCFE4202926 /* SharedViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedViews.swift; sourceTree = "<group>"; };
 		3E7D005F349F97C0D11B64C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -155,7 +156,6 @@
 		A971E826B1D07DAAEBB0A89D /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentShotsStore.swift; sourceTree = "<group>"; };
 		ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWatchApp.swift; sourceTree = "<group>"; };
-		AE8B24B5C3201692DE399FAD /* LogHubView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogHubView.swift; sourceTree = "<group>"; };
 		B45946CD3F5007081C43A4A8 /* AppAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppAppearance.swift; sourceTree = "<group>"; };
 		B9237CCE5AC5A79262C60E27 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BDB19EDB4D888D537799BF2B /* PlanStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanStore.swift; sourceTree = "<group>"; };
@@ -328,10 +328,10 @@
 		D5FE7F599B2748A59E0E825B /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				35EFA633DF7EE0F692370926 /* EditEventSheet.swift */,
 				4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */,
 				CEB2CBF9F536FFD8DF927366 /* HomeView.swift */,
 				9CACE598976ED5713C9175CC /* InsightsView.swift */,
-				AE8B24B5C3201692DE399FAD /* LogHubView.swift */,
 				28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */,
 				5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */,
 				277F143457A552933D07C4FB /* ReviewPromptSheet.swift */,
@@ -547,6 +547,7 @@
 				797EEEF5E4C611DE7FE5E90C /* AppStoreReviewLinks.swift in Sources */,
 				3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */,
 				F20C4780AF8C9986003EE891 /* DiagnosticsService.swift in Sources */,
+				0AAF01DFEED9B922085DF7D0 /* EditEventSheet.swift in Sources */,
 				D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */,
 				54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */,
 				911A7CEBC2DDC9A040D743E5 /* GLPModelStore.swift in Sources */,
@@ -556,7 +557,6 @@
 				581A969FA5943DB620BF86DF /* HomeView.swift in Sources */,
 				0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */,
 				766BA777284D5C9A638DC548 /* InsightsView.swift in Sources */,
-				B96AA1A3092E0EFF473AEFC9 /* LogHubView.swift in Sources */,
 				7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */,
 				EA96773E480A686C74C0E88E /* PhoneWatchSession.swift in Sources */,
 				32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */,
@@ -642,7 +642,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -703,7 +703,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

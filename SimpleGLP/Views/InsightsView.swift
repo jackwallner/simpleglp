@@ -22,26 +22,21 @@ struct InsightsView: View {
                     timingCard
                 }
 
-                if !store.isProUnlocked {
-                    Card {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text("Go Pro")
-                                .font(.headline)
-                            Text("Unlock pattern alerts and deeper schedule insights.")
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                            Button("Upgrade") { showPaywall = true }
-                                .buttonStyle(.borderedProminent)
-                                .tint(AppTheme.brand)
-                        }
-                    }
-                    .padding(.horizontal)
-                } else {
+                if store.isProUnlocked {
                     NavigationLink(destination: ProAlertsConfigView()) {
                         Card {
-                            HStack {
-                                Text("Proactive Alerts")
-                                    .font(.headline)
+                            HStack(spacing: 12) {
+                                Image(systemName: "bell.badge.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(AppTheme.brand)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Proactive Alerts")
+                                        .font(.headline)
+                                        .foregroundStyle(AppTheme.text)
+                                    Text("Pattern detection and dose-day nudges.")
+                                        .font(.caption)
+                                        .foregroundStyle(AppTheme.muted)
+                                }
                                 Spacer()
                                 Image(systemName: "chevron.right")
                                     .foregroundStyle(.secondary)
@@ -50,6 +45,9 @@ struct InsightsView: View {
                         .padding(.horizontal)
                     }
                     .buttonStyle(.plain)
+                } else {
+                    proLockedSection
+                        .padding(.horizontal)
                 }
 
                 Spacer(minLength: 40)
@@ -101,5 +99,121 @@ struct InsightsView: View {
             }
         }
         .padding(.horizontal)
+    }
+
+    private var proLockedSection: some View {
+        ZStack {
+            VStack(spacing: 14) {
+                ProLockedPreviewCard(
+                    icon: "bell.badge.fill",
+                    title: "Proactive Alerts",
+                    headline: "Dose day in 2 days",
+                    detail: "Quiet hours respected. Your usual Tuesday window is 8:00–10:00 AM."
+                )
+                ProLockedPreviewCard(
+                    icon: "waveform.path.ecg",
+                    title: "Pattern detection",
+                    headline: "Drift detected: +6 hrs over 3 weeks",
+                    detail: "Shots are creeping later in the day. A reset nudge can pull your window back in line."
+                )
+                ProLockedPreviewCard(
+                    icon: "calendar.badge.clock",
+                    title: "Smart timing",
+                    headline: "Best next dose: Tue 8:42 AM",
+                    detail: "Based on your last 12 shots, mornings yield your most consistent rhythm."
+                )
+            }
+            .blur(radius: 9)
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
+
+            unlockOverlay
+        }
+        .contentShape(Rectangle())
+        .onTapGesture { showPaywall = true }
+    }
+
+    private var unlockOverlay: some View {
+        VStack(spacing: 10) {
+            ZStack {
+                Circle()
+                    .fill(AppTheme.brand)
+                    .frame(width: 48, height: 48)
+                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 12, x: 0, y: 5)
+                Image(systemName: "lock.fill")
+                    .font(.system(size: 20, weight: .bold))
+                    .foregroundStyle(.white)
+            }
+            Text("Unlock with Pro")
+                .font(.headline.weight(.bold))
+                .foregroundStyle(AppTheme.text)
+            Text("See patterns, get nudges, and stay on track on autopilot.")
+                .font(.footnote)
+                .foregroundStyle(AppTheme.muted)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 24)
+            Button {
+                showPaywall = true
+            } label: {
+                Text("See Plans")
+                    .font(.subheadline.weight(.bold))
+                    .foregroundStyle(.white)
+                    .padding(.horizontal, 24)
+                    .padding(.vertical, 12)
+                    .background(AppTheme.brand, in: Capsule())
+                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
+            }
+            .buttonStyle(.plain)
+            .padding(.top, 4)
+        }
+        .padding(.vertical, 18)
+        .padding(.horizontal, 18)
+        .background(
+            RoundedRectangle(cornerRadius: 24, style: .continuous)
+                .fill(.ultraThinMaterial)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 24, style: .continuous)
+                        .strokeBorder(AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
+                )
+        )
+        .padding(.horizontal, 24)
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("Unlock Pro features")
+        .accessibilityHint("Opens upgrade options")
+    }
+}
+
+private struct ProLockedPreviewCard: View {
+    let icon: String
+    let title: String
+    let headline: String
+    let detail: String
+
+    var body: some View {
+        Card {
+            HStack(alignment: .top, spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.brandSoft)
+                        .frame(width: 36, height: 36)
+                    Image(systemName: icon)
+                        .font(.system(size: 15, weight: .bold))
+                        .foregroundStyle(AppTheme.brand)
+                }
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(AppTheme.muted)
+                    Text(headline)
+                        .font(.subheadline.weight(.bold))
+                        .foregroundStyle(AppTheme.text)
+                    Text(detail)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
+        }
     }
 }

@@ -3,7 +3,9 @@ import SwiftUI
 
 enum PaywallLinks {
     static let privacyPolicy = URL(string: "https://jackwallner.github.io/simpleglp/privacy-policy.html")!
+    static let termsOfUse = URL(string: "https://jackwallner.github.io/simpleglp/terms.html")!
     static let standardEULA = URL(string: "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/")!
+    static let support = URL(string: "https://jackwallner.github.io/simpleglp/support.html")!
 }
 
 /// Native Simple GLP Pro paywall. Purchases flow through `StoreService.purchase`
@@ -319,16 +321,18 @@ struct SimplePaywallView: View {
         return nil
     }
 
+    /// Apple 3.1.2: full price, renewal, and cancellation — one caption under the CTA (not a separate cancel section).
     private var disclosureText: String? {
         guard let package = selectedPackage else { return nil }
         let price = package.glpProPriceLabel
         if package.glpProPackageKind == .lifetime {
             return "\(price). One-time purchase. Lifetime access."
         }
+        let renew = "Auto-renews. Cancel anytime."
         if store.isEligibleForIntroOffer(package), let trial = package.glpProIntroOfferLabel {
-            return "\(trial.capitalized), then \(price). Auto-renews."
+            return "\(trial.capitalized), then \(price). \(renew)"
         }
-        return "\(price). Auto-renews."
+        return "\(price). \(renew)"
     }
 
     private var monthlyReferencePrice: Decimal? {

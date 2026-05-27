@@ -18,21 +18,17 @@ struct RootTabView: View {
                 .tabItem { Label("One Tap", systemImage: "syringe.fill") }
                 .tag(0)
 
-            NavigationStack { LogHubView() }
-                .tabItem { Label("Optional", systemImage: "plus.circle") }
-                .tag(1)
-
             NavigationStack { HistoryView() }
                 .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
-                .tag(2)
+                .tag(1)
 
             NavigationStack { InsightsView() }
                 .tabItem { Label("Patterns", systemImage: "chart.bar.xaxis") }
-                .tag(3)
+                .tag(2)
 
             NavigationStack { SettingsView() }
                 .tabItem { Label("Settings", systemImage: "slider.horizontal.3") }
-                .tag(4)
+                .tag(3)
         }
         .tint(AppTheme.brand)
         .preferredColorScheme(AppAppearance.from(storageValue: appearanceRaw).preferredColorScheme)
@@ -95,6 +91,6 @@ struct RootTabView: View {
 
     /// Passive prompts only on One Tap (shot logged) or Settings (export success).
     private var reviewPromptTabAllowed: Bool {
-        selectedTab == 0 || selectedTab == 4
+        selectedTab == 0 || selectedTab == 3
     }
 }
