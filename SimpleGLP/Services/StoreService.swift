@@ -106,7 +106,6 @@ extension CustomerInfo {
     var hasGLPProEntitlement: Bool {
         entitlements.active[RevenueCatConfig.proEntitlement] != nil
         || entitlements.active[RevenueCatConfig.fallbackEntitlement] != nil
-        || !entitlements.active.isEmpty
     }
 }
 
