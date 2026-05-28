@@ -26,6 +26,8 @@
 	<false/>
 	<key>NSHealthShareUsageDescription</key>
 	<string>Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a shot.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>Simple GLP reads Apple Health to add context to your logged shots and does not write any data back to Apple Health.</string>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
