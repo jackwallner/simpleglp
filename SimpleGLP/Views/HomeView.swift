@@ -54,9 +54,12 @@ struct HomeView: View {
         Button {
             let ok = coordinator.captureShot(in: modelContext)
             triggerConfirmation()
-            if ok, promptForDetails, let id = coordinator.lastCapturedEventID,
-               let event = events.first(where: { $0.id == id }) {
-                selectedEvent = event
+            if ok, promptForDetails, let id = coordinator.lastCapturedEventID {
+                // The @Query array hasn't refreshed yet in this run loop turn, so
+                // fetch the just-saved event straight from the context.
+                var descriptor = FetchDescriptor<ShotEvent>(predicate: #Predicate { $0.id == id })
+                descriptor.fetchLimit = 1
+                selectedEvent = try? modelContext.fetch(descriptor).first
             }
         } label: {
             ZStack {

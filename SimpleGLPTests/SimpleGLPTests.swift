@@ -76,6 +76,34 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertNil(ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: cal))
     }
 
+    func testCSVEscapingQuotesFieldsWithSpecialCharacters() {
+        XCTAssertEqual(ExportService.csvEscaped("simple"), "simple")
+        XCTAssertEqual(ExportService.csvEscaped("a,b"), "\"a,b\"")
+        XCTAssertEqual(ExportService.csvEscaped("say \"hi\""), "\"say \"\"hi\"\"\"")
+        XCTAssertEqual(ExportService.csvEscaped("line1\nline2"), "\"line1\nline2\"")
+    }
+
+    func testCSVRoundTripPreservesCommasQuotesAndNewlines() {
+        // A note containing a comma, quote, and newline must survive export → import.
+        let note = "felt great, took it \"early\"\nslept well"
+        let header = ExportService.header
+        let row = [
+            ISO8601DateFormatter().string(from: Date(timeIntervalSince1970: 1_700_000_000)),
+            "Mounjaro",
+            "5.0",
+            "onSchedule",
+            "Abdomen",
+            note
+        ].map(ExportService.csvEscaped).joined(separator: ",")
+
+        let records = ImportService.parseCSV(header + "\n" + row)
+        XCTAssertEqual(records.count, 2)
+        XCTAssertEqual(records[1].count, 6)
+        XCTAssertEqual(records[1][1], "Mounjaro")
+        XCTAssertEqual(records[1][4], "Abdomen")
+        XCTAssertEqual(records[1][5], note)
+    }
+
     func testNextExpectedDateUsesPreferredTimeWhenStartIsToday() {
         // Regression for "Overdue by -7 days" on home: nextExpectedDate must
         // be the next aligned Saturday 09:00, not the literal start moment.
