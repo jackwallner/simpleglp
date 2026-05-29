@@ -93,6 +93,7 @@ final class ShotCaptureCoordinator: ObservableObject {
         let timestamp = tapDate ?? .now
         let plan = PlanStore.currentPlan(in: context)
         let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        let isFirstShot = events.isEmpty
         let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: events)
         let event = ShotEvent(
             timestamp: timestamp,
@@ -115,6 +116,9 @@ final class ShotCaptureCoordinator: ObservableObject {
 
         ReviewPromptTracker.recordPositiveMoment()
         NotificationCenter.default.post(name: .glpPositiveMomentForReview, object: nil)
+        if isFirstShot {
+            NotificationCenter.default.post(name: .glpFirstShotLogged, object: nil)
+        }
 
         showUndoOption = true
 

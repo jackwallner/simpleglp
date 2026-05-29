@@ -26,13 +26,13 @@ struct SimplePaywallView: View {
     private let benefits: [(icon: String, title: String, detail: String)] = [
         ("bell.badge.fill",
          "Never miss a dose",
-         "Proactive alerts catch schedule drift before it costs a week of progress."),
+         "Pro watches your timing and nudges you before a dose slips — so one busy week doesn't undo your progress."),
         ("waveform.path.ecg",
-         "See what's working",
-         "Personalized pattern insights surface trends across timing and adherence."),
-        ("calendar.badge.clock",
-         "Stay on track on autopilot",
-         "Smart timing nudges adapt to your real life, not a rigid weekly calendar.")
+         "Catch drift early",
+         "Spot when your shots creep later week over week, and pull your rhythm back in line."),
+        ("lock.shield.fill",
+         "Private by design",
+         "Everything stays on your device. No accounts, no ads, no data sold — ever.")
     ]
 
     var body: some View {
@@ -111,6 +111,10 @@ struct SimplePaywallView: View {
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
+            Label("Private · On-device · No accounts, ever.", systemImage: "lock.fill")
+                .font(.caption2.weight(.medium))
+                .foregroundStyle(AppTheme.muted)
+                .padding(.top, 2)
         }
         .frame(maxWidth: .infinity)
     }
