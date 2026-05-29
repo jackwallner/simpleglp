@@ -145,9 +145,11 @@ struct ReviewPromptSheet: View {
 
             VStack(spacing: 10) {
                 Button {
-                    ReviewPromptTracker.markOpenedWriteReview()
-                    UIApplication.shared.open(AppStoreReviewLinks.writeReviewURL)
-                    finish(.openedWriteReview)
+                    // Apple's ratings policy discourages custom, sentiment-gated write-review
+                    // deep links. Route the happy path through the native StoreKit prompt
+                    // instead — RootTabView's sheet onDismiss calls requestReview().
+                    ReviewPromptTracker.markShown()
+                    finish(.enjoyedMaybeLater)
                 } label: {
                     primaryButtonLabel("Rate on the App Store")
                 }
@@ -155,7 +157,7 @@ struct ReviewPromptSheet: View {
 
                 Button {
                     ReviewPromptTracker.markShown()
-                    finish(.enjoyedMaybeLater)
+                    finish(.notNow)
                 } label: {
                     secondaryButtonLabel("Maybe later")
                 }
