@@ -5,6 +5,6 @@ Testing the core flow:
 2. Tap the large shot button on the Home tab to log a shot. A toast confirms with an Undo action.
 3. The Home Screen widget and Apple Watch app provide the same one-tap log via App Intents and WatchConnectivity.
 
-Simple GLP Pro is an auto-renewing subscription that unlocks proactive pattern alerts. It is not required to use the app.
+Simple GLP Pro is an auto-renewing subscription that unlocks proactive pattern alerts. It is not required to use the app. To view the subscription paywall: Settings → "Upgrade to Pro", or the Patterns tab → tap the locked card. A dismissible offer also appears once after onboarding and once after the first logged shot.
 
 The app does not provide medical advice or dosing instructions. The "GLP-1" terminology refers to a category of medications the user is prescribed; the app only records timestamps and user-entered context.
