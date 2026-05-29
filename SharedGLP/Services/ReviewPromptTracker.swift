@@ -3,6 +3,9 @@ import Foundation
 extension Notification.Name {
     /// Posted when the user completes a satisfaction moment — host may present the enjoyment funnel after a short delay.
     static let glpPositiveMomentForReview = Notification.Name("com.jackwallner.glp.positiveMomentForReview")
+
+    /// Posted once when the user logs their very first shot — host may present a one-time, dismissible trial offer.
+    static let glpFirstShotLogged = Notification.Name("com.jackwallner.glp.firstShotLogged")
 }
 
 /// How the user last resolved the in-app review / feedback prompt.

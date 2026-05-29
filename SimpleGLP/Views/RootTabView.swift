@@ -2,14 +2,20 @@ import StoreKit
 import SwiftUI
 
 struct RootTabView: View {
+    @EnvironmentObject private var store: StoreService
     @AppStorage(GLPStorageKey.appearance.rawValue, store: GLPAppGroup.userDefaults) private var appearanceRaw = AppAppearance.system.rawValue
     @AppStorage(GLPStorageKey.hasCompletedOnboarding.rawValue, store: GLPAppGroup.userDefaults) private var hasCompletedOnboarding = false
+    @AppStorage(GLPStorageKey.hasSeenFirstRunOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenFirstRunOffer = false
+    @AppStorage(GLPStorageKey.hasSeenFirstShotOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenFirstShotOffer = false
     @StateObject private var reviewPromptCoordinator = ReviewPromptCoordinator.shared
     @State private var selectedTab = 0
     @State private var showReviewPrompt = false
     @State private var reviewPromptInitialStep: ReviewPromptSheet.Step = .enjoyment
     @State private var reviewPromptShownThisSession = false
     @State private var pendingNativeReviewAfterDismiss = false
+    @State private var showTrialPaywall = false
+    @State private var trialPaywallImpressionId = "simpleglp_first_run"
+    @State private var paywallShownThisSession = false
     @Environment(\.requestReview) private var requestReview
 
     var body: some View {
@@ -54,6 +60,48 @@ struct RootTabView: View {
         }) {
             ReviewPromptSheet(initialStep: reviewPromptInitialStep, onFinish: handleReviewPromptFinish)
         }
+        .sheet(isPresented: $showTrialPaywall) {
+            SimplePaywallView(paywallImpressionId: trialPaywallImpressionId)
+                .environmentObject(store)
+        }
+        .onReceive(NotificationCenter.default.publisher(for: .glpFirstShotLogged)) { _ in
+            presentFirstShotOfferIfEligible()
+        }
+        .onAppear { presentFirstRunOfferIfEligible() }
+    }
+
+    /// Soft trial offer right after onboarding — the highest-intent moment. Dismissible (the
+    /// paywall's own close button) so it never gates the core app. One offer per session, max.
+    private func presentFirstRunOfferIfEligible() {
+        guard !hasSeenFirstRunOffer,
+              !store.isProUnlocked,
+              !paywallShownThisSession,
+              !AppEnvironment.isUITesting
+        else { return }
+        // Claim the per-session slot up front so a fast first-shot log can't race in behind us.
+        paywallShownThisSession = true
+        Task { @MainActor in
+            try? await Task.sleep(nanoseconds: 450_000_000)
+            guard !hasSeenFirstRunOffer, !store.isProUnlocked, !showReviewPrompt else { return }
+            hasSeenFirstRunOffer = true
+            trialPaywallImpressionId = "simpleglp_first_run"
+            showTrialPaywall = true
+        }
+    }
+
+    /// Contextual trial offer right after the first shot is logged — a peak value moment.
+    /// Suppressed if any paywall already showed this session (e.g. the post-onboarding one).
+    private func presentFirstShotOfferIfEligible() {
+        guard !hasSeenFirstShotOffer,
+              !store.isProUnlocked,
+              !paywallShownThisSession,
+              !showReviewPrompt,
+              !AppEnvironment.isUITesting
+        else { return }
+        hasSeenFirstShotOffer = true
+        paywallShownThisSession = true
+        trialPaywallImpressionId = "simpleglp_first_shot"
+        showTrialPaywall = true
     }
 
     private func scheduleReviewPromptAfterPositiveMoment() {
