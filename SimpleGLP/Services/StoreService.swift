@@ -7,6 +7,20 @@ enum GLPProProduct {
     static let yearly = "com.jackwallner.glp.pro.yearly"
     static let monthly = "com.jackwallner.glp.pro.monthly"
     static let all: [String] = [lifetime, yearly, monthly]
+
+    static func kind(for productID: String) -> GLPProPackageKind {
+        switch productID {
+        case lifetime: return .lifetime
+        case yearly: return .yearly
+        case monthly: return .monthly
+        default:
+            let id = productID.lowercased()
+            if id.contains("lifetime") { return .lifetime }
+            if id.contains("year") || id.contains("annual") { return .yearly }
+            if id.contains("month") { return .monthly }
+            return .other
+        }
+    }
 }
 
 enum RevenueCatConfig {
@@ -26,6 +40,24 @@ enum GLPProPackageKind: Int {
     case yearly = 1
     case monthly = 2
     case other = 3
+
+    var packageType: PackageType {
+        switch self {
+        case .lifetime: return .lifetime
+        case .yearly: return .annual
+        case .monthly: return .monthly
+        case .other: return .custom
+        }
+    }
+
+    var fallbackPackageIdentifier: String {
+        switch self {
+        case .lifetime: return "$rc_lifetime"
+        case .yearly: return "$rc_annual"
+        case .monthly: return "$rc_monthly"
+        case .other: return "$rc_custom"
+        }
+    }
 }
 
 extension GLPProPackageKind {
@@ -146,6 +178,9 @@ final class StoreService: NSObject, ObservableObject {
     @Published private(set) var isProUnlocked: Bool = false
     @Published private(set) var purchaseInFlight: Bool = false
     @Published private(set) var isLoadingProducts: Bool = false
+    /// True when `products` were loaded directly by ID instead of from a RevenueCat offering
+    /// (offering missing/empty on the dashboard). Purchases must then go through the product, not the package.
+    @Published private(set) var usingFallbackProducts: Bool = false
     @Published var lastError: String?
     @Published private(set) var introEligibility: [String: Bool] = [:]
 
@@ -181,29 +216,56 @@ final class StoreService: NSObject, ObservableObject {
         do {
             let offerings = try await Purchases.shared.offerings()
             let offering = offerings.glpProPaywallOffering
-            currentOffering = offering
             let packages = offering?.glpProSortedPackages ?? []
-            products = packages
-            if packages.isEmpty {
-                let availableCount = offerings.all.count
-                logger.error("Offerings returned no packages. offerings.all.count=\(availableCount, privacy: .public) current=\(offerings.current?.identifier ?? "nil", privacy: .public)")
-                #if DEBUG
-                lastError = "Offerings loaded but no packages attached (count=\(availableCount)). Check RevenueCat dashboard."
-                #else
-                lastError = "Purchase options aren't available right now. Please try again shortly."
-                #endif
-            } else {
+            if !packages.isEmpty {
+                currentOffering = offering
+                usingFallbackProducts = false
+                products = packages
                 lastError = nil
+                await refreshIntroEligibility()
+                return
             }
-            await refreshIntroEligibility()
+            // Offering missing or empty on the RevenueCat dashboard. Rather than show
+            // "no purchase options", load the products straight from the store by ID so the
+            // paywall works regardless of how the dashboard offering is configured.
+            logger.error("Offerings returned no packages (all=\(offerings.all.count, privacy: .public), current=\(offerings.current?.identifier ?? "nil", privacy: .public)). Falling back to direct product fetch.")
+            await loadFallbackProducts()
         } catch {
-            logger.error("Product fetch failed: \(String(describing: error), privacy: .public)")
-            #if DEBUG
-            lastError = "Offerings fetch failed: \(error.localizedDescription)"
-            #else
-            lastError = "Couldn't load purchase options. Check your connection and try again."
-            #endif
+            logger.error("Offerings fetch failed: \(String(describing: error), privacy: .public). Falling back to direct product fetch.")
+            await loadFallbackProducts()
         }
+    }
+
+    /// Loads the Pro products by identifier and wraps them in synthesized packages so the
+    /// existing paywall UI keeps working even when no RevenueCat offering is attached.
+    private func loadFallbackProducts() async {
+        let storeProducts = await Purchases.shared.products(GLPProProduct.all)
+        guard !storeProducts.isEmpty else {
+            currentOffering = nil
+            usingFallbackProducts = false
+            products = []
+            #if DEBUG
+            lastError = "No products returned for \(GLPProProduct.all.joined(separator: ", ")). Check App Store Connect / StoreKit config."
+            #else
+            lastError = "Purchase options aren't available right now. Please try again shortly."
+            #endif
+            return
+        }
+        let synthesized = storeProducts.map { product -> Package in
+            let kind = GLPProProduct.kind(for: product.productIdentifier)
+            return Package(
+                identifier: kind.fallbackPackageIdentifier,
+                packageType: kind.packageType,
+                storeProduct: product,
+                offeringIdentifier: "fallback",
+                webCheckoutUrl: nil
+            )
+        }
+        currentOffering = nil
+        usingFallbackProducts = true
+        products = synthesized.sorted { $0.glpProPackageKind.rawValue < $1.glpProPackageKind.rawValue }
+        lastError = nil
+        await refreshIntroEligibility()
     }
 
     private func refreshIntroEligibility() async {
@@ -240,7 +302,11 @@ final class StoreService: NSObject, ObservableObject {
         configureIfNeeded()
         purchaseInFlight = true
         defer { purchaseInFlight = false }
-        let result = try await Purchases.shared.purchase(package: package)
+        // Synthesized fallback packages point at an offering that doesn't exist on the
+        // dashboard, so purchase the underlying product directly in that case.
+        let result = usingFallbackProducts
+            ? try await Purchases.shared.purchase(product: package.storeProduct)
+            : try await Purchases.shared.purchase(package: package)
         apply(customerInfo: result.customerInfo)
         if result.userCancelled {
             return .cancelled
