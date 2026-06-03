@@ -25,8 +25,10 @@ enum GLPProProduct {
 
 enum RevenueCatConfig {
     static let apiKey = "appl_GIiheOxycuuhBLLflisHGrMcrHU"
-    static let proEntitlement = "SimpleGLPPro"
-    static let fallbackEntitlement = "pro"
+    /// Entitlement identifier as configured on the RevenueCat dashboard ("GLP Pro").
+    static let proEntitlement = "GLP Pro"
+    /// Older/alternate identifiers kept so prior sandbox or pre-migration purchases still unlock.
+    static let fallbackEntitlements = ["SimpleGLPPro", "pro"]
 }
 
 enum PurchaseState {
@@ -136,8 +138,8 @@ extension Package {
 
 extension CustomerInfo {
     var hasGLPProEntitlement: Bool {
-        entitlements.active[RevenueCatConfig.proEntitlement] != nil
-        || entitlements.active[RevenueCatConfig.fallbackEntitlement] != nil
+        if entitlements.active[RevenueCatConfig.proEntitlement] != nil { return true }
+        return RevenueCatConfig.fallbackEntitlements.contains { entitlements.active[$0] != nil }
     }
 }
 
