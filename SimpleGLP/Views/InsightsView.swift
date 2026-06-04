@@ -102,84 +102,121 @@ struct InsightsView: View {
     }
 
     private var proLockedSection: some View {
-        ZStack {
-            VStack(spacing: 14) {
-                ProLockedPreviewCard(
-                    icon: "bell.badge.fill",
-                    title: "Proactive Alerts",
-                    headline: "Dose day in 2 days",
-                    detail: "Quiet hours respected. Your usual Tuesday window is 8:00–10:00 AM."
-                )
-                ProLockedPreviewCard(
-                    icon: "waveform.path.ecg",
-                    title: "Pattern detection",
-                    headline: "Drift detected: +6 hrs over 3 weeks",
-                    detail: "Shots are creeping later in the day. A reset nudge can pull your window back in line."
-                )
-                ProLockedPreviewCard(
-                    icon: "calendar.badge.clock",
-                    title: "Smart timing",
-                    headline: "Best next dose: Tue 8:42 AM",
-                    detail: "Based on your last 12 shots, mornings yield your most consistent rhythm."
-                )
-            }
-            .blur(radius: 9)
-            .allowsHitTesting(false)
-            .accessibilityHidden(true)
-
-            unlockOverlay
+        VStack(spacing: 16) {
+            previewHeader
+            previewStack
+            unlockCallout
         }
         .contentShape(Rectangle())
         .onTapGesture { showPaywall = true }
     }
 
-    private var unlockOverlay: some View {
-        VStack(spacing: 10) {
-            ZStack {
-                Circle()
-                    .fill(AppTheme.brand)
-                    .frame(width: 48, height: 48)
-                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 12, x: 0, y: 5)
-                Image(systemName: "lock.fill")
-                    .font(.system(size: 20, weight: .bold))
-                    .foregroundStyle(.white)
-            }
-            Text("Unlock with Pro")
-                .font(.headline.weight(.bold))
+    private var previewHeader: some View {
+        HStack(spacing: 8) {
+            Image(systemName: "sparkles")
+                .font(.subheadline.weight(.bold))
+                .foregroundStyle(AppTheme.brand)
+            Text("What Pro watches for you")
+                .font(.headline)
                 .foregroundStyle(AppTheme.text)
-            Text("See patterns, get nudges, and stay on track on autopilot.")
-                .font(.footnote)
-                .foregroundStyle(AppTheme.muted)
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 24)
+            Spacer(minLength: 0)
+            Text("PREVIEW")
+                .font(.system(size: 10, weight: .heavy))
+                .foregroundStyle(AppTheme.brand)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(AppTheme.brandSoft, in: Capsule())
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel("What Pro watches for you. Preview.")
+    }
+
+    // A light, legible blur reads as "locked sample" without hiding the value;
+    // the bottom fades into the page so it feels like there's more behind the wall.
+    private var previewStack: some View {
+        VStack(spacing: 14) {
+            ProLockedPreviewCard(
+                icon: "bell.badge.fill",
+                title: "Proactive Alerts",
+                headline: "Dose day in 2 days",
+                detail: "Quiet hours respected. Your usual Tuesday window is 8:00–10:00 AM."
+            )
+            ProLockedPreviewCard(
+                icon: "waveform.path.ecg",
+                title: "Pattern detection",
+                headline: "Drift detected: +6 hrs over 3 weeks",
+                detail: "Shots are creeping later in the day. A reset nudge can pull your window back in line."
+            )
+            ProLockedPreviewCard(
+                icon: "calendar.badge.clock",
+                title: "Smart timing",
+                headline: "Best next dose: Tue 8:42 AM",
+                detail: "Based on your last 12 shots, mornings yield your most consistent rhythm."
+            )
+        }
+        .blur(radius: 2.5)
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
+        .mask(
+            LinearGradient(
+                stops: [
+                    .init(color: .black, location: 0),
+                    .init(color: .black, location: 0.6),
+                    .init(color: .black.opacity(0.12), location: 1)
+                ],
+                startPoint: .top,
+                endPoint: .bottom
+            )
+        )
+    }
+
+    private var unlockCallout: some View {
+        VStack(spacing: 12) {
+            HStack(spacing: 12) {
+                ZStack {
+                    Circle()
+                        .fill(AppTheme.brand)
+                        .frame(width: 40, height: 40)
+                        .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+                VStack(alignment: .leading, spacing: 2) {
+                    Text("Unlock with Pro")
+                        .font(.headline.weight(.bold))
+                        .foregroundStyle(AppTheme.text)
+                    Text("Pattern alerts and dose-day nudges, on autopilot.")
+                        .font(.caption)
+                        .foregroundStyle(AppTheme.muted)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                Spacer(minLength: 0)
+            }
             Button {
                 showPaywall = true
             } label: {
                 Text("See Plans")
                     .font(.subheadline.weight(.bold))
                     .foregroundStyle(.white)
-                    .padding(.horizontal, 24)
-                    .padding(.vertical, 12)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 13)
                     .background(AppTheme.brand, in: Capsule())
                     .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
             }
             .buttonStyle(.plain)
-            .padding(.top, 4)
+            .accessibilityLabel("Unlock Pro — see plans")
+            .accessibilityHint("Opens upgrade options")
         }
-        .padding(.vertical, 18)
-        .padding(.horizontal, 18)
+        .padding(16)
         .background(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
-                .fill(.ultraThinMaterial)
+                .fill(AppTheme.surface)
                 .overlay(
                     RoundedRectangle(cornerRadius: 24, style: .continuous)
                         .strokeBorder(AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
                 )
         )
-        .padding(.horizontal, 24)
-        .accessibilityElement(children: .combine)
-        .accessibilityLabel("Unlock Pro features")
-        .accessibilityHint("Opens upgrade options")
     }
 }
 
