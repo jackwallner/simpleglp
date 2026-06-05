@@ -3,6 +3,7 @@ import SwiftUI
 
 struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @EnvironmentObject private var coordinator: ShotCaptureCoordinator
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
     @AppStorage(GLPStorageKey.promptForDetails.rawValue, store: GLPAppGroup.userDefaults) private var promptForDetails = false
@@ -78,9 +79,11 @@ struct HomeView: View {
             }
         }
         .buttonStyle(.plain)
-        .disabled(coordinator.isCapturing && !showConfirmation)
+        // Stay disabled through the whole confirmation window so a second tap
+        // during the "Logged" flash can't write a duplicate shot.
+        .disabled(coordinator.isCapturing || showConfirmation)
         .padding(.vertical, 8)
-        .animation(.easeInOut(duration: 0.2), value: showConfirmation)
+        .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: showConfirmation)
     }
 
     @ViewBuilder
@@ -111,9 +114,15 @@ struct HomeView: View {
             Card {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text(copy.headline)
-                            .font(.caption.weight(.semibold))
-                            .foregroundStyle(copy.isOverdue ? AppTheme.warm : AppTheme.muted)
+                        HStack(spacing: 4) {
+                            if copy.isOverdue {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .font(.caption2)
+                            }
+                            Text(copy.headline)
+                                .font(.caption.weight(.semibold))
+                        }
+                        .foregroundStyle(copy.isOverdue ? AppTheme.warm : AppTheme.muted)
                         Text(copy.dateToShow, style: .date)
                             .font(.headline)
                         Text(copy.dateToShow, style: .time)

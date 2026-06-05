@@ -33,19 +33,19 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         let optimistic = RecentShot(timestamp: now)
         recentShots = RecentShotsStore.record(optimistic)
 
-        guard session.isReachable else {
-            statusMessage = "Saved locally. Open iPhone to sync."
+        let payload: [String: Any] = [
+            "type": "logShot",
+            "timestamp": now.timeIntervalSince1970,
+            "id": optimistic.id.uuidString
+        ]
+        guard session.activationState == .activated else {
+            statusMessage = "Saved on Watch. Open iPhone to sync."
             return
         }
-        let message: [String: Any] = [
-            "type": "logShot",
-            "timestamp": now.timeIntervalSince1970
-        ]
-        session.sendMessage(message, replyHandler: nil) { [weak self] _ in
-            Task { @MainActor in
-                self?.statusMessage = "Sent to iPhone."
-            }
-        }
+        // transferUserInfo queues and delivers in the background even when the phone
+        // isn't reachable right now, so a shot logged offline still reaches the iPhone.
+        session.transferUserInfo(payload)
+        statusMessage = session.isReachable ? "Sent to iPhone." : "Saved — will sync to iPhone."
     }
 
     private func triggerConfirmation() {

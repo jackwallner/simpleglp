@@ -9,24 +9,34 @@ struct HistoryView: View {
     @State private var pendingDeletion: [ShotEvent] = []
 
     var body: some View {
-        List {
-            ForEach(groupedEvents.keys.sorted(by: >), id: \.self) { month in
-                Section(month) {
-                    ForEach(groupedEvents[month] ?? []) { event in
-                        Button {
-                            selectedEvent = event
-                            showEdit = true
-                        } label: {
-                            historyRow(event: event)
+        Group {
+            if events.isEmpty {
+                ContentUnavailableView {
+                    Label("No shots logged yet", systemImage: "syringe")
+                } description: {
+                    Text("Your shots will appear here. Tap the big button on the One Tap tab to log your first.")
+                }
+            } else {
+                List {
+                    ForEach(groupedEvents.keys.sorted(by: >), id: \.self) { month in
+                        Section(month) {
+                            ForEach(groupedEvents[month] ?? []) { event in
+                                Button {
+                                    selectedEvent = event
+                                    showEdit = true
+                                } label: {
+                                    historyRow(event: event)
+                                }
+                            }
+                            .onDelete { indexSet in
+                                requestDelete(at: indexSet, in: month)
+                            }
                         }
                     }
-                    .onDelete { indexSet in
-                        requestDelete(at: indexSet, in: month)
-                    }
                 }
+                .listStyle(.insetGrouped)
             }
         }
-        .listStyle(.insetGrouped)
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("History")
         .sheet(item: $selectedEvent) { event in

@@ -59,11 +59,20 @@ extension PhoneWatchSession: WCSessionDelegate {
     }
 
     nonisolated func session(_ session: WCSession, didReceiveMessage message: [String: Any]) {
-        guard let type = message["type"] as? String else { return }
-        if type == "logShot", let timestamp = message["timestamp"] as? TimeInterval {
-            Task { @MainActor in
-                PhoneWatchSession.shared.onWatchRequestedCapture?(Date(timeIntervalSince1970: timestamp))
-            }
+        handleIncoming(message)
+    }
+
+    // Delivered for queued transferUserInfo payloads — the reliable path the watch
+    // uses so an offline-logged shot still reaches the phone after reconnection.
+    nonisolated func session(_ session: WCSession, didReceiveUserInfo userInfo: [String: Any]) {
+        handleIncoming(userInfo)
+    }
+
+    nonisolated private func handleIncoming(_ payload: [String: Any]) {
+        guard let type = payload["type"] as? String, type == "logShot",
+              let timestamp = payload["timestamp"] as? TimeInterval else { return }
+        Task { @MainActor in
+            PhoneWatchSession.shared.onWatchRequestedCapture?(Date(timeIntervalSince1970: timestamp))
         }
     }
 }
