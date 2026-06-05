@@ -2,6 +2,7 @@ import SwiftUI
 
 struct WatchRootView: View {
     @StateObject private var controller = WatchConnectivityController()
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
         ScrollView {
@@ -25,7 +26,7 @@ struct WatchRootView: View {
                     )
                 }
                 .buttonStyle(.plain)
-                .animation(.easeInOut(duration: 0.2), value: controller.showConfirmation)
+                .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: controller.showConfirmation)
 
                 if let status = controller.statusMessage, !controller.showConfirmation {
                     Text(status)

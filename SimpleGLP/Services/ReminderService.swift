@@ -27,6 +27,13 @@ enum ReminderService {
         try? await center.add(request)
     }
 
+    /// True when the user has explicitly denied notifications — used to warn that
+    /// reminders won't fire. Does not prompt (unlike `ensureAuthorization`).
+    static func isDenied() async -> Bool {
+        let settings = await UNUserNotificationCenter.current().notificationSettings()
+        return settings.authorizationStatus == .denied
+    }
+
     static func ensureAuthorization() async -> Bool {
         let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()

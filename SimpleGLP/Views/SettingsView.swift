@@ -110,6 +110,7 @@ struct PlanEditorView: View {
     @State private var minute = 0
     @State private var reminderEnabled = true
     @State private var reminderLeadMinutes = 0
+    @State private var notificationsDenied = false
 
     var body: some View {
         Form {
@@ -161,6 +162,9 @@ struct PlanEditorView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    if notificationsDenied {
+                        notificationsOffWarning
+                    }
                 }
             }
         }
@@ -170,6 +174,10 @@ struct PlanEditorView: View {
             ToolbarItem(placement: .confirmationAction) {
                 Button("Save") { save() }
             }
+        }
+        .task { notificationsDenied = await ReminderService.isDenied() }
+        .onChange(of: reminderEnabled) { _, _ in
+            Task { notificationsDenied = await ReminderService.isDenied() }
         }
         .onAppear {
             let p = PlanStore.ensurePlan(in: modelContext)
@@ -183,6 +191,27 @@ struct PlanEditorView: View {
             minute = p.preferredMinute
             reminderEnabled = p.reminderEnabled
             reminderLeadMinutes = p.reminderLeadMinutes
+        }
+    }
+
+    private var notificationsOffWarning: some View {
+        HStack(alignment: .top, spacing: 8) {
+            Image(systemName: "exclamationmark.triangle.fill")
+                .foregroundStyle(AppTheme.warm)
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Notifications are off")
+                    .font(.subheadline.weight(.semibold))
+                Text("Reminders won't fire until you turn on notifications for Simple GLP in iOS Settings.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Button("Open Settings") {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                }
+                .font(.caption.weight(.semibold))
+            }
         }
     }
 

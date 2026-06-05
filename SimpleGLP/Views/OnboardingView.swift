@@ -253,7 +253,7 @@ struct OnboardingView: View {
                 title: "Reminders",
                 subtitle: "A gentle nudge so a busy week doesn't push your shot."
             )
-            VStack(spacing: 14) {
+            VStack(alignment: .leading, spacing: 14) {
                 Toggle("Remind me on shot day", isOn: $reminderEnabled)
                     .font(.body)
                 if reminderEnabled {
@@ -267,6 +267,10 @@ struct OnboardingView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
+                    Text("We'll ask permission to send notifications. If you decline, reminders won't fire — you can enable them later in iOS Settings.")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .padding(18)
@@ -285,8 +289,12 @@ struct OnboardingView: View {
             VStack(alignment: .leading, spacing: 14) {
                 Toggle("Auto-capture Health context", isOn: $enableHealth)
                     .font(.body)
-                Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a shot. You can change this later in Settings.")
+                Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a shot. If you skip this or deny permission, you can turn it on later in Settings.")
                     .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text("This adds context to your log — it isn't medical advice.")
+                    .font(.caption2)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
             }

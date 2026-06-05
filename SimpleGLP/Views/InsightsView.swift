@@ -12,7 +12,7 @@ struct InsightsView: View {
             VStack(spacing: 20) {
                 if events.count < ProactiveAlertsEngine.minimumSampleSize {
                     Card {
-                        Text("Keep logging your shots. Insights appear once you have enough data.")
+                        Text("Keep logging your shots. Insights appear once you've logged \(ProactiveAlertsEngine.minimumSampleSize) — you have \(events.count) so far.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
