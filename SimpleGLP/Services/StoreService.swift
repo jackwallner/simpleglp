@@ -139,7 +139,16 @@ extension Package {
 extension CustomerInfo {
     var hasGLPProEntitlement: Bool {
         if entitlements.active[RevenueCatConfig.proEntitlement] != nil { return true }
-        return RevenueCatConfig.fallbackEntitlements.contains { entitlements.active[$0] != nil }
+        if RevenueCatConfig.fallbackEntitlements.contains(where: { entitlements.active[$0] != nil }) {
+            return true
+        }
+        // Resilience: if the RevenueCat dashboard entitlement isn't attached to our products
+        // (or is named differently), a real purchase still "goes through" but `entitlements.active`
+        // stays empty. Fall back to verified product ownership — an active subscription or the
+        // lifetime non-consumable — so Pro unlocks regardless of dashboard entitlement mapping.
+        let proIDs = Set(GLPProProduct.all)
+        if !activeSubscriptions.isDisjoint(with: proIDs) { return true }
+        return nonSubscriptions.contains { proIDs.contains($0.productIdentifier) }
     }
 }
 
@@ -190,13 +199,12 @@ final class StoreService: NSObject, ObservableObject {
     var yearlyPackage: Package? { products.first { $0.glpProPackageKind == .yearly } }
     var lifetimePackage: Package? { products.first { $0.glpProPackageKind == .lifetime } }
 
-    /// True when Pro is from a recurring subscription (not lifetime).
+    /// True when Pro is from a recurring subscription (not lifetime). Reads `activeSubscriptions`
+    /// directly so "Manage subscription" appears even if the dashboard entitlement is mis-mapped.
     var hasSubscription: Bool {
         guard let info = customerInfo else { return false }
-        return info.entitlements.active.values.contains { entitlement in
-            let id = entitlement.productIdentifier
-            return id == GLPProProduct.yearly || id == GLPProProduct.monthly
-        }
+        return info.activeSubscriptions.contains(GLPProProduct.yearly)
+            || info.activeSubscriptions.contains(GLPProProduct.monthly)
     }
 
     private let logger = Logger(subsystem: "com.jackwallner.glp", category: "Store")
