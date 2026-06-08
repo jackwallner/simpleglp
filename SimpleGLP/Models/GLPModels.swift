@@ -109,7 +109,11 @@ final class MedicationPlan {
     var medicationRaw: String
     var customMedicationName: String?
     var doseMg: Double
+    /// The anchor for the whole schedule: the day of the first dose. Combined with
+    /// `preferredHour`/`preferredMinute` and `intervalDays` this fully describes the cadence.
     var scheduleStartDate: Date
+    /// Legacy: kept in sync as the weekday of `scheduleStartDate` for back-compat, but the
+    /// schedule no longer reads it — the dose day is derived from `scheduleStartDate`.
     var preferredWeekday: Int
     var preferredHour: Int
     var preferredMinute: Int
@@ -155,8 +159,44 @@ final class MedicationPlan {
     /// infinite/degenerate schedule. Always returns at least 1.
     var cadenceDays: Int { max(1, intervalDays) }
 
-    /// True when this plan uses the standard weekly (weekday-anchored) cadence.
+    /// True when this plan repeats weekly.
     var isWeekly: Bool { cadenceDays == 7 }
+
+    /// The first dose as a single date+time anchor (start day at the preferred time).
+    /// Setting it decomposes back into the stored fields and keeps the legacy weekday in sync.
+    var firstDoseAnchor: Date {
+        get {
+            let cal = Calendar.current
+            let startDay = cal.startOfDay(for: scheduleStartDate)
+            return cal.date(bySettingHour: preferredHour, minute: preferredMinute, second: 0, of: startDay) ?? scheduleStartDate
+        }
+        set {
+            let comps = Calendar.current.dateComponents([.hour, .minute, .weekday], from: newValue)
+            scheduleStartDate = newValue
+            preferredHour = comps.hour ?? preferredHour
+            preferredMinute = comps.minute ?? preferredMinute
+            preferredWeekday = comps.weekday ?? preferredWeekday
+        }
+    }
+
+    /// One-time migration from the legacy split model (separate `preferredWeekday`) to the
+    /// unified anchor model: bakes the chosen weekday into `scheduleStartDate` so the schedule
+    /// is fully described by start date + interval, without shifting anyone's dose day.
+    /// Idempotent; returns true only when it actually changed the stored anchor.
+    @discardableResult
+    func normalizeScheduleAnchor(calendar: Calendar = .current) -> Bool {
+        guard isWeekly else { return false }
+        let startDay = calendar.startOfDay(for: scheduleStartDate)
+        guard calendar.component(.weekday, from: startDay) != preferredWeekday else { return false }
+        var candidate = startDay
+        for _ in 0..<7 {
+            if calendar.component(.weekday, from: candidate) == preferredWeekday { break }
+            guard let next = calendar.date(byAdding: .day, value: 1, to: candidate) else { break }
+            candidate = next
+        }
+        scheduleStartDate = candidate
+        return true
+    }
 
     var medication: GLPMedication {
         get { GLPMedication(rawValue: medicationRaw) ?? .other }

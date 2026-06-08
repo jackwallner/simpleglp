@@ -3,6 +3,9 @@ import SwiftData
 
 /// User-facing strings for schedule cadence.
 enum GLPScheduleFormat {
+    /// Common cadences surfaced as menu presets. Anything else is "Custom".
+    static let presets: [Int] = [1, 7, 14, 28]
+
     /// A human label for an every-N-days cadence, e.g. "day", "week", "2 weeks", "10 days".
     /// Reads naturally after "Repeat every".
     static func intervalLabel(_ days: Int) -> String {
@@ -11,6 +14,20 @@ enum GLPScheduleFormat {
         if n == 7 { return "week" }
         if n % 7 == 0 { return "\(n / 7) weeks" }
         return "\(n) days"
+    }
+
+    /// One-line plain-language schedule, e.g. "Weekly on Thursdays · 9:00 AM" or
+    /// "Every 3 days · 8:00 AM". Used to confirm the schedule back to the user.
+    static func summary(firstDose: Date, intervalDays: Int) -> String {
+        let n = max(1, intervalDays)
+        let time = firstDose.formatted(.dateTime.hour().minute())
+        let cadence: String
+        if n == 7 {
+            cadence = "Weekly on \(firstDose.formatted(.dateTime.weekday(.wide)))s"
+        } else {
+            cadence = "Every \(intervalLabel(n))"
+        }
+        return "\(cadence) · \(time)"
     }
 }
 
@@ -64,24 +81,10 @@ enum ScheduleEngine {
         )
     }
 
-    /// The first canonical scheduled dose for this plan.
-    /// - Weekly plans anchor on the preferred weekday/time within the start week, rolled forward
-    ///   to on/after the start date (preserves the original weekday-based behavior).
-    /// - Every-N-days plans anchor on the start date itself at the preferred time of day.
+    /// The first canonical scheduled dose: the start date at the preferred time of day.
+    /// The whole schedule is just this anchor plus `cadenceDays` — the weekday is simply
+    /// whatever day the start date falls on (weekly is `cadenceDays == 7`).
     static func firstScheduledDate(plan: MedicationPlan, calendar: Calendar = .current) -> Date? {
-        if plan.isWeekly {
-            var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: plan.scheduleStartDate)
-            components.weekday = plan.preferredWeekday
-            components.hour = plan.preferredHour
-            components.minute = plan.preferredMinute
-            components.second = 0
-            guard var candidate = calendar.date(from: components) else { return nil }
-            while candidate < plan.scheduleStartDate {
-                guard let next = calendar.date(byAdding: .day, value: 7, to: candidate) else { return nil }
-                candidate = next
-            }
-            return candidate
-        }
         let startDay = calendar.startOfDay(for: plan.scheduleStartDate)
         return calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: startDay)
     }

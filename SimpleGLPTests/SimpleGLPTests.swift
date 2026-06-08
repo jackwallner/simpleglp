@@ -60,10 +60,10 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertTrue(event.captureStatus == .partial || event.captureStatus == .complete)
     }
 
-    func testScheduledDateOnOrBeforeReturnsNilWhenFirstDoseIsInFuture() {
-        // Plan starts today at 10:18, preferred Sat 09:00 — first canonical
-        // dose is next Saturday, so there is no scheduled occurrence on or
-        // before "now" (today 10:30).
+    func testScheduledDateOnOrBeforeReturnsFirstDoseOnStartDay() {
+        // Unified anchor model: the first dose is the start day at the preferred time.
+        // Setting up at 10:30 with a 09:00 dose time means today's 09:00 dose is the most
+        // recent scheduled occurrence (it shows as due/overdue until logged).
         let cal = Calendar.current
         let start = cal.date(from: DateComponents(year: 2026, month: 5, day: 23, hour: 10, minute: 18))!
         let now = cal.date(from: DateComponents(year: 2026, month: 5, day: 23, hour: 10, minute: 30))!
@@ -73,7 +73,24 @@ final class SimpleGLPTests: XCTestCase {
             preferredHour: 9,
             preferredMinute: 0
         )
-        XCTAssertNil(ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: cal))
+        let prior = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: cal)
+        let expected = cal.date(from: DateComponents(year: 2026, month: 5, day: 23, hour: 9, minute: 0))!
+        XCTAssertEqual(prior, expected)
+    }
+
+    func testNormalizeScheduleAnchorBakesLegacyWeekdayIntoStartDate() {
+        // Legacy weekly plan onboarded on a Monday but dosing on Thursday: migration must
+        // advance the start date to that Thursday so the unified engine keeps Thursdays.
+        let cal = Calendar.current
+        let monday = cal.date(from: DateComponents(year: 2026, month: 5, day: 18, hour: 14))! // Mon
+        let plan = MedicationPlan(scheduleStartDate: monday, preferredWeekday: 5, preferredHour: 9, preferredMinute: 0)
+        XCTAssertTrue(plan.normalizeScheduleAnchor(calendar: cal))
+        XCTAssertEqual(cal.component(.weekday, from: plan.scheduleStartDate), 5)
+        let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: cal)
+        let expected = cal.date(from: DateComponents(year: 2026, month: 5, day: 21, hour: 9))! // Thu
+        XCTAssertEqual(first, expected)
+        // Idempotent: a second pass changes nothing.
+        XCTAssertFalse(plan.normalizeScheduleAnchor(calendar: cal))
     }
 
     func testCSVEscapingQuotesFieldsWithSpecialCharacters() {

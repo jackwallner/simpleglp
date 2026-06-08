@@ -67,6 +67,7 @@ private struct SimpleGLPRootContent: View {
             }
         }
         .onAppear {
+            PlanStore.migrateLegacySchedules(in: modelContext)
             PhoneWatchSession.shared.start()
             PhoneWatchSession.shared.onWatchRequestedCapture = { date in
                 shotCoordinator.captureShot(in: modelContext, tapDate: date)
