@@ -120,4 +120,73 @@ final class SimpleGLPTests: XCTestCase {
         let expected = cal.date(from: DateComponents(year: 2026, month: 5, day: 30, hour: 9, minute: 0))!
         XCTAssertEqual(next, expected)
     }
+
+    // MARK: - Every-N-days cadence
+
+    func testEveryNDaysFirstDoseAnchorsOnStartDayAtPreferredTime() {
+        // Non-weekly plans anchor on the start date itself (not a weekday), at the preferred time.
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 10, minute: 18))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0, intervalDays: 3)
+        let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: cal)
+        let expected = cal.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 9, minute: 0))!
+        XCTAssertEqual(first, expected)
+    }
+
+    func testEveryNDaysNextExpectedStepsByCadence() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 9))!
+        let now = cal.date(from: DateComponents(year: 2026, month: 1, day: 2, hour: 12))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0, intervalDays: 3)
+        let next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: cal)
+        let expected = cal.date(from: DateComponents(year: 2026, month: 1, day: 4, hour: 9))!
+        XCTAssertEqual(next, expected)
+    }
+
+    func testEveryNDaysScheduledDateOnOrBefore() {
+        // Occurrences: Jan 1, 4, 7, 10 — largest on/before Jan 8 is Jan 7.
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 9))!
+        let date = cal.date(from: DateComponents(year: 2026, month: 1, day: 8, hour: 12))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0, intervalDays: 3)
+        let prior = ScheduleEngine.scheduledDate(onOrBefore: date, plan: plan, calendar: cal)
+        let expected = cal.date(from: DateComponents(year: 2026, month: 1, day: 7, hour: 9))!
+        XCTAssertEqual(prior, expected)
+    }
+
+    func testEveryNDaysMatchOnSchedule() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 9))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0, intervalDays: 3)
+        let match = ScheduleEngine.match(
+            timestamp: cal.date(from: DateComponents(year: 2026, month: 1, day: 4, hour: 9))!,
+            plan: plan,
+            calendar: cal
+        )
+        XCTAssertEqual(match.status, .onSchedule)
+    }
+
+    func testDailyCadenceNextExpected() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 8))!
+        let now = cal.date(from: DateComponents(year: 2026, month: 1, day: 5, hour: 12))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 8, preferredMinute: 0, intervalDays: 1)
+        let next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: cal)
+        let expected = cal.date(from: DateComponents(year: 2026, month: 1, day: 6, hour: 8))!
+        XCTAssertEqual(next, expected)
+    }
+
+    func testCadenceDaysGuardsAgainstZeroInterval() {
+        // A 0 left by an older migration must not produce a degenerate schedule.
+        let plan = MedicationPlan(intervalDays: 0)
+        XCTAssertEqual(plan.cadenceDays, 1)
+    }
+
+    func testIntervalLabel() {
+        XCTAssertEqual(GLPScheduleFormat.intervalLabel(1), "day")
+        XCTAssertEqual(GLPScheduleFormat.intervalLabel(7), "week")
+        XCTAssertEqual(GLPScheduleFormat.intervalLabel(14), "2 weeks")
+        XCTAssertEqual(GLPScheduleFormat.intervalLabel(10), "10 days")
+        XCTAssertEqual(GLPScheduleFormat.intervalLabel(0), "day")
+    }
 }

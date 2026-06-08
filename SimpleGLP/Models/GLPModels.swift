@@ -113,6 +113,9 @@ final class MedicationPlan {
     var preferredWeekday: Int
     var preferredHour: Int
     var preferredMinute: Int
+    /// Days between doses. 7 = weekly (the default). Anything else drives an "every N days"
+    /// cadence anchored on `scheduleStartDate`. Defaulted for SwiftData lightweight migration.
+    var intervalDays: Int = 7
     var reminderEnabled: Bool
     var reminderLeadMinutes: Int
     var createdAt: Date
@@ -127,6 +130,7 @@ final class MedicationPlan {
         preferredWeekday: Int = Calendar.current.component(.weekday, from: .now),
         preferredHour: Int = 9,
         preferredMinute: Int = 0,
+        intervalDays: Int = 7,
         reminderEnabled: Bool = true,
         reminderLeadMinutes: Int = 0,
         doseSteps: [DoseStep] = []
@@ -139,12 +143,20 @@ final class MedicationPlan {
         self.preferredWeekday = preferredWeekday
         self.preferredHour = preferredHour
         self.preferredMinute = preferredMinute
+        self.intervalDays = intervalDays
         self.reminderEnabled = reminderEnabled
         self.reminderLeadMinutes = reminderLeadMinutes
         self.createdAt = .now
         self.updatedAt = .now
         self.doseSteps = doseSteps
     }
+
+    /// Cadence in days, guarded so a 0 left by an older migration never produces an
+    /// infinite/degenerate schedule. Always returns at least 1.
+    var cadenceDays: Int { max(1, intervalDays) }
+
+    /// True when this plan uses the standard weekly (weekday-anchored) cadence.
+    var isWeekly: Bool { cadenceDays == 7 }
 
     var medication: GLPMedication {
         get { GLPMedication(rawValue: medicationRaw) ?? .other }

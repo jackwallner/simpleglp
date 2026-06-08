@@ -1,6 +1,19 @@
 import Foundation
 import SwiftData
 
+/// User-facing strings for schedule cadence.
+enum GLPScheduleFormat {
+    /// A human label for an every-N-days cadence, e.g. "day", "week", "2 weeks", "10 days".
+    /// Reads naturally after "Repeat every".
+    static func intervalLabel(_ days: Int) -> String {
+        let n = max(1, days)
+        if n == 1 { return "day" }
+        if n == 7 { return "week" }
+        if n % 7 == 0 { return "\(n / 7) weeks" }
+        return "\(n) days"
+    }
+}
+
 enum ScheduleEngine {
     struct Match: Sendable {
         let scheduledDate: Date?
@@ -51,22 +64,33 @@ enum ScheduleEngine {
         )
     }
 
-    static func nextExpectedDate(after date: Date = .now, plan: MedicationPlan?, calendar: Calendar = .current) -> Date? {
-        guard let plan else { return nil }
-        // Anchor on the first canonical scheduled occurrence: preferred
-        // weekday/hour/minute, on or after the plan's start date.
-        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: plan.scheduleStartDate)
-        components.weekday = plan.preferredWeekday
-        components.hour = plan.preferredHour
-        components.minute = plan.preferredMinute
-        components.second = 0
-        guard var candidate = calendar.date(from: components) else { return nil }
-        while candidate < plan.scheduleStartDate {
-            guard let next = calendar.date(byAdding: .day, value: 7, to: candidate) else { return nil }
-            candidate = next
+    /// The first canonical scheduled dose for this plan.
+    /// - Weekly plans anchor on the preferred weekday/time within the start week, rolled forward
+    ///   to on/after the start date (preserves the original weekday-based behavior).
+    /// - Every-N-days plans anchor on the start date itself at the preferred time of day.
+    static func firstScheduledDate(plan: MedicationPlan, calendar: Calendar = .current) -> Date? {
+        if plan.isWeekly {
+            var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: plan.scheduleStartDate)
+            components.weekday = plan.preferredWeekday
+            components.hour = plan.preferredHour
+            components.minute = plan.preferredMinute
+            components.second = 0
+            guard var candidate = calendar.date(from: components) else { return nil }
+            while candidate < plan.scheduleStartDate {
+                guard let next = calendar.date(byAdding: .day, value: 7, to: candidate) else { return nil }
+                candidate = next
+            }
+            return candidate
         }
+        let startDay = calendar.startOfDay(for: plan.scheduleStartDate)
+        return calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: startDay)
+    }
+
+    static func nextExpectedDate(after date: Date = .now, plan: MedicationPlan?, calendar: Calendar = .current) -> Date? {
+        guard let plan, var candidate = firstScheduledDate(plan: plan, calendar: calendar) else { return nil }
+        let cadence = plan.cadenceDays
         while candidate <= date {
-            guard let next = calendar.date(byAdding: .day, value: 7, to: candidate) else { return nil }
+            guard let next = calendar.date(byAdding: .day, value: cadence, to: candidate) else { return nil }
             candidate = next
         }
         return candidate
@@ -78,32 +102,30 @@ enum ScheduleEngine {
     }
 
     static func expectedDates(around date: Date, plan: MedicationPlan, calendar: Calendar = .current) -> [Date] {
+        let cadence = plan.cadenceDays
         guard let anchor = scheduledDate(onOrBefore: date, plan: plan, calendar: calendar) else {
-            return [plan.scheduleStartDate]
+            return [firstScheduledDate(plan: plan, calendar: calendar) ?? plan.scheduleStartDate]
         }
-        return (-2...2).compactMap { calendar.date(byAdding: .day, value: $0 * 7, to: anchor) }
+        return (-2...2).compactMap { calendar.date(byAdding: .day, value: $0 * cadence, to: anchor) }
     }
 
+    /// The most recent scheduled dose on or before `date`, or nil if the first dose is still ahead.
     static func scheduledDate(onOrBefore date: Date, plan: MedicationPlan, calendar: Calendar = .current) -> Date? {
-        var components = calendar.dateComponents([.yearForWeekOfYear, .weekOfYear], from: max(plan.scheduleStartDate, date))
-        components.weekday = plan.preferredWeekday
-        components.hour = plan.preferredHour
-        components.minute = plan.preferredMinute
-        components.second = 0
-
-        var candidate = calendar.date(from: components)
-        if let c = candidate, c > date {
-            candidate = calendar.date(byAdding: .day, value: -7, to: c)
+        guard let first = firstScheduledDate(plan: plan, calendar: calendar) else { return nil }
+        if first > date { return nil }
+        let cadence = plan.cadenceDays
+        // Jump close arithmetically, then correct for any DST drift in both directions so the
+        // result is the largest occurrence <= date.
+        let secondsPerStep = Double(cadence) * 86_400
+        let approxSteps = max(0, Int((date.timeIntervalSince(first) / secondsPerStep).rounded(.down)))
+        var candidate = calendar.date(byAdding: .day, value: approxSteps * cadence, to: first) ?? first
+        while let next = calendar.date(byAdding: .day, value: cadence, to: candidate), next <= date {
+            candidate = next
         }
-        while let c = candidate, c < plan.scheduleStartDate {
-            candidate = calendar.date(byAdding: .day, value: 7, to: c)
+        while candidate > date {
+            guard let prev = calendar.date(byAdding: .day, value: -cadence, to: candidate) else { break }
+            candidate = prev
         }
-        // If pushing past the start date moved us past `date`, there is no
-        // scheduled occurrence on or before `date` yet — return nil rather
-        // than a future date.
-        if let c = candidate, c > date {
-            return nil
-        }
-        return candidate
+        return candidate > date ? nil : candidate
     }
 }
