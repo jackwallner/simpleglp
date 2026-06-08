@@ -106,6 +106,8 @@ struct PlanEditorView: View {
     @State private var doseMg = 0.25
     @State private var useCustomDose = false
     @State private var weekday = Calendar.current.component(.weekday, from: Date())
+    @State private var intervalDays = 7
+    @State private var startDate = Date()
     @State private var hour = 9
     @State private var minute = 0
     @State private var reminderEnabled = true
@@ -133,23 +135,25 @@ struct PlanEditorView: View {
                 doseField
             }
             Section("Schedule") {
-                Picker("Day", selection: $weekday) {
-                    ForEach(1..<8, id: \.self) { d in
-                        Text(Calendar.current.weekdaySymbols[d - 1]).tag(d)
+                Stepper(value: $intervalDays, in: 1...90) {
+                    HStack {
+                        Text("Repeat every")
+                        Spacer()
+                        Text(GLPScheduleFormat.intervalLabel(intervalDays))
+                            .foregroundStyle(.secondary)
                     }
                 }
-                .pickerStyle(.segmented)
-                HStack {
-                    Text("Time")
-                    Spacer()
-                    Picker("Hour", selection: $hour) {
-                        ForEach(0..<24, id: \.self) { Text(String(format: "%02d", $0)).tag($0) }
+                if intervalDays == 7 {
+                    Picker("Day", selection: $weekday) {
+                        ForEach(1..<8, id: \.self) { d in
+                            Text(Calendar.current.shortWeekdaySymbols[d - 1]).tag(d)
+                        }
                     }
-                    Text(":")
-                    Picker("Minute", selection: $minute) {
-                        ForEach([0, 15, 30, 45], id: \.self) { Text(String(format: "%02d", $0)).tag($0) }
-                    }
+                    .pickerStyle(.segmented)
+                } else {
+                    DatePicker("First dose", selection: $startDate, displayedComponents: .date)
                 }
+                DatePicker("Time", selection: timeOfDay, displayedComponents: .hourAndMinute)
             }
             Section("Reminders") {
                 Toggle("Enabled", isOn: $reminderEnabled)
@@ -187,11 +191,24 @@ struct PlanEditorView: View {
             doseMg = p.doseMg
             useCustomDose = !p.medication.standardDoseStepsMg.contains(p.doseMg)
             weekday = p.preferredWeekday
+            intervalDays = p.cadenceDays
+            startDate = p.scheduleStartDate
             hour = p.preferredHour
             minute = p.preferredMinute
             reminderEnabled = p.reminderEnabled
             reminderLeadMinutes = p.reminderLeadMinutes
         }
+    }
+
+    private var timeOfDay: Binding<Date> {
+        Binding(
+            get: { Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: Date()) ?? Date() },
+            set: { newValue in
+                let comps = Calendar.current.dateComponents([.hour, .minute], from: newValue)
+                hour = comps.hour ?? hour
+                minute = comps.minute ?? minute
+            }
+        )
     }
 
     private var notificationsOffWarning: some View {
@@ -255,6 +272,12 @@ struct PlanEditorView: View {
         plan.preferredWeekday = weekday
         plan.preferredHour = hour
         plan.preferredMinute = minute
+        plan.intervalDays = intervalDays
+        // Weekly plans anchor on the weekday and keep their original start date; every-N-days
+        // plans anchor on the chosen first-dose date.
+        if intervalDays != 7 {
+            plan.scheduleStartDate = startDate
+        }
         plan.reminderEnabled = reminderEnabled
         plan.reminderLeadMinutes = reminderLeadMinutes
         plan.updatedAt = .now
