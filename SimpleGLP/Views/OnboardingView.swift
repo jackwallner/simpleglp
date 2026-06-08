@@ -11,6 +11,7 @@ struct OnboardingView: View {
     @State private var useCustomDose = false
     @State private var startDate = Date()
     @State private var weekday = Calendar.current.component(.weekday, from: Date())
+    @State private var intervalDays = 7
     @State private var hour = 9
     @State private var minute = 0
     @State private var reminderEnabled = true
@@ -203,22 +204,37 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "calendar",
                 iconColor: AppTheme.calm,
-                title: "When is your shot day?",
-                subtitle: "We'll line up your weekly rhythm from here."
+                title: "How often do you dose?",
+                subtitle: "We'll line up your dose rhythm from here."
             )
             VStack(alignment: .leading, spacing: 18) {
-                DatePicker("Start date", selection: $startDate, displayedComponents: .date)
-                    .font(.body)
-                VStack(alignment: .leading, spacing: 10) {
-                    Text("Day of week")
-                        .foregroundStyle(.secondary)
-                        .font(.subheadline)
-                    Picker("Day", selection: $weekday) {
-                        ForEach(1..<8, id: \.self) { d in
-                            Text(Calendar.current.shortWeekdaySymbols[d - 1]).tag(d)
-                        }
+                Stepper(value: $intervalDays, in: 1...90) {
+                    HStack {
+                        Text("Repeat every")
+                            .font(.body)
+                        Spacer()
+                        Text(GLPScheduleFormat.intervalLabel(intervalDays))
+                            .foregroundStyle(.secondary)
                     }
-                    .pickerStyle(.segmented)
+                }
+                DatePicker(
+                    intervalDays == 7 ? "Start date" : "First dose",
+                    selection: $startDate,
+                    displayedComponents: .date
+                )
+                .font(.body)
+                if intervalDays == 7 {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Day of week")
+                            .foregroundStyle(.secondary)
+                            .font(.subheadline)
+                        Picker("Day", selection: $weekday) {
+                            ForEach(1..<8, id: \.self) { d in
+                                Text(Calendar.current.shortWeekdaySymbols[d - 1]).tag(d)
+                            }
+                        }
+                        .pickerStyle(.segmented)
+                    }
                 }
                 DatePicker(
                     "Time",
@@ -342,6 +358,7 @@ struct OnboardingView: View {
             preferredWeekday: weekday,
             preferredHour: hour,
             preferredMinute: minute,
+            intervalDays: intervalDays,
             reminderEnabled: reminderEnabled,
             reminderLeadMinutes: reminderLeadMinutes
         )
