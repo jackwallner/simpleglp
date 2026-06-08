@@ -9,11 +9,8 @@ struct OnboardingView: View {
     @State private var customMedicationName = ""
     @State private var doseMg = 0.25
     @State private var useCustomDose = false
-    @State private var startDate = Date()
-    @State private var weekday = Calendar.current.component(.weekday, from: Date())
+    @State private var firstDose = Calendar.current.date(bySettingHour: 9, minute: 0, second: 0, of: .now) ?? .now
     @State private var intervalDays = 7
-    @State private var hour = 9
-    @State private var minute = 0
     @State private var reminderEnabled = true
     @State private var reminderLeadMinutes = 0
     @State private var enableHealth = true
@@ -205,60 +202,15 @@ struct OnboardingView: View {
                 icon: "calendar",
                 iconColor: AppTheme.calm,
                 title: "How often do you dose?",
-                subtitle: "We'll line up your dose rhythm from here."
+                subtitle: "Set your first dose and we'll keep the rhythm from there."
             )
-            VStack(alignment: .leading, spacing: 18) {
-                Stepper(value: $intervalDays, in: 1...90) {
-                    HStack {
-                        Text("Repeat every")
-                            .font(.body)
-                        Spacer()
-                        Text(GLPScheduleFormat.intervalLabel(intervalDays))
-                            .foregroundStyle(.secondary)
-                    }
-                }
-                DatePicker(
-                    intervalDays == 7 ? "Start date" : "First dose",
-                    selection: $startDate,
-                    displayedComponents: .date
-                )
-                .font(.body)
-                if intervalDays == 7 {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Day of week")
-                            .foregroundStyle(.secondary)
-                            .font(.subheadline)
-                        Picker("Day", selection: $weekday) {
-                            ForEach(1..<8, id: \.self) { d in
-                                Text(Calendar.current.shortWeekdaySymbols[d - 1]).tag(d)
-                            }
-                        }
-                        .pickerStyle(.segmented)
-                    }
-                }
-                DatePicker(
-                    "Time",
-                    selection: timeOfDay,
-                    displayedComponents: .hourAndMinute
-                )
-                .font(.body)
+            VStack(alignment: .leading, spacing: 16) {
+                ScheduleFields(firstDose: $firstDose, intervalDays: $intervalDays)
+                    .font(.body)
             }
             .padding(18)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
-    }
-
-    private var timeOfDay: Binding<Date> {
-        Binding(
-            get: {
-                Calendar.current.date(bySettingHour: hour, minute: minute, second: 0, of: Date()) ?? Date()
-            },
-            set: { newValue in
-                let comps = Calendar.current.dateComponents([.hour, .minute], from: newValue)
-                hour = comps.hour ?? hour
-                minute = comps.minute ?? minute
-            }
-        )
     }
 
     private var reminderStep: some View {
@@ -354,14 +306,11 @@ struct OnboardingView: View {
             medication: medication,
             customMedicationName: medication == .other ? customMedicationName : nil,
             doseMg: doseMg,
-            scheduleStartDate: startDate,
-            preferredWeekday: weekday,
-            preferredHour: hour,
-            preferredMinute: minute,
             intervalDays: intervalDays,
             reminderEnabled: reminderEnabled,
             reminderLeadMinutes: reminderLeadMinutes
         )
+        plan.firstDoseAnchor = firstDose
         modelContext.insert(plan)
         try? modelContext.save()
         if enableHealth {
