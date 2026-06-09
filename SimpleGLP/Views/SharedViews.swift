@@ -34,46 +34,64 @@ struct ScheduleFields: View {
     }
 }
 
-/// "Repeat" as a menu of human presets (daily / weekly / 2 weeks / 4 weeks) with a Custom
-/// escape hatch that reveals a stepper for any 1–90 day interval.
+/// "Repeat every [N] [days/weeks]" — a count menu plus a unit menu, the way medication
+/// reminders are usually expressed. The underlying model is a fixed day-interval, so the
+/// unit is just a multiplier (day ×1, week ×7); GLP-1s are only ever dosed daily or weekly.
 struct CadenceField: View {
     @Binding var intervalDays: Int
-    @State private var isCustom = false
+    @State private var count = 1
+    @State private var unit: Unit = .week
 
-    private static let customTag = -1
+    private enum Unit: Hashable {
+        case day, week
+        var perStep: Int { self == .week ? 7 : 1 }
+        /// Caps cover the prior custom range (1–90 days): 90 days, or 12 weeks (84 days).
+        var maxCount: Int { self == .week ? 12 : 90 }
 
-    var body: some View {
-        Picker("Repeat", selection: selection) {
-            Text("Every day").tag(1)
-            Text("Weekly").tag(7)
-            Text("Every 2 weeks").tag(14)
-            Text("Every 4 weeks").tag(28)
-            Text("Custom…").tag(Self.customTag)
-        }
-        .pickerStyle(.menu)
-        .onAppear { isCustom = !GLPScheduleFormat.presets.contains(intervalDays) }
-        if isCustom {
-            Stepper(value: $intervalDays, in: 1...90) {
-                HStack {
-                    Text("Every")
-                    Spacer()
-                    Text(GLPScheduleFormat.intervalLabel(intervalDays))
-                        .foregroundStyle(.secondary)
-                }
-            }
+        /// Largest natural unit that divides the interval cleanly, e.g. 14 → (2, .week).
+        static func decode(_ days: Int) -> (count: Int, unit: Unit) {
+            let n = max(1, days)
+            return n % 7 == 0 ? (n / 7, .week) : (n, .day)
         }
     }
 
-    private var selection: Binding<Int> {
+    var body: some View {
+        HStack {
+            Text("Repeat every")
+            Spacer()
+            Picker("Count", selection: countBinding) {
+                ForEach(1...unit.maxCount, id: \.self) { Text("\($0)").tag($0) }
+            }
+            .labelsHidden()
+            .pickerStyle(.menu)
+            Picker("Unit", selection: unitBinding) {
+                Text("day").tag(Unit.day)
+                Text("week").tag(Unit.week)
+            }
+            .labelsHidden()
+            .pickerStyle(.menu)
+        }
+        .onAppear {
+            let decoded = Unit.decode(intervalDays)
+            count = decoded.count
+            unit = decoded.unit
+        }
+    }
+
+    private var countBinding: Binding<Int> {
         Binding(
-            get: { isCustom ? Self.customTag : intervalDays },
-            set: { newValue in
-                if newValue == Self.customTag {
-                    isCustom = true
-                } else {
-                    isCustom = false
-                    intervalDays = newValue
-                }
+            get: { count },
+            set: { count = $0; intervalDays = $0 * unit.perStep }
+        )
+    }
+
+    private var unitBinding: Binding<Unit> {
+        Binding(
+            get: { unit },
+            set: { newUnit in
+                count = min(count, newUnit.maxCount)
+                unit = newUnit
+                intervalDays = count * newUnit.perStep
             }
         )
     }
