@@ -3,9 +3,6 @@ import SwiftData
 
 /// User-facing strings for schedule cadence.
 enum GLPScheduleFormat {
-    /// Common cadences surfaced as menu presets. Anything else is "Custom".
-    static let presets: [Int] = [1, 7, 14, 28]
-
     /// A human label for an every-N-days cadence, e.g. "day", "week", "2 weeks", "10 days".
     /// Reads naturally after "Repeat every".
     static func intervalLabel(_ days: Int) -> String {
