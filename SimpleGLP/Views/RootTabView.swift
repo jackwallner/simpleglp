@@ -63,6 +63,11 @@ struct RootTabView: View {
         .sheet(isPresented: $showTrialPaywall) {
             SimplePaywallView(paywallImpressionId: trialPaywallImpressionId)
                 .environmentObject(store)
+                // Persist "seen" only once the sheet actually appears. On a fresh install the
+                // HealthKit permission sheet from onboarding can swallow this presentation; if
+                // the flag were set up front the offer would be lost forever — this way it
+                // retries on the next launch.
+                .onAppear { hasSeenFirstRunOffer = true }
         }
         .onReceive(NotificationCenter.default.publisher(for: .glpFirstShotLogged)) { _ in
             presentFirstShotOfferIfEligible()
@@ -83,7 +88,6 @@ struct RootTabView: View {
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 450_000_000)
             guard !hasSeenFirstRunOffer, !store.isProUnlocked, !showReviewPrompt else { return }
-            hasSeenFirstRunOffer = true
             trialPaywallImpressionId = "simpleglp_first_run"
             showTrialPaywall = true
         }
