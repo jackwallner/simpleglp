@@ -1,73 +1,88 @@
-# PASTE EVERYTHING BELOW THIS LINE INTO CLAUDE DESIGN
-# (upload raw-1 … raw-5 and raw-w1 alongside it)
+# Claude Design prompt — App Store screenshots (link local code: ~/simpleglp)
+# Paste everything below this line after linking the repo.
 
-Produce exactly 5 finished App Store screenshot images and nothing else.
-No preamble, no explanations, no design alternates, no extra frames, no icons,
-no manifest, no follow-up questions. Just the 5 files.
+Produce exactly 6 finished App Store screenshot PNGs and nothing else. No
+preamble, no explanations, no alternates, no extra frames, no manifest, no
+follow-up questions.
 
-## Hard output spec (non-negotiable)
+## Context in the linked repo
 
-- Every file: **1290 × 2796 pixels, portrait** (iPhone 6.9" App Store size).
-  Exact pixels. If your renderer can't hit it exactly, match the 1290:2796
-  aspect ratio precisely at the highest resolution you can — it will be
-  resized down, never cropped.
-- PNG, sRGB, no transparency.
-- File names exactly: `store-1-onetap.png`, `store-2-log.png`,
-  `store-3-reminder.png`, `store-4-watch.png`, `store-5-private.png`.
+- `claude-design/raw/` — real device screenshots of the shipping app. These
+  are ground truth for layout, spacing, color, and type. Match them exactly.
+- `claude-design/BRAND.md` — brand tokens. `SimpleGLP/Views/` — the SwiftUI
+  source for every screen, if you need to confirm a detail.
 
-## What these are
+## Hard output spec
 
-App Store screenshots for **Simple GLP**, a one-tap GLP-1 injection tracker.
-Store listing terms these must convert (searcher sees them and thinks "yes,
-this is the thing I searched for"): **GLP-1 shot tracker, peptide tracker,
-shot log, dose log, weekly injection reminder, private**.
+- Every file exactly **1320 × 2868 px, portrait** (iPhone 6.9" App Store
+  size — same resolution as the raws). PNG, sRGB, no transparency. If you
+  cannot hit exact pixels, match the 1320:2868 aspect ratio precisely at max
+  resolution; never crop.
+- Filenames: `store-1-onetap.png`, `store-2-log.png`, `store-3-reminders.png`,
+  `store-4-watch.png`, `store-5-patterns.png`, `store-6-dark.png`.
 
-Audience: people on weekly GLP-1 shots who want the laziest possible tracker
-and are tired of bloated food-logging apps. Tone: calm, effortless, zero
-judgment. Never pushy, never clinical.
+## What these must do
 
-**Do NOT put drug brand names (Ozempic, Wegovy, Mounjaro, Zepbound) anywhere
-in these images.**
+Sell **Simple GLP** — the laziest GLP-1 injection tracker — to someone who
+just searched: **glp-1 shot tracker, peptide tracker, shot log, dose log,
+weekly injection reminder**. Headlines echo those exact terms so the search
+is visually confirmed in frame 1. Tone: calm, effortless, zero judgment.
+**No drug brand names (Ozempic, Wegovy, Mounjaro, Zepbound) anywhere.**
 
-## Visual system
+## Frame anatomy (identical treatment across all 6)
 
-- Background: warm off-white `#FAF8F4`, optionally with a very soft radial
-  wash of `#2FBF71` at ≤8% opacity. All 5 frames share the same background
-  treatment so the set reads as one family.
-- Headline: SF Pro Rounded, heavy weight, color `#1A1A1A`, very large
-  (~110–130 px cap height), top of frame, max 2 lines, generous air.
-- Subline: SF Pro Rounded regular, `#7A7A7A`, ~55 px, one line.
-- One green `#2FBF71` accent per frame maximum (an underline, a keyword in
-  the headline, or the button already visible in the screenshot — not all).
-- Device: modern iPhone frame (thin dark titanium bezel, no notch art
-  needed), centered, occupying roughly the lower 72–78% of the canvas,
-  slight soft drop shadow. Corner radius consistent across all frames.
-- **Use my uploaded screenshots as-is inside the device frame. Do not redraw,
-  re-typeset, or invent app UI. Do not change any data shown in them.**
+- Canvas: warm off-white `#FAF8F4` (`#121212` for frame 6), optional soft
+  radial wash of `#2FBF71` at ≤8% opacity.
+- Headline: SF Pro Rounded heavy, `#1A1A1A` (`#F2F2F2` on frame 6),
+  ~115 px, top of canvas, max 2 lines. Subline: SF Pro Rounded regular,
+  `#7A7A7A`, ~55 px, one line. At most one `#2FBF71` accent per frame.
+- Device: modern iPhone frame, centered, lower ~74% of canvas, soft shadow.
 
-## The 5 frames
+## Screen content — recreate, don't paste
 
-1. `store-1-onetap.png` — uses upload **raw-1-onetap**
+Rebuild each screen pixel-faithful to its raw (same layout, type, colors,
+tab bar, status bar at 9:41 full battery) but with the idealized data below.
+Do not invent UI elements that aren't in the raws or the SwiftUI source.
+
+1. `store-1-onetap.png` — recreate `raw-1-onetap-hero-light.png`.
+   Data: header "You took your shot. Nice. See you next week." · next-dose
+   card "In 7 days / June 17, 2026 / 9:00 AM / Dose 0.5 mg" · green
+   "I took my shot" button · Last few shots: "June 10, 2026 / 9:04 AM /
+   On schedule".
    Headline: `The one‑tap GLP‑1 shot tracker`
    Subline: `Tap once a week. That's the whole app.`
 
-2. `store-2-log.png` — uses upload **raw-2-history**
-   Headline: `Your shot log, kept for you`
-   Subline: `Every dose, date, and injection site — automatic.`
+2. `store-2-log.png` — recreate `raw-2-history-light.png` filled with a real
+   history. "Jun 2026": Jun 10 · 0.5 mg, Jun 3 · 0.5 mg. "May 2026": May 27
+   · 0.5 mg, May 20 · 0.5 mg, May 13 · 0.25 mg, May 6 · 0.25 mg. "Apr
+   2026": Apr 29 · 0.25 mg, Apr 22 · 0.25 mg. Every row ~9:00 AM with a
+   green "On schedule" badge — the dose increase from 0.25 to 0.5 must be
+   visible.
+   Headline: `Your shot log & dose schedule`
+   Subline: `Every dose, date, and increase — tracked for you.`
 
-3. `store-3-reminder.png` — uses upload **raw-3-reminder**
+3. `store-3-reminders.png` — recreate `raw-3-proactive-alerts-light.png`
+   with "Enable Proactive Alerts" ON and "Predict from your patterns" ON
+   (green), quiet hours 10 PM–7 AM as shown.
    Headline: `Never miss a weekly shot`
-   Subline: `Set your injection day once. We handle the reminders.`
+   Subline: `Set your shot day once. We handle the reminders.`
 
-4. `store-4-watch.png` — uses uploads **raw-4-widget** and **raw-w1-watch**
-   Composite: iPhone frame (showing the widget screenshot) with an Apple
-   Watch frame (showing the watch screenshot) overlapping its lower-right,
-   both inside the same canvas.
-   Headline: `Log from your wrist or Home Screen`
-   Subline: `Apple Watch app and widget included.`
+4. `store-4-watch.png` — Apple Watch (Series 10, midnight) device frame
+   instead of an iPhone, larger in frame, showing
+   `raw-w1-watch-idle.png` as-is (do not redraw the watch UI).
+   Headline: `Log it from your wrist`
+   Subline: `One tap on Apple Watch. Phone stays in your pocket.`
 
-5. `store-5-private.png` — uses upload **raw-5-settings**
-   Headline: `Private by design`
-   Subline: `On‑device. No account. Your data stays yours.`
+5. `store-5-patterns.png` — recreate `raw-4-patterns-light.png`.
+   Data: Schedule adherence "96% on schedule" / "23 of 24 shots logged
+   within the expected window." · Timing pattern "Most shots on Wednesday"
+   · Proactive Alerts row as shown.
+   Headline: `Gentle insights. 100% on‑device.`
+   Subline: `Private by design — no account, no cloud, no judgment.`
 
-Deliver the 5 PNGs. Nothing else.
+6. `store-6-dark.png` — recreate `raw-5-onetap-hero-dark.png` (dark mode
+   hero) with the same idealized data as frame 1, on the `#121212` canvas.
+   Headline: `Easy on you. Easy on your eyes.`
+   Subline: `Full dark mode, widget, and Apple Watch included.`
+
+Deliver the 6 PNGs. Nothing else.
