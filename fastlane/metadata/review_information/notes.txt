@@ -1,10 +1,22 @@
-Simple GLP is a private, on-device GLP-1 shot tracker. No account required — the app launches straight into onboarding.
+Simple GLP is a private, on-device GLP-1 shot tracker. No account or sign-in exists — the app launches straight into onboarding, so the demo credential fields are intentionally blank.
 
-Testing the core flow:
-1. Open the app, accept onboarding (HealthKit prompt is optional and may be declined).
-2. Tap the large shot button on the Home tab to log a shot. A toast confirms with an Undo action.
-3. The Home Screen widget and Apple Watch app provide the same one-tap log via App Intents and WatchConnectivity.
+CORE FLOW
+1. Launch → 5-step onboarding (welcome, medication, schedule, reminders, Health context). The HealthKit read prompt and the notification prompt are both optional and may be declined; the app works fully without them.
+2. The first tab is named "One Tap". Tap the large green "I took my shot" button to log a shot. A confirmation appears with an "Undo" option.
+3. "History" tab lists logged shots (tap a row to edit details; swipe to delete, with confirmation). "Patterns" tab shows adherence/timing stats once 5 shots are logged.
+4. The Home Screen widget (small/medium) and the Apple Watch app offer the same one-tap log via App Intents and WatchConnectivity.
 
-Simple GLP Pro is an auto-renewing subscription that unlocks proactive pattern alerts. It is not required to use the app. To view the subscription paywall: Settings → "Upgrade to Pro", or the Patterns tab → tap the locked card. A dismissible offer also appears once after onboarding and once after the first logged shot.
+SUBSCRIPTION (Simple GLP Pro — optional, never required)
+Products: yearly and monthly auto-renewing subscriptions plus a lifetime one-time purchase, served via RevenueCat.
+Where to find the paywall:
+- Settings tab → "Upgrade to Pro", or
+- Patterns tab → tap the blurred "What Pro watches for you" preview or the "See Plans" button.
+- A dismissible offer sheet also appears once after onboarding and once after the first logged shot (close via the X button).
+Pro unlocks "Proactive alerts" (Settings → Pro section after purchase): pattern-based dose-day notifications and a late-dose nudge. Price, renewal term, free-trial language (shown only to trial-eligible Apple IDs), Restore Purchases, Terms (standard EULA), and Privacy Policy links are all on the paywall. Restore Purchases is also in Settings → Pro.
 
-The app does not provide medical advice or dosing instructions. The "GLP-1" terminology refers to a category of medications the user is prescribed; the app only records timestamps and user-entered context.
+DATA & PRIVACY
+All shot data stays on device (SwiftData in an App Group). HealthKit is read-only context attached to logged shots; nothing is written back and nothing leaves the device. Settings → Data offers CSV "Export" and "Import". No analytics SDKs; RevenueCat processes purchases only.
+
+The app does not provide medical advice or dosing instructions; a disclaimer is shown in Settings → About. "GLP-1" refers to the medication category the user is prescribed; the app records timestamps and user-entered context only.
+
+Contact: Jack Wallner, +1 425 753 3411, jtest0979@gmail.com

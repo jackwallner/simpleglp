@@ -18,6 +18,10 @@ enum ProactiveAlertsEngine {
 
     static let minimumSampleSize = 5
     static let patternMinimumEvents = 6
+    static let lateDoseIdentifier = "glp-late-dose"
+    /// How long after the planned dose time the "dose slipping" nudge fires when no shot
+    /// has been logged for that occurrence.
+    static let lateDoseGraceHours = 4
 
     static func analyzeTimingPatterns(events: [ShotEvent], sensitivity: Double) -> [PatternCluster] {
         guard events.count >= patternMinimumEvents else { return [] }
@@ -36,13 +40,76 @@ enum ProactiveAlertsEngine {
     @MainActor
     static func schedulePatternAlertsIfEnabled(in context: ModelContext) async {
         let prefs = ProAlertPreferenceValues.current()
-        guard prefs.alertsEnabled, prefs.patternAlertsEnabled else {
+        guard prefs.alertsEnabled else {
             await cancelPatternNotifications()
+            cancelLateDoseNudge()
             return
         }
         let events = allShotEvents(in: context)
-        let clusters = analyzeTimingPatterns(events: events, sensitivity: prefs.patternAlertSensitivity)
-        await reschedulePatternNotifications(clusters: clusters, prefs: prefs)
+        if prefs.patternAlertsEnabled {
+            let clusters = analyzeTimingPatterns(events: events, sensitivity: prefs.patternAlertSensitivity)
+            await reschedulePatternNotifications(clusters: clusters, prefs: prefs)
+        } else {
+            await cancelPatternNotifications()
+        }
+        await rescheduleLateDoseNudge(plan: PlanStore.currentPlan(in: context), events: events, prefs: prefs)
+    }
+
+    /// The "never miss a dose" Pro nudge: if the next planned dose hasn't been logged a few
+    /// hours after its time, remind the user before the day fully slips. Rescheduled on every
+    /// capture (logging a shot claims the occurrence and pushes the nudge to the next one).
+    @MainActor
+    static func rescheduleLateDoseNudge(
+        plan: MedicationPlan?,
+        events: [ShotEvent],
+        prefs: ProAlertPreferenceValues,
+        calendar: Calendar = .current
+    ) async {
+        cancelLateDoseNudge()
+        guard prefs.alertsEnabled,
+              let plan,
+              let next = ScheduleEngine.nextExpectedDate(plan: plan, calendar: calendar),
+              !isOccurrenceClaimed(next, by: events)
+        else { return }
+
+        let granted = await ReminderService.ensureAuthorization()
+        guard granted else { return }
+
+        let fireDate = lateDoseFireDate(for: next, prefs: prefs, calendar: calendar)
+        let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
+        let content = UNMutableNotificationContent()
+        content.title = "Dose slipping?"
+        content.body = "Your \(plan.displayMedicationName) dose was planned for \(next.formatted(.dateTime.hour().minute())) today. One tap to log it and stay on track."
+        content.sound = .default
+        content.threadIdentifier = "pro-alerts"
+        let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+        let request = UNNotificationRequest(identifier: lateDoseIdentifier, content: content, trigger: trigger)
+        try? await UNUserNotificationCenter.current().add(request)
+    }
+
+    static func cancelLateDoseNudge() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [lateDoseIdentifier])
+    }
+
+    /// True when a logged shot already claimed this scheduled occurrence (same matching
+    /// tolerance ScheduleEngine uses), so the late-dose nudge shouldn't fire for it.
+    @MainActor
+    static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent]) -> Bool {
+        events.contains { event in
+            guard let scheduled = event.scheduledDate else { return false }
+            return abs(scheduled.timeIntervalSince(occurrence)) < 60
+        }
+    }
+
+    /// Planned time + grace, shifted forward out of quiet hours if needed.
+    static func lateDoseFireDate(for occurrence: Date, prefs: ProAlertPreferenceValues, calendar: Calendar = .current) -> Date {
+        var fire = occurrence.addingTimeInterval(TimeInterval(lateDoseGraceHours) * 3600)
+        var guardrail = 0
+        while prefs.isQuietHour(at: fire, calendar: calendar), guardrail < 24 {
+            fire = fire.addingTimeInterval(3600)
+            guardrail += 1
+        }
+        return fire
     }
 
     static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues) async {

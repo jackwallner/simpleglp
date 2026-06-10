@@ -1,7 +1,9 @@
+import SwiftData
 import SwiftUI
 import UserNotifications
 
 struct ProAlertsConfigView: View {
+    @Environment(\.modelContext) private var modelContext
     @StateObject private var prefs = ProAlertPreferences.shared
     @State private var notificationStatus: UNAuthorizationStatus = .notDetermined
     @State private var testAlertMessage: String?
@@ -11,8 +13,11 @@ struct ProAlertsConfigView: View {
             Section {
                 Toggle("Enable Proactive Alerts", isOn: $prefs.alertsEnabled)
                     .onChange(of: prefs.alertsEnabled) { _, newValue in
-                        if newValue {
-                            Task { await requestPermissionsIfNeeded() }
+                        Task {
+                            if newValue {
+                                await requestPermissionsIfNeeded()
+                            }
+                            await applyAlertSettings()
                         }
                     }
             } footer: {
@@ -58,6 +63,13 @@ struct ProAlertsConfigView: View {
         }
         .navigationTitle("Proactive Alerts")
         .task { await refreshPermissionStatuses() }
+        // Apply changes immediately — without this, new settings wouldn't take effect
+        // until the next shot capture reschedules notifications.
+        .onChange(of: prefs.patternAlertsEnabled) { _, _ in Task { await applyAlertSettings() } }
+        .onChange(of: prefs.patternAlertSensitivity) { _, _ in Task { await applyAlertSettings() } }
+        .onChange(of: prefs.quietHoursEnabled) { _, _ in Task { await applyAlertSettings() } }
+        .onChange(of: prefs.quietHoursStart) { _, _ in Task { await applyAlertSettings() } }
+        .onChange(of: prefs.quietHoursEnd) { _, _ in Task { await applyAlertSettings() } }
         .alert("Test Alert", isPresented: Binding(get: { testAlertMessage != nil }, set: { if !$0 { testAlertMessage = nil } })) {
             Button("OK", role: .cancel) {}
         } message: {
@@ -85,6 +97,10 @@ struct ProAlertsConfigView: View {
 
     private func refreshPermissionStatuses() async {
         notificationStatus = await UNUserNotificationCenter.current().notificationSettings().authorizationStatus
+    }
+
+    private func applyAlertSettings() async {
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: modelContext)
     }
 
     private func requestPermissionsIfNeeded() async {

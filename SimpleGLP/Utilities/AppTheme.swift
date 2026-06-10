@@ -24,7 +24,10 @@ enum AppTheme {
     )
     static let brand = Color(red: 0.184, green: 0.749, blue: 0.443)
     static let brandPressed = Color(red: 0.141, green: 0.620, blue: 0.361)
-    static let brandSoft = Color(red: 0.847, green: 0.937, blue: 0.871)
+    static let brandSoft = adaptive(
+        light: Color(red: 0.847, green: 0.937, blue: 0.871),
+        dark: Color(red: 0.110, green: 0.227, blue: 0.157)
+    )
     static let calm = Color(red: 0.357, green: 0.753, blue: 0.745)
     static let warm = Color(red: 0.957, green: 0.635, blue: 0.349)
     static let text = adaptive(

@@ -199,6 +199,45 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertEqual(plan.cadenceDays, 1)
     }
 
+    // MARK: - Late-dose nudge
+
+    func testLateDoseFireDateAddsGraceHours() {
+        let cal = Calendar.current
+        let prefs = ProAlertPreferenceValues(
+            alertsEnabled: true, quietHoursEnabled: false, quietHoursStart: 22, quietHoursEnd: 7,
+            patternAlertsEnabled: false, patternAlertSensitivity: 0
+        )
+        let dose = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 9))!
+        let fire = ProactiveAlertsEngine.lateDoseFireDate(for: dose, prefs: prefs, calendar: cal)
+        XCTAssertEqual(fire, cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 13))!)
+    }
+
+    func testLateDoseFireDateShiftsOutOfQuietHours() {
+        // Dose at 20:00 + 4h grace lands at midnight (quiet 22–7) → pushed to 7:00 next day.
+        let cal = Calendar.current
+        let prefs = ProAlertPreferenceValues(
+            alertsEnabled: true, quietHoursEnabled: true, quietHoursStart: 22, quietHoursEnd: 7,
+            patternAlertsEnabled: false, patternAlertSensitivity: 0
+        )
+        let dose = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 20))!
+        let fire = ProactiveAlertsEngine.lateDoseFireDate(for: dose, prefs: prefs, calendar: cal)
+        XCTAssertEqual(cal.component(.hour, from: fire), 7)
+        XCTAssertEqual(cal.component(.day, from: fire), 10)
+    }
+
+    @MainActor
+    func testLateDoseOccurrenceClaimedByLoggedShot() {
+        let cal = Calendar.current
+        let occurrence = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 9))!
+        let logged = ShotEvent(
+            timestamp: occurrence.addingTimeInterval(-3600),
+            scheduledDate: occurrence,
+            scheduleStatus: .onSchedule
+        )
+        XCTAssertTrue(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence, by: [logged]))
+        XCTAssertFalse(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence.addingTimeInterval(7 * 86_400), by: [logged]))
+    }
+
     func testIntervalLabel() {
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(1), "day")
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(7), "week")
