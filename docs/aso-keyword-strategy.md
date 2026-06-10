@@ -1,212 +1,224 @@
-# ASO keyword strategy — Simple GLP (US)
+# ASO keyword strategy — Simple GLP (US → 50 locales)
 
-**Data snapshot:** 2026-05-25 · Astro MCP · **SimpleGLP** app `105` · prelaunch (ranks mostly #1000 until live)
+**Data snapshot:** 2026-06-09 · Astro MCP app `105` · prelaunch
 
-## The mix (popularity vs difficulty)
+## The indie truth
 
-| Bucket | Rule | What you do |
-|--------|------|-------------|
-| **Attack** | pop ≥ 5 and diff ≤ 35, **or** brand terms (Ozempic, Mounjaro…) with pop ≥ 18 and diff ≤ 55 | Subtitle, screenshot #1–3, description opener |
-| **Siege** | pop ≥ 45 and diff ≥ 70, or generic giants (`health`, `weight loss`) | ASC **keyword field** only; months to move |
-| **Intel** | Competitor names (`shotsy`, `meagain`, `glapp`) | Track in Astro; never put in ASC copy |
-| **Ignore** | Single-word generics at low pop, wrong category (`weight tracker`, `glucose tracker`) | Delete in Astro UI |
+We're not beating Shotsy (25K ratings) or MeAgain (18K ratings) on head terms. This strategy is about **winnable pop/diff** — terms where:
+- pop ≥ 5 and diff ≤ 25 → **instant win** (put in subtitle, screenshots, description)
+- pop ≥ 18 and diff ≤ 55 → **brand conquest** (drug names, competitor names)
+- pop ≥ 45 and diff ≥ 70 → **keyword field only** (don't waste subtitle chars)
 
-**Sweet-spot ratio:** `popularity ÷ difficulty` — aim for **≥ 0.25** on phrases you own in copy.
+**Sweet spot:** `popularity ÷ difficulty ≥ 0.5` on anything in copy.
 
----
+## What changed from v1
 
-## Attack — optimize now
+| Aspect | Old (v1) | New (v2) |
+|--------|----------|----------|
+| Subtitle strategy | Feature-based (`One-Tap Widget · Watch Log`) | Drug-name-based (matches competitor format) |
+| `peptide tracker` pop | 40 | **51** (Astro actual) |
+| Keyword field | 96 chars, included drug names | 97 chars, drug names moved to subtitle |
+| Description | Generic opener | Weaves high-value keywords in first 2 sentences |
+| Competitor targets | Shotsy + MeAgain + Glapp | Added Pep, Glowise, Dose AI, Glapp |
 
-Lead marketing and creative around these (best pop/diff tradeoffs first):
+## Competitor subtitle analysis (US App Store)
 
-| Keyword | Pop | Diff | Why |
-|---------|-----|------|-----|
-| **peptide tracker** | 40 | 21 | Best ratio in category; GLP-1 searchers overlap peptide apps |
-| **shotsy** | 55 | 38 | #1 competitor brand query — intercept with “simpler / private” |
-| **glp1 tracker** | 30 | 51 | Core category head term |
-| **mounjaro** | 25 | 41 | Brand search, moderate difficulty |
-| **zepbound** | 25 | 47 | Brand search |
-| **ozempic** | 22 | 47 | Brand search |
-| **wegovy** | 23 | 55 | Brand search |
-| **dose log** | 5 | 7 | Easiest win — matches “log dose later” UX |
-| **shot log** | 5 | 13 | One-tap positioning |
-| **injection schedule** | 5 | 13 | Weekly schedule feature |
-| **glp-1 injection** / **glp1 injection** | 5 | 13 | Literal use case |
-| **injection site log** | 5 | 15 | Differentiator vs bare trackers |
-| **weekly injection** | 5 | 15 | Schedule engine |
-| **ozempic dose** / **mounjaro dose** | 5 | 15–17 | Brand + feature |
-| **glp-1 shot** | 5 | 23 | Tight product fit |
-| **ozempic shot** | 5 | 21 | High intent |
-| **private shot tracker** | 5 | 52 | “Private by design” — worth copy tests |
-| **one tap glp** | 5 | 50 | Matches hero UX |
+| App | Subtitle | Strategy |
+|-----|----------|----------|
+| **Shotsy** | `GLP1 Zepbound, Wegovy, Peptide` | Drug names indexing |
+| **MeAgain** | `Wegovy Pill Zepbound GLP1 Shot` | Drug names + format |
+| **Glapp** | `Zepbound Wegovy Ozempic GLP1` | Drug names only |
+| **Pep** | `Zepbound Ozempic Mounjaro GLP1` | Drug names only |
+| **Glowise** | `Ozempic Wegovy Mounjaro Pill` | Drug names + pill |
+| **Dose AI** | `For Zepbound, Wegovy, Ozempic` | Drug names with "For" |
+| **Our old** | `One-Tap Widget · Watch Log` | **Zero search indexing** |
 
-**Brand + tracker combos** (keep in Astro, reinforce in description):  
-`ozempic tracker`, `wegovy tracker`, `mounjaro tracker`, `zepbound tracker`, `semaglutide tracker`, `tirzepatide tracker`, `shot tracker`, `injection tracker`.
+**Lesson:** Every competitor uses subtitle for drug name SEO. We must too.
 
----
+## Proposed App Store Connect copy (en-US)
 
-## Siege — keyword field + patience
+### Name (30 chars) — keep
 
-High volume, high difficulty — do **not** waste subtitle characters here:
-
-| Keyword | Pop | Diff | Notes |
-|---------|-----|------|-------|
-| **health** | 68 | 79 | Too broad |
-| **weight loss tracker** | 61 | 76 | Dominated by diet apps |
-| **weight loss** | 56 | 83 | Same |
-| **apple health** | 60 | 65 | You’re HealthKit *read* — say that in description, not field |
-| **tracker** | 52 | 81 | Meaningless alone |
-| **weight** | 45 | 80 | Generic |
-| **shot** | 30 | 82 | Sports noise |
-
----
-
-## Ignore — remove in Astro UI
-
-Low ROI or wrong intent (MCP cannot delete):
-
-- `health app`, `weight tracker`, `healthkit tracker`, `glucose tracker`, `widget tracker`, `watch complication`
-- Lone tokens you already cover in phrases: `glp-1`, `injection`, `semaglutide`, `tirzepatide` (unless you want them for field experiments)
-
----
-
-## Recommended App Store Connect copy
-
-Apple indexes **name + subtitle + keyword field** together. **Never repeat a word** across the three — duplicates waste the 100-char keyword budget (comma-separated, **no spaces**: `KEY,WORD,CYX`).
-
-### Name (30 chars max) — **updated**
-
-| | |
-|--|--|
-| **Was (ASC)** | `Easy GLP - Simple GLP1 Tracker` (30) |
-| **Now (repo)** | `Easy GLP - GLP-1 Shot Tracker` (29) |
-
-**Indexes from name:** Easy, GLP, GLP-1, Shot, Tracker → covers `glp-1 shot tracker`, brand **Easy GLP**.
-
-### Subtitle (30 chars max) — **updated**
-
-| | |
-|--|--|
-| **Was** | *(empty)* |
-| **Now** | `One-Tap Widget · Watch Log` (28) |
-
-**Indexes from subtitle:** One-Tap, Widget, Watch, Log — **no repeat** of Shot/GLP-1/Tracker (already in name).
-
-### Keyword field (100 chars max) — **updated**
-
-| | |
-|--|--|
-| **Was** | `GLP-1,shot,injection,tracker,…,weight,health` (100) — repeated `tracker`, siege `health`/`weight` |
-| **Now** | `ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,peptide,reminder,injection,private,dose` (**93 chars**) |
-
-| Token | Role |
-|-------|------|
-| ozempic, wegovy, mounjaro, zepbound, semaglutide, tirzepatide | Brand **Attack/Siege** (not in name/subtitle) |
-| peptide | Best pop/diff ratio (40/21) |
-| reminder, injection, private, dose | Feature **Attack** terms |
-
-**Deliberately NOT in field** (already indexed elsewhere): `glp1`, `shot`, `widget`, `watch`, `log`, `tracker`, `health`, `weight`.
-
-**Room left:** 7 chars — e.g. add `,site` (4+1) if you want injection-site indexing in field.
-
-Upload when ready:
-
-```bash
-./scripts/upload-appstore-metadata.sh   # if present, or fastlane upload_metadata
+```
+Simple GLP: GLP-1 Shot Tracker   (30)
 ```
 
----
+**Indexes:** Simple, GLP, GLP-1, Shot, Tracker → covers `glp-1 shot tracker`, `simple glp`.
+**Brand note:** `easy glp` and `simple glp` are both popularity 5 (ASO-neutral), so the
+brand word follows the binary — CFBundleDisplayName, paywall, and legal pages all say
+"Simple GLP" (Guideline 2.3 consistency; standardized 2026-06-04).
 
-## Astro: what to track (~100 terms)
+### Subtitle (30 chars) — NEW
 
-**Files:**
-
-- `scripts/astro-keywords-us.json` — curated sync list  
-- `scripts/astro-keyword-buckets.json` — attack / siege / mid / ignore  
-- `scripts/.astro-app.json` — app `105` SimpleGLP  
-
-**Priority tag in Astro UI (weekly):**  
-`peptide tracker`, `glp1 tracker`, `shotsy`, `mounjaro`, `zepbound`, `ozempic`, `wegovy`, `dose log`, `shot log`, `glp-1 shot`, `ozempic tracker`, `apple watch widget`, `one tap glp`
-
-**Re-sync:**
-
-```bash
-ASTRO_APP_NAME=SimpleGLP ./scripts/sync-astro-keywords.sh
+```
+GLP1 Ozempic Wegovy Zepbound   (28)
 ```
 
----
+**Indexes:** GLP1, Ozempic, Wegovy, Zepbound → covers `glp1`, `ozempic`, `wegovy`, `zepbound`.  
+**Why:** Every competitor does this. Frees 12+ chars from keyword field.
+
+### Keyword field (100 chars) — NEW
+
+```
+peptide,semaglutide,tirzepatide,mounjaro,injection,dose,weekly,private,reminder,dose log,shot log   (97)
+```
+
+| Token | Pop/Diff | Why it's here |
+|-------|----------|---------------|
+| peptide | catches `peptide tracker` 51/21 | **#1 winnable** — best ratio in category |
+| semaglutide | — | Drug name not in subtitle |
+| tirzepatide | — | Drug name not in subtitle |
+| mounjaro | — | Drug name not in subtitle |
+| injection | 5/21 | Covers `injection tracker`, `injection log`, `injection site` |
+| dose | — | Core term, covers `dose log`, `dose tracker` |
+| weekly | — | Covers `weekly injection`, `weekly shot log` |
+| private | — | Differentiator |
+| reminder | — | Feature term |
+| dose log | 5/7 | **Ultra winnable** — instant win |
+| shot log | 5/13 | **Ultra winnable** — instant win |
+
+**Not in field (already indexed in name/subtitle):** glp1, glp-1, ozempic, wegovy, zepbound, shot, tracker, easy.
+
+### What changed from keyword field v1
+
+| Drug | v1 (in keywords) | v2 (moved to subtitle) |
+|------|-------------------|----------------------|
+| ozempic | ✅ keyword field | ✅ subtitle |
+| wegovy | ✅ keyword field | ✅ subtitle |
+| zepbound | ✅ keyword field | ✅ subtitle |
+| mounjaro | ✅ keyword field | ✅ keyword field |
+| semaglutide | ✅ keyword field | ✅ keyword field |
+| tirzepatide | ✅ keyword field | ✅ keyword field |
+
+**Net gain:** `peptide` + `weekly` + `dose log` + `shot log` now fit in keyword field.
+
+## Attack buckets (all locales)
+
+### Tier 1 — Instant win (put in subtitle + screenshot 1–2 + description)
+
+| Keyword | Pop/Diff | Ratio | Why |
+|---------|----------|-------|-----|
+| **peptide tracker** | 51/21 | 2.42 | Best in category; Astro confirmed 51/21 |
+| **dose log** | 5/7 | 0.71 | Zero competition |
+| **shot log** | 5/13 | 0.38 | Ultra winnable |
+| **injection site log** | 5/15 | 0.33 | Differentiator |
+| **weekly injection** | 5/15 | 0.33 | Schedule feature |
+| **glp-1 injection** | 5/13 | 0.38 | Literal use case |
+| **glp1 injection** | 5/13 | 0.38 | Literal use case |
+| **injection schedule** | 5/13 | 0.38 | Schedule feature |
+| **injection** | 5/21 | 0.23 | Core term, low diff |
+| **injection tracker** | 5/21 | 0.23 | Core term |
+| **injection log** | 5/21 | 0.23 | Core term |
+| **glp-1 shot** | 5/23 | 0.21 | Core term |
+| **glp-1 reminder** | 5/23 | 0.21 | Feature term |
+| **ozempic dose** | 5/15 | 0.33 | Brand + dose |
+| **mounjaro dose** | 5/17 | 0.29 | Brand + dose |
+| **semaglutide log** | 5/21 | 0.23 | Drug + log |
+| **tirzepatide log** | 5/17 | 0.29 | Drug + log |
+| **ozempic shot** | 5/21 | 0.23 | Brand + shot |
+
+### Tier 2 — Brand conquest (subtitle + field)
+
+| Keyword | Pop/Diff | Ratio | Note |
+|---------|----------|-------|------|
+| **shotsy** | 55/38 | 1.44 | #1 competitor brand |
+| **zepbound** | 25/47 | 0.53 | In subtitle |
+| **ozempic** | 22/47 | 0.46 | In subtitle |
+| **wegovy** | 23/55 | 0.41 | In subtitle |
+| **mounjaro** | 25/41 | 0.60 | In keyword field |
+| **zepbound tracker** | 23/49 | 0.46 | Drug + function |
+| **glp1 tracker** | 29/51 | 0.56 | Core category term |
+| **mounjaro tracker** | 9/39 | 0.23 | Low pop but low diff |
+| **ozempic tracker** | 9/41 | 0.21 | Low pop but low diff |
+| **meagain** | 26/66 | 0.39 | Competitor (field only) |
+| **glapp** | 5/23 | 0.21 | Competitor (field only) |
+
+### Tier 3 — Siege (keyword field only)
+
+| Keyword | Pop/Diff | Note |
+|---------|----------|------|
+| health | 68/79 | Too broad |
+| weight loss | 56/83 | Diet app dominated |
+| weight loss tracker | 61/76 | Same |
+| tracker | 52/81 | Meaningless alone |
+| weight | 45/80 | Generic |
+| weight tracker | 54/70 | Not our category |
+| apple health | 60/65 | HealthKit integration mention |
+| shot | 31/82 | Sports noise |
 
 ## Screenshots ↔ keywords
 
 | Order | Keyword cluster | Headline direction |
 |-------|-----------------|-------------------|
-| 1 | glp1 tracker · one tap | “Log your GLP-1 shot in one tap” |
-| 2 | apple watch widget · watch shot | “Apple Watch + Home Screen widget” |
-| 3 | dose log · injection site | “Dose, site, notes — when you want them” |
-| 4 | weekly injection · injection schedule | “Weekly schedule that knows early vs late” |
-| 5 | private shot tracker · healthkit | “Private, on-device, optional Health context” |
+| 1 | glp1 tracker · one tap · peptide tracker | "The simplest GLP-1 tracker. One tap." |
+| 2 | shot log · dose log · injection site | "Dose, site, notes — log what matters." |
+| 3 | weekly injection · injection schedule | "Weekly schedule. Automatic reminders." |
+| 4 | apple watch widget · watch shot | "Widget + Watch. From your wrist." |
+| 5 | private · healthkit · on-device | "Private by design. No sign-up needed." |
 
-Do **not** lead with competitor names; use them only in comparison-style caption if at all.
+**Lead with `peptide tracker`** in screenshot #1 — it's our highest pop/diff ratio and the "peptide" framing differentiates from generic "shot trackers."
 
----
+## Description opener
 
-## Description opener (first 2 sentences)
+```
+Simple GLP is the fastest peptide tracker and shot log — log your weekly GLP-1 injection in one tap from iPhone, Apple Watch, or Home Screen widget. No accounts, no spreadsheets. Just a private dose log that works around your routine.
+```
 
-Include: **one tap**, **GLP-1 shot**, **Apple Watch**, **widget**, **private**, **weekly schedule**, **injection site**, **dose log**.
-
-Example:
-
-> **Simple GLP** is the fastest way to log a **GLP-1 shot in one tap** — from the app, **Home Screen widget**, or **Apple Watch**. Set your weekly schedule, optionally add **dose**, **injection site**, and notes later, and keep everything **private on your device**.
-
----
+Weaves in: peptide tracker, shot log, weekly, GLP-1 injection, one tap, private, dose log.
 
 ## Promotional text (170 chars)
 
 ```
-Log GLP-1 shots in one tap — iPhone, widget, and Apple Watch. Private weekly schedule, optional dose & site notes, HealthKit context. No account required.
+Log your GLP-1 shot in one tap — iPhone, widget, and Apple Watch. Private weekly dose log with optional injection site notes and HealthKit context. No account required. (158)
 ```
-
----
 
 ## What not to chase
 
 | Term | Why skip |
 |------|----------|
 | calorie counter, workout, golf, basketball | Competitor noise from `glp1 tracker` extraction |
-| weight loss tracker (alone) | pop 61, diff 76 — Mounjaro/Ozempic diet clutter |
-| glp-1 tracker **app** / **free** | Generic modifiers; low diff value |
-| AI glp1 tracker | Not your positioning |
+| weight loss / weight loss tracker | Diet app dominated (pop 56+/diff 76+) |
+| AI glp1 tracker | Not our positioning |
+| health / tracker / weight | Generic single words, high diff |
+| glp-1 tracker free | Modifier, low value |
+| glucose tracker | Different use case |
 
----
+## Competitor landscape (US)
 
-## Competitors (search intel)
+| App | Rating | Subtitle | Our angle vs them |
+|-----|--------|----------|-------------------|
+| **Shotsy** | 4.8 · 25K | GLP1 Zepbound, Wegovy, Peptide | Simpler, one-tap, no bloat |
+| **MeAgain** | 4.8 · 18K | Wegovy Pill Zepbound GLP1 Shot | Private, no account needed |
+| **Glapp** | 4.9 · 483 | Zepbound Wegovy Ozempic GLP1 | Less complex, widget-first |
+| **Pep** | 4.7 · 773 | Zepbound Ozempic Mounjaro GLP1 | One-tap vs full food diary |
+| **Glowise** | 4.8 · 958 | Ozempic Wegovy Mounjaro Pill | Focused shot tracker |
+| **Dose AI** | — | For Zepbound, Wegovy, Ozempic | Privacy positioning |
 
-Top US results for `glp-1 tracker` / `shotsy`: **Shotsy**, **MeAgain**, **Glapp**, GLPTracker, Shot Pal, OneShot.  
-Track their brand terms in Astro; differentiate on **privacy**, **one tap**, **no account**, **Watch/widget**.
+## Localization strategy (50 locales)
 
----
+For every locale:
+1. **Subtitle** → translate `GLP1 [local drug names]` format (brand drug names stay global)
+2. **Keywords** → native translations of feature terms (`dose log`, `shot log`, `weekly`, `private`, `reminder`, `injection`, `peptide`)
+3. **Description** → keep existing native translations, update opener to weave keywords
+4. **Name** → keep existing native names with the `Simple GLP` brand word (e.g., `Simple GLP: GLP-1 Spritzen-Log` for de-DE) — brand must match the binary in every locale
 
 ## Measurement plan
 
 | When | Check |
 |------|-------|
 | Prelaunch | All ranks #1000 — baseline only |
-| Day 7 after live | `glp1 tracker`, `peptide tracker`, `dose log`, `shot log` |
-| Day 14 | Subtitle A/B if you tested alternates |
-| Day 30 | Any term breaks top 200; promote to screenshot #1 |
+| Day 7 after live | `dose log`, `shot log`, `peptide tracker`, `glp1 tracker` |
+| Day 14 | Subtitle ranking for `ozempic`, `wegovy`, `zepbound` |
+| Day 30 | Any term breaks top 200; promote winner to screenshot #1 |
 
 **Win conditions (30 days post-launch):**
+- `peptide tracker` → top 100
+- `dose log` or `shot log` → top 50
+- Any drug brand in subtitle → top 150
+- `shotsy` → top 100 (conquest)
 
-- `glp1 tracker` or `peptide tracker` → top 100  
-- `dose log` or `shot log` → top 50  
-- `shotsy` → top 80 (conquest)  
-- One brand combo (`ozempic tracker`) → top 150  
+## Astro tracking updates
 
----
-
-## Files changed in this iteration
-
-- `fastlane/metadata/en-US/keywords.txt` — optimized field  
-- `fastlane/metadata/en-US/subtitle.txt` — Attack-term subtitle  
-- `scripts/astro-keywords-us.json` — curated ~100 keywords  
-- `scripts/astro-keyword-buckets.json` — bucket labels  
+- Add to `scripts/astro-keywords-us.json`: `peptide tracker`, `dose log`, `shot log` (if missing)
+- Remove from tracking: single-word generics that won't move (`health`, `weight`, `shot`)
+- Tag `peptide tracker` as priority — it's our #1 opportunity

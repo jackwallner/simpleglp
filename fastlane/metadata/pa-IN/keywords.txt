@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ਪੇਪਟਾਈਡ,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ
+mounjaro,semaglutide,tirzepatide,ਪੇਪਟਾਈਡ,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ,ਦਵਾਈ,ਲੌਗ

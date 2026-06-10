@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,पेप्टाइड,रिमाइंडर,इंजेक्शन,प्राइवेट,खुराक
+mounjaro,semaglutide,tirzepatide,पेप्टाइड,रिमाइंडर,इंजेक्शन,प्राइवेट,खुराक,साप्ताहिक,दवा,लॉग

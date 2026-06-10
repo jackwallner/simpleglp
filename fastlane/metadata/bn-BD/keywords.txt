@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,পেপটাইড,রিমাইন্ডার,ইনজেকশন,প্রাইভেট,ডোজ
+mounjaro,semaglutide,tirzepatide,পেপটাইড,রিমাইন্ডার,ইনজেকশন,প্রাইভেট,ডোজ,সাপ্তাহিক,ওষুধ,লগ

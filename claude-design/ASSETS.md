@@ -60,12 +60,19 @@ the "Jab" mascot face. Must read at 40px. Background `brand`, mark `surface`.
 
 ## I · App Store marketing screenshots
 Device-framed, on-brand bg, big caption bar. **Two sizes each:** 6.9"
-(1290×2796) and 6.5" (1242×2688). 5 frames:
-1. `store-1-onetap` — Home — "One tap. That's the whole app."
-2. `store-2-setonce` — Onboarding — "Set it once. We handle the rest."
-3. `store-3-remember` — Reminder — "We remember so you don't."
-4. `store-4-dose` — Titration card — "Your dose, on schedule. Automatically."
-5. `store-5-trends` — Insights — "See how you're doing — only if you care to."
+(1290×2796) and 6.5" (1242×2688). 5 frames. Lead with `peptide tracker`
+keyword cluster — our highest pop/diff term. **No drug names in headlines**
+(Ozempic, Wegovy etc. are in the ASC subtitle for search indexing — screenshots
+sell simplicity, not drugs):
+
+| Order | File prefix | What to screenshot | Headline | Keyword cluster |
+|-------|-------------|-------------------|----------|-----------------|
+| 1 | `store-1-onetap` | Home — the giant shot button, clean state | "The simplest GLP-1 tracker. One tap." | peptide tracker, glp1 tracker, one tap |
+| 2 | `store-2-log` | Log hub — dose, injection site, notes | "Log your shot, dose, and site. That's it." | dose log, shot log, injection site log |
+| 3 | `store-3-schedule` | Schedule — weekly cadence, auto-reminder | "Weekly schedule. Reminds you automatically." | weekly injection, injection schedule |
+| 4 | `store-4-watch` | Apple Watch + Home Screen widget together | "Widget and Watch. From your wrist." | apple watch widget, watch shot log |
+| 5 | `store-5-private` | Privacy or gentle stats card | "Private. On-device. No account needed." | private shot tracker, healthkit |
+
 → `fastlane/screenshots/en-US/`
 
 ## J · Engineering tokens

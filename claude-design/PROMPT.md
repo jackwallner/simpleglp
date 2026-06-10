@@ -102,12 +102,30 @@ G. Widget (@2x and @3x of each, point sizes given):
 H. watch-shot-glyph@2x.png — 88×88, high-contrast simple button/complication glyph.
 
 I. App Store screenshots — device-framed, on-brand background, big caption bar.
-   TWO sizes each: 6.9" (1290×2796) and 6.5" (1242×2688):
-   1. store-1-onetap — Home — "One tap. That's the whole app."
-   2. store-2-setonce — Onboarding — "Set it once. We handle the rest."
-   3. store-3-remember — Reminder — "We remember so you don't."
-   4. store-4-dose — Titration card — "Your dose, on schedule. Automatically."
-   5. store-5-trends — Insights — "See how you're doing — only if you care to."
+   TWO sizes each: 6.9" (1290×2796) and 6.5" (1242×2688). Lead with the keyword
+   cluster from the strategy doc — our best pop/diff term is `peptide tracker`.
+   5 frames for each of the 50 ASC locales (provide English source; localization
+    is done separately):
+   1. store-1-onetap — Home screen showing the giant shot button. Caption: "The
+      simplest GLP-1 tracker. One tap."  
+      *Keyword cluster: peptide tracker, glp1 tracker, one tap*
+   2. store-2-log — Log hub showing dose + injection site + notes. Caption: "Log
+      your shot, dose, and site. That's it."  
+      *Keyword cluster: dose log, shot log, injection site log*
+   3. store-3-schedule — Schedule showing weekly cadence. Caption: "Weekly
+      schedule. Reminds you automatically."  
+      *Keyword cluster: weekly injection, injection schedule, injection tracker*
+   4. store-4-watch — Apple Watch + widget on Home Screen. Caption: "Widget and
+      Watch. From your wrist."  
+      *Keyword cluster: apple watch widget, watch shot log, widget*
+   5. store-5-private — Privacy screen or simple stats card. Caption: "Private.
+      On-device. No account needed."  
+      *Keyword cluster: private shot tracker, healthkit, on-device*
+
+   Important: Do NOT use competitor names (Ozempic, Wegovy, etc.) in screenshot
+   headlines. Those are in the subtitle for search indexing. Screenshots sell the
+   *simplicity* angle — the one-tap peptide tracker for people tired of bloated
+   apps.
 
 J. tokens.json — all brand colors (light+dark hex), radii, spacing scale, type
    scale. Engineering consumes this directly.
