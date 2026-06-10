@@ -1,4 +1,3 @@
-import StoreKit
 import SwiftData
 import SwiftUI
 import UIKit
@@ -41,11 +40,6 @@ struct SettingsView: View {
                 } else {
                     Button("Upgrade to Pro") { showPaywall = true }
                 }
-                if store.isProUnlocked && store.hasSubscription {
-                    Button("Manage subscription") {
-                        Task { await openManageSubscriptions() }
-                    }
-                }
                 Button("Restore purchases") {
                     Task { await store.restorePurchases() }
                 }
@@ -87,14 +81,6 @@ struct SettingsView: View {
         }
     }
 
-    private func openManageSubscriptions() async {
-        guard let scene = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .first(where: { $0.activationState == .foregroundActive })
-            ?? UIApplication.shared.connectedScenes.compactMap({ $0 as? UIWindowScene }).first
-        else { return }
-        try? await AppStore.showManageSubscriptions(in: scene)
-    }
 }
 
 struct PlanEditorView: View {

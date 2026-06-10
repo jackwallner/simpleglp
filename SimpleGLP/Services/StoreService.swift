@@ -199,14 +199,6 @@ final class StoreService: NSObject, ObservableObject {
     var yearlyPackage: Package? { products.first { $0.glpProPackageKind == .yearly } }
     var lifetimePackage: Package? { products.first { $0.glpProPackageKind == .lifetime } }
 
-    /// True when Pro is from a recurring subscription (not lifetime). Reads `activeSubscriptions`
-    /// directly so "Manage subscription" appears even if the dashboard entitlement is mis-mapped.
-    var hasSubscription: Bool {
-        guard let info = customerInfo else { return false }
-        return info.activeSubscriptions.contains(GLPProProduct.yearly)
-            || info.activeSubscriptions.contains(GLPProProduct.monthly)
-    }
-
     private let logger = Logger(subsystem: "com.jackwallner.glp", category: "Store")
     private var isConfigured = false
     private var paywallImpressionsThisSession: Set<String> = []
