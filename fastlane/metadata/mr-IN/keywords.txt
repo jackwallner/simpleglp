@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,पेप्टाइड,स्मरण,इंजेक्शन,खाजगी,डोस,साप्ताहिक
+mounjaro,semaglutide,tirzepatide,पेप्टाइड,स्मरण,इंजेक्शन,खाजगी,डोस,साप्ताहिक,औषध,नोंद

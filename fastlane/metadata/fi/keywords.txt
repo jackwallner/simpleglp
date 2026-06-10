@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutidi,tirzepatidi,peptidi,muistutus,annos,vikoittain
+mounjaro,semaglutidi,tirzepatidi,peptidi,muistutus,yksityinen,annos,vikoittain

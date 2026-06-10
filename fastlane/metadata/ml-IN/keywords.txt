@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,പെപ്റ്റൈഡ്,ഓർമ്മ,ഇഞ്ചക്ഷൻ,സ്വകാര്യ,ഡോസ്
+mounjaro,semaglutide,tirzepatide,പെപ്റ്റൈഡ്,ഓർമ്മ,ഇഞ്ചക്ഷൻ,സ്വകാര്യ,ഡോസ്,ആഴ്ചതോറും,മരുന്ന്,രേഖ

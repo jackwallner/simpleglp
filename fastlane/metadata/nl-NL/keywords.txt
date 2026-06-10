@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,peptide,herinnering,privé,dosis,wekelijks
+semaglutide,tirzepatide,mounjaro,peptide,herinnering,privé,dosis,wekelijks,spuit,logboek

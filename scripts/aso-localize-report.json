@@ -1,302 +1,302 @@
 {
   "ar-SA": {
     "name_len": 22,
-    "subtitle_len": 23,
-    "keywords_len": 88,
+    "subtitle_len": 27,
+    "keywords_len": 75,
     "description_chars": 1036
   },
   "bn-BD": {
     "name_len": 26,
-    "subtitle_len": 19,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 90,
     "description_chars": 1075
   },
   "ca": {
     "name_len": 22,
-    "subtitle_len": 23,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 72,
     "description_chars": 1212
   },
   "cs": {
     "name_len": 22,
-    "subtitle_len": 23,
-    "keywords_len": 95,
+    "subtitle_len": 28,
+    "keywords_len": 71,
     "description_chars": 1237
   },
   "da": {
     "name_len": 28,
-    "subtitle_len": 24,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 70,
     "description_chars": 1249
   },
   "de-DE": {
     "name_len": 29,
     "subtitle_len": 28,
-    "keywords_len": 97,
+    "keywords_len": 93,
     "description_chars": 1345
   },
   "el": {
     "name_len": 27,
-    "subtitle_len": 20,
-    "keywords_len": 89,
+    "subtitle_len": 28,
+    "keywords_len": 77,
     "description_chars": 1232
   },
   "en-AU": {
     "name_len": 29,
-    "subtitle_len": 26,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 72,
     "description_chars": 1343
   },
   "en-CA": {
     "name_len": 29,
-    "subtitle_len": 26,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 72,
     "description_chars": 1343
   },
   "en-GB": {
     "name_len": 29,
-    "subtitle_len": 26,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 72,
     "description_chars": 1343
   },
   "en-US": {
     "name_len": 29,
-    "subtitle_len": 26,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 100,
     "description_chars": 1343
   },
   "es-ES": {
     "name_len": 23,
-    "subtitle_len": 25,
-    "keywords_len": 99,
+    "subtitle_len": 28,
+    "keywords_len": 93,
     "description_chars": 1293
   },
   "es-MX": {
     "name_len": 23,
-    "subtitle_len": 25,
-    "keywords_len": 95,
+    "subtitle_len": 28,
+    "keywords_len": 85,
     "description_chars": 1293
   },
   "fi": {
     "name_len": 27,
-    "subtitle_len": 25,
-    "keywords_len": 91,
+    "subtitle_len": 28,
+    "keywords_len": 78,
     "description_chars": 1260
   },
   "fr-CA": {
     "name_len": 24,
-    "subtitle_len": 27,
-    "keywords_len": 92,
+    "subtitle_len": 28,
+    "keywords_len": 81,
     "description_chars": 1372
   },
   "fr-FR": {
     "name_len": 24,
-    "subtitle_len": 27,
-    "keywords_len": 95,
+    "subtitle_len": 28,
+    "keywords_len": 99,
     "description_chars": 1372
   },
   "gu-IN": {
     "name_len": 23,
-    "subtitle_len": 19,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 88,
     "description_chars": 978
   },
   "he": {
     "name_len": 21,
-    "subtitle_len": 20,
-    "keywords_len": 92,
+    "subtitle_len": 26,
+    "keywords_len": 73,
     "description_chars": 981
   },
   "hi": {
     "name_len": 23,
-    "subtitle_len": 17,
-    "keywords_len": 98,
+    "subtitle_len": 28,
+    "keywords_len": 92,
     "description_chars": 1080
   },
   "hr": {
     "name_len": 24,
-    "subtitle_len": 22,
-    "keywords_len": 93,
+    "subtitle_len": 28,
+    "keywords_len": 69,
     "description_chars": 1237
   },
   "hu": {
     "name_len": 22,
-    "subtitle_len": 21,
-    "keywords_len": 90,
+    "subtitle_len": 28,
+    "keywords_len": 66,
     "description_chars": 1242
   },
   "id": {
     "name_len": 20,
-    "subtitle_len": 22,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 92,
     "description_chars": 1220
   },
   "it": {
     "name_len": 23,
-    "subtitle_len": 25,
-    "keywords_len": 100,
+    "subtitle_len": 28,
+    "keywords_len": 96,
     "description_chars": 1269
   },
   "ja": {
     "name_len": 20,
     "subtitle_len": 16,
-    "keywords_len": 64,
+    "keywords_len": 58,
     "description_chars": 608
   },
   "kn-IN": {
     "name_len": 26,
-    "subtitle_len": 18,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 92,
     "description_chars": 1071
   },
   "ko": {
     "name_len": 22,
-    "subtitle_len": 11,
-    "keywords_len": 52,
+    "subtitle_len": 17,
+    "keywords_len": 45,
     "description_chars": 644
   },
   "ml-IN": {
     "name_len": 25,
-    "subtitle_len": 25,
-    "keywords_len": 96,
+    "subtitle_len": 28,
+    "keywords_len": 94,
     "description_chars": 1161
   },
   "mr-IN": {
     "name_len": 23,
-    "subtitle_len": 19,
-    "keywords_len": 100,
+    "subtitle_len": 28,
+    "keywords_len": 85,
     "description_chars": 1028
   },
   "ms": {
     "name_len": 20,
-    "subtitle_len": 22,
-    "keywords_len": 97,
+    "subtitle_len": 28,
+    "keywords_len": 87,
     "description_chars": 1232
   },
   "nl-NL": {
     "name_len": 25,
-    "subtitle_len": 24,
-    "keywords_len": 98,
+    "subtitle_len": 28,
+    "keywords_len": 88,
     "description_chars": 1242
   },
   "no": {
     "name_len": 28,
-    "subtitle_len": 26,
-    "keywords_len": 93,
+    "subtitle_len": 28,
+    "keywords_len": 69,
     "description_chars": 1250
   },
   "or-IN": {
     "name_len": 23,
-    "subtitle_len": 23,
-    "keywords_len": 95,
+    "subtitle_len": 28,
+    "keywords_len": 88,
     "description_chars": 1108
   },
   "pa-IN": {
     "name_len": 22,
-    "subtitle_len": 17,
-    "keywords_len": 98,
+    "subtitle_len": 28,
+    "keywords_len": 83,
     "description_chars": 1040
   },
   "pl": {
     "name_len": 25,
-    "subtitle_len": 23,
-    "keywords_len": 90,
+    "subtitle_len": 28,
+    "keywords_len": 77,
     "description_chars": 1243
   },
   "pt-BR": {
     "name_len": 23,
-    "subtitle_len": 25,
+    "subtitle_len": 28,
     "keywords_len": 95,
     "description_chars": 1236
   },
   "pt-PT": {
     "name_len": 23,
-    "subtitle_len": 25,
+    "subtitle_len": 28,
     "keywords_len": 95,
     "description_chars": 1239
   },
   "ro": {
     "name_len": 23,
-    "subtitle_len": 19,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 70,
     "description_chars": 1231
   },
   "ru": {
     "name_len": 23,
-    "subtitle_len": 24,
-    "keywords_len": 97,
+    "subtitle_len": 28,
+    "keywords_len": 73,
     "description_chars": 1227
   },
   "sk": {
     "name_len": 23,
-    "subtitle_len": 23,
-    "keywords_len": 88,
+    "subtitle_len": 28,
+    "keywords_len": 64,
     "description_chars": 1238
   },
   "sl-SI": {
     "name_len": 24,
-    "subtitle_len": 20,
-    "keywords_len": 93,
+    "subtitle_len": 28,
+    "keywords_len": 69,
     "description_chars": 1235
   },
   "sv": {
     "name_len": 26,
-    "subtitle_len": 26,
-    "keywords_len": 92,
+    "subtitle_len": 28,
+    "keywords_len": 68,
     "description_chars": 1250
   },
   "ta-IN": {
     "name_len": 26,
-    "subtitle_len": 21,
+    "subtitle_len": 28,
     "keywords_len": 92,
     "description_chars": 1097
   },
   "te-IN": {
     "name_len": 24,
-    "subtitle_len": 19,
-    "keywords_len": 97,
+    "subtitle_len": 28,
+    "keywords_len": 83,
     "description_chars": 1119
   },
   "th": {
     "name_len": 23,
-    "subtitle_len": 23,
-    "keywords_len": 98,
+    "subtitle_len": 28,
+    "keywords_len": 84,
     "description_chars": 1023
   },
   "tr": {
     "name_len": 23,
-    "subtitle_len": 21,
-    "keywords_len": 91,
+    "subtitle_len": 28,
+    "keywords_len": 67,
     "description_chars": 1234
   },
   "uk": {
     "name_len": 25,
-    "subtitle_len": 22,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 70,
     "description_chars": 1229
   },
   "ur-PK": {
     "name_len": 22,
-    "subtitle_len": 18,
-    "keywords_len": 98,
+    "subtitle_len": 28,
+    "keywords_len": 82,
     "description_chars": 1050
   },
   "vi": {
     "name_len": 24,
-    "subtitle_len": 21,
-    "keywords_len": 94,
+    "subtitle_len": 28,
+    "keywords_len": 83,
     "description_chars": 1131
   },
   "zh-Hans": {
     "name_len": 20,
-    "subtitle_len": 10,
-    "keywords_len": 42,
+    "subtitle_len": 16,
+    "keywords_len": 38,
     "description_chars": 467
   },
   "zh-Hant": {
     "name_len": 20,
-    "subtitle_len": 10,
-    "keywords_len": 42,
+    "subtitle_len": 16,
+    "keywords_len": 38,
     "description_chars": 469
   }
 }

@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ପେପଟାଇଡ୍,ସ୍ମରଣ,ଇଞ୍ଜେକ୍ସନ,ବ୍ୟକ୍ତିଗତ,ଡୋଜ
+mounjaro,semaglutide,tirzepatide,ପେପଟାଇଡ୍,ସ୍ମରଣ,ଇଞ୍ଜେକ୍ସନ,ବ୍ୟକ୍ତିଗତ,ଡୋଜ,ସାପ୍ତାହିକ,ଔଷଧ,ଲଗ

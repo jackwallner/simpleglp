@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutyd,tirzepatyd,peptyd,przypomnienie,prywatny,dawka
+mounjaro,semaglutyd,tirzepatyd,peptyd,przypomnienie,prywatny,dawka,tygodniowy

@@ -10,7 +10,7 @@ OPTIONAL HEALTHKIT CONTEXT
 With your permission, Simple GLP can attach context from Apple Health — weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein — to each shot. Read-only. Never written back.
 
 PRIVATE BY DESIGN
-No accounts. No ads. No third-party tracking. No data sold. Your shot history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
+No accounts. No ads. No analytics. No data sold. Your shot history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
 
 SIMPLE GLP PRO (OPTIONAL)
 Pro adds pattern-based proactive alerts so timing drift gets caught early. Subscribe in-app. Cancel anytime in Settings.
