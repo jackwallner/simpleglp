@@ -194,10 +194,29 @@ final class StoreService: NSObject, ObservableObject {
     @Published private(set) var usingFallbackProducts: Bool = false
     @Published var lastError: String?
     @Published private(set) var introEligibility: [String: Bool] = [:]
+    /// Flips true only after an explicit `customerInfo` fetch resolves. The delegate's
+    /// initial push can carry stale/cached non-Pro info; promo surfaces that present on
+    /// it get yanked when the authoritative result lands — a blank sheet flash on cold
+    /// launch for returning Pro users. Promo gating waits on this instead.
+    @Published private(set) var hasResolvedEntitlements: Bool = false
 
     var monthlyPackage: Package? { products.first { $0.glpProPackageKind == .monthly } }
     var yearlyPackage: Package? { products.first { $0.glpProPackageKind == .yearly } }
     var lifetimePackage: Package? { products.first { $0.glpProPackageKind == .lifetime } }
+
+    /// True when this account shows any Pro signal — active entitlement, a lifetime
+    /// purchase, or a subscription that expired within the last 48h. An expired-but-renewing
+    /// subscription can flip `isProUnlocked` a beat after launch; presenting a promo inside
+    /// that window gets the sheet yanked before layout. Promo surfaces stay quiet for these.
+    var hasRecentOrActiveProSignal: Bool {
+        guard let info = customerInfo else { return false }
+        if info.hasGLPProEntitlement { return true }
+        if !info.nonSubscriptions.isEmpty { return true }
+        let cutoff = Date(timeIntervalSinceNow: -48 * 3600)
+        return info.entitlements.all.values.contains { entitlement in
+            entitlement.isActive || (entitlement.expirationDate.map { $0 > cutoff } ?? false)
+        }
+    }
 
     private let logger = Logger(subsystem: "com.jackwallner.glp", category: "Store")
     private var isConfigured = false
@@ -323,6 +342,8 @@ final class StoreService: NSObject, ObservableObject {
         do {
             let info = try await Purchases.shared.customerInfo(fetchPolicy: fetchPolicy)
             apply(customerInfo: info)
+            // Explicit fetch — Pro status is now authoritative, so promo sheets may unblock.
+            hasResolvedEntitlements = true
             lastError = nil
         } catch {
             logger.error("Customer info refresh failed: \(String(describing: error), privacy: .public)")

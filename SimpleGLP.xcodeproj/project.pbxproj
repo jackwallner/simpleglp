@@ -41,6 +41,7 @@
 		81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADB560B88F76955016CB54 /* WatchRootView.swift */; };
 		842F394A2FDFF256CE375F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7E3863B993311209064780D /* Assets.xcassets */; };
 		8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45946CD3F5007081C43A4A8 /* AppAppearance.swift */; };
+		8884FF7A79749AE428CA1D54 /* TrialOfferSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */; };
 		8C167B317D477E68C9420934 /* SimpleGLPWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A971E826B1D07DAAEBB0A89D /* RootTabView.swift */; };
 		8CA67D29F54C70F50B3E998D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */; };
@@ -123,6 +124,7 @@
 		051EB15D1CA10D7846D38B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPApp.swift; sourceTree = "<group>"; };
 		0DADB560B88F76955016CB54 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
+		15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialOfferSheet.swift; sourceTree = "<group>"; };
 		181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPAppGroup.swift; sourceTree = "<group>"; };
 		1F8D51AD66946F59E77221EE /* GLPModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModelStore.swift; sourceTree = "<group>"; };
 		277F143457A552933D07C4FB /* ReviewPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptSheet.swift; sourceTree = "<group>"; };
@@ -339,6 +341,7 @@
 				E72BB2053E8DC8186F41B380 /* SettingsView.swift */,
 				397B9E408E138DCFE4202926 /* SharedViews.swift */,
 				74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */,
+				15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -575,6 +578,7 @@
 				65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */,
 				E658BD595B6DB73ACC16E862 /* SimplePaywallView.swift in Sources */,
 				5FED014126C39C1020F61215 /* StoreService.swift in Sources */,
+				8884FF7A79749AE428CA1D54 /* TrialOfferSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
