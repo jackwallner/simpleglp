@@ -1,3 +1,4 @@
+import SwiftData
 import SwiftUI
 @preconcurrency import RevenueCat
 
@@ -10,9 +11,21 @@ enum PaywallLinks {
 
 /// Native Simple GLP Pro paywall. Purchases flow through `StoreService.purchase`
 /// → `Purchases.shared.purchase`; RevenueCat records transactions and entitlements.
+///
+/// Layout follows proven high-conversion patterns:
+///   1. Personalized hero keyed off the user's real shot history — progress they've
+///      already banked, not generic marketing.
+///   2. Compact outcome-framed benefit rows.
+///   3. Blinkist-style trial timeline (today → reminder → trial ends) when a free
+///      trial is on the table — "when am I charged?" is the #1 stated reason users
+///      bail on trial paywalls.
+///   4. Plan stack with yearly dominant: savings badge, per-month anchor, and a
+///      strikethrough monthly×12 anchor price.
+///   5. Trial-led CTA naming the trial length, Apple 3.1.2 disclosure inline.
 struct SimplePaywallView: View {
     @EnvironmentObject private var store: StoreService
     @Environment(\.dismiss) private var dismiss
+    @Query private var events: [ShotEvent]
 
     var displayCloseButton: Bool = true
     var paywallImpressionId: String?
@@ -23,23 +36,22 @@ struct SimplePaywallView: View {
     @State private var restoreMessage: String?
     @State private var isRestoring = false
 
-    private let benefits: [(icon: String, title: String, detail: String)] = [
-        ("bell.badge.fill",
-         "Never miss a dose",
-         "Pro watches your timing and nudges you before a dose slips — so one busy week doesn't undo your progress."),
-        ("waveform.path.ecg",
-         "Catch drift early",
-         "Spot when your shots creep later week over week, and pull your rhythm back in line."),
-        ("lock.shield.fill",
-         "Private by design",
-         "Everything stays on your device. No accounts, no ads, no data sold — ever.")
+    private let benefits: [(icon: String, title: String)] = [
+        ("bell.badge.fill", "Dose-day nudges before a shot slips"),
+        ("waveform.path.ecg", "Drift alerts when timing creeps off schedule"),
+        ("lock.shield.fill", "Private by design — on-device, no accounts")
     ]
 
     var body: some View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            content
+            // Fixed single-viewport layout on regular screens; scrolls on short ones
+            // (SE, zoomed display) so the CTA never gets clipped silently.
+            ViewThatFits(in: .vertical) {
+                content
+                ScrollView(showsIndicators: false) { content }
+            }
 
             if displayCloseButton {
                 closeButton
@@ -59,93 +71,203 @@ struct SimplePaywallView: View {
     }
 
     private var content: some View {
-        VStack(spacing: 0) {
-            Spacer(minLength: displayCloseButton ? 44 : 16)
+        VStack(spacing: 14) {
+            Spacer(minLength: displayCloseButton ? 40 : 12)
 
             header
-                .padding(.horizontal, 22)
-
-            Spacer(minLength: 12)
 
             benefitList
-                .padding(.horizontal, 22)
 
-            Spacer(minLength: 12)
+            if showsTrialTimeline {
+                trialTimeline
+            }
 
             if store.products.isEmpty {
                 planPlaceholder
-                    .padding(.horizontal, 22)
             } else {
                 planCards
-                    .padding(.horizontal, 22)
             }
 
-            Spacer(minLength: 12)
-
             purchaseSection
-                .padding(.horizontal, 22)
-
-            Spacer(minLength: 8)
 
             footerLinks
-                .padding(.horizontal, 22)
-                .padding(.bottom, 16)
+                .padding(.bottom, 14)
         }
+        .padding(.horizontal, 22)
     }
 
+    // MARK: - Personalized hero
+
+    /// Hero copy keys off real logged progress. Personalization is the biggest
+    /// conversion lever on a paywall short of price — "you've already built this"
+    /// frames Pro as protecting banked progress, not buying something new.
+    private var onScheduleCount: Int { events.filter { $0.scheduleStatus == .onSchedule }.count }
+
+    @ViewBuilder
     private var header: some View {
         VStack(spacing: 8) {
             ZStack {
                 Circle()
                     .fill(AppTheme.brand)
-                    .frame(width: 56, height: 56)
+                    .frame(width: 52, height: 52)
                     .shadow(color: AppTheme.brand.opacity(0.35), radius: 12, x: 0, y: 5)
                 Image(systemName: "sparkles")
-                    .font(.system(size: 24, weight: .bold))
+                    .font(.system(size: 22, weight: .bold))
                     .foregroundStyle(.white)
             }
-            Text("Simple GLP Pro")
-                .font(.title2.weight(.bold))
-                .foregroundStyle(AppTheme.text)
-            Text("Get the most out of every dose.")
-                .font(.subheadline)
-                .foregroundStyle(AppTheme.muted)
-                .multilineTextAlignment(.center)
+
+            let shots = events.count
+            if shots >= 4, onScheduleCount > 0 {
+                let pct = Int((Double(onScheduleCount) / Double(shots) * 100).rounded())
+                Text("\(pct)% on schedule")
+                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppTheme.text)
+                Text("across \(shots) shots. Pro watches your timing so it stays that way.")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+            } else if shots >= 1 {
+                Text(shots == 1 ? "Your first shot is logged" : "\(shots) shots logged")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppTheme.text)
+                Text("You're building a rhythm. Pro makes sure the next dose is always on time.")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+            } else {
+                Text("Make every dose count")
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(AppTheme.text)
+                Text("Your medication is a serious investment. Pro keeps it on schedule.")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+            }
+
             Label("Private · On-device · No accounts, ever.", systemImage: "lock.fill")
                 .font(.caption2.weight(.medium))
                 .foregroundStyle(AppTheme.muted)
-                .padding(.top, 2)
         }
         .frame(maxWidth: .infinity)
     }
 
     private var benefitList: some View {
-        VStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 9) {
             ForEach(benefits, id: \.title) { benefit in
-                HStack(alignment: .top, spacing: 12) {
-                    ZStack {
-                        Circle()
-                            .fill(AppTheme.brandSoft)
-                            .frame(width: 30, height: 30)
-                        Image(systemName: benefit.icon)
-                            .font(.system(size: 13, weight: .bold))
-                            .foregroundStyle(AppTheme.brand)
-                    }
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(benefit.title)
-                            .font(.subheadline.weight(.semibold))
-                            .foregroundStyle(AppTheme.text)
-                        Text(benefit.detail)
-                            .font(.footnote)
-                            .foregroundStyle(AppTheme.muted)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
+                HStack(spacing: 10) {
+                    Image(systemName: benefit.icon)
+                        .font(.system(size: 13, weight: .bold))
+                        .foregroundStyle(AppTheme.brand)
+                        .frame(width: 20)
+                    Text(benefit.title)
+                        .font(.footnote.weight(.medium))
+                        .foregroundStyle(AppTheme.text)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.85)
                     Spacer(minLength: 0)
                 }
             }
         }
-        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
+        }
     }
+
+    // MARK: - Trial timeline
+
+    /// Blinkist-pattern transparency: showing exactly when the reminder arrives and
+    /// when billing starts lifted Blinkist's trial conversion 23% and cut complaints
+    /// 55%. Only rendered when the selected plan actually carries an eligible trial.
+    private var showsTrialTimeline: Bool {
+        guard let package = selectedPackage else { return false }
+        return store.isEligibleForIntroOffer(package) && trialDays != nil
+    }
+
+    private var trialDays: Int? {
+        guard let intro = selectedPackage?.storeProduct.introductoryDiscount,
+              intro.paymentMode == .freeTrial else { return nil }
+        let period = intro.subscriptionPeriod
+        switch period.unit {
+        case .day: return period.value
+        case .week: return period.value * 7
+        case .month: return period.value * 30
+        case .year: return period.value * 365
+        @unknown default: return nil
+        }
+    }
+
+    private var trialTimeline: some View {
+        let days = trialDays ?? 7
+        let reminderDay = max(1, days - 2)
+        return VStack(alignment: .leading, spacing: 0) {
+            timelineRow(
+                icon: "lock.open.fill",
+                tint: AppTheme.brand,
+                title: "Today",
+                detail: "Unlock everything. No payment due now.",
+                showsConnector: true
+            )
+            timelineRow(
+                icon: "bell.badge.fill",
+                tint: AppTheme.warm,
+                title: "Day \(reminderDay)",
+                detail: "Apple reminds you before your trial ends.",
+                showsConnector: true
+            )
+            timelineRow(
+                icon: "star.circle.fill",
+                tint: AppTheme.calm,
+                title: "Day \(days)",
+                detail: "Trial ends. Keep Pro, or cancel — your call.",
+                showsConnector: false
+            )
+        }
+        .padding(.horizontal, 14)
+        .padding(.vertical, 12)
+        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
+        }
+        .accessibilityElement(children: .combine)
+    }
+
+    private func timelineRow(icon: String, tint: Color, title: String, detail: String, showsConnector: Bool) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            VStack(spacing: 0) {
+                ZStack {
+                    Circle()
+                        .fill(tint.opacity(0.16))
+                        .frame(width: 26, height: 26)
+                    Image(systemName: icon)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(tint)
+                }
+                if showsConnector {
+                    Rectangle()
+                        .fill(AppTheme.surfaceStroke.opacity(0.7))
+                        .frame(width: 2, height: 14)
+                }
+            }
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font(.caption.weight(.bold))
+                    .foregroundStyle(AppTheme.text)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.bottom, showsConnector ? 6 : 0)
+            Spacer(minLength: 0)
+        }
+    }
+
+    // MARK: - Plans
 
     private var planPlaceholder: some View {
         VStack(spacing: 10) {
@@ -184,7 +306,8 @@ struct SimplePaywallView: View {
                     showsTrialBadge: store.isEligibleForIntroOffer(package),
                     isBestValue: package.glpProPackageKind == .yearly,
                     perMonthLabel: perMonthLabel(for: package),
-                    savingsLabel: savingsLabel(for: package, monthlyReference: monthlyPrice)
+                    savingsLabel: savingsLabel(for: package, monthlyReference: monthlyPrice),
+                    anchorPriceLabel: anchorPriceLabel(for: package, monthlyReference: monthlyPrice)
                 ) {
                     selectedPackage = package
                 }
@@ -227,13 +350,6 @@ struct SimplePaywallView: View {
             }
             .buttonStyle(.plain)
             .disabled(isPurchasing || (store.products.isEmpty == false && selectedPackage == nil))
-
-            if let assurance = assuranceText {
-                Text(assurance)
-                    .font(.footnote.weight(.medium))
-                    .foregroundStyle(AppTheme.brand)
-                    .multilineTextAlignment(.center)
-            }
 
             if let disclosure = disclosureText {
                 Text(disclosure)
@@ -301,7 +417,14 @@ struct SimplePaywallView: View {
         }
         guard let package = selectedPackage else { return "Continue" }
         if package.glpProPackageKind == .lifetime { return "Unlock Lifetime Access" }
-        if store.isEligibleForIntroOffer(package) { return "Start My Free Trial" }
+        if store.isEligibleForIntroOffer(package) {
+            // Naming the trial length in the CTA outperforms a generic "Start My Free
+            // Trial" — it answers "what am I agreeing to?" inside the button itself.
+            if let days = trialDays {
+                return "Start My \(days)-Day Free Trial"
+            }
+            return "Start My Free Trial"
+        }
         return "Subscribe & Continue"
     }
 
@@ -314,15 +437,6 @@ struct SimplePaywallView: View {
         } else {
             startPurchase()
         }
-    }
-
-    private var assuranceText: String? {
-        guard let package = selectedPackage else { return nil }
-        if package.glpProPackageKind == .lifetime { return nil }
-        if store.isEligibleForIntroOffer(package) {
-            return "No payment today."
-        }
-        return nil
     }
 
     /// Apple 3.1.2: full price, renewal, and cancellation — one caption under the CTA (not a separate cancel section).
@@ -351,13 +465,7 @@ struct SimplePaywallView: View {
               period.unit == .year else { return nil }
         let months = Decimal(period.value * 12)
         let perMonth = NSDecimalNumber(decimal: package.storeProduct.price / months)
-        let formatter = NumberFormatter()
-        formatter.numberStyle = .currency
-        formatter.locale = package.storeProduct.priceFormatter?.locale ?? .current
-        formatter.currencyCode = package.storeProduct.currencyCode
-        formatter.maximumFractionDigits = 2
-        formatter.minimumFractionDigits = 2
-        guard let formatted = formatter.string(from: perMonth) else { return nil }
+        guard let formatted = currencyFormatter(for: package).string(from: perMonth) else { return nil }
         return "\(formatted) / month"
     }
 
@@ -374,6 +482,29 @@ struct SimplePaywallView: View {
         let percent = NSDecimalNumber(decimal: saved * 100).intValue
         guard percent > 0 else { return nil }
         return "SAVE \(percent)%"
+    }
+
+    /// Strikethrough "what 12 months of monthly costs" anchor next to the yearly
+    /// price — the comparison that makes the savings badge concrete.
+    private func anchorPriceLabel(for package: Package, monthlyReference: Decimal?) -> String? {
+        guard package.glpProPackageKind == .yearly,
+              let monthlyReference,
+              monthlyReference > 0,
+              let period = package.storeProduct.subscriptionPeriod,
+              period.unit == .year else { return nil }
+        let yearlyEquivalent = monthlyReference * Decimal(period.value * 12)
+        guard yearlyEquivalent > package.storeProduct.price else { return nil }
+        return currencyFormatter(for: package).string(from: NSDecimalNumber(decimal: yearlyEquivalent))
+    }
+
+    private func currencyFormatter(for package: Package) -> NumberFormatter {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        formatter.locale = package.storeProduct.priceFormatter?.locale ?? .current
+        formatter.currencyCode = package.storeProduct.currencyCode
+        formatter.maximumFractionDigits = 2
+        formatter.minimumFractionDigits = 2
+        return formatter
     }
 
     private func selectDefaultPackageIfNeeded() {
@@ -424,6 +555,7 @@ private struct GLPProPlanCard: View {
     let isBestValue: Bool
     let perMonthLabel: String?
     let savingsLabel: String?
+    let anchorPriceLabel: String?
     let onTap: () -> Void
 
     var body: some View {
@@ -462,9 +594,17 @@ private struct GLPProPlanCard: View {
                         }
                     }
                     if showsTrialBadge, let trial = package.glpProIntroOfferLabel {
-                        Text(trial.capitalized)
-                            .font(.caption2.weight(.semibold))
-                            .foregroundStyle(AppTheme.calm)
+                        // Reinforce the trial on the card itself, with the per-month
+                        // anchor beside it — not just in the CTA.
+                        if let perMonthLabel {
+                            Text("\(trial.capitalized) · \(perMonthLabel)")
+                                .font(.caption2.weight(.semibold))
+                                .foregroundStyle(AppTheme.calm)
+                        } else {
+                            Text(trial.capitalized)
+                                .font(.caption2.weight(.semibold))
+                                .foregroundStyle(AppTheme.calm)
+                        }
                     } else if let perMonthLabel {
                         Text(perMonthLabel)
                             .font(.caption2.weight(.medium))
@@ -478,9 +618,10 @@ private struct GLPProPlanCard: View {
                     Text(package.glpProPriceLabel)
                         .font(.subheadline.weight(.semibold).monospacedDigit())
                         .foregroundStyle(AppTheme.text)
-                    if showsTrialBadge, let perMonthLabel {
-                        Text(perMonthLabel)
-                            .font(.caption2)
+                    if let anchorPriceLabel {
+                        Text(anchorPriceLabel)
+                            .font(.caption2.monospacedDigit())
+                            .strikethrough()
                             .foregroundStyle(AppTheme.muted)
                     }
                 }

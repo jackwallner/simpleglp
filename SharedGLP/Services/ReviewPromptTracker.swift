@@ -6,6 +6,9 @@ extension Notification.Name {
 
     /// Posted once when the user logs their very first shot — host may present a one-time, dismissible trial offer.
     static let glpFirstShotLogged = Notification.Name("com.jackwallner.glp.firstShotLogged")
+
+    /// Posted when the Patterns (Insights) tab appears — host may consider the second-touch trial offer.
+    static let glpPatternsDidAppear = Notification.Name("com.jackwallner.glp.patternsDidAppear")
 }
 
 /// How the user last resolved the in-app review / feedback prompt.

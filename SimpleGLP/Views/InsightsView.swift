@@ -56,6 +56,9 @@ struct InsightsView: View {
         }
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("Patterns")
+        .onAppear {
+            NotificationCenter.default.post(name: .glpPatternsDidAppear, object: nil)
+        }
         .sheet(isPresented: $showPaywall) {
             SimplePaywallView(paywallImpressionId: "simpleglp_insights_sheet")
                 .environmentObject(store)

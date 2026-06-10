@@ -9,7 +9,8 @@ enum GLPAppGroup {
 enum GLPStorageKey: String {
     case hasCompletedOnboarding = "glpHasCompletedOnboarding"
     case hasSeenFirstRunOffer = "glpHasSeenFirstRunOffer"
-    case hasSeenFirstShotOffer = "glpHasSeenFirstShotOffer"
+    case hasSeenTrialOffer = "glpHasSeenTrialOffer"
+    case hasSeenPatternsTrialOffer = "glpHasSeenPatternsTrialOffer"
     case widgetLastLoggedAt = "glpWidgetLastLoggedAt"
     case appearance = "glpAppearance"
     case promptForDetails = "glpPromptForDetails"
