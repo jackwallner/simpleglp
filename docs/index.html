@@ -14,12 +14,12 @@
     <meta property="og:description" content="One-tap GLP-1 shot logging for iPhone, Apple Watch, and widgets. Private by design and built around your weekly routine.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jackwallner.github.io/simpleglp/">
-    <meta property="og:image" content="https://jackwallner.github.io/simpleglp/icon_256.png">
+    <meta property="og:image" content="https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png">
     <meta property="og:site_name" content="Simple GLP">
-    <meta name="twitter:card" content="summary">
+    <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="Simple GLP - GLP-1 Shot Tracker">
     <meta name="twitter:description" content="Log GLP-1 shots in one tap. Private, on-device, and made for iPhone, Apple Watch, and widgets.">
-    <meta name="twitter:image" content="https://jackwallner.github.io/simpleglp/icon_256.png">
+    <meta name="twitter:image" content="https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
@@ -44,6 +44,7 @@
         "description": "Private one-tap GLP-1 shot tracking for iPhone, Apple Watch, and widgets.",
         "url": "https://jackwallner.github.io/simpleglp/",
         "downloadUrl": "https://apps.apple.com/app/id6770137909",
+        "screenshot": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
         "softwareVersion": "1.0.0",
         "author": {
             "@type": "Person",
@@ -105,6 +106,27 @@
             border-radius: 980px;
             text-decoration: none;
         }
+        .showcase { padding: 0 0 80px; }
+        .showcase-scroll {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 24px;
+            max-width: 1200px;
+            margin: 0 auto;
+            scrollbar-width: none;
+        }
+        .showcase-scroll::-webkit-scrollbar { display: none; }
+        .showcase-card {
+            flex-shrink: 0;
+            scroll-snap-align: center;
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(21,122,73,0.08), 0 16px 48px rgba(21,122,73,0.12);
+        }
+        .showcase-card img { height: 540px; display: block; }
         .features {
             padding: 80px 0;
             background: #fff;
@@ -169,8 +191,12 @@
             .hero { padding: 72px 20px 48px; }
             .hero h1 { font-size: 36px; letter-spacing: -1px; }
             .hero .tagline { font-size: 17px; }
+            .showcase-card img { height: 400px; }
             .features-grid { grid-template-columns: 1fr; }
             .features-header h2, .privacy h2, .more-info-header h2, .cta h2 { font-size: 28px; }
+        }
+        @media (max-width: 480px) {
+            .showcase-card img { height: 360px; }
         }
     </style>
 </head>
@@ -191,6 +217,26 @@
         <p class="tagline">Simple GLP logs shots fast, remembers your schedule, and captures optional Health context without turning your treatment routine into a spreadsheet.</p>
         <p class="platforms">iPhone &middot; Apple Watch &middot; Widget &middot; HealthKit</p>
         <a class="download-btn" id="download" href="https://apps.apple.com/app/id6770137909">Download on the App Store</a>
+    </section>
+
+    <section class="showcase">
+        <div class="showcase-scroll">
+            <div class="showcase-card">
+                <img src="screenshot-1-onetap.png" alt="One tap to log your shot — the big shot button on the home screen">
+            </div>
+            <div class="showcase-card">
+                <img src="screenshot-2-history.png" alt="History — every shot with dose, time, and schedule status">
+            </div>
+            <div class="showcase-card">
+                <img src="screenshot-3-patterns.png" alt="Patterns — schedule adherence and timing trends from your history">
+            </div>
+            <div class="showcase-card">
+                <img src="screenshot-4-alerts.png" alt="Proactive Alerts — pattern-based dose-day nudges with quiet hours">
+            </div>
+            <div class="showcase-card">
+                <img src="screenshot-5-dark.png" alt="Dark mode — the same one-tap home screen at night">
+            </div>
+        </div>
     </section>
 
     <section class="features">
