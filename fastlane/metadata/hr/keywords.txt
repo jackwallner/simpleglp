@@ -1,1 +1,1 @@
-mounjaro,semaglutid,tirzepatid,peptid,podsjetnik,privatno,doza,tjedno
+mounjaro,semaglutid,tirzepatid,peptid,podsjetnik,privatno,doza,tjedno,shotsy

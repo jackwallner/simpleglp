@@ -1,1 +1,1 @@
-mounjaro,semaglutid,tirzepatid,peptid,připomínka,soukromý,dávka,týdenní
+mounjaro,semaglutid,tirzepatid,peptid,připomínka,soukromý,dávka,týdenní,shotsy

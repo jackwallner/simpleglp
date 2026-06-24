@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,पेप्टाइड,रिमाइंडर,इंजेक्शन,प्राइवेट,खुराक,साप्ताहिक,दवा,लॉग
+mounjaro,semaglutide,tirzepatide,पेप्टाइड,रिमाइंडर,इंजेक्शन,प्राइवेट,खुराक,साप्ताहिक,दवा,लॉग,shotsy

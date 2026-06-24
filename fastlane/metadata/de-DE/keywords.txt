@@ -1,1 +1,1 @@
-semaglutid,tirzepatid,mounjaro,peptid,erinnerung,injektion,privat,dosis,wöchentlich,protokoll
+semaglutid,tirzepatid,mounjaro,peptid,erinnerung,injektion,privat,dosis,wöchentlich,protokoll,shotsy

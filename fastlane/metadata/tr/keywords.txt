@@ -1,1 +1,1 @@
-mounjaro,semaglutid,tirzepatid,peptid,hatırlatıcı,özel,doz,haftalık
+mounjaro,semaglutid,tirzepatid,peptid,hatırlatıcı,özel,doz,haftalık,shotsy
