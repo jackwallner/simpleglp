@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,ಪೆಪ್ಟೈಡ್,ಜ್ಞಾಪನೆ,ಇಂಜೆಕ್ಷನ್,ಖಾಸಗಿ,ಡೋಸ್,ವಾರಕ್ಕೊಮ್ಮೆ,ಔಷಧ,ದಾಖಲೆ
+mounjaro,semaglutide,tirzepatide,ಪೆಪ್ಟೈಡ್,ಜ್ಞಾಪನೆ,ಇಂಜೆಕ್ಷನ್,ಖಾಸಗಿ,ಡೋಸ್,ವಾರಕ್ಕೊಮ್ಮೆ,ಔಷಧ,ದಾಖಲೆ,shotsy

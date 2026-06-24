@@ -1,1 +1,1 @@
-peptide,semaglutide,tirzepatide,mounjaro,injection,dose,weekly,private,reminder,dose log,shot log
+mounjaro,semaglutide,tirzepatide,peptide,injection,weekly,reminder,private,log,diary,shotsy,med

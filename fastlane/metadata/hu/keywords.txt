@@ -1,1 +1,1 @@
-mounjaro,semaglutid,tirzepatid,peptid,emlékeztető,privát,adag,heti
+mounjaro,semaglutid,tirzepatid,peptid,emlékeztető,privát,adag,heti,shotsy

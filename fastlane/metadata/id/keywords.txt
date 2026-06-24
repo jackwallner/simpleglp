@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,peptida,pengingat,suntik,privat,dosis,mingguan,obat,catatan
+mounjaro,semaglutide,tirzepatide,peptida,pengingat,suntik,privat,dosis,mingguan,obat,catatan,shotsy

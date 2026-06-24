@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,ببتيد,تذكير,حقن,خاص,جرعة,أسبوعي,دواء,تسجيل
+mounjaro,semaglutide,tirzepatide,ببتيد,تذكير,حقن,خاص,جرعة,أسبوعي,دواء,تسجيل,shotsy
