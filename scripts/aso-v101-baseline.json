@@ -1,0 +1,39 @@
+{
+  "experiment": "v1.0.1 en-US keyword-field optimization",
+  "submitted": "2026-06-24",
+  "build": 30,
+  "store": "us",
+  "appId": "6770137909",
+  "astroTag": "v1.0.1",
+  "change": "en-US keywords: removed redundant 'dose log','shot log'; added standalone 'log','diary','shotsy','med'. Field now: mounjaro,semaglutide,tirzepatide,peptide,injection,weekly,reminder,private,log,diary,shotsy,med",
+  "hypotheses": {
+    "primary": "shotsy enters top ~200 (competitor brand bid, pop 55)",
+    "secondary": "med-combos (med reminder pop 21) and diary-combos appear/rise",
+    "negativeControl": "medication tracker/reminder do NOT move (field has 'med' not 'medication'; Apple does no stemming)",
+    "regressionWatch": "dose log / shot log do not drop further (exact phrases removed)"
+  },
+  "baseline": [
+    {"keyword": "shotsy",              "role": "primary",          "rank": null, "pop": 55, "diff": 44},
+    {"keyword": "med reminder",        "role": "secondary",        "rank": null, "pop": 21, "diff": 52},
+    {"keyword": "med tracker",         "role": "secondary",        "rank": null, "pop": 7,  "diff": 62},
+    {"keyword": "med log",             "role": "secondary",        "rank": null, "pop": 5,  "diff": 19},
+    {"keyword": "med diary",           "role": "secondary",        "rank": null, "pop": 5,  "diff": 62},
+    {"keyword": "diary",               "role": "secondary",        "rank": null, "pop": 51, "diff": 65},
+    {"keyword": "shot diary",          "role": "secondary",        "rank": 110,  "pop": 5,  "diff": 46},
+    {"keyword": "glp diary",           "role": "secondary",        "rank": 166,  "pop": 5,  "diff": 59},
+    {"keyword": "glp-1 diary",         "role": "secondary",        "rank": 97,   "pop": 5,  "diff": 53},
+    {"keyword": "weekly diary",        "role": "secondary",        "rank": null, "pop": 5,  "diff": 51},
+    {"keyword": "private diary",       "role": "secondary",        "rank": null, "pop": 5,  "diff": 59},
+    {"keyword": "peptide diary",       "role": "secondary",        "rank": null, "pop": 5,  "diff": 21},
+    {"keyword": "injection diary",     "role": "secondary",        "rank": null, "pop": 5,  "diff": 58},
+    {"keyword": "glp log",             "role": "secondary",        "rank": 170,  "pop": 5,  "diff": 46},
+    {"keyword": "glp-1 log",           "role": "secondary",        "rank": 106,  "pop": 5,  "diff": 17},
+    {"keyword": "injection log",       "role": "secondary",        "rank": null, "pop": 5,  "diff": 15},
+    {"keyword": "weekly log",          "role": "secondary",        "rank": null, "pop": 5,  "diff": 49},
+    {"keyword": "medication tracker",  "role": "negativeControl",  "rank": null, "pop": 37, "diff": 60},
+    {"keyword": "medication reminder", "role": "negativeControl",  "rank": null, "pop": 7,  "diff": 59},
+    {"keyword": "dose log",            "role": "regressionWatch",  "rank": null, "pop": 5,  "diff": 9},
+    {"keyword": "shot log",            "role": "regressionWatch",  "rank": null, "pop": 5,  "diff": 11}
+  ],
+  "howToReview": "After 1.0.1 is approved + a few days of Apple re-index, filter Astro by tag 'v1.0.1' (or get_app_keywords appId 6770137909 store us, then compare to this baseline). Success: shotsy ranks, med/diary combos appear or rise, controls flat, no regression. rank:null = unranked (>250 or untracked) at baseline."
+}
