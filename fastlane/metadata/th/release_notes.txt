@@ -1,1 +1,1 @@
-เวอร์ชันแรก บันทึกการฉีด GLP-1 รายสัปดาห์ด้วยการแตะครั้งเดียว — บน iPhone, Apple Watch หรือวิดเจ็ต เป็นส่วนตัวและเก็บไว้ในเครื่อง
+Bug fixes and performance improvements to keep your shot log reliable.

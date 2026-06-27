@@ -1,1 +1,1 @@
-Перший випуск. Фіксуйте щотижневу ін'єкцію GLP-1 одним дотиком — на iPhone, Apple Watch або через віджет. Приватно й лише на пристрої.
+Bug fixes and performance improvements to keep your shot log reliable.

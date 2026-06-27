@@ -1,1 +1,1 @@
-גרסה ראשונה. תעדו את זריקת ה-GLP-1 השבועית בנגיעה אחת — באייפון, ב-Apple Watch או מהווידג'ט. פרטי ונשמר במכשיר.
+Bug fixes and performance improvements to keep your shot log reliable.

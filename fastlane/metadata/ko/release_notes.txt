@@ -1,1 +1,1 @@
-첫 번째 버전. 주 1회 GLP-1 주사를 한 번의 탭으로 기록하세요 — iPhone, Apple Watch, 위젯에서. 데이터는 기기에만 비공개로 저장됩니다.
+Bug fixes and performance improvements to keep your shot log reliable.

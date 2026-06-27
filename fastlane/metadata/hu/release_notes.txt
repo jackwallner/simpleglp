@@ -1,1 +1,1 @@
-Első verzió. Naplózd heti GLP-1 injekciódat egyetlen koppintással — iPhone-on, Apple Watchon vagy widgettel. Privát, az eszközödön marad.
+Bug fixes and performance improvements to keep your shot log reliable.

@@ -1,1 +1,1 @@
-ಮೊದಲ ಆವೃತ್ತಿ. ವಾರದ GLP-1 ಇಂಜೆಕ್ಷನ್ ಅನ್ನು ಒಂದೇ ಟ್ಯಾಪ್‌ನಲ್ಲಿ ದಾಖಲಿಸಿ — iPhone, Apple Watch ಅಥವಾ ವಿಜೆಟ್‌ನಿಂದ. ಖಾಸಗಿ, ನಿಮ್ಮ ಸಾಧನದಲ್ಲಿಯೇ ಇರುತ್ತದೆ.
+Bug fixes and performance improvements to keep your shot log reliable.

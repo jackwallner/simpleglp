@@ -1,1 +1,1 @@
-Erste Version. Protokollieren Sie Ihre wöchentliche GLP-1-Spritze mit einem Tippen — auf iPhone, Apple Watch oder per Widget. Privat und auf dem Gerät.
+Bug fixes and performance improvements to keep your shot log reliable.

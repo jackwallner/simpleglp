@@ -1,1 +1,1 @@
-Первый выпуск. Отмечайте еженедельную инъекцию GLP-1 одним касанием — на iPhone, Apple Watch или через виджет. Приватно и только на устройстве.
+Bug fixes and performance improvements to keep your shot log reliable.

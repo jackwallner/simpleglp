@@ -1,1 +1,1 @@
-প্রথম সংস্করণ। সাপ্তাহিক GLP-1 ইনজেকশন এক ট্যাপে লগ করুন — iPhone, Apple Watch বা উইজেট থেকে। ব্যক্তিগত এবং আপনার ডিভাইসেই থাকে।
+Bug fixes and performance improvements to keep your shot log reliable.
