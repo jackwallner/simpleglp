@@ -1,1 +1,1 @@
-První verze. Zaznamenejte svou týdenní injekci GLP-1 jedním klepnutím — na iPhonu, Apple Watch nebo přes widget. Soukromé a v zařízení.
+Bug fixes and performance improvements to keep your shot log reliable.

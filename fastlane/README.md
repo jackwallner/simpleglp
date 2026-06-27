@@ -31,6 +31,14 @@ Create the App Store Connect app record + bundle IDs (idempotent)
 
 Upload metadata to App Store Connect (no screenshots, no binary, no submit)
 
+### ios submit_release
+
+```sh
+[bundle exec] fastlane ios submit_release
+```
+
+Upload metadata to the draft version, attach latest build, and submit for review
+
 ### ios ship_testflight
 
 ```sh

@@ -1,1 +1,1 @@
-Prima versiune. Înregistrează injecția săptămânală de GLP-1 cu o atingere — pe iPhone, Apple Watch sau din widget. Privat și pe dispozitiv.
+Bug fixes and performance improvements to keep your shot log reliable.

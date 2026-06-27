@@ -1,1 +1,1 @@
-Πρώτη έκδοση. Καταγράψτε την εβδομαδιαία ένεση GLP-1 με ένα άγγιγμα — σε iPhone, Apple Watch ή από το widget. Ιδιωτικά και στη συσκευή.
+Bug fixes and performance improvements to keep your shot log reliable.

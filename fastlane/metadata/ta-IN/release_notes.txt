@@ -1,1 +1,1 @@
-முதல் பதிப்பு. வாராந்திர GLP-1 ஊசியை ஒரே தட்டலில் பதிவு செய்யுங்கள் — iPhone, Apple Watch அல்லது விட்ஜெட்டில். தனிப்பட்டது, உங்கள் சாதனத்திலேயே இருக்கும்.
+Bug fixes and performance improvements to keep your shot log reliable.

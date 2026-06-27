@@ -1,1 +1,1 @@
-Versi pertama. Catat suntikan GLP-1 mingguan Anda dengan sekali ketuk — di iPhone, Apple Watch, atau widget. Privat dan tersimpan di perangkat.
+Bug fixes and performance improvements to keep your shot log reliable.

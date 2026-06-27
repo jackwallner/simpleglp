@@ -1,1 +1,1 @@
-Pierwsza wersja. Zapisuj cotygodniowy zastrzyk GLP-1 jednym dotknięciem — na iPhonie, Apple Watch lub przez widżet. Prywatnie i na urządzeniu.
+Bug fixes and performance improvements to keep your shot log reliable.

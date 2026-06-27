@@ -1,1 +1,1 @@
-ആദ്യ പതിപ്പ്. ആഴ്ചതോറുമുള്ള GLP-1 കുത്തിവയ്പ്പ് ഒറ്റ ടാപ്പിൽ രേഖപ്പെടുത്തുക — iPhone, Apple Watch അല്ലെങ്കിൽ വിജറ്റിൽ നിന്ന്. സ്വകാര്യം, നിങ്ങളുടെ ഉപകരണത്തിൽ തന്നെ.
+Bug fixes and performance improvements to keep your shot log reliable.
