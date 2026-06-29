@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,peptide,injection,weekly,reminder,private,log,diary,shotsy,med
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose

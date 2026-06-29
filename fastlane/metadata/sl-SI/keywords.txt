@@ -1,1 +1,1 @@
-mounjaro,semaglutid,tirzepatid,peptid,opomnik,zasebno,odmera,tedensko,shotsy
+ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,opomnik,zasebno,odmera,tedensko

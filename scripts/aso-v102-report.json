@@ -1,0 +1,652 @@
+{
+  "ar-SA": {
+    "name": "Simple GLP - متتبع GLP-1",
+    "subtitle": {
+      "old": "حقن GLP1 · ودجت وساعة",
+      "new": "حقن GLP1 · ودجت وساعة",
+      "len": 21
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,تذكير,خاص,جرعة,أسبوعي",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,تذكير,خاص,جرعة,أسبوعي",
+      "len": 78
+    }
+  },
+  "bn-BD": {
+    "name": "Simple GLP - GLP-1 ট্র্যাকার",
+    "subtitle": {
+      "old": "GLP1 ইনজেকশন · উইজেট ও Watch",
+      "new": "GLP1 ইনজেকশন · উইজেট ও Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,রিমাইন্ডার,প্রাইভেট,ডোজ,সাপ্তাহিক",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,রিমাইন্ডার,প্রাইভেট,ডোজ,সাপ্তাহিক",
+      "len": 90
+    }
+  },
+  "ca": {
+    "name": "Simple GLP - Diari GLP-1",
+    "subtitle": {
+      "old": "Injecció GLP1 · Widget+Watch",
+      "new": "Injecció GLP1 · Widget+Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatori,privat,dosi,setmanal",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatori,privat,dosi,setmanal",
+      "len": 89
+    }
+  },
+  "cs": {
+    "name": "Simple GLP - Deník GLP-1",
+    "subtitle": {
+      "old": "GLP1 Injekce · Widget+Watch",
+      "new": "GLP1 Injekce · Widget+Watch",
+      "len": 27
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,připomínka,soukromý,dávka,týdenní",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,připomínka,soukromý,dávka,týdenní",
+      "len": 88
+    }
+  },
+  "da": {
+    "name": "Simple GLP - GLP-1 Sprøjtelogg",
+    "subtitle": {
+      "old": "GLP1 Stik · Widget & Watch",
+      "new": "GLP1 Stik · Widget & Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,påmindelse,indsprøjtning,privat,dosis",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,påmindelse,indsprøjtning,privat,dosis",
+      "len": 92
+    }
+  },
+  "de-DE": {
+    "name": "Simple GLP: GLP-1 Spritzen-Log",
+    "subtitle": {
+      "old": "GLP1 Spritze · Widget & Watch",
+      "new": "GLP1 Spritze · Widget & Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,erinnerung,privat,dosis,wöchentlich",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,erinnerung,privat,dosis,wöchentlich",
+      "len": 90
+    }
+  },
+  "el": {
+    "name": "Simple GLP - Ημερολόγιο GLP-1",
+    "subtitle": {
+      "old": "Ένεση GLP1 · Widget & Watch",
+      "new": "Ένεση GLP1 · Widget & Watch",
+      "len": 27
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,σεμαγλουτίδη,τιρζεπατίδη,υπενθύμιση,ιδιωτικό,δόση,εβδομαδιαίο",
+      "new": "ozempic,wegovy,mounjaro,zepbound,σεμαγλουτίδη,τιρζεπατίδη,υπενθύμιση,ιδιωτικό,δόση,εβδομαδιαίο",
+      "len": 94
+    }
+  },
+  "en-AU": {
+    "name": "Simple GLP: GLP-1 Shot Tracker",
+    "subtitle": {
+      "old": "GLP1 Jab · Widget & Watch",
+      "new": "GLP1 Jab · Widget & Watch",
+      "len": 25
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "len": 88
+    }
+  },
+  "en-CA": {
+    "name": "Simple GLP: GLP-1 Shot Tracker",
+    "subtitle": {
+      "old": "GLP1 Shot · Widget & Watch",
+      "new": "GLP1 Shot · Widget & Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "len": 88
+    }
+  },
+  "en-GB": {
+    "name": "Simple GLP: GLP-1 Shot Tracker",
+    "subtitle": {
+      "old": "GLP1 Jab · Widget & Watch",
+      "new": "GLP1 Jab · Widget & Watch",
+      "len": 25
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "len": 88
+    }
+  },
+  "en-US": {
+    "name": "Simple GLP: GLP-1 Shot Tracker",
+    "subtitle": {
+      "old": "GLP1 Shot · Widget & Watch",
+      "new": "GLP1 Shot · Widget & Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,reminder,injection,private,dose",
+      "len": 88
+    }
+  },
+  "es-ES": {
+    "name": "Simple GLP - Diario GLP-1",
+    "subtitle": {
+      "old": "Inyección GLP1 · Widget+Watch",
+      "new": "Inyección GLP1 · Widget+Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatorio,privado,dosis,semanal",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatorio,privado,dosis,semanal",
+      "len": 91
+    }
+  },
+  "es-MX": {
+    "name": "Simple GLP - Diario GLP-1",
+    "subtitle": {
+      "old": "Inyección GLP1 · Widget+Watch",
+      "new": "Inyección GLP1 · Widget+Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatorio,privado,dosis,semanal",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatorio,privado,dosis,semanal",
+      "len": 91
+    }
+  },
+  "fi": {
+    "name": "Simple GLP - GLP-1 Pistosloki",
+    "subtitle": {
+      "old": "GLP1 Pisto · Widget & Watch",
+      "new": "GLP1 Pisto · Widget & Watch",
+      "len": 27
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutidi,tirzepatidi,muistutus,ruiske,yksityinen,annos",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutidi,tirzepatidi,muistutus,ruiske,yksityinen,annos",
+      "len": 90
+    }
+  },
+  "fr-CA": {
+    "name": "Simple GLP - Journal GLP-1",
+    "subtitle": {
+      "old": "Injection GLP1 · Widget+Watch",
+      "new": "Injection GLP1 · Widget+Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,sémaglutide,tirzépatide,rappel,privé,dose,hebdomadaire",
+      "new": "ozempic,wegovy,mounjaro,zepbound,sémaglutide,tirzépatide,rappel,privé,dose,hebdomadaire",
+      "len": 87
+    }
+  },
+  "fr-FR": {
+    "name": "Simple GLP - Journal GLP-1",
+    "subtitle": {
+      "old": "Injection GLP1 · Widget+Watch",
+      "new": "Injection GLP1 · Widget+Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,sémaglutide,tirzépatide,rappel,privé,dose,hebdomadaire",
+      "new": "ozempic,wegovy,mounjaro,zepbound,sémaglutide,tirzépatide,rappel,privé,dose,hebdomadaire",
+      "len": 87
+    }
+  },
+  "gu-IN": {
+    "name": "Simple GLP - GLP-1 ટ્રેકર",
+    "subtitle": {
+      "old": "GLP1 ઇન્જેક્શન · વિજેટ",
+      "new": "GLP1 ઇન્જેક્શન · વિજેટ",
+      "len": 22
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,રિમાઇન્ડર,ખાનગી,ડોઝ,સાપ્તાહિક",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,રિમાઇન્ડર,ખાનગી,ડોઝ,સાપ્તાહિક",
+      "len": 86
+    }
+  },
+  "he": {
+    "name": "Simple GLP - יומן GLP-1",
+    "subtitle": {
+      "old": "זריקת GLP1 · ווידג'ט ושעון",
+      "new": "זריקת GLP1 · ווידג'ט ושעון",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,תזכורת,זריקה,פרטי,מינון,שבועי",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,תזכורת,זריקה,פרטי,מינון,שבועי",
+      "len": 86
+    }
+  },
+  "hi": {
+    "name": "Simple GLP - GLP-1 ट्रैकर",
+    "subtitle": {
+      "old": "GLP1 इंजेक्शन · विजेट और वॉच",
+      "new": "GLP1 इंजेक्शन · विजेट और वॉच",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,रिमाइंडर,प्राइवेट,खुराक,साप्ताहिक",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,रिमाइंडर,प्राइवेट,खुराक,साप्ताहिक",
+      "len": 90
+    }
+  },
+  "hr": {
+    "name": "Simple GLP - Dnevnik GLP-1",
+    "subtitle": {
+      "old": "GLP1 Injekcija · Widget+Wat",
+      "new": "GLP1 Injekcija · Widget",
+      "len": 23
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,podsjetnik,privatno,doza,tjedno",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,podsjetnik,privatno,doza,tjedno",
+      "len": 86
+    }
+  },
+  "hu": {
+    "name": "Simple GLP - GLP-1 Napló",
+    "subtitle": {
+      "old": "GLP1 Injekció · Widget+Watch",
+      "new": "GLP1 Injekció · Widget+Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,emlékeztető,privát,adag,heti",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,emlékeztető,privát,adag,heti",
+      "len": 83
+    }
+  },
+  "id": {
+    "name": "Simple GLP - Log GLP-1",
+    "subtitle": {
+      "old": "Suntik GLP1 · Widget & Watch",
+      "new": "Suntik GLP1 · Widget & Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,pengingat,privat,dosis,mingguan",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,pengingat,privat,dosis,mingguan",
+      "len": 88
+    }
+  },
+  "it": {
+    "name": "Simple GLP - Diario GLP-1",
+    "subtitle": {
+      "old": "Iniezione GLP1 · Widget+Watch",
+      "new": "Iniezione GLP1 · Widget+Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,promemoria,privato,dose,settimanale",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,promemoria,privato,dose,settimanale",
+      "len": 92
+    }
+  },
+  "ja": {
+    "name": "Simple GLP - GLP-1注射記録",
+    "subtitle": {
+      "old": "GLP1注射 · ウィジェットとWatch",
+      "new": "GLP1注射 · ウィジェットとWatch",
+      "len": 21
+    },
+    "keywords": {
+      "old": "オゼンピック,ウゴービ,マンジャロ,ゼップバウンド,セマグルチド,チルゼパチド,リマインダー,プライベート,用量,週次",
+      "new": "オゼンピック,ウゴービ,マンジャロ,ゼップバウンド,セマグルチド,チルゼパチド,リマインダー,プライベート,用量,週次",
+      "len": 59
+    }
+  },
+  "kn-IN": {
+    "name": "Simple GLP - GLP-1 ಟ್ರ್ಯಾಕರ್",
+    "subtitle": {
+      "old": "GLP1 ಚುಚ್ಚುಮದ್ದು · ವಿಜೆಟ್",
+      "new": "GLP1 ಚುಚ್ಚುಮದ್ದು · ವಿಜೆಟ್",
+      "len": 25
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ಜ್ಞಾಪನೆ,ಇಂಜೆಕ್ಷನ್,ಖಾಸಗಿ,ಡೋಸ್,ವಾರಕ್ಕೊಮ್ಮೆ",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ಜ್ಞಾಪನೆ,ಇಂಜೆಕ್ಷನ್,ಖಾಸಗಿ,ಡೋಸ್,ವಾರಕ್ಕೊಮ್ಮೆ",
+      "len": 97
+    }
+  },
+  "ko": {
+    "name": "Simple GLP - GLP-1 주사 기록",
+    "subtitle": {
+      "old": "GLP1 주사 · 위젯과 워치",
+      "new": "GLP1 주사 · 위젯과 워치",
+      "len": 16
+    },
+    "keywords": {
+      "old": "오젬픽,위고비,마운자로,젭바운드,세마글루타이드,티르제파타이드,알림,프라이빗,용량,주간",
+      "new": "오젬픽,위고비,마운자로,젭바운드,세마글루타이드,티르제파타이드,알림,프라이빗,용량,주간",
+      "len": 47
+    }
+  },
+  "ml-IN": {
+    "name": "Simple GLP - GLP-1 ട്രാക്കർ",
+    "subtitle": {
+      "old": "GLP1 കുത്തിവയ്പ്പ് · വിജറ്റ്",
+      "new": "GLP1 കുത്തിവയ്പ്പ് · വിജറ്റ്",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ഓർമ്മപ്പെടുത്തൽ,ഇഞ്ചക്ഷൻ,സ്വകാര്യ,ഡോസ്",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ഓർമ്മപ്പെടുത്തൽ,ഇഞ്ചക്ഷൻ,സ്വകാര്യ,ഡോസ്",
+      "len": 95
+    }
+  },
+  "mr-IN": {
+    "name": "Simple GLP - GLP-1 ट्रॅकर",
+    "subtitle": {
+      "old": "GLP1 इंजेक्शन · विजेट, वॉच",
+      "new": "GLP1 इंजेक्शन · विजेट, वॉच",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,स्मरण,खाजगी,डोस,साप्ताहिक",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,स्मरण,खाजगी,डोस,साप्ताहिक",
+      "len": 82
+    }
+  },
+  "ms": {
+    "name": "Simple GLP - Log GLP-1",
+    "subtitle": {
+      "old": "Suntik GLP1 · Widget & Watch",
+      "new": "Suntik GLP1 · Widget & Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,peringatan,peribadi,dos,mingguan",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,peringatan,peribadi,dos,mingguan",
+      "len": 89
+    }
+  },
+  "nl-NL": {
+    "name": "Simple GLP - GLP-1 Injectie",
+    "subtitle": {
+      "old": "GLP1 Prik · Widget & Watch",
+      "new": "GLP1 Prik · Widget & Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,herinnering,privé,dosis,wekelijks",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,herinnering,privé,dosis,wekelijks",
+      "len": 90
+    }
+  },
+  "no": {
+    "name": "Simple GLP - GLP-1 Sprøytelogg",
+    "subtitle": {
+      "old": "GLP1 Sprøyte · Widget+Watch",
+      "new": "GLP1 Sprøyte · Widget+Watch",
+      "len": 27
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,påminnelse,privat,dose,ukentlig",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,påminnelse,privat,dose,ukentlig",
+      "len": 86
+    }
+  },
+  "or-IN": {
+    "name": "Simple GLP - GLP-1 ଟ୍ରାକର",
+    "subtitle": {
+      "old": "GLP1 ଇଞ୍ଜେକ୍ସନ · ୱିଜେଟ",
+      "new": "GLP1 ଇଞ୍ଜେକ୍ସନ · ୱିଜେଟ",
+      "len": 22
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ସ୍ମରଣ,ବ୍ୟକ୍ତିଗତ,ଡୋଜ,ସାପ୍ତାହିକ",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ସ୍ମରଣ,ବ୍ୟକ୍ତିଗତ,ଡୋଜ,ସାପ୍ତାହିକ",
+      "len": 86
+    }
+  },
+  "pa-IN": {
+    "name": "Simple GLP - GLP-1 ਟਰੈਕਰ",
+    "subtitle": {
+      "old": "GLP1 ਟੀਕਾ · ਵਿਜੇਟ ਤੇ ਵਾਚ",
+      "new": "GLP1 ਟੀਕਾ · ਵਿਜੇਟ ਤੇ ਵਾਚ",
+      "len": 24
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ",
+      "len": 90
+    }
+  },
+  "pl": {
+    "name": "Simple GLP - Dziennik GLP-1",
+    "subtitle": {
+      "old": "Zastrzyk GLP1 · Widget+Watch",
+      "new": "Zastrzyk GLP1 · Widget+Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutyd,tirzepatyd,przypomnienie,prywatny,dawka,tygodniowy",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutyd,tirzepatyd,przypomnienie,prywatny,dawka,tygodniowy",
+      "len": 94
+    }
+  },
+  "pt-BR": {
+    "name": "Simple GLP - Diário GLP-1",
+    "subtitle": {
+      "old": "Aplicação GLP1 · Widget+Watch",
+      "new": "Aplicação GLP1 · Widget+Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,lembrete,injeção,privado,dose,semanal",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,lembrete,injeção,privado,dose,semanal",
+      "len": 94
+    }
+  },
+  "pt-PT": {
+    "name": "Simple GLP - Diário GLP-1",
+    "subtitle": {
+      "old": "Injeção GLP1 · Widget & Watch",
+      "new": "Injeção GLP1 · Widget & Watch",
+      "len": 29
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,lembrete,privado,dose,semanal",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,lembrete,privado,dose,semanal",
+      "len": 86
+    }
+  },
+  "ro": {
+    "name": "Simple GLP - Jurnal GLP-1",
+    "subtitle": {
+      "old": "Injecție GLP1 · Widget+Watch",
+      "new": "Injecție GLP1 · Widget+Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutidă,tirzepatidă,memento,privat,doză,săptămânal",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutidă,tirzepatidă,memento,privat,doză,săptămânal",
+      "len": 87
+    }
+  },
+  "ru": {
+    "name": "Simple GLP - Журнал GLP-1",
+    "subtitle": {
+      "old": "GLP1 Укол · Виджет и Watch",
+      "new": "GLP1 Укол · Виджет и Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,семаглутид,тирзепатид,напоминание,инъекция,приват,доза,еженедельно",
+      "new": "ozempic,wegovy,mounjaro,zepbound,семаглутид,тирзепатид,напоминание,инъекция,приват,доза,еженедельно",
+      "len": 99
+    }
+  },
+  "sk": {
+    "name": "Simple GLP - Denník GLP-1",
+    "subtitle": {
+      "old": "GLP1 Injekcia · Widget+Watch",
+      "new": "GLP1 Injekcia · Widget+Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,pripomienka,súkromný,dávka",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,pripomienka,súkromný,dávka",
+      "len": 81
+    }
+  },
+  "sl-SI": {
+    "name": "Simple GLP - Dnevnik GLP-1",
+    "subtitle": {
+      "old": "GLP1 Injekcija · Widget+Wat",
+      "new": "GLP1 Injekcija · Widget",
+      "len": 23
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,opomnik,zasebno,odmera,tedensko",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,opomnik,zasebno,odmera,tedensko",
+      "len": 86
+    }
+  },
+  "sv": {
+    "name": "Simple GLP - GLP-1 Sprutlogg",
+    "subtitle": {
+      "old": "GLP1 Spruta · Widget & Watch",
+      "new": "GLP1 Spruta · Widget & Watch",
+      "len": 28
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,påminnelse,privat,dos,veckovis",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,påminnelse,privat,dos,veckovis",
+      "len": 85
+    }
+  },
+  "ta-IN": {
+    "name": "Simple GLP - GLP-1 டிராக்கர்",
+    "subtitle": {
+      "old": "GLP1 ஊசி · விட்ஜெட், வாட்ச்",
+      "new": "GLP1 ஊசி · விட்ஜெட், வாட்ச்",
+      "len": 27
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,நினைவூட்டல்,தனிப்பட்ட,அளவு,வாராந்திர",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,நினைவூட்டல்,தனிப்பட்ட,அளவு,வாராந்திர",
+      "len": 93
+    }
+  },
+  "te-IN": {
+    "name": "Simple GLP - GLP-1 ట్రాకర్",
+    "subtitle": {
+      "old": "GLP1 ఇంజెక్షన్ · విడ్జెట్",
+      "new": "GLP1 ఇంజెక్షన్ · విడ్జెట్",
+      "len": 25
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,రిమైండర్,ప్రైవేట్,డోస్,వారంవారం",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,రిమైండర్,ప్రైవేట్,డోస్,వారంవారం",
+      "len": 88
+    }
+  },
+  "th": {
+    "name": "Simple GLP - บันทึก GLP-1",
+    "subtitle": {
+      "old": "ฉีด GLP1 · วิดเจ็ตและ Watch",
+      "new": "ฉีด GLP1 · วิดเจ็ตและ Watch",
+      "len": 27
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,เตือน,ส่วนตัว,ขนาด,รายสัปดาห์",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,เตือน,ส่วนตัว,ขนาด,รายสัปดาห์",
+      "len": 86
+    }
+  },
+  "tr": {
+    "name": "Simple GLP - GLP-1 Günlük",
+    "subtitle": {
+      "old": "GLP1 İğne · Widget & Watch",
+      "new": "GLP1 İğne · Widget & Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,hatırlatıcı,enjeksiyon,özel,doz,haftalık",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,hatırlatıcı,enjeksiyon,özel,doz,haftalık",
+      "len": 95
+    }
+  },
+  "uk": {
+    "name": "Simple GLP - Щоденник GLP-1",
+    "subtitle": {
+      "old": "GLP1 Укол · Віджет і Watch",
+      "new": "GLP1 Укол · Віджет і Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,семаглутид,тирзепатид,нагадування,ін'єкція,приват,доза,тижневий",
+      "new": "ozempic,wegovy,mounjaro,zepbound,семаглутид,тирзепатид,нагадування,ін'єкція,приват,доза,тижневий",
+      "len": 96
+    }
+  },
+  "ur-PK": {
+    "name": "Simple GLP - GLP-1 ٹریکر",
+    "subtitle": {
+      "old": "GLP1 انجکشن · وجیٹ اور واچ",
+      "new": "GLP1 انجکشن · وجیٹ اور واچ",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,یاددہانی,نجی,خوراک,ہفتہوار",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,یاددہانی,نجی,خوراک,ہفتہوار",
+      "len": 83
+    }
+  },
+  "vi": {
+    "name": "Simple GLP - Nhật ký GLP-1",
+    "subtitle": {
+      "old": "Tiêm GLP1 · Widget & Watch",
+      "new": "Tiêm GLP1 · Widget & Watch",
+      "len": 26
+    },
+    "keywords": {
+      "old": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,nhắc,riêng,liều,hàngtuần",
+      "new": "ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,nhắc,riêng,liều,hàngtuần",
+      "len": 81
+    }
+  },
+  "zh-Hans": {
+    "name": "Simple GLP - GLP-1注射记录",
+    "subtitle": {
+      "old": "GLP1注射 · 小组件与手表",
+      "new": "GLP1注射 · 小组件与手表",
+      "len": 15
+    },
+    "keywords": {
+      "old": "司美格鲁肽,替尔泊肽,利拉鲁肽,度拉糖肽,奥泽匹克,维戈维,玛仕度肽,泽普肽,提醒,私密,剂量,每周",
+      "new": "司美格鲁肽,替尔泊肽,利拉鲁肽,度拉糖肽,奥泽匹克,维戈维,玛仕度肽,泽普肽,提醒,私密,剂量,每周",
+      "len": 50
+    }
+  },
+  "zh-Hant": {
+    "name": "Simple GLP - GLP-1注射記錄",
+    "subtitle": {
+      "old": "GLP1注射 · 小工具與手錶",
+      "new": "GLP1注射 · 小工具與手錶",
+      "len": 15
+    },
+    "keywords": {
+      "old": "司美格魯肽,替爾泊肽,利拉魯肽,度拉糖肽,奧澤匹克,維戈維,瑪仕度肽,澤普肽,提醒,私密,劑量,每週",
+      "new": "司美格魯肽,替爾泊肽,利拉魯肽,度拉糖肽,奧澤匹克,維戈維,瑪仕度肽,澤普肽,提醒,私密,劑量,每週",
+      "len": 50
+    }
+  }
+}

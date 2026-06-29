@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,เปปไทด์,เตือน,ฉีด,ส่วนตัว,ขนาด,รายสัปดาห์,ยา,shotsy
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,เตือน,ส่วนตัว,ขนาด,รายสัปดาห์
