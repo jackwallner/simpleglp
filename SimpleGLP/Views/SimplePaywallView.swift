@@ -15,10 +15,8 @@ enum PaywallLinks {
 /// Layout follows proven high-conversion patterns:
 ///   1. Personalized hero keyed off the user's real shot history — progress they've
 ///      already banked, not generic marketing.
-///   2. Compact outcome-framed benefit rows.
-///   3. Blinkist-style trial timeline (today → reminder → trial ends) when a free
-///      trial is on the table — "when am I charged?" is the #1 stated reason users
-///      bail on trial paywalls.
+///   2. Compact outcome-framed benefit rows (Vitals-style: name + outcome).
+///   3. Trial reassurance line under the CTA when a free trial is eligible.
 ///   4. Plan stack with yearly dominant: savings badge, per-month anchor, and a
 ///      strikethrough monthly×12 anchor price.
 ///   5. Trial-led CTA naming the trial length, Apple 3.1.2 disclosure inline.
@@ -37,21 +35,16 @@ struct SimplePaywallView: View {
     @State private var isRestoring = false
 
     private let benefits: [(icon: String, title: String)] = [
-        ("bell.badge.fill", "Dose-day nudges before a shot slips"),
-        ("waveform.path.ecg", "Drift alerts when timing creeps off schedule"),
-        ("lock.shield.fill", "Private by design — on-device, no accounts")
+        ("bell.badge.fill", "Dose-day nudges: before a shot slips your schedule"),
+        ("waveform.path.ecg", "Drift alerts: when timing creeps off your rhythm"),
+        ("lock.shield.fill", "On-device private: no accounts, everything stays local")
     ]
 
     var body: some View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            // Fixed single-viewport layout on regular screens; scrolls on short ones
-            // (SE, zoomed display) so the CTA never gets clipped silently.
-            ViewThatFits(in: .vertical) {
-                content
-                ScrollView(showsIndicators: false) { content }
-            }
+            paywallContent
 
             if displayCloseButton {
                 closeButton
@@ -70,30 +63,24 @@ struct SimplePaywallView: View {
         .onChange(of: store.products.count) { _, _ in selectDefaultPackageIfNeeded() }
     }
 
-    private var content: some View {
-        VStack(spacing: 14) {
-            Spacer(minLength: displayCloseButton ? 40 : 12)
-
+    /// Single viewport — personalized hero, benefits, plans, and CTA together.
+    private var paywallContent: some View {
+        VStack(spacing: 12) {
             header
-
             benefitList
-
-            if showsTrialTimeline {
-                trialTimeline
-            }
-
             if store.products.isEmpty {
                 planPlaceholder
             } else {
                 planCards
             }
-
+            Spacer(minLength: 0)
             purchaseSection
-
             footerLinks
-                .padding(.bottom, 14)
         }
         .padding(.horizontal, 22)
+        .padding(.top, displayCloseButton ? 44 : 16)
+        .padding(.bottom, 14)
+        .frame(maxHeight: .infinity)
     }
 
     // MARK: - Personalized hero
@@ -105,14 +92,14 @@ struct SimplePaywallView: View {
 
     @ViewBuilder
     private var header: some View {
-        VStack(spacing: 8) {
+        VStack(spacing: 6) {
             ZStack {
                 Circle()
                     .fill(AppTheme.brand)
-                    .frame(width: 52, height: 52)
-                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 12, x: 0, y: 5)
+                    .frame(width: 46, height: 46)
+                    .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
                 Image(systemName: "sparkles")
-                    .font(.system(size: 22, weight: .bold))
+                    .font(.system(size: 20, weight: .bold))
                     .foregroundStyle(.white)
             }
 
@@ -120,31 +107,37 @@ struct SimplePaywallView: View {
             if shots >= 4, onScheduleCount > 0 {
                 let pct = Int((Double(onScheduleCount) / Double(shots) * 100).rounded())
                 Text("\(pct)% on schedule")
-                    .font(.system(size: 30, weight: .bold, design: .rounded))
+                    .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
-                Text("across \(shots) shots. Pro watches your timing so it stays that way.")
-                    .font(.subheadline)
+                Text("Across \(shots) shots. Pro keeps your timing locked in.")
+                    .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.9)
             } else if shots >= 1 {
                 Text(shots == 1 ? "Your first shot is logged" : "\(shots) shots logged")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
-                Text("You're building a rhythm. Pro makes sure the next dose is always on time.")
-                    .font(.subheadline)
+                Text("You're building a rhythm. Pro keeps the next dose on time.")
+                    .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.9)
             } else {
                 Text("Make every dose count")
-                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
                 Text("Your medication is a serious investment. Pro keeps it on schedule.")
-                    .font(.subheadline)
+                    .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
+                    .lineLimit(2)
+                    .minimumScaleFactor(0.9)
             }
 
-            Label("Private · On-device · No accounts, ever.", systemImage: "lock.fill")
+            Label("Private · On-device · No accounts", systemImage: "lock.fill")
                 .font(.caption2.weight(.medium))
                 .foregroundStyle(AppTheme.muted)
         }
@@ -152,7 +145,7 @@ struct SimplePaywallView: View {
     }
 
     private var benefitList: some View {
-        VStack(alignment: .leading, spacing: 9) {
+        VStack(alignment: .leading, spacing: 7) {
             ForEach(benefits, id: \.title) { benefit in
                 HStack(spacing: 10) {
                     Image(systemName: benefit.icon)
@@ -162,7 +155,7 @@ struct SimplePaywallView: View {
                     Text(benefit.title)
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(AppTheme.text)
-                        .lineLimit(1)
+                        .lineLimit(2)
                         .minimumScaleFactor(0.85)
                     Spacer(minLength: 0)
                 }
@@ -222,7 +215,7 @@ struct SimplePaywallView: View {
                 icon: "star.circle.fill",
                 tint: AppTheme.calm,
                 title: "Day \(days)",
-                detail: "Trial ends. Keep Pro, or cancel — your call.",
+                detail: "Trial ends. Keep Pro, or cancel. Your call.",
                 showsConnector: false
             )
         }
@@ -338,26 +331,40 @@ struct SimplePaywallView: View {
                     Text(primaryButtonTitle)
                         .font(.headline.weight(.bold))
                         .foregroundStyle(.white)
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.72)
                         .opacity(isPurchasing ? 0 : 1)
                     if isPurchasing {
                         ProgressView().tint(.white)
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .padding(.vertical, 17)
+                .frame(height: 52)
                 .background(AppTheme.brand, in: Capsule())
                 .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
             }
             .buttonStyle(.plain)
             .disabled(isPurchasing || (store.products.isEmpty == false && selectedPackage == nil))
 
-            if let disclosure = disclosureText {
-                Text(disclosure)
-                    .font(.caption2)
-                    .foregroundStyle(AppTheme.muted)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
+            Text(trialReassuranceLine ?? " ")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(AppTheme.brand)
+                .multilineTextAlignment(.center)
+                .lineLimit(2)
+                .minimumScaleFactor(0.85)
+                .frame(minHeight: 18)
+                .opacity(trialReassuranceLine == nil ? 0 : 1)
+                .accessibilityHidden(trialReassuranceLine == nil)
+
+            Text(disclosureText ?? " ")
+                .font(.caption2)
+                .foregroundStyle(AppTheme.muted)
+                .multilineTextAlignment(.center)
+                .lineLimit(4)
+                .minimumScaleFactor(0.9)
+                .frame(minHeight: 56, alignment: .top)
+                .opacity(disclosureText == nil ? 0 : 1)
+                .accessibilityHidden(disclosureText == nil)
 
             if let errorMessage {
                 Text(errorMessage)
@@ -446,11 +453,20 @@ struct SimplePaywallView: View {
         if package.glpProPackageKind == .lifetime {
             return "\(price). One-time purchase. Lifetime access."
         }
-        let renew = "Auto-renews. Cancel anytime."
+        let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings → Subscriptions."
         if store.isEligibleForIntroOffer(package), let trial = package.glpProIntroOfferLabel {
             return "\(trial.capitalized), then \(price). \(renew)"
         }
         return "\(price). \(renew)"
+    }
+
+    /// Compact trial transparency (replaces the tall timeline on the single-screen layout).
+    private var trialReassuranceLine: String? {
+        guard let package = selectedPackage,
+              store.isEligibleForIntroOffer(package),
+              let days = trialDays else { return nil }
+        let reminderDay = max(1, days - 2)
+        return "No payment today · Reminder day \(reminderDay) · Billing day \(days)"
     }
 
     private var monthlyReferencePrice: Decimal? {
@@ -508,6 +524,19 @@ struct SimplePaywallView: View {
     }
 
     private func selectDefaultPackageIfNeeded() {
+        #if DEBUG
+        if let mode = PaywallScreenshotMode.current, !store.products.isEmpty {
+            switch mode {
+            case .monthly:
+                selectedPackage = store.products.first { $0.glpProPackageKind == .monthly }
+            case .lifetime:
+                selectedPackage = store.products.first { $0.glpProPackageKind == .lifetime }
+            case .yearly, .trial:
+                selectedPackage = store.products.first { $0.glpProPackageKind == .yearly }
+            }
+            return
+        }
+        #endif
         guard selectedPackage == nil, !store.products.isEmpty else { return }
         selectedPackage = store.products.first { $0.glpProPackageKind == .yearly }
             ?? store.products.first { $0.glpProPackageKind == .monthly }

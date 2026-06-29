@@ -208,7 +208,7 @@ struct InsightsView: View {
                     .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Unlock Pro — see plans")
+            .accessibilityLabel("Unlock Pro, see plans")
             .accessibilityHint("Opens upgrade options")
         }
         .padding(16)

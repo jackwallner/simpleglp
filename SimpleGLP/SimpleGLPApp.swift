@@ -15,9 +15,21 @@ struct SimpleGLPApp: App {
 
     var body: some Scene {
         WindowGroup {
+            #if DEBUG
+            if let mode = PaywallScreenshotMode.current {
+                PaywallScreenshotHarness(mode: mode)
+                    .environmentObject(shotCoordinator)
+                    .environmentObject(storeService)
+            } else {
+                SimpleGLPRootContent()
+                    .environmentObject(shotCoordinator)
+                    .environmentObject(storeService)
+            }
+            #else
             SimpleGLPRootContent()
                 .environmentObject(shotCoordinator)
                 .environmentObject(storeService)
+            #endif
         }
         .modelContainer(GLPModelStore.sharedModelContainer)
     }
