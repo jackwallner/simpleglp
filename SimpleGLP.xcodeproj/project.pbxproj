@@ -19,6 +19,7 @@
 		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
 		33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72BB2053E8DC8186F41B380 /* SettingsView.swift */; };
 		3CB495635750C499935D1F28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 89D51D7C41B4EE64885B9B1C /* RevenueCat */; };
+		416EEB0DD9D55AB6CEA17824 /* PaywallScreenshotMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7642962625DDC83DD536C6CA /* PaywallScreenshotMode.swift */; };
 		45127D8C4C2A8DF86390D905 /* AppStoreReviewLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */; };
 		46937D2C98E89CF4B6350D25 /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
@@ -57,6 +58,7 @@
 		C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */; };
 		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
 		CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
+		D58040E25CBB385C8204A779 /* PaywallScreenshotHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0051BC21B7D05834D21C3 /* PaywallScreenshotHarness.swift */; };
 		D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B87891F3FE471993E42C3C /* ExportService.swift */; };
 		DBE478B5D061071769E92CBE /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
 		DCE9E5DE3F9C6AAC6B91131C /* GLPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */; };
@@ -144,6 +146,7 @@
 		66C73FE3C2F5DE3B0CAFE7EB /* SimpleGLP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLP.entitlements; sourceTree = "<group>"; };
 		6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPTests.swift; sourceTree = "<group>"; };
 		74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePaywallView.swift; sourceTree = "<group>"; };
+		7642962625DDC83DD536C6CA /* PaywallScreenshotMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallScreenshotMode.swift; sourceTree = "<group>"; };
 		7D390C19714B2F9313020B6F /* SimpleGLP.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimpleGLP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEngine.swift; sourceTree = "<group>"; };
 		80224F926658DE5F12BDF68F /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
@@ -151,6 +154,7 @@
 		892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewLinks.swift; sourceTree = "<group>"; };
 		8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWidget.entitlements; sourceTree = "<group>"; };
+		8FF0051BC21B7D05834D21C3 /* PaywallScreenshotHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallScreenshotHarness.swift; sourceTree = "<group>"; };
 		985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SimpleGLPWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotCaptureCoordinator.swift; sourceTree = "<group>"; };
 		9CACE598976ED5713C9175CC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
@@ -303,6 +307,7 @@
 				B45946CD3F5007081C43A4A8 /* AppAppearance.swift */,
 				BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */,
 				008BE86A6ABA09E92A2C103B /* AppTheme.swift */,
+				7642962625DDC83DD536C6CA /* PaywallScreenshotMode.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -335,6 +340,7 @@
 				CEB2CBF9F536FFD8DF927366 /* HomeView.swift */,
 				9CACE598976ED5713C9175CC /* InsightsView.swift */,
 				28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */,
+				8FF0051BC21B7D05834D21C3 /* PaywallScreenshotHarness.swift */,
 				5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */,
 				277F143457A552933D07C4FB /* ReviewPromptSheet.swift */,
 				A971E826B1D07DAAEBB0A89D /* RootTabView.swift */,
@@ -561,6 +567,8 @@
 				0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */,
 				766BA777284D5C9A638DC548 /* InsightsView.swift in Sources */,
 				7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */,
+				D58040E25CBB385C8204A779 /* PaywallScreenshotHarness.swift in Sources */,
+				416EEB0DD9D55AB6CEA17824 /* PaywallScreenshotMode.swift in Sources */,
 				EA96773E480A686C74C0E88E /* PhoneWatchSession.swift in Sources */,
 				32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */,
 				B765FE4D49B6CD1835A785FB /* ProAlertPreferences.swift in Sources */,
