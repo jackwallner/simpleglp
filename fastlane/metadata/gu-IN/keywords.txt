@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,પેપટાઇડ,રિમાઇન્ડર,ઇન્જેક્શન,ખાનગી,ડોઝ,સાપ્તાહિક,દવા,લોગ,shotsy
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,રિમાઇન્ડર,ખાનગી,ડોઝ,સાપ્તાહિક

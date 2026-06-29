@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,peptida,pengingat,suntik,privat,dosis,mingguan,obat,catatan,shotsy
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,pengingat,privat,dosis,mingguan

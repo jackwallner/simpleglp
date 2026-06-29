@@ -1,1 +1,1 @@
-semaglutida,tirzepatida,mounjaro,peptídeo,lembrete,injeção,privado,dose,semanal,agulha,registro
+ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,lembrete,injeção,privado,dose,semanal

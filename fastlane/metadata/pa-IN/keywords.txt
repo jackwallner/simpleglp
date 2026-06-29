@@ -1,1 +1,1 @@
-mounjaro,semaglutide,tirzepatide,ਪੇਪਟਾਈਡ,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ,ਦਵਾਈ,ਲੌਗ,shotsy
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ
