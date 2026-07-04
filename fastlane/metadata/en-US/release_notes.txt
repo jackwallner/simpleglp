@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+This update makes logging faster and leaner, and sharpens the app around what matters most: one private tap to record your weekly shot. Core logging is free, with no account required.
