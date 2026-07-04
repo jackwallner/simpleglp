@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,ਯਾਦ,ਇੰਜੈਕਸ਼ਨ,ਨਿੱਜੀ,ਖੁਰਾਕ,ਹਫ਼ਤਾਵਾਰ
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injection,shot,weekly,reminder

@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutida,tirzepatida,recordatorio,privado,dosis,semanal
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,inyeccion,semanal,recordatorio

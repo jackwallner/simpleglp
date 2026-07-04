@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,تذكير,خاص,جرعة,أسبوعي
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,حقنة,أسبوعي,تذكير,جرعة,قلم

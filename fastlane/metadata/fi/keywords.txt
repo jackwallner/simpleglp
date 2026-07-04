@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutidi,tirzepatidi,muistutus,ruiske,yksityinen,annos
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,pistos,injektio,viikoittainen

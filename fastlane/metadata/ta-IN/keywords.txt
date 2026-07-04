@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,நினைவூட்டல்,தனிப்பட்ட,அளவு,வாராந்திர
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injection,shot,weekly,reminder

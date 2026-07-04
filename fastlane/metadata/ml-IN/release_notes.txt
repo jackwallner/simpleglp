@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+ലോഗിംഗ് ഇപ്പോൾ വേഗത്തിലും ലളിതവും: ആഴ്ചയിലെ ഷോട്ടിന് ഒരു സ്വകാര്യ ടാപ്പ്. അടിസ്ഥാന ലോഗിംഗ് സൗജന്യം, അക്കൗണ്ട് ഇല്ലാതെ.

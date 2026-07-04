@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+লগিং আরও দ্রুত ও সহজ করা হয়েছে: এক প্রাইভেট ট্যাপে সাপ্তাহিক শট রেকর্ড করুন। মূল লগিং ফ্রি, অ্যাকাউন্ট ছাড়াই।

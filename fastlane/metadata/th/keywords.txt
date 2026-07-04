@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,เตือน,ส่วนตัว,ขนาด,รายสัปดาห์
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injection,shot,รายสัปดาห์,เตือน

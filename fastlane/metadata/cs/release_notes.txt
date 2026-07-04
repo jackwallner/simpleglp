@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+Záznam je nyní rychlejší a jednodušší: jedno soukromé klepnutí pro týdenní injekci. Základní záznam je zdarma a bez účtu.
