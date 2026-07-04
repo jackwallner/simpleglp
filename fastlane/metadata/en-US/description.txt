@@ -1,19 +1,22 @@
-Simple GLP is the fastest way to log a weekly GLP-1 shot — designed for people who just want the moment recorded without turning their treatment routine into a spreadsheet.
+Simple GLP is the fastest, most private way to log a weekly GLP-1 shot. It's free, needs no account, and takes nothing to set up. Built for people who just want the moment recorded, not another subscription or a spreadsheet.
 
 ONE TAP TO LOG
-Open the app, tap the Home Screen widget, or raise your wrist with Apple Watch. Your shot is timestamped immediately. Add dose, injection site, notes, and symptoms later if you want.
+Open the app, tap the Home Screen widget, or raise your wrist with Apple Watch. Your shot is timestamped instantly. Add dose, injection site, notes, and symptoms later if you want.
+
+FREE, WITH NO ACCOUNT
+Core logging is free and stays free. No sign-up, no login, no email. Open the app and log. That's it.
+
+PRIVATE BY DESIGN
+No accounts. No ads. No analytics. No data sold. Your shot history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
 
 A SCHEDULE THAT KNOWS YOUR WEEK
 Set your medication, dose plan, preferred weekday, and time. Simple GLP figures out whether each shot was early, on-time, or late and reminds you ahead of the next one.
 
 OPTIONAL HEALTHKIT CONTEXT
-With your permission, Simple GLP can attach context from Apple Health — weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein — to each shot. Read-only. Never written back.
-
-PRIVATE BY DESIGN
-No accounts. No ads. No analytics. No data sold. Your shot history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
+With your permission, Simple GLP can attach context from Apple Health (weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein) to each shot. Read-only. Never written back.
 
 SIMPLE GLP PRO (OPTIONAL)
-Pro adds pattern-based proactive alerts so timing drift gets caught early. Subscribe in-app. Cancel anytime in Settings.
+Everything you need to log is free. Pro is an optional upgrade that adds pattern-based proactive alerts so timing drift gets caught early. Subscribe in-app. Cancel anytime in Settings.
 
 NOT A MEDICAL DEVICE
 Simple GLP does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations. Always follow your prescriber's guidance.
