@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+Logning er nu hurtigere og enklere: ét privat tryk til din ugentlige injektion. Grundlæggende logning er gratis og uden konto.

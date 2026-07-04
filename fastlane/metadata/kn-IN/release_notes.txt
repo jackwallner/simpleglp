@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+ಲಾಗಿಂಗ್ ಈಗ ವೇಗವಾಗಿ ಮತ್ತು ಸರಳ: ವಾರದ ಶಾಟ್‌ಗೆ ಒಂದು ಖಾಸಗಿ ಟ್ಯಾಪ್. ಮೂಲ ಲಾಗಿಂಗ್ ಉಚಿತ, ಖಾತೆ ಇಲ್ಲದೆ.

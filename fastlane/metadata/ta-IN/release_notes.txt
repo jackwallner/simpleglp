@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+பதிவு இப்போது வேகமாகவும் எளிதாகவும்: வாராந்திர ஷாட்டுக்கு ஒரு தனிப்பட்ட தட்டல். அடிப்படை பதிவு இலவசம், கணக்கு இல்லாமல்.

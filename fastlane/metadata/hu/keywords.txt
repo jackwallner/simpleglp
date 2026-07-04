@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,emlékeztető,privát,adag,heti
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injekcio,heti,emlekezteto,adag

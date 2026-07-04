@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,sémaglutide,tirzépatide,rappel,privé,dose,hebdomadaire
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injection,hebdomadaire,rappel,dose

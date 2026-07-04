@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,семаглутид,тирзепатид,напоминание,инъекция,приват,доза,еженедельно
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,инъекция,укол,еженедельно

@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+Kirjaaminen on nyt nopeampaa ja kevyempää: yksi yksityinen napautus viikoittaiseen pistokseen. Peruskirjaus ilmainen, ilman tiliä.

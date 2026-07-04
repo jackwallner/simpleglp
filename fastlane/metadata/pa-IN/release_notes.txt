@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+ਲੌਗਿੰਗ ਹੁਣ ਤੇਜ਼ ਅਤੇ ਸਰਲ: ਹਫ਼ਤਾਵਾਰ ਸ਼ਾਟ ਲਈ ਇੱਕ ਪ੍ਰਾਈਵੇਟ ਟੈਪ। ਮੂਲ ਲੌਗਿੰਗ ਮੁਫ਼ਤ, ਖਾਤੇ ਤੋਂ ਬਿਨਾਂ।

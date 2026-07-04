@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+లాగింగ్ ఇప్పుడు వేగంగా, సరళంగా: వారపు షాట్ కోసం ఒక ప్రైవేట్ ట్యాప్. ప్రాథమిక లాగింగ్ ఉచితం, ఖాతా లేకుండా.

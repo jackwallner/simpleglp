@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,promemoria,privato,dose,settimanale
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,iniezione,settimanale,promemoria

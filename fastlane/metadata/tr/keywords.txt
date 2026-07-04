@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,hatırlatıcı,enjeksiyon,özel,doz,haftalık
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,igne,enjeksiyon,haftalik

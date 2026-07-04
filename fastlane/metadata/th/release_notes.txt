@@ -1,1 +1,1 @@
-Bug fixes and performance improvements to keep your shot log reliable.
+การบันทึกเร็วและง่ายขึ้น: แตะเดียวแบบส่วนตัวสำหรับการฉีดรายสัปดาห์ การบันทึกพื้นฐานฟรี ไม่ต้องมีบัญชี

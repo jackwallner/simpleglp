@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutid,tirzepatid,pripomienka,súkromný,dávka
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injekcia,tyzdenne,pripomienka
