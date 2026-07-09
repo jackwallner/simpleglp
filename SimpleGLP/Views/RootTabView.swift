@@ -16,6 +16,14 @@ struct RootTabView: View {
     @Query private var events: [ShotEvent]
     @StateObject private var reviewPromptCoordinator = ReviewPromptCoordinator.shared
     @State private var selectedTab = 0
+    /// True once the first-run paywall has actually been presented this session
+    /// (confirmed by the sheet's `.onAppear`). `hasSeenFirstRunOffer` is consumed only
+    /// when a *presented* sheet is dismissed (see `handleRootSheetDismiss`).
+    @State private var firstRunPaywallPresented = false
+    /// True between requesting the first-run sheet and its `.onAppear` confirming it
+    /// actually presented. A watchdog resets a dropped attempt (present rejected because
+    /// a permission dialog grabbed the window) so a later scenePhase→active retry works.
+    @State private var firstRunPaywallPending = false
     /// Single source of truth for every root-level promo / review sheet. One
     /// `.sheet(item:)` instead of stacked `.sheet(isPresented:)` modifiers
     /// guarantees only one ever presents — stacked sheets on the same view can
@@ -96,13 +104,22 @@ struct RootTabView: View {
         .sheet(item: $activeSheet, onDismiss: handleRootSheetDismiss) { sheet in
             switch sheet {
             case .firstRunPaywall:
+                // `.onAppear` here means the sheet was *actually added to the hierarchy*
+                // — it fires even if the sheet sits behind a permission alert, but it
+                // does NOT fire when the present is dropped (SwiftUI silently rejects a
+                // sheet raised at the same instant a system dialog takes the window).
+                // So it's the reliable "the user will see this" signal: commit the
+                // per-session slot and mark presented here. `hasSeenFirstRunOffer` is
+                // still consumed only on real dismissal (`handleRootSheetDismiss`), and
+                // the RC `simpleglp_first_run` impression fires from SimplePaywallView's
+                // own `.task`, so neither is spent on a dropped present.
                 SimplePaywallView(paywallImpressionId: trialPaywallImpressionId)
                     .environmentObject(store)
-                    // Persist "seen" only once the sheet actually appears. On a fresh
-                    // install the HealthKit permission sheet from onboarding can swallow
-                    // this presentation; if the flag were set up front the offer would
-                    // be lost forever — this way it retries on the next launch.
-                    .onAppear { hasSeenFirstRunOffer = true }
+                    .onAppear {
+                        firstRunPaywallPending = false
+                        firstRunPaywallPresented = true
+                        paywallShownThisSession = true
+                    }
             case .trialOffer:
                 TrialOfferSheet(
                     offerLabel: trialOfferLabel,
@@ -156,8 +173,16 @@ struct RootTabView: View {
             evaluatePatternsTrialOffer()
         }
         .onChange(of: scenePhase) { _, phase in
-            if phase == .background {
+            switch phase {
+            case .background:
                 foregroundEpoch += 1
+            case .active:
+                // Onboarding permission alerts briefly deactivate the scene. Once we're
+                // foreground-active again (every dialog dismissed), retry the deferred
+                // first-run offer.
+                presentFirstRunOfferIfEligible()
+            default:
+                break
             }
         }
         .onChange(of: store.isProUnlocked) { _, isPro in
@@ -193,28 +218,52 @@ struct RootTabView: View {
     /// decisions happen on day 0). Dismissible so it never gates the core app.
     private func presentFirstRunOfferIfEligible() {
         guard !hasSeenFirstRunOffer,
+              !firstRunPaywallPresented,
+              !firstRunPaywallPending,
               !store.isProUnlocked,
               !paywallShownThisSession,
-              !AppEnvironment.isUITesting
+              !AppEnvironment.isUITesting,
+              activeSheet == nil,
+              // Defer until the scene is foreground-active. Right after Finish the
+              // Notifications + HealthKit permission alerts are up, which puts the scene
+              // in `.inactive`; presenting now would slide the paywall in *behind* them
+              // (or get it dropped). `scenePhase == .active` is only true once every
+              // system dialog is gone, and the scenePhase→active handler retries then.
+              // Cannot deadlock (unlike waiting on a permission callback that may never
+              // resume).
+              scenePhase == .active
         else { return }
-        // Claim the per-session slot up front so a fast first-shot log can't race in behind us.
-        paywallShownThisSession = true
         let epoch = foregroundEpoch
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 450_000_000)
             guard epoch == foregroundEpoch,
+                  scenePhase == .active,
                   !hasSeenFirstRunOffer,
+                  !firstRunPaywallPresented,
+                  !firstRunPaywallPending,
+                  !paywallShownThisSession,
                   !store.isProUnlocked,
                   !store.hasRecentOrActiveProSignal,
                   activeSheet == nil
-            else {
-                // Release the slot if we bailed for a transient reason; a Pro flip
-                // makes the guards above permanent anyway.
-                paywallShownThisSession = store.isProUnlocked
-                return
-            }
+            else { return }
+            // Request the sheet. The per-session slot and "presented" flag are committed
+            // only in the sheet's `.onAppear` (real presentation) — NOT here — so a
+            // dropped present never suppresses the first-shot offer nobody saw.
+            firstRunPaywallPending = true
             trialPaywallImpressionId = "simpleglp_first_run"
             activeSheet = .firstRunPaywall
+            // Watchdog: if the present was dropped (a permission dialog grabbed the
+            // window at the same tick), `.onAppear` never fires. Reset so the next
+            // scenePhase→active retry can present cleanly once nothing competes.
+            Task { @MainActor in
+                try? await Task.sleep(nanoseconds: 1_200_000_000)
+                guard firstRunPaywallPending,
+                      !firstRunPaywallPresented,
+                      activeSheet == .firstRunPaywall
+                else { return }
+                firstRunPaywallPending = false
+                activeSheet = nil
+            }
         }
     }
 
@@ -349,6 +398,14 @@ struct RootTabView: View {
     private func handleRootSheetDismiss() {
         trialPurchaseInFlight = false
         trialPurchaseError = nil
+        firstRunPaywallPending = false
+        if firstRunPaywallPresented {
+            // The first-run paywall was actually shown and is now dismissed — consume
+            // the one-shot here so it's only spent on a sheet the user really saw. A
+            // dropped present never sets this flag (its `.onAppear` never fired).
+            firstRunPaywallPresented = false
+            hasSeenFirstRunOffer = true
+        }
         if pendingPaywallAfterTrialDismiss {
             pendingPaywallAfterTrialDismiss = false
             activeSheet = .trialPaywall
