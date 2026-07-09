@@ -4,6 +4,11 @@ import UserNotifications
 enum ReminderService {
     static let shotReminderIdentifier = "simpleglp.next-shot"
 
+    // `@MainActor`: `MedicationPlan` is a non-Sendable SwiftData model bound to the
+    // main actor. Pinning this method to the main actor keeps `plan` from being
+    // "sent" across an actor boundary (Swift 6 data-race diagnostic) at the three
+    // call sites (onboarding finish, settings save, shot capture).
+    @MainActor
     static func scheduleNextShotReminder(for plan: MedicationPlan) async {
         let center = UNUserNotificationCenter.current()
         guard plan.reminderEnabled, let next = ScheduleEngine.nextExpectedDate(plan: plan) else {
