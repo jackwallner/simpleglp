@@ -12,7 +12,7 @@ struct InsightsView: View {
             VStack(spacing: 20) {
                 if events.count < ProactiveAlertsEngine.minimumSampleSize {
                     Card {
-                        Text("Keep logging your shots. Insights appear once you've logged \(ProactiveAlertsEngine.minimumSampleSize) — you have \(events.count) so far.")
+                        Text("Keep logging your shots. Insights appear once you've logged \(ProactiveAlertsEngine.minimumSampleSize). You have \(events.count) so far.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -142,7 +142,7 @@ struct InsightsView: View {
                 icon: "bell.badge.fill",
                 title: "Proactive Alerts",
                 headline: "Dose day in 2 days",
-                detail: "Quiet hours respected. Your usual Tuesday window is 8:00–10:00 AM."
+                detail: "Quiet hours respected. Your usual Tuesday window is 8:00-10:00 AM."
             )
             ProLockedPreviewCard(
                 icon: "waveform.path.ecg",

@@ -235,7 +235,7 @@ struct OnboardingView: View {
                                 .foregroundStyle(.secondary)
                         }
                     }
-                    Text("We'll ask permission to send notifications. If you decline, reminders won't fire — you can enable them later in iOS Settings.")
+                    Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
@@ -261,7 +261,7 @@ struct OnboardingView: View {
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
-                Text("This adds context to your log — it isn't medical advice.")
+                Text("This adds context to your log. It isn't medical advice.")
                     .font(.caption2)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)

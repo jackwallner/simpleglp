@@ -482,7 +482,8 @@ struct SimplePaywallView: View {
         let months = Decimal(period.value * 12)
         let perMonth = NSDecimalNumber(decimal: package.storeProduct.price / months)
         guard let formatted = currencyFormatter(for: package).string(from: perMonth) else { return nil }
-        return "\(formatted) / month"
+        // "/ mo" keeps the trial + per-month subtitle on one line on Pro widths.
+        return "\(formatted) / mo"
     }
 
     private func savingsLabel(for package: Package, monthlyReference: Decimal?) -> String? {
@@ -629,15 +630,19 @@ private struct GLPProPlanCard: View {
                             Text("\(trial.capitalized) · \(perMonthLabel)")
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(AppTheme.calm)
+                                .lineLimit(1)
+                                .minimumScaleFactor(0.8)
                         } else {
                             Text(trial.capitalized)
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(AppTheme.calm)
+                                .lineLimit(1)
                         }
                     } else if let perMonthLabel {
                         Text(perMonthLabel)
                             .font(.caption2.weight(.medium))
                             .foregroundStyle(AppTheme.muted)
+                            .lineLimit(1)
                     }
                 }
 
@@ -647,13 +652,17 @@ private struct GLPProPlanCard: View {
                     Text(package.glpProPriceLabel)
                         .font(.subheadline.weight(.semibold).monospacedDigit())
                         .foregroundStyle(AppTheme.text)
+                        .lineLimit(1)
                     if let anchorPriceLabel {
                         Text(anchorPriceLabel)
                             .font(.caption2.monospacedDigit())
                             .strikethrough()
                             .foregroundStyle(AppTheme.muted)
+                            .lineLimit(1)
                     }
                 }
+                // Never let the trailing price column compress or clip.
+                .fixedSize(horizontal: true, vertical: false)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
