@@ -30,17 +30,42 @@ struct TrialOfferSheet: View {
         LinearGradient(colors: [AppTheme.brand, AppTheme.calm], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 
-    /// Extract a clean period phrase from an intro label like `"7-day free trial"` → `"7 days"`.
+    /// Parsed (value, singular-unit) from an intro label like `"7-day free trial"` → `(7, "day")`.
     /// Falls back to nil when the label doesn't match the expected shape.
-    private var trialPeriodPhrase: String? {
+    private var trialLength: (value: Int, unit: String)? {
         guard let offerLabel else { return nil }
         let scanner = Scanner(string: offerLabel)
         var value: Int = 0
         guard scanner.scanInt(&value) else { return nil }
         _ = scanner.scanString("-")
         guard let unit = scanner.scanCharacters(from: .letters) else { return nil }
+        return (value, unit.lowercased())
+    }
+
+    /// Clean period phrase for prose, e.g. `"7 days"`.
+    private var trialPeriodPhrase: String? {
+        guard let (value, unit) = trialLength else { return nil }
         let plural = value == 1 ? unit : "\(unit)s"
         return "\(value) \(plural)"
+    }
+
+    /// Trial length in days, for the day-numbered timeline. Weeks/months expand to days.
+    private var trialDayCount: Int? {
+        guard let (value, unit) = trialLength else { return nil }
+        switch unit {
+        case "day", "days": return value
+        case "week", "weeks": return value * 7
+        case "month", "months": return value * 30
+        default: return nil
+        }
+    }
+
+    /// CTA names the trial length so the button answers "what am I agreeing to?":
+    /// `"Start My 7-Day Free Trial"`. Falls back to the generic phrase when unparsed.
+    private var startButtonTitle: String {
+        guard let (value, unit) = trialLength else { return "Start My Free Trial" }
+        let singular = unit.hasSuffix("s") ? String(unit.dropLast()) : unit
+        return "Start My \(value)-\(singular.capitalized) Free Trial"
     }
 
     private var headline: String {
@@ -77,13 +102,14 @@ struct TrialOfferSheet: View {
     }
 
     /// Compliant billing disclosure shown beside the buy control (Apple 3.1.2): trial
-    /// length, recurring price, auto-renew, and how to cancel — condensed to one line.
+    /// length, auto-renew, and how to cancel — condensed to one line. The billed price
+    /// itself renders as its own conspicuous line right above this (same condition).
     private var billingDisclosure: String {
-        if directPurchase, let priceLabel {
+        if directPurchase, priceLabel != nil {
             if let period = trialPeriodPhrase {
-                return "Free for \(period), then \(priceLabel). Auto-renews; cancel anytime in Settings at least 24h before it ends."
+                return "Free for \(period). Auto-renews; cancel anytime in Settings at least 24h before it ends."
             }
-            return "Then \(priceLabel). Auto-renews; cancel anytime in Settings at least 24h before it ends."
+            return "Auto-renews; cancel anytime in Settings at least 24h before it ends."
         }
         return "Billed through Apple. No charge during the trial."
     }
@@ -163,6 +189,8 @@ struct TrialOfferSheet: View {
                         .foregroundStyle(AppTheme.muted)
                         .labelStyle(.titleAndIcon)
 
+                    trialTimeline
+
                     Group {
                         if let errorMessage {
                             Text(errorMessage)
@@ -177,9 +205,11 @@ struct TrialOfferSheet: View {
                     VStack(spacing: 10) {
                         Button(action: onStartTrial) {
                             ZStack {
-                                Text("Start My Free Trial")
+                                Text(startButtonTitle)
                                     .font(.system(.headline, design: .rounded, weight: .bold))
                                     .foregroundStyle(.white)
+                                    .lineLimit(1)
+                                    .minimumScaleFactor(0.72)
                                     .opacity(isPurchasing ? 0 : 1)
                                 if isPurchasing {
                                     ProgressView()
@@ -192,6 +222,14 @@ struct TrialOfferSheet: View {
                         }
                         .buttonStyle(.plain)
                         .disabled(isPurchasing)
+
+                        // Apple 3.1.2: the amount the user will be billed must be the most
+                        // conspicuous price on the sheet — shown plainly right under the CTA.
+                        if directPurchase, let priceLabel {
+                            Text("then \(priceLabel)")
+                                .font(.system(.subheadline, design: .rounded, weight: .semibold))
+                                .foregroundStyle(AppTheme.text)
+                        }
 
                         Text(billingDisclosure)
                             .font(.system(.caption2, design: .rounded))
@@ -255,6 +293,61 @@ struct TrialOfferSheet: View {
             guard !reduceMotion else { return }
             animateGlow = true
             shimmerPhase = 1.4
+        }
+    }
+
+    /// Blinkist-pattern trial transparency: show exactly when the reminder arrives and
+    /// when billing starts. Only rendered for the one-tap direct-purchase sheet where a
+    /// real trial length is known.
+    @ViewBuilder
+    private var trialTimeline: some View {
+        if directPurchase, let days = trialDayCount {
+            let reminderDay = max(1, days - 2)
+            VStack(alignment: .leading, spacing: 0) {
+                timelineStep(icon: "lock.open.fill", tint: AppTheme.brand,
+                             title: "Today", detail: "Full access unlocks. No payment now.", connector: true)
+                timelineStep(icon: "bell.badge.fill", tint: AppTheme.warm,
+                             title: "Day \(reminderDay)", detail: "Apple reminds you before the trial ends.", connector: true)
+                timelineStep(icon: "star.circle.fill", tint: AppTheme.calm,
+                             title: "Day \(days)", detail: "Trial ends. Keep Pro, or cancel. Your call.", connector: false)
+            }
+            .padding(.horizontal, 14)
+            .padding(.vertical, 12)
+            .background(AppTheme.surface.opacity(0.85), in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .overlay {
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .stroke(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
+            }
+            .accessibilityElement(children: .combine)
+        }
+    }
+
+    private func timelineStep(icon: String, tint: Color, title: String, detail: String, connector: Bool) -> some View {
+        HStack(alignment: .top, spacing: 10) {
+            VStack(spacing: 0) {
+                ZStack {
+                    Circle().fill(tint.opacity(0.16)).frame(width: 26, height: 26)
+                    Image(systemName: icon)
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundStyle(tint)
+                }
+                if connector {
+                    Rectangle()
+                        .fill(AppTheme.surfaceStroke.opacity(0.7))
+                        .frame(width: 2, height: 14)
+                }
+            }
+            VStack(alignment: .leading, spacing: 1) {
+                Text(title)
+                    .font(.system(.caption, design: .rounded, weight: .bold))
+                    .foregroundStyle(AppTheme.text)
+                Text(detail)
+                    .font(.system(.caption, design: .rounded))
+                    .foregroundStyle(AppTheme.muted)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.bottom, connector ? 6 : 0)
+            Spacer(minLength: 0)
         }
     }
 
