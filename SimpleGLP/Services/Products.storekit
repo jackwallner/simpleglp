@@ -46,6 +46,11 @@
           "familyShareable" : true,
           "groupNumber" : 1,
           "internalID" : "GLP_PRO_MONTHLY_001",
+          "introductoryOffer" : {
+            "internalID" : "GLP_PRO_MONTHLY_INTRO_FREE_TRIAL",
+            "paymentMode" : "free",
+            "subscriptionPeriod" : "P1W"
+          },
           "localizations" : [
             {
               "description" : "Monthly Pro access. Alerts and personalized GLP patterns.",
@@ -62,7 +67,7 @@
         {
           "adHocOffers" : [],
           "codeOffers" : [],
-          "displayPrice" : "9.99",
+          "displayPrice" : "19.99",
           "familyShareable" : true,
           "groupNumber" : 2,
           "introductoryOffer" : {

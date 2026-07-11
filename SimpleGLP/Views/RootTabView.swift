@@ -32,7 +32,6 @@ struct RootTabView: View {
     @State private var reviewPromptInitialStep: ReviewPromptSheet.Step = .enjoyment
     @State private var reviewPromptShownThisSession = false
     @State private var pendingNativeReviewAfterDismiss = false
-    @State private var trialPaywallImpressionId = "simpleglp_first_run"
     /// One Pro moment per session, shared across the first-run paywall and every
     /// trial-offer trigger so they never stack back-to-back.
     @State private var paywallShownThisSession = false
@@ -104,22 +103,50 @@ struct RootTabView: View {
         .sheet(item: $activeSheet, onDismiss: handleRootSheetDismiss) { sheet in
             switch sheet {
             case .firstRunPaywall:
+                // First-run moment: the one-tap trial-first sheet (not the full plan
+                // picker). One primary action buys the yearly trial directly; "See all
+                // plans" chains to SimplePaywallView (monthly/lifetime live there);
+                // "Not now" lands in the app with nothing stacked on top.
+                //
                 // `.onAppear` here means the sheet was *actually added to the hierarchy*
                 // — it fires even if the sheet sits behind a permission alert, but it
                 // does NOT fire when the present is dropped (SwiftUI silently rejects a
                 // sheet raised at the same instant a system dialog takes the window).
                 // So it's the reliable "the user will see this" signal: commit the
-                // per-session slot and mark presented here. `hasSeenFirstRunOffer` is
-                // still consumed only on real dismissal (`handleRootSheetDismiss`), and
-                // the RC `simpleglp_first_run` impression fires from SimplePaywallView's
-                // own `.task`, so neither is spent on a dropped present.
-                SimplePaywallView(paywallImpressionId: trialPaywallImpressionId)
-                    .environmentObject(store)
-                    .onAppear {
-                        firstRunPaywallPending = false
-                        firstRunPaywallPresented = true
-                        paywallShownThisSession = true
-                    }
+                // per-session slot, mark presented, and fire the `simpleglp_first_run`
+                // impression here. `hasSeenFirstRunOffer` is still consumed only on real
+                // dismissal (`handleRootSheetDismiss`), so neither the slot nor the
+                // impression is spent on a dropped present.
+                TrialOfferSheet(
+                    offerLabel: trialOfferLabel,
+                    priceLabel: directTrialPackage?.glpProPriceLabel,
+                    directPurchase: directTrialPackage != nil,
+                    isPurchasing: trialPurchaseInFlight,
+                    errorMessage: trialPurchaseError,
+                    onStartTrial: {
+                        if directTrialPackage != nil {
+                            startDirectTrialPurchase()
+                        } else {
+                            pendingPaywallAfterTrialDismiss = true
+                            activeSheet = nil
+                        }
+                    },
+                    onSeeAllPlans: {
+                        pendingPaywallAfterTrialDismiss = true
+                        activeSheet = nil
+                    },
+                    onDismiss: { activeSheet = nil }
+                )
+                .environmentObject(store)
+                .presentationDetents([.fraction(0.85), .large])
+                .presentationDragIndicator(.visible)
+                .interactiveDismissDisabled(trialPurchaseInFlight)
+                .onAppear {
+                    firstRunPaywallPending = false
+                    firstRunPaywallPresented = true
+                    paywallShownThisSession = true
+                    store.trackPaywallImpression(id: "simpleglp_first_run")
+                }
             case .trialOffer:
                 TrialOfferSheet(
                     offerLabel: trialOfferLabel,
@@ -204,8 +231,10 @@ struct RootTabView: View {
             evaluateExistingUserTrialOffer()
         }
         .onChange(of: store.products.count) { _, _ in
-            // Products may load after appear — re-evaluate the existing-user path so a
-            // returning user with shots but no products yet still gets pitched.
+            // Products may load after appear — retry the first-run offer (it waits for
+            // the trial package so it never presents degraded) and re-evaluate the
+            // existing-user path so a returning user with shots still gets pitched.
+            presentFirstRunOfferIfEligible()
             evaluateExistingUserTrialOffer()
         }
         .onAppear {
@@ -224,6 +253,10 @@ struct RootTabView: View {
               !paywallShownThisSession,
               !AppEnvironment.isUITesting,
               activeSheet == nil,
+              // Never present a degraded first-run sheet: the one-tap offer needs the
+              // trial-bearing package (intro label + billed price) resolved. Products
+              // loading late is covered by the products.count onChange retry.
+              hasTrialOffer,
               // Defer until the scene is foreground-active. Right after Finish the
               // Notifications + HealthKit permission alerts are up, which puts the scene
               // in `.inactive`; presenting now would slide the paywall in *behind* them
@@ -244,13 +277,15 @@ struct RootTabView: View {
                   !paywallShownThisSession,
                   !store.isProUnlocked,
                   !store.hasRecentOrActiveProSignal,
+                  hasTrialOffer,
                   activeSheet == nil
             else { return }
             // Request the sheet. The per-session slot and "presented" flag are committed
             // only in the sheet's `.onAppear` (real presentation) — NOT here — so a
             // dropped present never suppresses the first-shot offer nobody saw.
+            trialPurchaseError = nil
+            trialPurchaseInFlight = false
             firstRunPaywallPending = true
-            trialPaywallImpressionId = "simpleglp_first_run"
             activeSheet = .firstRunPaywall
             // Watchdog: if the present was dropped (a permission dialog grabbed the
             // window at the same tick), `.onAppear` never fires. Reset so the next
