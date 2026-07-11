@@ -306,6 +306,45 @@ final class StoreService: NSObject, ObservableObject {
         return introEligibility[package.storeProduct.productIdentifier] ?? true
     }
 
+    // MARK: - Onboarding trial CTA (StatScout / Headaches pattern)
+
+    /// One-tap conversion target for the onboarding trial step: the eligible yearly
+    /// trial package, falling back to any eligible trial-bearing package, then the
+    /// plain yearly package. Bought directly (Apple confirm); the full paywall is only
+    /// the fallback when this is nil (products not loaded). Mirrors the package
+    /// selection RootTabView uses for its post-onboarding trial sheet so the label,
+    /// disclosure, and purchase all reference the same product.
+    var directTrialPackage: Package? {
+        let eligible = products.filter { isEligibleForIntroOffer($0) }
+        return eligible.first { $0.glpProPackageKind == .yearly }
+            ?? eligible.first
+            ?? yearlyPackage
+    }
+
+    /// CTA label for the one-tap yearly conversion. Leads with the free-trial offer
+    /// when eligible, price-forward otherwise so the price is never hidden
+    /// (Apple 3.1.2 — nothing implies Pro is free forever).
+    var onboardingTrialCTALabel: String {
+        guard let pkg = directTrialPackage else { return "Unlock Simple GLP Pro" }
+        if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
+            return "Start \(trial)"
+        }
+        return "Unlock Simple GLP Pro for \(pkg.glpProPriceLabel)"
+    }
+
+    /// Full Apple-3.1.2 auto-renew disclosure for the onboarding trial CTA. States
+    /// trial length (when eligible), then the real price from the loaded package, then
+    /// auto-renew and how to cancel. Returns nil until a package loads so no
+    /// placeholder price is ever rendered.
+    var onboardingTrialDisclosureText: String? {
+        guard let pkg = directTrialPackage else { return nil }
+        let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings › Apple ID › Subscriptions."
+        if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
+            return "\(trial.capitalized), then \(pkg.glpProPriceLabel). \(renew)"
+        }
+        return "\(pkg.glpProPriceLabel). \(renew)"
+    }
+
     func trackPaywallImpression(id: String, oncePerSession: Bool = false) {
         configureIfNeeded()
         if AppEnvironment.isUITesting { return }
