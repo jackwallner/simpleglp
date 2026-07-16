@@ -1,10 +1,10 @@
 # Astro ASO setup — Simple GLP (US, prelaunch)
 
-> **Repeat this setup:** follow [`astro-setup-process.md`](astro-setup-process.md) and say **"go"**.
+> **Repeat this setup:** follow [Astro setup process](~/ios/aso/astro-setup-process.md) and say **"go"**.
 
 Last synced: **2026-05-26** (50-locale **native** metadata + ASC draft upload)
 
-**Localization:** [`localization-aso.md`](localization-aso.md) · [`astro-phase-b-report.md`](astro-phase-b-report.md)
+**Localization:** [`localization-aso.md`](localization-aso.md) · [Phase B report](archive/aso/2026-05/astro-phase-b-report.md)
 
 **Strategy doc:** [`aso-keyword-strategy.md`](aso-keyword-strategy.md) — attack/siege mix, ASC copy, screenshots.
 
