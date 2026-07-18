@@ -10,21 +10,21 @@
     <meta name="description" content="Simple GLP is a private GLP-1 shot tracker for iPhone, Apple Watch, and widgets. Log shots in one tap, track your weekly schedule, add optional Health context, and keep everything on device.">
     <link rel="canonical" href="https://jackwallner.github.io/simpleglp/">
     <meta name="keywords" content="GLP-1 tracker, shot tracker, injection tracker, semaglutide, tirzepatide, Ozempic, Wegovy, Mounjaro, Zepbound, iPhone, Apple Watch, HealthKit">
-    <meta property="og:title" content="Simple GLP - Private GLP-1 Shot Tracker">
+    <meta property="og:title" content="Simple GLP: GLP-1 Shot Tracker for iPhone & Apple Watch">
     <meta property="og:description" content="One-tap GLP-1 shot logging for iPhone, Apple Watch, and widgets. Private by design and built around your weekly routine.">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://jackwallner.github.io/simpleglp/">
     <meta property="og:image" content="https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png">
     <meta property="og:site_name" content="Simple GLP">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Simple GLP - GLP-1 Shot Tracker">
+    <meta name="twitter:title" content="Simple GLP: GLP-1 Shot Tracker">
     <meta name="twitter:description" content="Log GLP-1 shots in one tap. Private, on-device, and made for iPhone, Apple Watch, and widgets.">
     <meta name="twitter:image" content="https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png">
     <script type="application/ld+json">
     {
         "@context": "https://schema.org",
         "@type": "SoftwareApplication",
-        "name": "Simple GLP",
+        "name": "Simple GLP: GLP-1 Shot Tracker",
         "operatingSystem": "iOS",
         "applicationCategory": "HealthApplication",
         "offers": [
@@ -32,20 +32,37 @@
                 "@type": "Offer",
                 "price": "0",
                 "priceCurrency": "USD",
-                "description": "Free GLP-1 shot logging, history, reminders, widget, and Apple Watch capture"
+                "description": "Free GLP-1 shot logging, history, schedule reminders, insights, widget, and Apple Watch capture"
             },
             {
                 "@type": "Offer",
                 "price": "2.99",
                 "priceCurrency": "USD",
-                "description": "Simple GLP Pro monthly with proactive alerts and pattern insights"
+                "description": "Simple GLP Pro Monthly — proactive dose-day and drift alerts, 7-day free trial"
+            },
+            {
+                "@type": "Offer",
+                "price": "19.99",
+                "priceCurrency": "USD",
+                "description": "Simple GLP Pro Yearly — same Pro features, billed annually, 7-day free trial"
+            },
+            {
+                "@type": "Offer",
+                "price": "24.99",
+                "priceCurrency": "USD",
+                "description": "Simple GLP Pro Lifetime — one-time purchase, unlocks Pro forever"
             }
         ],
+        "aggregateRating": {
+            "@type": "AggregateRating",
+            "ratingValue": "5",
+            "ratingCount": "1"
+        },
         "description": "Private one-tap GLP-1 shot tracking for iPhone, Apple Watch, and widgets.",
         "url": "https://jackwallner.github.io/simpleglp/",
         "downloadUrl": "https://apps.apple.com/us/app/simple-glp-glp-1-shot-tracker/id6770137909",
         "screenshot": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
-        "softwareVersion": "1.0.0",
+        "softwareVersion": "1.0.5",
         "author": {
             "@type": "Person",
             "name": "Jack Wallner"
@@ -180,6 +197,8 @@
         .more-info-section { margin-bottom: 40px; }
         .more-info-section h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #8a857d; margin-bottom: 12px; }
         .more-info-section p { font-size: 15px; line-height: 1.6; color: #1a1a1a; margin-bottom: 12px; }
+        .more-info-section p:last-child { margin-bottom: 0; }
+        .more-info-section strong { font-weight: 600; }
         .specs-table { width: 100%; font-size: 14px; border-collapse: collapse; margin-top: 16px; }
         .specs-table td { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
         .specs-table td:first-child { color: #8a857d; width: 140px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
@@ -268,6 +287,21 @@
                 <p>Read weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein when available.</p>
             </div>
             <div class="feature-card">
+                <span class="label">Insights</span>
+                <h3>Adherence &amp; timing</h3>
+                <p>See your on-schedule rate and weekday timing trends once you've logged a few shots. Free, no upgrade required.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label">Apple Watch</span>
+                <h3>Log from your wrist</h3>
+                <p>A dedicated watch app puts one tap at your wrist and keeps your recent shots synced with iPhone.</p>
+            </div>
+            <div class="feature-card">
+                <span class="label">Export</span>
+                <h3>Your data, portable</h3>
+                <p>Export your full shot history to CSV anytime from Settings. No account, no lock-in.</p>
+            </div>
+            <div class="feature-card">
                 <span class="label">Privacy</span>
                 <h3>On-device by design</h3>
                 <p>Your shot history and Health context are stored locally using SwiftData and an App Group.</p>
@@ -275,7 +309,7 @@
             <div class="feature-card">
                 <span class="label pro">Simple GLP Pro</span>
                 <h3>Proactive alerts</h3>
-                <p>Optional pattern-based alerts help you anticipate dose days and timing changes.</p>
+                <p>Get a nudge before a planned dose slips and a heads-up when your timing drifts from your usual pattern.</p>
             </div>
         </div>
     </section>
@@ -304,6 +338,13 @@
                     <p>It is not a medical device and does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations.</p>
                 </div>
                 <div class="more-info-section">
+                    <h3>Simple GLP Pro</h3>
+                    <p>An optional upgrade for people who want to stay ahead of their schedule. $2.99/month or $19.99/year, both with a 7-day free trial, or $24.99 once for lifetime access.</p>
+                    <p><strong>Dose-day nudges.</strong> If a planned dose hasn't been logged a few hours after it was due, Pro reminds you before the day fully slips.</p>
+                    <p><strong>Drift alerts.</strong> Pro watches your logged timing and flags when your usual dose day starts to shift, so you can course-correct early.</p>
+                    <p>Everything else &mdash; logging, schedule, history, insights, HealthKit context, widget, and Apple Watch capture &mdash; stays free, forever.</p>
+                </div>
+                <div class="more-info-section">
                     <h3>Specs</h3>
                     <table class="specs-table">
                         <tr><td>Platform</td><td>iOS 17+, watchOS 10+</td></tr>
@@ -311,7 +352,15 @@
                         <tr><td>Frameworks</td><td>SwiftUI · SwiftData · HealthKit · WidgetKit · WatchConnectivity</td></tr>
                         <tr><td>Data</td><td>Local shot history and read-only optional HealthKit context</td></tr>
                         <tr><td>Storage</td><td>SwiftData shared with widget and watch workflows through App Group</td></tr>
+                        <tr><td>Widgets</td><td>Home Screen widget with interactive one-tap logging</td></tr>
                     </table>
+                </div>
+                <div class="more-info-section">
+                    <h3>What Mattered</h3>
+                    <p><strong>One tap, no app launch.</strong> The Home Screen widget logs a shot directly through an interactive App Intent &mdash; no need to open the app first.</p>
+                    <p><strong>Free core, paid depth.</strong> Logging, schedule, history, insights, and HealthKit context are free forever. Pro is reserved for proactive nudges only, not gated basics.</p>
+                    <p><strong>Health context is optional, not required.</strong> HealthKit access is read-only and can be skipped entirely; the core logging flow never depends on it.</p>
+                    <p><strong>Privacy as default.</strong> No accounts, no third-party analytics or ad SDKs. The only network activity is App Store purchase validation for Pro. Shot history lives in SwiftData behind an App Group, shared only with the widget and watch app.</p>
                 </div>
             </div>
         </div>
