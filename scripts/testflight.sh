@@ -41,6 +41,7 @@ xcodebuild -exportArchive \
   -allowProvisioningUpdates
 
 git -C "$ROOT" add "$PROJECT_YML"
-git -C "$ROOT" commit -m "Bump build for TestFlight upload"
+git -C "$ROOT" commit -m "chore: bump build for TestFlight upload"
+git -C "$ROOT" push origin HEAD
 
-echo "Done. Build $NEW uploaded. Check App Store Connect → TestFlight for processing."
+echo "Done. Build $NEW uploaded and pushed. Check App Store Connect → TestFlight for processing."
