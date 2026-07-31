@@ -12,6 +12,7 @@ from __future__ import annotations
 
 import argparse
 import sys
+import time
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
@@ -24,6 +25,18 @@ from asc_lib import (
     list_all,
     load_credentials,
 )
+
+
+def retry(label: str, call, attempts: int = 5, delay: int = 8):
+    """ASC's reviewSubmission endpoints return sporadic 500s that clear on retry."""
+    for attempt in range(1, attempts + 1):
+        try:
+            return call()
+        except RuntimeError as e:
+            if attempt == attempts or "500" not in str(e):
+                raise
+            print(f"  {label}: attempt {attempt} hit a 500, retrying in {delay}s")
+            time.sleep(delay)
 
 
 def find_build(client: ASCClient, app_id: str, build_number: str) -> dict:
@@ -101,46 +114,55 @@ def main() -> None:
     )
     print(f"set releaseType {args.release_type}")
 
-    submission = client.post(
-        "/reviewSubmissions",
-        {
-            "data": {
-                "type": "reviewSubmissions",
-                "attributes": {"platform": "IOS"},
-                "relationships": {"app": {"data": {"type": "apps", "id": app_id}}},
-            }
-        },
+    submission = retry(
+        "create submission",
+        lambda: client.post(
+            "/reviewSubmissions",
+            {
+                "data": {
+                    "type": "reviewSubmissions",
+                    "attributes": {"platform": "IOS"},
+                    "relationships": {"app": {"data": {"type": "apps", "id": app_id}}},
+                }
+            },
+        ),
     )["data"]
     submission_id = submission["id"]
     print(f"created reviewSubmission {submission_id}")
 
-    client.post(
-        "/reviewSubmissionItems",
-        {
-            "data": {
-                "type": "reviewSubmissionItems",
-                "relationships": {
-                    "reviewSubmission": {
-                        "data": {"type": "reviewSubmissions", "id": submission_id}
+    retry(
+        "add item",
+        lambda: client.post(
+            "/reviewSubmissionItems",
+            {
+                "data": {
+                    "type": "reviewSubmissionItems",
+                    "relationships": {
+                        "reviewSubmission": {
+                            "data": {"type": "reviewSubmissions", "id": submission_id}
+                        },
+                        "appStoreVersion": {
+                            "data": {"type": "appStoreVersions", "id": version_id}
+                        },
                     },
-                    "appStoreVersion": {
-                        "data": {"type": "appStoreVersions", "id": version_id}
-                    },
-                },
-            }
-        },
+                }
+            },
+        ),
     )
     print("added version to submission")
 
-    result = client.patch(
-        f"/reviewSubmissions/{submission_id}",
-        {
-            "data": {
-                "type": "reviewSubmissions",
-                "id": submission_id,
-                "attributes": {"submitted": True},
-            }
-        },
+    result = retry(
+        "submit",
+        lambda: client.patch(
+            f"/reviewSubmissions/{submission_id}",
+            {
+                "data": {
+                    "type": "reviewSubmissions",
+                    "id": submission_id,
+                    "attributes": {"submitted": True},
+                }
+            },
+        ),
     )
     print(f"submitted; state={result['data']['attributes'].get('state')}")
 
