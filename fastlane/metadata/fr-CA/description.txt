@@ -19,3 +19,9 @@ Pro ajoute des alertes proactives en cas de dérive d’horaires. Abonnement in-
 
 PAS UN DISPOSITIF MÉDICAL
 Simple GLP ne fournit pas de conseil médical, de posologie, de diagnostic ni de recommandation de traitement. Suivez toujours votre prescripteur.
+
+Détails d’abonnement
+Simple GLP Pro est offert sous forme d’abonnement à renouvellement automatique (mensuel 2,99 $ / annuel 19,99 $ chacun avec essai gratuit de 7 jours) ou d’achat unique à vie (24,99 $). Le paiement est facturé à votre identifiant Apple à la confirmation. L’abonnement se renouvelle automatiquement sauf si vous l’annulez au moins 24 heures avant la fin de la période.
+
+Politique de confidentialité : https://jackwallner.github.io/simpleglp/privacy-policy.html
+Conditions d’utilisation (CLUF) : https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

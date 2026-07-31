@@ -19,3 +19,9 @@ Pro מוסיפה התראות יזומות כשהזמנים סוטים. מנוי
 
 לא מכשיר רפואי
 Simple GLP אינה מספקת ייעוץ רפואי, הוראות מינון, אבחון או המלצות טיפול. עקבו תמיד אחרי הרופא המטפל.
+
+פרטי מנוי
+Simple GLP Pro זמין כמנוי מתחדש אוטומטית (חודשי 2.99 $ / שנתי 19.99 $ שניהם עם ניסיון חינם ל‑7 ימים) או כרכישת Lifetime חד‑פעמית (24.99 $). התשלום מחויב ל‑Apple ID שלכם באישור. המנויים מתחדשים אוטומטית אלא אם בוטלו לפחות 24 שעות לפני סוף התקופה. ניתן לנהל או לבטל בכל עת דרך הגדרות → Apple ID → מינויים.
+
+Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

@@ -19,3 +19,9 @@ Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anu
 
 NIE JEST WYROBEM MEDYCZNYM
 Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+
+Szczegóły subskrypcji
+Simple GLP Pro jest dostępny jako automatycznie odnawialna subskrypcja (miesięcznie 2,99 USD / rocznie 19,99 USD oba z 7-dniowym bezpłatnym okresem próbnym) lub jednorazowy zakup Lifetime (24,99 USD). Płatność zostanie pobrana z Twojego Apple ID po potwierdzeniu. Subskrypcje odnawiają się automatycznie, chyba że zostaną anulowane co najmniej 24 godziny przed końcem okresu. Zarządzaj nimi lub anuluj w dowolnym momencie w Ustawienia → Apple ID → Subskrypcje.
+
+Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

@@ -1,1 +1,1 @@
-A naplózás gyorsabb és egyszerűbb lett: egy privát koppintás a heti injekcióhoz. Az alap naplózás ingyenes, fiók nélkül.
+Ez a frissítés áttekinthetőbb előfizetési és árinformációkat hoz az App Store-oldalra. Maga az alkalmazás pontosan ugyanúgy működik: egy privát koppintás a heti injekció rögzítéséhez, ingyen és fiók nélkül.

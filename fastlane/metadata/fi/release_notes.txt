@@ -1,1 +1,1 @@
-Kirjaaminen on nyt nopeampaa ja kevyempää: yksi yksityinen napautus viikoittaiseen pistokseen. Peruskirjaus ilmainen, ilman tiliä.
+Tämä päivitys selkeyttää App Store -sivun tilaus- ja hintatiedot. Itse sovellus toimii täsmälleen kuten ennenkin: yksi yksityinen napautus viikoittaisen pistoksen kirjaamiseen, ilmaiseksi ja ilman tiliä.
