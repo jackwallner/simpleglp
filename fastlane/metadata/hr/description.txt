@@ -19,3 +19,9 @@ Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anu
 
 NIE JEST WYROBEM MEDYCZNYM
 Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+
+Pojedinosti pretplate
+Simple GLP Pro je dostupan kao pretplata s automatskom obnovom (mjesečno 2,99 USD / godišnje 19,99 USD oba sa 7-dnevnim besplatnim probnim razdobljem) ili jednokratnom Lifetime kupnjom (24,99 USD). Plaćanje se naplaćuje vašem Apple ID računu pri potvrdi. Pretplate se automatski obnavljaju osim ako ne otkažete najmanje 24 sata prije kraja razdoblja. Upravljačete ili otkažite bilo kada u Postavke → Apple ID → Pretplate.
+
+Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

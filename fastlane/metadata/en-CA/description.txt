@@ -1,4 +1,4 @@
-Simple GLP is the fastest way to log a weekly GLP-1 shot — designed for people who just want the moment recorded without turning their treatment routine into a spreadsheet.
+Simple GLP is the fastest way to log a weekly GLP-1 shot, designed for people who just want the moment recorded without turning their treatment routine into a spreadsheet.
 
 ONE TAP TO LOG
 Open the app, tap the Home Screen widget, or raise your wrist with Apple Watch. Your shot is timestamped immediately. Add dose, injection site, notes, and symptoms later if you want.
@@ -7,7 +7,7 @@ A SCHEDULE THAT KNOWS YOUR WEEK
 Set your medication, dose plan, preferred weekday, and time. Simple GLP figures out whether each shot was early, on-time, or late and reminds you ahead of the next one.
 
 OPTIONAL HEALTHKIT CONTEXT
-With your permission, Simple GLP can attach context from Apple Health — weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein — to each shot. Read-only. Never written back.
+With your permission, Simple GLP can attach context from Apple Health (weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein) to each shot. Read-only. Never written back.
 
 PRIVATE BY DESIGN
 No accounts. No ads. No analytics. No data sold. Your shot history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
@@ -17,3 +17,9 @@ Pro adds pattern-based proactive alerts so timing drift gets caught early. Subsc
 
 NOT A MEDICAL DEVICE
 Simple GLP does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations. Always follow your prescriber's guidance.
+
+Subscription Details
+Simple GLP Pro is available as an auto-renewing subscription (Monthly $2.99 / Yearly $19.99 each with a 7‑day free trial) or a one-time Lifetime purchase ($24.99). Payment is charged to your Apple ID at confirmation. Subscriptions auto-renew unless cancelled at least 24 hours before the end of the period. Manage or cancel anytime in Settings → Apple ID → Subscriptions.
+
+Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

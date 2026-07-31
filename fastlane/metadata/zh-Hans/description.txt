@@ -19,3 +19,9 @@ Pro 增加基于模式的前瞻提醒，及早发现时间偏移。应用内订�
 
 非医疗器械
 Simple GLP 不提供医疗建议、剂量说明、诊断或治疗建议。请始终遵循处方者的指导。
+
+订阅详情
+Simple GLP Pro 提供自动续订订阅（按月 US$2.99 / 按年 US$19.99，均含 7 天免费试用），也可一次性购买终身版（US$24.99）。确认购买后费用会从你的 Apple ID 扣款。订阅会在当前周期结束前 24 小时内自动续订，除非你提前取消。你可以随时在“设置 → Apple ID → 订阅”中管理或取消订阅。
+
+隐私政策: https://jackwallner.github.io/simpleglp/privacy-policy.html
+使用条款 (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

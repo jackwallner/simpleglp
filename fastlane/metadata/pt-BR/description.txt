@@ -19,3 +19,9 @@ Pro adiciona alertas proativos se o horário desviar. Assinatura no app. Cancele
 
 NÃO É DISPOSITIVO MÉDICO
 O Simple GLP não oferece orientação médica, instruções de dose, diagnóstico ou recomendações de tratamento. Siga sempre seu prescritor.
+
+Detalhes da assinatura
+Simple GLP Pro está disponível como assinatura com renovação automática (Mensal US$2,99 / Anual US$19,99 ambos com teste grátis de 7 dias) ou compra vitalícia única (US$24,99). O pagamento é cobrado do seu ID Apple na confirmação. As assinaturas renovam automaticamente, a menos que sejam canceladas pelo menos 24 horas antes do fim do período. Gerencie ou cancele a qualquer momento em Ajustes → ID Apple → Assinaturas.
+
+Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

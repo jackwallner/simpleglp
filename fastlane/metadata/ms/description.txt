@@ -19,3 +19,9 @@ Pro menambah peringatan proaktif saat waktu menyimpang. Berlangganan di aplikasi
 
 BUKAN PERANGKAT MEDIS
 Simple GLP tidak memberikan saran medis, instruksi dosis, diagnosis, atau rekomendasi perawatan. Selalu ikuti petunjuk peresep Anda.
+
+Butiran Langganan
+Simple GLP Pro tersedia sebagai langganan pembaharuan automatik (Bulanan $2.99 / Tahunan $19.99 kedua-duanya dengan percubaan percuma 7 hari) atau pembelian Lifetime sekali sahaja ($24.99). Bayaran dicaj kepada Apple ID anda semasa pengesahan. Langganan diperbaharui secara automatik melainkan dibatalkan sekurang-kurangnya 24 jam sebelum akhir tempoh. Urus atau batalkan pada bila-bila masa dalam Tetapan → Apple ID → Subscriptions.
+
+Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
