@@ -20,6 +20,7 @@ struct OnboardingView: View {
     @State private var isPurchasing = false
     @State private var trialError: String?
     @State private var showPaywallFallback = false
+    @State private var saveError: String?
 
     private static let totalSteps = 6
     private var isTrialStep: Bool { step == Self.totalSteps - 1 }
@@ -60,6 +61,17 @@ struct OnboardingView: View {
         .fullScreenCover(isPresented: $showPaywallFallback, onDismiss: finishOnboarding) {
             SimplePaywallView(paywallImpressionId: "simpleglp_onboarding_trial")
                 .environmentObject(store)
+        }
+        .alert(
+            "Couldn't save setup",
+            isPresented: Binding(
+                get: { saveError != nil },
+                set: { if !$0 { saveError = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(saveError ?? "Try again.")
         }
     }
 
@@ -479,9 +491,20 @@ struct OnboardingView: View {
     }
 
     private func finishOnboarding() {
+        guard !hasCompletedOnboarding else { return }
+        let trimmedCustomName = customMedicationName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard doseMg > 0 else {
+            saveError = "Enter a dose greater than 0 mg."
+            return
+        }
+        guard medication != .other || !trimmedCustomName.isEmpty else {
+            saveError = "Enter the medication name."
+            return
+        }
+
         let plan = MedicationPlan(
             medication: medication,
-            customMedicationName: medication == .other ? customMedicationName : nil,
+            customMedicationName: medication == .other ? trimmedCustomName : nil,
             doseMg: doseMg,
             intervalDays: intervalDays,
             reminderEnabled: reminderEnabled,
@@ -489,7 +512,14 @@ struct OnboardingView: View {
         )
         plan.firstDoseAnchor = firstDose
         modelContext.insert(plan)
-        try? modelContext.save()
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.delete(plan)
+            saveError = "Your medication plan could not be saved. Please try again."
+            return
+        }
+        GLPOnboardingStore.healthContextEnabled = enableHealth
         if enableHealth {
             Task {
                 try? await HealthKitService.shared.prepareAuthorizationDuringOnboarding()

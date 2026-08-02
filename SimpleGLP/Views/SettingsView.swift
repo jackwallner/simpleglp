@@ -8,6 +8,7 @@ struct SettingsView: View {
     @EnvironmentObject private var store: StoreService
     @AppStorage(GLPStorageKey.appearance.rawValue, store: GLPAppGroup.userDefaults) private var appearanceRaw = AppAppearance.system.rawValue
     @AppStorage(GLPStorageKey.promptForDetails.rawValue, store: GLPAppGroup.userDefaults) private var promptForDetails = false
+    @AppStorage(GLPStorageKey.healthContextEnabled.rawValue, store: GLPAppGroup.userDefaults) private var healthContextEnabled = true
     @State private var showPaywall = false
     @State private var showProAlerts = false
 
@@ -32,6 +33,18 @@ struct SettingsView: View {
 
             Section("Logging") {
                 Toggle("Prompt for details after shot", isOn: $promptForDetails)
+            }
+
+            Section {
+                Toggle("Attach Apple Health context", isOn: $healthContextEnabled)
+                    .onChange(of: healthContextEnabled) { _, enabled in
+                        guard enabled else { return }
+                        Task { try? await HealthKitService.shared.prepareAuthorizationDuringOnboarding() }
+                    }
+            } header: {
+                Text("Health")
+            } footer: {
+                Text("When enabled, Simple GLP reads optional Health data when you log a shot. It never writes back to Apple Health.")
             }
 
             Section("Pro") {
@@ -96,6 +109,7 @@ struct PlanEditorView: View {
     @State private var reminderEnabled = true
     @State private var reminderLeadMinutes = 0
     @State private var notificationsDenied = false
+    @State private var saveError: String?
 
     var body: some View {
         Form {
@@ -160,6 +174,17 @@ struct PlanEditorView: View {
             reminderEnabled = p.reminderEnabled
             reminderLeadMinutes = p.reminderLeadMinutes
         }
+        .alert(
+            "Couldn't save plan",
+            isPresented: Binding(
+                get: { saveError != nil },
+                set: { if !$0 { saveError = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(saveError ?? "Try again.")
+        }
     }
 
     private var notificationsOffWarning: some View {
@@ -217,15 +242,30 @@ struct PlanEditorView: View {
 
     private func save() {
         guard let plan else { return }
+        let trimmedCustomName = customName.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard doseMg > 0 else {
+            saveError = "Enter a dose greater than 0 mg."
+            return
+        }
+        guard medication != .other || !trimmedCustomName.isEmpty else {
+            saveError = "Enter the medication name."
+            return
+        }
         plan.medication = medication
-        plan.customMedicationName = medication == .other ? customName : nil
+        plan.customMedicationName = medication == .other ? trimmedCustomName : nil
         plan.doseMg = doseMg
         plan.intervalDays = intervalDays
         plan.firstDoseAnchor = firstDose
         plan.reminderEnabled = reminderEnabled
         plan.reminderLeadMinutes = reminderLeadMinutes
         plan.updatedAt = .now
-        try? modelContext.save()
+        PlanStore.recalculateScheduleMatches(for: plan, in: modelContext)
+        do {
+            try modelContext.save()
+        } catch {
+            saveError = "Your medication plan could not be saved. Please try again."
+            return
+        }
         if reminderEnabled {
             Task { await ReminderService.scheduleNextShotReminder(for: plan) }
         } else {
@@ -330,6 +370,7 @@ struct AddDoseStepSheet: View {
     @State private var startDate = Date()
     @State private var doseMg = 0.25
     @State private var useCustomDose = false
+    @State private var saveError: String?
 
     var body: some View {
         NavigationStack {
@@ -384,15 +425,37 @@ struct AddDoseStepSheet: View {
                     doseMg = presets.first ?? doseMg
                 }
             }
+            .alert(
+                "Couldn't save dose step",
+                isPresented: Binding(
+                    get: { saveError != nil },
+                    set: { if !$0 { saveError = nil } }
+                )
+            ) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(saveError ?? "Try again.")
+            }
         }
     }
 
     private func save() {
+        guard doseMg > 0 else {
+            saveError = "Enter a dose greater than 0 mg."
+            return
+        }
         let step = DoseStep(startDate: startDate, doseMg: doseMg)
         step.plan = plan
         plan.doseSteps.append(step)
         modelContext.insert(step)
-        try? modelContext.save()
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.delete(step)
+            plan.doseSteps.removeAll { $0.id == step.id }
+            saveError = "The dose step could not be saved. Please try again."
+            return
+        }
         onSave()
         dismiss()
     }

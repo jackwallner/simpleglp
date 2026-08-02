@@ -8,12 +8,13 @@ struct LogShotIntent: AppIntent {
     static let openAppWhenRun = true
 
     func perform() async throws -> some IntentResult {
-        let defaults = GLPAppGroup.userDefaults
         let timestamp = Date()
-        defaults.set(timestamp.timeIntervalSince1970, forKey: "pendingWidgetShotTimestamp")
-        defaults.set(GLPWidgetQuickLog.healthMessagePending, forKey: "pendingWidgetShotMessage")
+        let pending = PendingWidgetShot(timestamp: timestamp)
+        GLPAppGroup.enqueueWidgetShot(pending)
+
+        let defaults = GLPAppGroup.userDefaults
         defaults.set(timestamp, forKey: GLPStorageKey.widgetLastLoggedAt.rawValue)
-        RecentShotsStore.record(RecentShot(timestamp: timestamp))
+        RecentShotsStore.record(RecentShot(id: pending.id, timestamp: timestamp))
         WidgetCenter.shared.reloadAllTimelines()
         return .result()
     }

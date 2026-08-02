@@ -26,4 +26,24 @@ enum PlanStore {
         let changed = plans.reduce(false) { $0 || $1.normalizeScheduleAnchor() }
         if changed { try? context.save() }
     }
+
+    /// Recomputes stored schedule matches after a plan edit. Events are processed oldest
+    /// first so only the first shot can claim a scheduled occurrence; later duplicates remain
+    /// manual entries instead of inheriting stale status from the previous plan.
+    static func recalculateScheduleMatches(for plan: MedicationPlan, in context: ModelContext) {
+        let descriptor = FetchDescriptor<ShotEvent>(sortBy: [SortDescriptor(\.timestamp, order: .forward)])
+        let events = (try? context.fetch(descriptor)) ?? []
+        var processed: [ShotEvent] = []
+        for event in events {
+            let match = ScheduleEngine.match(
+                timestamp: event.timestamp,
+                plan: plan,
+                existingEvents: processed
+            )
+            event.scheduledDate = match.scheduledDate
+            event.scheduleStatus = match.status
+            event.minutesFromSchedule = match.minutesFromSchedule
+            processed.append(event)
+        }
+    }
 }

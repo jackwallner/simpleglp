@@ -47,6 +47,26 @@ enum ImportService {
             if cols.count >= 6, !cols[5].isEmpty {
                 event.userNotes = cols[5]
             }
+            event.nausea = intValue(in: cols, at: 6)
+            event.appetite = intValue(in: cols, at: 7)
+            event.foodNoise = intValue(in: cols, at: 8)
+            event.wellbeing = intValue(in: cols, at: 9)
+            event.bodyMassKg = doubleValue(in: cols, at: 10)
+            event.bloodGlucoseMgPerDL = doubleValue(in: cols, at: 11)
+            event.stepsToday = intValue(in: cols, at: 12)
+            event.activeEnergyKcalToday = doubleValue(in: cols, at: 13)
+            event.exerciseMinutesToday = doubleValue(in: cols, at: 14)
+            event.sleepHoursLastNight = doubleValue(in: cols, at: 15)
+            event.restingHeartRateBpm = doubleValue(in: cols, at: 16)
+            event.recentHeartRateAverageBpm = doubleValue(in: cols, at: 17)
+            event.workoutsLast24h = intValue(in: cols, at: 18)
+            event.waterMlToday = doubleValue(in: cols, at: 19)
+            event.caffeineMgToday = doubleValue(in: cols, at: 20)
+            event.dietaryEnergyKcalToday = doubleValue(in: cols, at: 21)
+            event.proteinGramsToday = doubleValue(in: cols, at: 22)
+            if hasHealthContext(event) {
+                event.healthStatus = .captured
+            }
             event.finalizeCapture()
             context.insert(event)
             known.append(event)
@@ -119,5 +139,31 @@ enum ImportService {
             commitRecord()
         }
         return records
+    }
+
+    private static func intValue(in columns: [String], at index: Int) -> Int? {
+        guard columns.indices.contains(index), !columns[index].isEmpty else { return nil }
+        return Int(columns[index])
+    }
+
+    private static func doubleValue(in columns: [String], at index: Int) -> Double? {
+        guard columns.indices.contains(index), !columns[index].isEmpty else { return nil }
+        return Double(columns[index])
+    }
+
+    private static func hasHealthContext(_ event: ShotEvent) -> Bool {
+        event.bodyMassKg != nil
+            || event.bloodGlucoseMgPerDL != nil
+            || event.stepsToday != nil
+            || event.activeEnergyKcalToday != nil
+            || event.exerciseMinutesToday != nil
+            || event.sleepHoursLastNight != nil
+            || event.restingHeartRateBpm != nil
+            || event.recentHeartRateAverageBpm != nil
+            || event.workoutsLast24h != nil
+            || event.waterMlToday != nil
+            || event.caffeineMgToday != nil
+            || event.dietaryEnergyKcalToday != nil
+            || event.proteinGramsToday != nil
     }
 }

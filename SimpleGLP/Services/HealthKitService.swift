@@ -69,6 +69,14 @@ actor HealthKitService {
             )
         }
 
+        guard GLPOnboardingStore.healthContextEnabled else {
+            return HealthCaptureResult(
+                status: .unavailable,
+                message: "Health context is turned off. You can enable it in Settings.",
+                snapshot: nil
+            )
+        }
+
         guard HKHealthStore.isHealthDataAvailable() else {
             return HealthCaptureResult(status: .unavailable, message: "Health data is not available on this device.", snapshot: nil)
         }
