@@ -6,7 +6,7 @@ up in the build list" (the legacy Tunes API can't see API-uploaded builds), so
 this drives the ASC reviewSubmissions API directly.
 
 Usage:
-  ./scripts/asc-submit-for-review.py --version 1.0.6 --build 38 [--dry-run]
+  ./scripts/asc-submit-for-review.py --version 1.0.7 --build 40 [--dry-run]
 """
 from __future__ import annotations
 
@@ -40,12 +40,13 @@ def retry(label: str, call, attempts: int = 5, delay: int = 8):
 
 
 def find_build(client: ASCClient, app_id: str, build_number: str) -> dict:
-    builds = list_all(
-        client, f"/builds?filter[app]={app_id}&filter[version]={build_number}&limit=10"
+    builds = list_all(client, f"/builds?filter[app]={app_id}&limit=200")
+    build = next(
+        (item for item in builds if str(item["attributes"].get("version")) == build_number),
+        None,
     )
-    if not builds:
+    if build is None:
         raise SystemExit(f"error: build {build_number} not found for app {app_id}")
-    build = builds[0]
     state = build["attributes"].get("processingState")
     if state != "VALID":
         raise SystemExit(f"error: build {build_number} is {state}, not VALID yet")
