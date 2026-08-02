@@ -68,14 +68,20 @@ enum ProactiveAlertsEngine {
         cancelLateDoseNudge()
         guard prefs.alertsEnabled,
               let plan,
-              let next = ScheduleEngine.nextExpectedDate(plan: plan, calendar: calendar),
-              !isOccurrenceClaimed(next, by: events)
+              let next = nextUnclaimedOccurrence(
+                  now: .now,
+                  plan: plan,
+                  events: events,
+                  calendar: calendar
+              )
         else { return }
 
         let granted = await ReminderService.ensureAuthorization()
         guard granted else { return }
 
-        let fireDate = lateDoseFireDate(for: next, prefs: prefs, calendar: calendar)
+        let now = Date()
+        let requestedFireDate = lateDoseFireDate(for: next, prefs: prefs, calendar: calendar)
+        let fireDate = max(requestedFireDate, now.addingTimeInterval(60))
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
         let content = UNMutableNotificationContent()
         content.title = "Dose slipping?"
@@ -99,6 +105,35 @@ enum ProactiveAlertsEngine {
             guard let scheduled = event.scheduledDate else { return false }
             return abs(scheduled.timeIntervalSince(occurrence)) < 60
         }
+    }
+
+    /// Returns the current unclaimed occurrence when a dose is overdue, otherwise the next
+    /// future occurrence. The previous implementation always used the next future occurrence,
+    /// so a missed dose never generated a late-dose nudge.
+    @MainActor
+    static func nextUnclaimedOccurrence(
+        now: Date,
+        plan: MedicationPlan,
+        events: [ShotEvent],
+        calendar: Calendar = .current
+    ) -> Date? {
+        if let overdue = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
+           let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: calendar),
+           overdue >= first,
+           !isOccurrenceClaimed(overdue, by: events) {
+            return overdue
+        }
+
+        guard var next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar) else {
+            return nil
+        }
+        while isOccurrenceClaimed(next, by: events) {
+            guard let following = calendar.date(byAdding: .day, value: plan.cadenceDays, to: next) else {
+                return nil
+            }
+            next = following
+        }
+        return next
     }
 
     /// Planned time + grace, shifted forward out of quiet hours if needed.

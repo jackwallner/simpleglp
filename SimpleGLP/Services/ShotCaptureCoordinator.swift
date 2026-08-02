@@ -16,15 +16,17 @@ final class ShotCaptureCoordinator: ObservableObject {
     /// app ingests it here. Returns true if a pending widget shot was captured.
     @discardableResult
     func ingestPendingWidgetShot(in context: ModelContext) -> Bool {
-        let defaults = GLPAppGroup.userDefaults
-        let key = "pendingWidgetShotTimestamp"
-        let raw = defaults.double(forKey: key)
-        guard raw > 0 else { return false }
-        defaults.removeObject(forKey: key)
-        defaults.removeObject(forKey: "pendingWidgetShotMessage")
+        guard let pending = GLPAppGroup.pendingWidgetShots().first else { return false }
+        let existing = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        if existing.contains(where: { $0.id == pending.id }) {
+            GLPAppGroup.acknowledgeWidgetShot(id: pending.id)
+            rebuildRecentShots(in: context)
+            return true
+        }
 
-        let captured = captureShot(in: context, tapDate: Date(timeIntervalSince1970: raw))
+        let captured = captureShot(in: context, tapDate: pending.timestamp, eventID: pending.id)
         if captured {
+            GLPAppGroup.acknowledgeWidgetShot(id: pending.id)
             rebuildRecentShots(in: context)
         }
         return captured
@@ -89,13 +91,22 @@ final class ShotCaptureCoordinator: ObservableObject {
     }
 
     @discardableResult
-    func captureShot(in context: ModelContext, tapDate: Date? = nil) -> Bool {
+    func captureShot(in context: ModelContext, tapDate: Date? = nil, eventID: UUID? = nil) -> Bool {
+        guard !isCapturing || eventID != nil else {
+            bannerMessage = "Finishing the last shot. Try again in a moment."
+            return false
+        }
+
         let timestamp = tapDate ?? .now
         let plan = PlanStore.currentPlan(in: context)
         let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        if let eventID, events.contains(where: { $0.id == eventID }) {
+            return true
+        }
         let isFirstShot = events.isEmpty
         let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: events)
         let event = ShotEvent(
+            id: eventID ?? UUID(),
             timestamp: timestamp,
             medicationName: plan?.displayMedicationName ?? "GLP-1",
             doseMg: match.doseMg,
@@ -143,7 +154,9 @@ final class ShotCaptureCoordinator: ObservableObject {
             descriptor.fetchLimit = 1
             guard let found = try? context.fetch(descriptor).first else {
                 isCapturing = false
-                bannerMessage = "Saved, but could not update context."
+                if lastCapturedEventID == eventID {
+                    bannerMessage = "Saved, but could not update context."
+                }
                 return
             }
 
@@ -173,6 +186,9 @@ final class ShotCaptureCoordinator: ObservableObject {
                 await ReminderService.scheduleNextShotReminder(for: plan)
             }
             await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+            if !GLPAppGroup.pendingWidgetShots().isEmpty {
+                _ = ingestPendingWidgetShot(in: context)
+            }
         }
 
         return true

@@ -13,6 +13,7 @@ struct EditEventSheet: View {
     @State private var appetite: Int = 0
     @State private var foodNoise: Int = 0
     @State private var wellbeing: Int = 0
+    @State private var saveError: String?
 
     var body: some View {
         NavigationStack {
@@ -79,6 +80,17 @@ struct EditEventSheet: View {
             appetite = event.appetite ?? 0
             foodNoise = event.foodNoise ?? 0
             wellbeing = event.wellbeing ?? 0
+        }
+        .alert(
+            "Couldn't save shot",
+            isPresented: Binding(
+                get: { saveError != nil },
+                set: { if !$0 { saveError = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(saveError ?? "Try again.")
         }
     }
 
@@ -150,6 +162,10 @@ struct EditEventSheet: View {
     }
 
     private func save() {
+        guard doseMg > 0 else {
+            saveError = "Enter a dose greater than 0 mg."
+            return
+        }
         let timestampChanged = timestamp != event.timestamp
         event.timestamp = timestamp
         event.doseMg = doseMg
@@ -170,7 +186,12 @@ struct EditEventSheet: View {
             event.minutesFromSchedule = match.minutesFromSchedule
         }
 
-        try? modelContext.save()
+        do {
+            try modelContext.save()
+        } catch {
+            saveError = "The shot could not be saved. Please try again."
+            return
+        }
         dismiss()
     }
 }

@@ -37,6 +37,14 @@ enum PurchaseState {
     case pending
 }
 
+enum StoreServiceError: LocalizedError {
+    case unavailableInSimulator
+
+    var errorDescription: String? {
+        "Purchases are unavailable in the iOS Simulator."
+    }
+}
+
 enum GLPProPackageKind: Int {
     case lifetime = 0
     case yearly = 1
@@ -225,12 +233,25 @@ final class StoreService: NSObject, ObservableObject {
     private override init() {}
 
     func start() {
+        #if targetEnvironment(simulator)
+        // RevenueCat must never be configured with the production key in an agent
+        // simulator. Mark the local store as resolved so launch-time promo gating
+        // can proceed without touching the SDK.
+        hasResolvedEntitlements = true
+        return
+        #else
         configureIfNeeded()
         Task { await updateCustomerProductStatus(fetchPolicy: .fetchCurrent) }
         Task { await fetchProducts() }
+        #endif
     }
 
     func fetchProducts() async {
+        #if targetEnvironment(simulator)
+        isLoadingProducts = false
+        hasResolvedEntitlements = true
+        return
+        #else
         configureIfNeeded()
         isLoadingProducts = true
         defer { isLoadingProducts = false }
@@ -255,6 +276,7 @@ final class StoreService: NSObject, ObservableObject {
             logger.error("Offerings fetch failed: \(String(describing: error), privacy: .public). Falling back to direct product fetch.")
             await loadFallbackProducts()
         }
+        #endif
     }
 
     /// Loads the Pro products by identifier and wraps them in synthesized packages so the
@@ -346,6 +368,9 @@ final class StoreService: NSObject, ObservableObject {
     }
 
     func trackPaywallImpression(id: String, oncePerSession: Bool = false) {
+        #if targetEnvironment(simulator)
+        return
+        #else
         configureIfNeeded()
         if AppEnvironment.isUITesting { return }
         if oncePerSession {
@@ -355,10 +380,14 @@ final class StoreService: NSObject, ObservableObject {
         Purchases.shared.trackCustomPaywallImpression(
             CustomPaywallImpressionParams(paywallId: id)
         )
+        #endif
     }
 
     @discardableResult
     func purchase(_ package: Package) async throws -> PurchaseState {
+        #if targetEnvironment(simulator)
+        throw StoreServiceError.unavailableInSimulator
+        #else
         configureIfNeeded()
         purchaseInFlight = true
         defer { purchaseInFlight = false }
@@ -374,9 +403,14 @@ final class StoreService: NSObject, ObservableObject {
             return .purchased
         }
         return .pending
+        #endif
     }
 
     func updateCustomerProductStatus(fetchPolicy: CacheFetchPolicy = .default) async {
+        #if targetEnvironment(simulator)
+        hasResolvedEntitlements = true
+        return
+        #else
         configureIfNeeded()
         do {
             let info = try await Purchases.shared.customerInfo(fetchPolicy: fetchPolicy)
@@ -388,9 +422,15 @@ final class StoreService: NSObject, ObservableObject {
             logger.error("Customer info refresh failed: \(String(describing: error), privacy: .public)")
             lastError = "Couldn't refresh your subscription status. Check your connection and try again."
         }
+        #endif
     }
 
     func restorePurchases() async {
+        #if targetEnvironment(simulator)
+        lastError = StoreServiceError.unavailableInSimulator.localizedDescription
+        hasResolvedEntitlements = true
+        return
+        #else
         configureIfNeeded()
         lastError = nil
         do {
@@ -401,6 +441,7 @@ final class StoreService: NSObject, ObservableObject {
             logger.error("Restore failed: \(String(describing: error), privacy: .public)")
             lastError = "Couldn't restore purchases. Try again."
         }
+        #endif
     }
 
     func apply(customerInfo: CustomerInfo) {

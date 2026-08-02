@@ -5,7 +5,7 @@ import WatchConnectivity
 final class PhoneWatchSession: NSObject, ObservableObject {
     static let shared = PhoneWatchSession()
 
-    var onWatchRequestedCapture: ((Date) -> Void)?
+    var onWatchRequestedCapture: ((Date, UUID?) -> Void)?
 
     private override init() {
         super.init()
@@ -71,8 +71,9 @@ extension PhoneWatchSession: WCSessionDelegate {
     nonisolated private func handleIncoming(_ payload: [String: Any]) {
         guard let type = payload["type"] as? String, type == "logShot",
               let timestamp = payload["timestamp"] as? TimeInterval else { return }
+        let eventID = (payload["id"] as? String).flatMap(UUID.init)
         Task { @MainActor in
-            PhoneWatchSession.shared.onWatchRequestedCapture?(Date(timeIntervalSince1970: timestamp))
+            PhoneWatchSession.shared.onWatchRequestedCapture?(Date(timeIntervalSince1970: timestamp), eventID)
         }
     }
 }

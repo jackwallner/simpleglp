@@ -238,6 +238,42 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertFalse(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence.addingTimeInterval(7 * 86_400), by: [logged]))
     }
 
+    @MainActor
+    func testNextUnclaimedOccurrencePrefersOverdueDose() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 6, day: 2, hour: 9))!
+        let now = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 14))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0)
+
+        let occurrence = ProactiveAlertsEngine.nextUnclaimedOccurrence(
+            now: now,
+            plan: plan,
+            events: [],
+            calendar: cal
+        )
+
+        XCTAssertEqual(occurrence, cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 9))!)
+    }
+
+    @MainActor
+    func testNextUnclaimedOccurrenceMovesForwardWhenCurrentDoseIsClaimed() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 6, day: 2, hour: 9))!
+        let now = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 14))!
+        let current = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 9))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0)
+        let logged = ShotEvent(timestamp: current, scheduledDate: current, scheduleStatus: .onSchedule)
+
+        let occurrence = ProactiveAlertsEngine.nextUnclaimedOccurrence(
+            now: now,
+            plan: plan,
+            events: [logged],
+            calendar: cal
+        )
+
+        XCTAssertEqual(occurrence, cal.date(from: DateComponents(year: 2026, month: 6, day: 16, hour: 9))!)
+    }
+
     func testIntervalLabel() {
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(1), "day")
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(7), "week")

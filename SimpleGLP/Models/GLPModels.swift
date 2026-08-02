@@ -265,8 +265,8 @@ final class ShotEvent {
     var dietaryEnergyKcalToday: Double?
     var proteinGramsToday: Double?
 
-    init(timestamp: Date = .now, medicationName: String = "GLP-1", doseMg: Double = 0, scheduledDate: Date? = nil, scheduleStatus: ScheduleMatchStatus = .unknown, minutesFromSchedule: Int? = nil) {
-        self.id = UUID()
+    init(id: UUID = UUID(), timestamp: Date = .now, medicationName: String = "GLP-1", doseMg: Double = 0, scheduledDate: Date? = nil, scheduleStatus: ScheduleMatchStatus = .unknown, minutesFromSchedule: Int? = nil) {
+        self.id = id
         self.timestamp = timestamp
         self.createdAt = .now
         self.captureCompletedAt = nil

@@ -46,9 +46,9 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         DiagnosticsService.shared.start()
         let fallbackCoordinator = backgroundShotCoordinator
         PhoneWatchSession.shared.start()
-        PhoneWatchSession.shared.onWatchRequestedCapture = { date in
+        PhoneWatchSession.shared.onWatchRequestedCapture = { date, eventID in
             let context = ModelContext(GLPModelStore.sharedModelContainer)
-            fallbackCoordinator.captureShot(in: context, tapDate: date)
+            fallbackCoordinator.captureShot(in: context, tapDate: date, eventID: eventID)
         }
         return true
     }
@@ -81,8 +81,8 @@ private struct SimpleGLPRootContent: View {
         .onAppear {
             PlanStore.migrateLegacySchedules(in: modelContext)
             PhoneWatchSession.shared.start()
-            PhoneWatchSession.shared.onWatchRequestedCapture = { date in
-                shotCoordinator.captureShot(in: modelContext, tapDate: date)
+            PhoneWatchSession.shared.onWatchRequestedCapture = { date, eventID in
+                shotCoordinator.captureShot(in: modelContext, tapDate: date, eventID: eventID)
             }
             shotCoordinator.ingestPendingWidgetShot(in: modelContext)
             shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)

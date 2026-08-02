@@ -54,8 +54,9 @@ struct HomeView: View {
     private var shotButton: some View {
         Button {
             let ok = coordinator.captureShot(in: modelContext)
+            guard ok else { return }
             triggerConfirmation()
-            if ok, promptForDetails, let id = coordinator.lastCapturedEventID {
+            if promptForDetails, let id = coordinator.lastCapturedEventID {
                 // The @Query array hasn't refreshed yet in this run loop turn, so
                 // fetch the just-saved event straight from the context.
                 var descriptor = FetchDescriptor<ShotEvent>(predicate: #Predicate { $0.id == id })
