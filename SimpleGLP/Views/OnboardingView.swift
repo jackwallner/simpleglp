@@ -465,11 +465,11 @@ struct OnboardingView: View {
         store.trackPaywallImpression(id: "simpleglp_onboarding_trial", oncePerSession: true)
     }
 
-    /// One-tap conversion: buy the yearly trial in place (Apple confirm). Products
-    /// failing to load presents the full paywall rather than a dead button; a
-    /// successful purchase or the emergency paywall both finish onboarding.
+    /// One-tap conversion: buy `onboardingTrialPackage` (monthly) in place (Apple
+    /// confirm). Products failing to load presents the full paywall rather than a dead
+    /// button; a successful purchase or the emergency paywall both finish onboarding.
     private func startTrialPurchase() {
-        guard let package = store.directTrialPackage else {
+        guard let package = store.onboardingTrialPackage else {
             showPaywallFallback = true
             return
         }

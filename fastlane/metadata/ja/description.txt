@@ -21,7 +21,7 @@ Proはタイミングのずれを早期に検知するプロアクティブな�
 Simple GLPは医療アドバイス、用量指示、診断、治療推奨を提供しません。常に処方担当者の指示に従ってください。
 
 サブスクリプションについて
-Simple GLP Proは自動更新サブスクリプション（月額$2.99 / 年額$19.99、どちらも7日間の無料トライアル付き）または買い切りのLifetime（$24.99）として提供されます。支払いは購入確認時にApple IDに請求されます。サブスクリプションは、期間終了の少なくとも24時間前までにキャンセルしない限り自動更新されます。管理やキャンセルは「設定」→「Apple ID」→「サブスクリプション」からいつでも行えます。
+Simple GLP Pro は自動更新サブスクリプション（月額または年額、どちらも7日間の無料トライアル付き）、または買い切りの Lifetime としてご利用いただけます。価格は購入前にアプリ内に表示され、地域によって異なります。購入確定時に Apple ID に請求されます。現在の期間が終了する24時間以上前に解約しない限り、サブスクリプションは自動更新されます。設定 → Apple ID → サブスクリプションでいつでも管理・解約できます。
 
 Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

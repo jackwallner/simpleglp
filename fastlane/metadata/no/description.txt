@@ -21,7 +21,7 @@ INTE EN MEDICINTEKNISK PRODUKT
 Simple GLP ger inte medicinsk rådgivning, dosinstruktioner, diagnos eller behandlingsrekommendationer. Följ alltid din förskrivares vägledning.
 
 Abonnementsdetaljer
-Simple GLP Pro er tilgjengelig som et automatisk fornyende abonnement (Månedlig $2.99 / Årlig $19.99 begge med 7 dagers gratis prøveperiode) eller et engangskjøp Lifetime ($24.99). Betaling belastes Apple‑ID‑en din ved bekreftelse. Abonnementer fornyes automatisk med mindre de sies opp minst 24 timer før perioden utløper. Administrer eller avbryt når som helst i Innstillinger → Apple‑ID → Abonnementer.
+Simple GLP Pro er tilgjengelig som abonnement med automatisk fornyelse (månedlig eller årlig, begge med 7 dagers gratis prøveperiode) eller som et engangskjøp av Lifetime. Prisene vises i appen før du kjøper, og varierer fra region til region. Betalingen belastes Apple-ID-en din ved bekreftelse. Abonnementer fornyes automatisk med mindre de sies opp minst 24 timer før inneværende periode er over. Administrer eller si opp når som helst under Innstillinger → Apple-ID → Abonnementer.
 
 Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

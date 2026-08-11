@@ -21,7 +21,7 @@ Pro는 일정 이탈을 조기에 잡는 선제 알림을 추가합니다. 앱 �
 Simple GLP는 의료 조언, 용량 지침, 진단 또는 치료 권고를 제공하지 않습니다. 항상 처방자의 지침을 따르세요.
 
 구독 정보
-Simple GLP Pro는 자동 갱신 구독(월 $2.99 / 연 $19.99, 둘 다 7일 무료 체험 포함) 또는 일회성 Lifetime 구매($24.99)로 이용할 수 있습니다. 결제는 확인 시점에 Apple ID로 청구됩니다. 구독은 기간이 끝나기 최소 24시간 전까지 해지하지 않으면 자동 갱신됩니다. 언제든지 설정 → Apple ID → 구독에서 관리하거나 해지할 수 있습니다.
+Simple GLP Pro는 자동 갱신 구독(월간 또는 연간, 모두 7일 무료 체험 포함) 또는 일회성 Lifetime 구입으로 이용할 수 있습니다. 가격은 구입 전 앱에 표시되며 지역에 따라 다릅니다. 결제는 확인 시 Apple ID로 청구됩니다. 현재 기간 종료 최소 24시간 전에 취소하지 않으면 구독이 자동으로 갱신됩니다. 설정 → Apple ID → 구독에서 언제든지 관리하거나 취소할 수 있습니다.
 
 Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/

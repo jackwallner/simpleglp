@@ -7,8 +7,10 @@ import SwiftUI
 /// surface in the sibling headache app.
 struct TrialOfferSheet: View {
     let offerLabel: String?
-    /// Recurring price after the trial, e.g. "$19.99 / year". Only required in
-    /// `directPurchase` mode (Apple 3.1.2 needs price + terms before purchase).
+    /// Recurring price after the trial, already localized and period-suffixed by
+    /// `glpProPriceLabel`. Only required in `directPurchase` mode (Apple 3.1.2 needs
+    /// price + terms before purchase). Never carries a hardcoded amount: nil drops
+    /// the figure from the disclosure rather than quoting a stale one.
     let priceLabel: String?
     /// When true the primary button buys the trial product directly via StoreKit
     /// and the sheet shows compliant billing disclosure + a "See all plans" link.

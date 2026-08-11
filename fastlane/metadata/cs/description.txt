@@ -21,7 +21,7 @@ NIE JEST WYROBEM MEDYCZNYM
 Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
 
 Podrobnosti předplatného
-Simple GLP Pro je dostupné jako automaticky obnovované předplatné (měsíčně 2,99 $ / ročně 19,99 $ obě se 7denní bezplatnou zkušební dobou) nebo jednorázový doživotní nákup (24,99 $). Platba se strhne z vašeho Apple ID po potvrzení nákupu. Předplatné se automaticky obnovuje, pokud jej nezrušíte alespoň 24 hodin před koncem období. Spravovat nebo zrušit ho můžete kdykoli v Nastavení → Apple ID → Předplatná.
+Simple GLP Pro je k dispozici jako automaticky obnovované předplatné (měsíční nebo roční, obojí se 7denní bezplatnou zkušební verzí) nebo jako jednorázový nákup Lifetime. Ceny se zobrazují v aplikaci před nákupem a liší se podle regionu. Platba se strhne z vašeho Apple ID při potvrzení. Předplatné se automaticky obnovuje, pokud ho nezrušíte alespoň 24 hodin před koncem aktuálního období. Spravovat nebo zrušit můžete kdykoli v Nastavení → Apple ID → Předplatné.
 
 Zásady ochrany osobních údajů: https://jackwallner.github.io/simpleglp/privacy-policy.html
 Podmínky použití (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
