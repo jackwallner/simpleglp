@@ -330,31 +330,24 @@ final class StoreService: NSObject, ObservableObject {
 
     // MARK: - Onboarding trial CTA (StatScout / Headaches pattern)
 
-    /// One-tap conversion target for the onboarding trial step: the monthly package,
-    /// falling back to any eligible trial-bearing package.
-    ///
-    /// Monthly, not yearly, and this is deliberate. Onboarding and the paywall serve
-    /// two different people: whoever taps through onboarding has not used the app yet
-    /// and is reacting to the recurring number on Apple's sheet, while whoever opens
-    /// the paywall later has already decided the app is worth paying for. So the
-    /// smaller recurring figure is what starts the trial here, and the paywall (and
-    /// RootTabView's post-onboarding trial sheet) still leads with yearly. Both plans
-    /// carry the same 7-day free trial, so nothing is lost by starting on monthly.
-    ///
-    /// Bought directly (Apple confirm); the full paywall is only the fallback when
-    /// this is nil (products not loaded).
-    var onboardingTrialPackage: Package? {
+    /// One-tap conversion target for the onboarding trial step: the eligible yearly
+    /// trial package, falling back to any eligible trial-bearing package, then the
+    /// plain yearly package. Bought directly (Apple confirm); the full paywall is only
+    /// the fallback when this is nil (products not loaded). Mirrors the package
+    /// selection RootTabView uses for its post-onboarding trial sheet so the label,
+    /// disclosure, and purchase all reference the same product.
+    var directTrialPackage: Package? {
         let eligible = products.filter { isEligibleForIntroOffer($0) }
-        return eligible.first { $0.glpProPackageKind == .monthly }
-            ?? monthlyPackage
+        return eligible.first { $0.glpProPackageKind == .yearly }
             ?? eligible.first
+            ?? yearlyPackage
     }
 
-    /// CTA label for the onboarding one-tap conversion. Leads with the free-trial offer
+    /// CTA label for the one-tap yearly conversion. Leads with the free-trial offer
     /// when eligible, price-forward otherwise so the price is never hidden
     /// (Apple 3.1.2 — nothing implies Pro is free forever).
     var onboardingTrialCTALabel: String {
-        guard let pkg = onboardingTrialPackage else { return "Unlock Simple GLP Pro" }
+        guard let pkg = directTrialPackage else { return "Unlock Simple GLP Pro" }
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
             return "Start \(trial)"
         }
@@ -365,12 +358,9 @@ final class StoreService: NSObject, ObservableObject {
     /// trial length (when eligible), then the real price from the loaded package, then
     /// auto-renew and how to cancel.
     ///
-    /// Reads from `onboardingTrialPackage` for the same reason the button buys it: the
-    /// disclosure must name the plan the tap actually charges. Quoting a yearly amount
-    /// over a monthly purchase would misstate the charge (3.1.2) and invite refunds.
     /// Returns nil until a package loads so no placeholder price is ever rendered.
     var onboardingTrialDisclosureText: String? {
-        guard let pkg = onboardingTrialPackage else { return nil }
+        guard let pkg = directTrialPackage else { return nil }
         let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings › Apple ID › Subscriptions."
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
             return "\(trial.capitalized), then \(pkg.glpProPriceLabel). \(renew)"
