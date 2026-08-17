@@ -1,87 +1,154 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="256x256" href="icon_256.png">
-    <link rel="apple-touch-icon" href="icon_256.png">
-    <title>Simple GLP - Privacy Policy</title>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simple GLP Privacy Policy</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; max-width: 760px; margin: 0 auto; padding: 24px; line-height: 1.6; color: #333; }
-        h1 { font-size: 28px; margin-bottom: 4px; }
-        h2 { font-size: 20px; margin-top: 32px; }
-        .date { color: #888; font-size: 14px; margin-bottom: 32px; }
-        ul { padding-left: 20px; }
-        li { margin-bottom: 8px; }
-        a { color: #157a49; text-decoration: none; }
-        a:hover { text-decoration: underline; }
-        .contact { background: #f5f5f7; padding: 16px; border-radius: 12px; margin-top: 32px; }
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        margin: 0;
+        padding: 32px 20px 64px;
+        font:
+          16px/1.65 -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        color: #202124;
+        background: #fafafa;
+      }
+      main {
+        max-width: 780px;
+        margin: 0 auto;
+      }
+      h1 {
+        line-height: 1.15;
+      }
+      h2 {
+        margin-top: 32px;
+      }
+      p,
+      li {
+        color: #565960;
+      }
+      a {
+        color: #0868c7;
+      }
+      .date,
+      footer {
+        color: #73757a;
+        font-size: 14px;
+      }
+      .nav {
+        margin-bottom: 28px;
+        font-size: 14px;
+      }
+      .card {
+        margin-top: 30px;
+        padding: 18px;
+        background: #fff;
+        border: 1px solid #e3e3e6;
+        border-radius: 14px;
+      }
+      @media (prefers-color-scheme: dark) {
+        body {
+          color: #f5f5f7;
+          background: #111214;
+        }
+        p,
+        li {
+          color: #c8c9cc;
+        }
+        .date,
+        footer {
+          color: #a1a1a6;
+        }
+        .card {
+          background: #1c1c1e;
+          border-color: #38383a;
+        }
+        a {
+          color: #6ab0ff;
+        }
+      }
     </style>
-</head>
-<body>
-    <h1>Simple GLP Privacy Policy</h1>
-    <p class="date">Last updated: May 16, 2026</p>
-
-    <h2>Overview</h2>
-    <p>Simple GLP is a personal GLP-1 shot tracking app for iPhone, Apple Watch, and widgets. The app is designed to store your shot history and optional Health context locally on your device.</p>
-
-    <h2>Data Collection</h2>
-    <p><strong>Simple GLP does not sell your data, use advertising tracking, or create user accounts.</strong></p>
-    <ul>
-        <li>No account creation is required.</li>
-        <li>No advertising or advertising tracking is included.</li>
-        <li>Your shot history is stored locally on your device.</li>
-        <li>HealthKit data is read only after you grant permission.</li>
-        <li>Simple GLP does not upload your HealthKit data to a server.</li>
-    </ul>
-
-    <h2>HealthKit Data</h2>
-    <p>Simple GLP may request <strong>read-only</strong> access to HealthKit data to add context to a logged shot. Depending on what you allow and what is available in Apple Health, this may include:</p>
-    <ul>
-        <li>Body mass</li>
-        <li>Blood glucose</li>
-        <li>Step count</li>
-        <li>Active energy burned</li>
-        <li>Exercise minutes</li>
-        <li>Sleep analysis</li>
-        <li>Heart rate and resting heart rate</li>
-        <li>Workout count</li>
-        <li>Water, caffeine, dietary energy, and protein</li>
-    </ul>
-    <p>This data is read from Apple Health and displayed in the app as personal context around your shot history. Simple GLP does not write to your health records. HealthKit data is not used for advertising, marketing, data mining, or any purpose unrelated to your personal use of the app.</p>
-    <p>You can revoke HealthKit access at any time in <strong>Settings &gt; Health &gt; Data Access &amp; Devices &gt; Simple GLP</strong>.</p>
-
-    <h2>Local Storage</h2>
-    <p>Simple GLP stores shot events, medication plan details, schedule information, notes, symptom ratings, and optional Health context locally using SwiftData. Some data is shared with the widget and watch workflows through an Apple App Group so those experiences can work without requiring a server.</p>
-
-    <h2>Purchases &amp; Subscriptions</h2>
-    <p>Simple GLP may offer optional Simple GLP Pro features, such as proactive alerts and pattern insights.</p>
-    <p>Purchases are processed by Apple through in-app purchase. Simple GLP uses RevenueCat to manage purchase status and entitlement checks. RevenueCat receives an anonymous app-user identifier, your purchase history, and subscription status needed to verify and restore your entitlement across sessions and devices. This information is used only to deliver and restore your purchase — not for advertising or cross-app tracking. Simple GLP does not send your shot history or HealthKit data to RevenueCat.</p>
-    <p>Apple handles payment information, subscription management, cancellations, and refunds through your Apple ID. Simple GLP does not receive or store your credit card number, billing address, or Apple ID credentials.</p>
-
-    <h2>Import &amp; Export</h2>
-    <p>If you use import or export features, files are processed locally on your device and shared only through the destination you choose, such as AirDrop, Files, email, or another app. Exported files may contain sensitive health information. Share them carefully.</p>
-
-    <h2>Notifications</h2>
-    <p>Simple GLP may use local notifications for reminders and optional proactive alerts. Notification scheduling happens on your device. You can disable notifications in iOS Settings at any time.</p>
-
-    <h2>Data Retention &amp; Deletion</h2>
-    <p>Your data remains on your device until you delete it in the app, import over it, or uninstall the app. Deleting the app removes locally stored app data from the device according to iOS behavior. Because Simple GLP does not maintain a user account or server-side health database, no additional deletion request is needed for shot or HealthKit data.</p>
-
-    <h2>Medical Disclaimer</h2>
-    <p>Simple GLP is not a medical device and is not intended to diagnose, treat, cure, or prevent any disease or condition. It does not provide medical advice, dosing advice, or treatment recommendations. Always consult a qualified healthcare professional for medical decisions.</p>
-
-    <h2>Children's Privacy</h2>
-    <p>Simple GLP is not directed to children under 13 and does not knowingly collect personal information from children.</p>
-
-    <h2>Changes to This Policy</h2>
-    <p>If this privacy policy is updated, the changes will be reflected on this page with an updated date.</p>
-
-    <div class="contact">
-        <h2 style="margin-top: 0;">Contact</h2>
-        <p>If you have questions about this privacy policy, contact:<br>
-        <strong><a href="mailto:jackwallner@gmail.com">jackwallner@gmail.com</a></strong></p>
-        <p>For general app support, visit <a href="support.html">Simple GLP Support</a>.</p>
-    </div>
-</body>
+  </head>
+  <body>
+    <main>
+      <nav class="nav">
+        <a href="index.html">Back to Simple GLP</a> ·
+        <a href="support.html">Support</a> ·
+        <a href="privacy-policy.html">Privacy</a> ·
+        <a href="terms.html">Terms</a>
+      </nav>
+      <h1>Simple GLP Privacy Policy</h1>
+      <p class="date">Last updated: August 17, 2026</p>
+      <p>
+        Simple GLP is a personal medication and shot tracking app for iPhone,
+        Apple Watch, and widgets. It does not require an account or operate a
+        server-side health database.
+      </p>
+      <h2>HealthKit data</h2>
+      <p>
+        With your permission, the app may read body mass, blood glucose, step
+        count, active energy, exercise minutes, sleep, heart rate, resting heart
+        rate, workouts, water, caffeine, dietary energy, and protein to show
+        context around a logged shot. It does not write to Apple Health.
+        HealthKit data is processed on-device and is not uploaded, sold, used
+        for advertising, marketing, or data mining. Revoke access in iOS
+        Settings.
+      </p>
+      <h2>Local storage</h2>
+      <p>
+        Shot events, medication plan details, schedules, notes, symptom ratings,
+        optional Health context, settings, and reminder data are stored locally
+        using SwiftData, UserDefaults, and an App Group shared with the Watch
+        and widget workflows. Imports and exports are processed locally and
+        shared only through the destination you choose.
+      </p>
+      <h2>Purchases</h2>
+      <p>
+        Simple GLP Pro purchases are processed by Apple and verified by
+        RevenueCat. RevenueCat may process an anonymous app user ID, purchase
+        and entitlement information, and limited technical context. It does not
+        receive your shot history or HealthKit data. See
+        <a href="https://www.revenuecat.com/privacy/"
+          >RevenueCat's privacy policy</a
+        >.
+      </p>
+      <h2>Retention and deletion</h2>
+      <p>
+        Local data remains until you delete it in the app, if available, or
+        remove the app. Apple and RevenueCat retain transaction records under
+        their policies. Exported files are controlled by the destination you
+        choose.
+      </p>
+      <h2>Medical use and children</h2>
+      <p>
+        Simple GLP is not a medical device and does not diagnose, prevent,
+        treat, or cure any condition. It is not medical, dosing, or emergency
+        advice. The app is not directed to children under 13 and does not
+        knowingly collect personal information from children.
+      </p>
+      <h2>Changes</h2>
+      <p>
+        We may update this policy when the app or its services change. The date
+        above identifies the current version.
+      </p>
+      <div class="card">
+        <strong>Contact</strong>
+        <p>
+          Questions about this page? Email
+          <a href="mailto:jackwallner@gmail.com">jackwallner@gmail.com</a>.
+        </p>
+      </div>
+      <footer>
+        <a href="index.html">Home</a> · <a href="support.html">Support</a> ·
+        <a href="privacy-policy.html">Privacy</a> ·
+        <a href="terms.html">Terms</a>
+      </footer>
+    </main>
+  </body>
 </html>
