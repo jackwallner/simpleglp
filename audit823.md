@@ -923,3 +923,44 @@ Before a production release:
 ## Bottom line
 
 The product proposition is clear and the current native purchase UI has a good foundation. The urgent work is correctness and observability: a pending transaction must never be counted as a completed trial, trial copy must not precede eligibility, and a production release must have a remote signal when users cannot launch, log, purchase, restore, or receive a promised reminder. Once those are fixed, test minimal setup versus the current six-step onboarding and use the public Watch, widget, and privacy wedge to improve downloads without changing the free core prematurely.
+
+## Activity and success context, 2026-08-23
+
+Classification: **low-scale monetizing**. Confidence: **medium**. Trend: **no ASC comparison displayed**.
+
+ASC release state: `iOS 1.1.0 Ready for Distribution`. ASC evidence: [Analytics Overview](https://appstoreconnect.apple.com/apps/6770137909/analytics/overview?dateSpec=d90), selected range `dateSpec=d90`.
+RevenueCat evidence: [Project Overview](https://app.revenuecat.com/projects/a722b48d/overview), production mode, selected range `Last 28 days, 2026-07-27 through 2026-08-23`.
+
+### Observed activity
+
+| Source | Metric | Value | Window or comparison |
+| --- | --- | ---: | --- |
+| ASC | First-time downloads | 43 | 90-day Analytics Overview |
+| ASC | Redownloads | 2 | 90-day Analytics Overview |
+| ASC | Conversion rate | 1.04% | comparison not displayed |
+| ASC | Proceeds | $2 | 90-day Analytics Overview |
+| ASC | In-app purchases | 2 | 90-day Analytics Overview |
+| RevenueCat | New customers | 33 | last 28 days |
+| RevenueCat | Active customers | 36 | last 28 days |
+| RevenueCat | Active trials | 0 | current total |
+| RevenueCat | Active subscriptions | 0 | current total |
+| RevenueCat | MRR | $0 | current total |
+| RevenueCat | Revenue | $0 | last 28 days |
+
+A missing value above means the source did not expose that metric in this read-only snapshot. It is not a zero.
+
+### Interpretation and implementation focus
+
+Simple GLP has 43 ASC first-time downloads, 33 RevenueCat new customers, 2 ASC in-app purchases, and no current RevenueCat subscription or revenue card. The product has activity and a small purchase signal, but no stable recurring funnel. Prioritize first log, reminder value, trial eligibility, and purchase-state instrumentation, while keeping health claims complementary and non-diagnostic.
+
+The deterministic classifier recommends: Protect the current paid path, then use release and cohort baselines to decide whether acquisition or conversion is the next constraint.
+
+- Join ASC first-time download, first launch, first value, paywall shown, offer loaded, trial started, trial canceled, trial converted, entitlement active, restore, and purchase failure events with the app version and build.
+- Keep ASC's 90-day acquisition and proceeds window separate from RevenueCat's 28-day customer and revenue window. Do not calculate a conversion rate by dividing values from different windows.
+- Use a mature trial cohort and a minimum sample before choosing a native paywall or onboarding A/B winner. Record the offering identifier, package, placement, experiment variant, and build.
+- Put the app's classification and the next baseline date in the release handoff so Cursor, Claude, and Codex do not optimize from an old qualitative audit.
+
+### Boundary on success or death
+
+This snapshot supports the label **low-scale monetizing**, not a lifetime verdict. The app has current paid activity, but ASC does not expose a positive comparison for the selected window. A later decision should include a clean 28-day RevenueCat trend, ASC acquisition and conversion trend, ratings and review count, crash and hang evidence, and a release-specific cohort.
+This dated section supersedes earlier statements in this file that per-app ASC or RevenueCat activity was unavailable as of 2026-08-23. Earlier statements remain historical evidence boundaries for their original audit pass.
