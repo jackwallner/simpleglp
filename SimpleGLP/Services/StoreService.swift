@@ -247,11 +247,21 @@ final class StoreService: NSObject, ObservableObject {
     }
 
     func fetchProducts() async {
-        #if targetEnvironment(simulator)
-        isLoadingProducts = false
-        hasResolvedEntitlements = true
-        return
+        // The probe is the one simulator run that configures RevenueCat, and
+        // against the project's Test Store rather than production. Without this
+        // it returns here and the purchase it drives has nothing to buy.
+        #if DEBUG
+        let probing = RevenueCatProbe.isEnabled
         #else
+        let probing = false
+        #endif
+        #if targetEnvironment(simulator)
+        if !probing {
+            isLoadingProducts = false
+            hasResolvedEntitlements = true
+            return
+        }
+        #endif
         configureIfNeeded()
         isLoadingProducts = true
         defer { isLoadingProducts = false }
@@ -276,7 +286,6 @@ final class StoreService: NSObject, ObservableObject {
             logger.error("Offerings fetch failed: \(String(describing: error), privacy: .public). Falling back to direct product fetch.")
             await loadFallbackProducts()
         }
-        #endif
     }
 
     /// Loads the Pro products by identifier and wraps them in synthesized packages so the
@@ -419,9 +428,14 @@ final class StoreService: NSObject, ObservableObject {
 
     @discardableResult
     func purchase(_ package: Package) async throws -> PurchaseState {
-        #if targetEnvironment(simulator)
-        throw StoreServiceError.unavailableInSimulator
+        #if DEBUG
+        let probing = RevenueCatProbe.isEnabled
         #else
+        let probing = false
+        #endif
+        #if targetEnvironment(simulator)
+        if !probing { throw StoreServiceError.unavailableInSimulator }
+        #endif
         configureIfNeeded()
         purchaseInFlight = true
         defer { purchaseInFlight = false }
@@ -444,14 +458,20 @@ final class StoreService: NSObject, ObservableObject {
             return .purchased
         }
         return .pending
-        #endif
     }
 
     func updateCustomerProductStatus(fetchPolicy: CacheFetchPolicy = .default) async {
-        #if targetEnvironment(simulator)
-        hasResolvedEntitlements = true
-        return
+        #if DEBUG
+        let probing = RevenueCatProbe.isEnabled
         #else
+        let probing = false
+        #endif
+        #if targetEnvironment(simulator)
+        if !probing {
+            hasResolvedEntitlements = true
+            return
+        }
+        #endif
         configureIfNeeded()
         do {
             let info = try await Purchases.shared.customerInfo(fetchPolicy: fetchPolicy)
@@ -463,7 +483,6 @@ final class StoreService: NSObject, ObservableObject {
             logger.error("Customer info refresh failed: \(String(describing: error), privacy: .public)")
             lastError = "Couldn't refresh your subscription status. Check your connection and try again."
         }
-        #endif
     }
 
     func restorePurchases() async {
@@ -558,6 +577,12 @@ enum RevenueCatProbe {
 
     static var impressionID: String {
         ProcessInfo.processInfo.environment["RC_PROBE_SURFACE"] ?? "simpleglp_onboarding_trial"
+    }
+
+    /// Drives a Test Store purchase after the impression, so the `converted_*`
+    /// half of the funnel record is exercised and not just the impression half.
+    static var wantsPurchase: Bool {
+        ProcessInfo.processInfo.arguments.contains("-rcfunnelprobepurchase")
     }
 }
 #endif
