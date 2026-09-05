@@ -22,6 +22,18 @@ settings:
     GENERATE_INFOPLIST_FILE: NO
 
 schemes:
+  SimpleGLPUITests:
+    build:
+      targets:
+        SimpleGLP: all
+        SimpleGLPUITests: [test]
+    test:
+      config: Debug
+      targets:
+        - SimpleGLPUITests
+    run:
+      config: Debug
+
   SimpleGLP:
     build:
       targets:
@@ -120,3 +132,20 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
     dependencies:
       - target: SimpleGLP
+
+  # The paywall purchase probe. Its own target and scheme: the app's own test
+  # action activates StoreKit Testing, and this has to reach RevenueCat's Test
+  # Store instead.
+  SimpleGLPUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources:
+      - path: SimpleGLPUITests
+    dependencies:
+      - target: SimpleGLP
+    settings:
+      base:
+        GENERATE_INFOPLIST_FILE: YES
+        PRODUCT_BUNDLE_IDENTIFIER: com.jackwallner.glp.uitests
+        TEST_TARGET_NAME: SimpleGLP
+
