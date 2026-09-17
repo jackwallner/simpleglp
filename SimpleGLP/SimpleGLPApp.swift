@@ -110,6 +110,9 @@ private struct SimpleGLPRootContent: View {
             }
             shotCoordinator.ingestPendingWidgetShot(in: modelContext)
             shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
+            #if DEBUG
+            SimpleGLPScreenshotData.seedIfRequested(in: modelContext)
+            #endif
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
@@ -119,3 +122,57 @@ private struct SimpleGLPRootContent: View {
         }
     }
 }
+
+#if DEBUG
+private enum SimpleGLPScreenshotData {
+    static func seedIfRequested(in context: ModelContext) {
+        guard ProcessInfo.processInfo.arguments.contains("-GLPScreenshotSeed") else { return }
+
+        let existingEvents = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        existingEvents.forEach(context.delete)
+        let existingPlans = (try? context.fetch(FetchDescriptor<MedicationPlan>())) ?? []
+        existingPlans.forEach(context.delete)
+
+        let now = Date()
+        let plan = MedicationPlan(
+            medication: .mounjaro,
+            doseMg: 5.0,
+            scheduleStartDate: Calendar.current.date(byAdding: .day, value: -56, to: now) ?? now,
+            preferredHour: 8,
+            preferredMinute: 30,
+            intervalDays: 7,
+            reminderEnabled: true
+        )
+        context.insert(plan)
+
+        let calendar = Calendar.current
+        for index in 0..<8 {
+            guard let timestamp = calendar.date(byAdding: .day, value: -(index * 7 + 1), to: now) else { continue }
+            let event = ShotEvent(
+                timestamp: timestamp,
+                medicationName: plan.displayMedicationName,
+                doseMg: plan.doseMg,
+                scheduledDate: timestamp,
+                scheduleStatus: .onSchedule,
+                minutesFromSchedule: 0
+            )
+            event.captureStatus = .complete
+            event.captureCompletedAt = timestamp.addingTimeInterval(60)
+            event.healthStatus = .captured
+            event.injectionSite = InjectionSite.allCases[index % InjectionSite.allCases.count]
+            event.userNotes = index == 0 ? "Felt steady after the dose" : nil
+            event.nausea = index % 3
+            event.appetite = 2 + (index % 3)
+            event.foodNoise = 1 + (index % 2)
+            event.wellbeing = 3 + (index % 3)
+            event.bodyMassKg = 88.4 - Double(index) * 0.35
+            event.stepsToday = 7_400 + index * 380
+            event.activeEnergyKcalToday = 420 + Double(index * 18)
+            event.sleepHoursLastNight = 7.1 + Double(index % 3) * 0.3
+            context.insert(event)
+        }
+
+        try? context.save()
+    }
+}
+#endif
