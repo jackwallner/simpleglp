@@ -45,7 +45,13 @@ struct SimpleGLPApp: App {
     var body: some Scene {
         WindowGroup {
             #if DEBUG
-            if let mode = PaywallScreenshotMode.current {
+            if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotAlerts") {
+                NavigationStack {
+                    ProAlertsConfigView()
+                }
+                .environmentObject(shotCoordinator)
+                .environmentObject(storeService)
+            } else if let mode = PaywallScreenshotMode.current {
                 PaywallScreenshotHarness(mode: mode)
                     .environmentObject(shotCoordinator)
                     .environmentObject(storeService)

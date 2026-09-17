@@ -25,13 +25,19 @@ struct ProAlertsConfigView: View {
             }
 
             Section("Status") {
-                ProAlertStatusRow(icon: notificationIcon, title: "Notifications", value: notificationLabel)
-                Button {
-                    Task { await sendTestAlert() }
-                } label: {
-                    Label("Send Test Alert", systemImage: "paperplane.fill")
+                ProAlertStatusRow(
+                    icon: isScreenshotMode ? "bell.badge.fill" : notificationIcon,
+                    title: "Notifications",
+                    value: isScreenshotMode ? "Available when enabled" : notificationLabel
+                )
+                if !isScreenshotMode {
+                    Button {
+                        Task { await sendTestAlert() }
+                    } label: {
+                        Label("Send Test Alert", systemImage: "paperplane.fill")
+                    }
+                    .disabled(!prefs.alertsEnabled)
                 }
-                .disabled(!prefs.alertsEnabled)
             }
 
             Section("Quiet hours") {
@@ -93,6 +99,14 @@ struct ProAlertsConfigView: View {
         case .notDetermined: return "Needs permission"
         @unknown default: return "Unknown"
         }
+    }
+
+    private var isScreenshotMode: Bool {
+        #if DEBUG
+        return ProcessInfo.processInfo.arguments.contains("-GLPScreenshotSeed")
+        #else
+        return false
+        #endif
     }
 
     private func refreshPermissionStatuses() async {
