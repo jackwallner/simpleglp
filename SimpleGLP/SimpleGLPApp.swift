@@ -10,6 +10,11 @@ struct SimpleGLPApp: App {
 
     init() {
         StoreService.shared.start()
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotPro") {
+            StoreService.shared.setLocalOverride(isPro: true)
+        }
+        #endif
         ReviewPromptTracker.recordAppLaunch()
         ConversionDiagnostics.recordAppOpen()
         #if DEBUG

@@ -246,6 +246,15 @@ final class StoreService: NSObject, ObservableObject {
         #endif
     }
 
+    #if DEBUG
+    /// Local-only entitlement state for literal screenshot captures. It never
+    /// configures RevenueCat and is unavailable to Release builds.
+    func setLocalOverride(isPro: Bool) {
+        isProUnlocked = isPro
+        hasResolvedEntitlements = true
+    }
+    #endif
+
     func fetchProducts() async {
         // The probe is the one simulator run that configures RevenueCat, and
         // against the project's Test Store rather than production. Without this
