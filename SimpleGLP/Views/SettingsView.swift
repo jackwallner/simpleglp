@@ -47,14 +47,16 @@ struct SettingsView: View {
                 Text("When enabled, Simple GLP reads optional Health data when you log a shot. It never writes back to Apple Health.")
             }
 
-            Section("Pro") {
-                if store.isProUnlocked {
-                    Button("Proactive alerts") { showProAlerts = true }
-                } else {
-                    Button("Upgrade to Pro") { showPaywall = true }
-                }
-                Button("Restore purchases") {
-                    Task { await store.restorePurchases() }
+            if !isScreenshotMode {
+                Section("Pro") {
+                    if store.isProUnlocked {
+                        Button("Proactive alerts") { showProAlerts = true }
+                    } else {
+                        Button("Upgrade to Pro") { showPaywall = true }
+                    }
+                    Button("Restore purchases") {
+                        Task { await store.restorePurchases() }
+                    }
                 }
             }
 
@@ -92,6 +94,14 @@ struct SettingsView: View {
         .sheet(isPresented: $showProAlerts) {
             ProAlertsConfigView()
         }
+    }
+
+    private var isScreenshotMode: Bool {
+        #if DEBUG
+        return ProcessInfo.processInfo.arguments.contains("-GLPScreenshotSeed")
+        #else
+        return false
+        #endif
     }
 
 }
