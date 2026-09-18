@@ -19,7 +19,7 @@ struct HistoryView: View {
             } else {
                 List {
                     ForEach(groupedEvents.keys.sorted(by: >), id: \.self) { month in
-                        Section(month) {
+                        Section(month.formatted(.dateTime.year().month())) {
                             ForEach(groupedEvents[month] ?? []) { event in
                                 Button {
                                     selectedEvent = event
@@ -61,9 +61,11 @@ struct HistoryView: View {
         pendingDeletion.count == 1 ? "Delete this shot?" : "Delete \(pendingDeletion.count) shots?"
     }
 
-    private var groupedEvents: [String: [ShotEvent]] {
-        Dictionary(grouping: events) { event in
-            event.timestamp.formatted(.dateTime.year().month())
+    /// Keyed by the first instant of each month so sections sort by date, not by month name.
+    private var groupedEvents: [Date: [ShotEvent]] {
+        let calendar = Calendar.current
+        return Dictionary(grouping: events) { event in
+            calendar.dateInterval(of: .month, for: event.timestamp)?.start ?? event.timestamp
         }
     }
 
@@ -96,7 +98,7 @@ struct HistoryView: View {
         .padding(.vertical, 4)
     }
 
-    private func requestDelete(at offsets: IndexSet, in month: String) {
+    private func requestDelete(at offsets: IndexSet, in month: Date) {
         guard let items = groupedEvents[month] else { return }
         pendingDeletion = offsets.map { items[$0] }
     }
