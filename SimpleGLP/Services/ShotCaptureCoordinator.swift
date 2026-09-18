@@ -120,6 +120,9 @@ final class ShotCaptureCoordinator: ObservableObject {
         do {
             try context.save()
         } catch {
+            // Drop the unsaved insert, or a retry leaves two copies pending and
+            // the next successful save writes both.
+            context.rollback()
             lastCapturedEventID = nil
             bannerMessage = "Could not save your shot. Try again."
             return false
@@ -200,7 +203,13 @@ final class ShotCaptureCoordinator: ObservableObject {
         descriptor.fetchLimit = 1
         if let event = try? context.fetch(descriptor).first {
             context.delete(event)
-            try? context.save()
+            do {
+                try context.save()
+            } catch {
+                context.rollback()
+                bannerMessage = "Could not undo that shot. Delete it from History instead."
+                return
+            }
         }
         RecentShotsStore.remove(id: eventID)
         PhoneWatchSession.shared.syncRecentShots()
