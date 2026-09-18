@@ -289,6 +289,7 @@ struct DoseScheduleView: View {
     @Environment(\.modelContext) private var modelContext
     @State private var plan: MedicationPlan?
     @State private var steps: [DoseStep] = []
+    @State private var deleteError: String?
     @State private var showAddStep = false
 
     var body: some View {
@@ -336,6 +337,17 @@ struct DoseScheduleView: View {
         .listStyle(.insetGrouped)
         .navigationTitle("Dose schedule")
         .navigationBarTitleDisplayMode(.inline)
+        .alert(
+            "Couldn't delete",
+            isPresented: Binding(
+                get: { deleteError != nil },
+                set: { if !$0 { deleteError = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(deleteError ?? "Please try again.")
+        }
         .sheet(isPresented: $showAddStep) {
             if let plan {
                 AddDoseStepSheet(plan: plan) { reload() }
@@ -359,7 +371,12 @@ struct DoseScheduleView: View {
             let step = steps[index]
             modelContext.delete(step)
         }
-        try? modelContext.save()
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            deleteError = "The dose step could not be deleted. Please try again."
+        }
         reload()
     }
 

@@ -7,6 +7,7 @@ struct HistoryView: View {
     @State private var selectedEvent: ShotEvent?
     @State private var showEdit = false
     @State private var pendingDeletion: [ShotEvent] = []
+    @State private var deleteError: String?
 
     var body: some View {
         Group {
@@ -54,6 +55,17 @@ struct HistoryView: View {
             Button("Cancel", role: .cancel) { pendingDeletion = [] }
         } message: {
             Text("Deleting a shot removes its dose, schedule status, and any logged details and Health context. This can't be undone.")
+        }
+        .alert(
+            "Couldn't delete",
+            isPresented: Binding(
+                get: { deleteError != nil },
+                set: { if !$0 { deleteError = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(deleteError ?? "Please try again.")
         }
     }
 
@@ -107,7 +119,14 @@ struct HistoryView: View {
         for event in pendingDeletion {
             modelContext.delete(event)
         }
-        try? modelContext.save()
+        do {
+            try modelContext.save()
+        } catch {
+            // Put the rows back rather than showing a delete that will undo
+            // itself on the next launch.
+            modelContext.rollback()
+            deleteError = "The shot could not be deleted. Please try again."
+        }
         pendingDeletion = []
     }
 }

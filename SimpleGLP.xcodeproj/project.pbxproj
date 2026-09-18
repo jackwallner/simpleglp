@@ -11,6 +11,7 @@
 		0C50968E42448580FC0564CF /* ReviewPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277F143457A552933D07C4FB /* ReviewPromptSheet.swift */; };
 		0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423148D3B21BF730934FCC05 /* ImportService.swift */; };
 		1062CD6D096B5D82A413377F /* SimpleGLPWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */; };
 		14CC3D6A7B622FAB190AFEAA /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = B9237CCE5AC5A79262C60E27 /* PrivacyInfo.xcprivacy */; };
 		172A474BC883B050D2C1F939 /* GLPModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */; };
 		2114D69BA3942C095AE857A1 /* SimpleGLPWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */; };
@@ -33,6 +34,7 @@
 		68D824C248A40FD0BFDEEE27 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E45ECA8A326A07DCE47612 /* HealthKitService.swift */; };
 		6979784B6EDA92FE61041C0F /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		69CB6A3015D875CDDF875255 /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
+		6F693C5F54297E4117D4F6E1 /* PaywallFunnelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */; };
 		7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */; };
 		7427A8DA5E90BDB05DFE85B1 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
 		75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */; };
@@ -53,11 +55,13 @@
 		A3D0CAA4A81500344B41E8DD /* SharedViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 397B9E408E138DCFE4202926 /* SharedViews.swift */; };
 		A6D6B2A9F6E579C00836D706 /* LogShotIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26137BA20E643D043938541 /* LogShotIntent.swift */; };
 		AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */; };
+		B3F413CB28D74B364C7B6F5B /* StoreQuarantineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */; };
 		B765FE4D49B6CD1835A785FB /* ProAlertPreferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */; };
 		BCCF302932E3459DF0010239 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */; };
 		C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */; };
 		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
 		CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
+		CEA61837AC3A58165792B40C /* ConversionDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6BF0C892ACE252EE509E701 /* ConversionDiagnostics.swift */; };
 		D58040E25CBB385C8204A779 /* PaywallScreenshotHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FF0051BC21B7D05834D21C3 /* PaywallScreenshotHarness.swift */; };
 		D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B87891F3FE471993E42C3C /* ExportService.swift */; };
 		DBE478B5D061071769E92CBE /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
@@ -81,6 +85,13 @@
 			remoteInfo = SimpleGLPWidget;
 		};
 		3BEAD2927FB005F233EF2E66 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 771A76F57C7541A3EF727F3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 31B2F5C41AC77F7BC5ADA96F;
+			remoteInfo = SimpleGLP;
+		};
+		63C1A24B5F2BC2B1BF230185 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 771A76F57C7541A3EF727F3F /* Project object */;
 			proxyType = 1;
@@ -128,6 +139,7 @@
 		0DADB560B88F76955016CB54 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
 		15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialOfferSheet.swift; sourceTree = "<group>"; };
 		181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPAppGroup.swift; sourceTree = "<group>"; };
+		1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallFunnelUITests.swift; sourceTree = "<group>"; };
 		1F8D51AD66946F59E77221EE /* GLPModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModelStore.swift; sourceTree = "<group>"; };
 		277F143457A552933D07C4FB /* ReviewPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptSheet.swift; sourceTree = "<group>"; };
 		28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -145,12 +157,14 @@
 		5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertsConfigView.swift; sourceTree = "<group>"; };
 		66C73FE3C2F5DE3B0CAFE7EB /* SimpleGLP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLP.entitlements; sourceTree = "<group>"; };
 		6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPTests.swift; sourceTree = "<group>"; };
+		72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreQuarantineTests.swift; sourceTree = "<group>"; };
 		74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePaywallView.swift; sourceTree = "<group>"; };
 		7642962625DDC83DD536C6CA /* PaywallScreenshotMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallScreenshotMode.swift; sourceTree = "<group>"; };
 		7D390C19714B2F9313020B6F /* SimpleGLP.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimpleGLP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEngine.swift; sourceTree = "<group>"; };
 		80224F926658DE5F12BDF68F /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
 		82E45ECA8A326A07DCE47612 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
+		8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallFunnelTests.swift; sourceTree = "<group>"; };
 		892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewLinks.swift; sourceTree = "<group>"; };
 		8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWidget.entitlements; sourceTree = "<group>"; };
@@ -159,6 +173,7 @@
 		9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotCaptureCoordinator.swift; sourceTree = "<group>"; };
 		9CACE598976ED5713C9175CC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWidget.swift; sourceTree = "<group>"; };
+		A121744A9855ED496FE6DC4A /* SimpleGLPUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A971E826B1D07DAAEBB0A89D /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentShotsStore.swift; sourceTree = "<group>"; };
 		ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWatchApp.swift; sourceTree = "<group>"; };
@@ -179,6 +194,7 @@
 		ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWatchSession.swift; sourceTree = "<group>"; };
 		F3E965069DAB46F2FADF4DE9 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
+		F6BF0C892ACE252EE509E701 /* ConversionDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDiagnostics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +239,7 @@
 			children = (
 				7D390C19714B2F9313020B6F /* SimpleGLP.app */,
 				892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */,
+				A121744A9855ED496FE6DC4A /* SimpleGLPUITests.xctest */,
 				C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */,
 				985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */,
 			);
@@ -243,6 +260,7 @@
 				63DBBFFC04AFB2E8BAF5A29B /* SharedGLP */,
 				15E9BA6BFBA5158B3668DB91 /* SimpleGLP */,
 				89BE1FEAE66EA5A643506A09 /* SimpleGLPTests */,
+				92B4807179E1C5967C11AAD0 /* SimpleGLPUITests */,
 				5AB5927F5E6C528AF10B124A /* SimpleGLPWatch */,
 				C5D4CEFE83A9C4D7550AD3A2 /* SimpleGLPWidget */,
 				3FEBE512D3F36912E79DFB19 /* Products */,
@@ -277,14 +295,25 @@
 		89BE1FEAE66EA5A643506A09 /* SimpleGLPTests */ = {
 			isa = PBXGroup;
 			children = (
+				8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */,
 				6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */,
+				72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */,
 			);
 			path = SimpleGLPTests;
+			sourceTree = "<group>";
+		};
+		92B4807179E1C5967C11AAD0 /* SimpleGLPUITests */ = {
+			isa = PBXGroup;
+			children = (
+				1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */,
+			);
+			path = SimpleGLPUITests;
 			sourceTree = "<group>";
 		};
 		93CEF8EA51D0E1AA116A6544 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F6BF0C892ACE252EE509E701 /* ConversionDiagnostics.swift */,
 				80224F926658DE5F12BDF68F /* DiagnosticsService.swift */,
 				C1B87891F3FE471993E42C3C /* ExportService.swift */,
 				1F8D51AD66946F59E77221EE /* GLPModelStore.swift */,
@@ -415,6 +444,24 @@
 			productReference = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */;
 			productType = "com.apple.product-type.application";
 		};
+		F4287AC2FBC596F8D352CF1F /* SimpleGLPUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A1D47C6F712E35BABC8F30D4 /* Build configuration list for PBXNativeTarget "SimpleGLPUITests" */;
+			buildPhases = (
+				4B38D0473B738FE650E5F97E /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5216172CE45D69EAD11784FA /* PBXTargetDependency */,
+			);
+			name = SimpleGLPUITests;
+			packageProductDependencies = (
+			);
+			productName = SimpleGLPUITests;
+			productReference = A121744A9855ED496FE6DC4A /* SimpleGLPUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2610D6622984D0AF9EC1E72B /* Build configuration list for PBXNativeTarget "SimpleGLPWidget" */;
@@ -454,6 +501,11 @@
 						DevelopmentTeam = YXG4MP6W39;
 						ProvisioningStyle = Automatic;
 					};
+					F4287AC2FBC596F8D352CF1F = {
+						DevelopmentTeam = YXG4MP6W39;
+						ProvisioningStyle = Automatic;
+						TestTargetID = 31B2F5C41AC77F7BC5ADA96F;
+					};
 					FD4BC72106554E1C639CC7D2 = {
 						DevelopmentTeam = YXG4MP6W39;
 						ProvisioningStyle = Automatic;
@@ -479,6 +531,7 @@
 			targets = (
 				31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */,
 				5A639435245201099AFFB34A /* SimpleGLPTests */,
+				F4287AC2FBC596F8D352CF1F /* SimpleGLPUITests */,
 				DD43B5A9662029B8C35C8B8B /* SimpleGLPWatch */,
 				FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */,
 			);
@@ -532,6 +585,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		4B38D0473B738FE650E5F97E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		7E048635FCCA2B0CD00CE71E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -555,6 +616,7 @@
 				75A6C464F044D2CB5DAC4705 /* AppEnvironment.swift in Sources */,
 				797EEEF5E4C611DE7FE5E90C /* AppStoreReviewLinks.swift in Sources */,
 				3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */,
+				CEA61837AC3A58165792B40C /* ConversionDiagnostics.swift in Sources */,
 				F20C4780AF8C9986003EE891 /* DiagnosticsService.swift in Sources */,
 				0AAF01DFEED9B922085DF7D0 /* EditEventSheet.swift in Sources */,
 				D8A6D51DF1D90C5A6D58F9FA /* ExportService.swift in Sources */,
@@ -594,13 +656,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F693C5F54297E4117D4F6E1 /* PaywallFunnelTests.swift in Sources */,
 				AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */,
+				B3F413CB28D74B364C7B6F5B /* StoreQuarantineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		5216172CE45D69EAD11784FA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */;
+			targetProxy = 63C1A24B5F2BC2B1BF230185 /* PBXContainerItemProxy */;
+		};
 		7A34F1ADD507BF4BC35642C4 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */;
@@ -619,6 +688,40 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		1191C5A125000FF611072323 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SimpleGLP;
+			};
+			name = Release;
+		};
+		1F12ACE1CE138B8C867F3296 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SimpleGLP;
+			};
+			name = Debug;
+		};
 		2B77A72E0D18E238407096D8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -654,7 +757,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 50;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -669,7 +772,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -715,7 +818,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 43;
+				CURRENT_PROJECT_VERSION = 50;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -736,7 +839,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.1.0;
+				MARKETING_VERSION = 1.1.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -922,6 +1025,15 @@
 			buildConfigurations = (
 				AA9F23890401C2AB328BD796 /* Debug */,
 				AD79373539ADCD70B92797C0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A1D47C6F712E35BABC8F30D4 /* Build configuration list for PBXNativeTarget "SimpleGLPUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F12ACE1CE138B8C867F3296 /* Debug */,
+				1191C5A125000FF611072323 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
