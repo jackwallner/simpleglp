@@ -14,7 +14,7 @@ struct ProAlertsConfigView: View {
                 Toggle("Enable Proactive Alerts", isOn: $prefs.alertsEnabled)
                     .onChange(of: prefs.alertsEnabled) { _, newValue in
                         Task {
-                            if newValue {
+                            if newValue && !isScreenshotMode {
                                 await requestPermissionsIfNeeded()
                             }
                             await applyAlertSettings()
@@ -68,7 +68,14 @@ struct ProAlertsConfigView: View {
             }
         }
         .navigationTitle("Proactive Alerts")
-        .task { await refreshPermissionStatuses() }
+        .task {
+            if isScreenshotMode {
+                prefs.alertsEnabled = true
+                prefs.patternAlertsEnabled = true
+                prefs.quietHoursEnabled = true
+            }
+            await refreshPermissionStatuses()
+        }
         // Apply changes immediately — without this, new settings wouldn't take effect
         // until the next shot capture reschedules notifications.
         .onChange(of: prefs.patternAlertsEnabled) { _, _ in Task { await applyAlertSettings() } }
