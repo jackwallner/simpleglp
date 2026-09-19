@@ -1,1 +1,3 @@
-Esta actualización renueva la ficha de la App Store con detalles más claros de suscripción y precios. La app funciona exactamente igual: un toque privado para registrar tu inyección semanal, gratis y sin cuenta.
+• El historial ahora muestra los meses por orden de fecha.
+• Verás un aviso si no se puede eliminar una inyección, en lugar de que vuelva a aparecer sin más.
+• Tu historial de inyecciones se conserva si el archivo de datos de la app se daña.

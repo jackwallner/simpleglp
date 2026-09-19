@@ -1,1 +1,3 @@
-Denne opdatering giver App Store-siden tydeligere abonnements- og prisoplysninger. Selve appen fungerer præcis som før: ét privat tryk for at logge din ugentlige dosis, gratis og uden konto.
+• Historik viser nu månederne i datoorden.
+• Du får en besked, hvis en injektion ikke kan slettes, i stedet for at den stille dukker op igen.
+• Din injektionshistorik er i sikkerhed, hvis appens datafil skulle blive beskadiget.

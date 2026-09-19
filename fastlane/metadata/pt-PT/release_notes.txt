@@ -1,1 +1,3 @@
-Esta atualização torna mais claros os detalhes de subscrição e preços na página da App Store. A app funciona exatamente como antes: um toque privado para registar a injeção semanal, grátis e sem conta.
+• O histórico mostra agora os meses por ordem de data.
+• Verá uma mensagem se uma injeção não puder ser eliminada, em vez de ela voltar sem aviso.
+• O seu histórico de injeções fica protegido se o ficheiro de dados da app for danificado.

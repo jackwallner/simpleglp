@@ -1,1 +1,3 @@
-Ta posodobitev prinaša jasnejše podatke o naročnini in cenah na strani App Store. Sama aplikacija deluje enako kot prej: en zaseben dotik za zapis tedenske injekcije, brezplačno in brez računa.
+• Zgodovina zdaj prikazuje mesece po vrstnem redu datumov.
+• Če injekcije ni mogoče izbrisati, se prikaže sporočilo, namesto da se tiho vrne.
+• Zgodovina injekcij ostane varna, tudi če se podatkovna datoteka aplikacije poškoduje.

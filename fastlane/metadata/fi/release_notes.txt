@@ -1,1 +1,3 @@
-Tämä päivitys selkeyttää App Store -sivun tilaus- ja hintatiedot. Itse sovellus toimii täsmälleen kuten ennenkin: yksi yksityinen napautus viikoittaisen pistoksen kirjaamiseen, ilmaiseksi ja ilman tiliä.
+• Historia näyttää nyt kuukaudet päivämääräjärjestyksessä.
+• Näet viestin, jos pistosta ei voi poistaa, sen sijaan että se palaisi hiljaa takaisin.
+• Pistoshistoriasi säilyy, vaikka sovelluksen datatiedosto vaurioituisi.

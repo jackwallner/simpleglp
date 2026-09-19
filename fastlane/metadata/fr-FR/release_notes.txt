@@ -1,1 +1,3 @@
-Cette mise à jour clarifie les détails d'abonnement et de prix sur la fiche App Store. L'app fonctionne exactement comme avant : une pression privée pour consigner votre injection hebdomadaire, gratuitement et sans compte.
+• L'historique affiche désormais les mois par ordre chronologique.
+• Un message s'affiche si une injection ne peut pas être supprimée, au lieu qu'elle réapparaisse sans prévenir.
+• Votre historique d'injections est préservé si le fichier de données de l'app est endommagé.

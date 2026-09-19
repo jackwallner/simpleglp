@@ -1,1 +1,3 @@
-Esta atualização deixa mais claros os detalhes de assinatura e preços na página da App Store. O app funciona exatamente como antes: um toque privado para registrar sua aplicação semanal, grátis e sem conta.
+• O histórico agora mostra os meses em ordem de data.
+• Você verá uma mensagem se uma aplicação não puder ser excluída, em vez de ela voltar sem aviso.
+• Seu histórico de aplicações fica protegido se o arquivo de dados do app for danificado.

@@ -1,1 +1,3 @@
-Deze update maakt de abonnements- en prijsgegevens op de App Store-pagina duidelijker. De app zelf werkt precies zoals voorheen: één privétik om je wekelijkse injectie te loggen, gratis en zonder account.
+• Geschiedenis toont maanden nu op datumvolgorde.
+• Je ziet een melding als een injectie niet kan worden verwijderd, in plaats van dat hij stilletjes terugkomt.
+• Je injectiegeschiedenis blijft bewaard als het gegevensbestand van de app beschadigd raakt.

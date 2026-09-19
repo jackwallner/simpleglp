@@ -1,1 +1,3 @@
-Tato aktualizace zpřesňuje informace o předplatném a cenách na stránce App Store. Samotná aplikace funguje stejně jako dřív: jedno soukromé klepnutí pro záznam týdenní dávky, zdarma a bez účtu.
+• Historie nyní řadí měsíce podle data.
+• Pokud injekci nelze smazat, zobrazí se zpráva, místo aby se potichu vrátila.
+• Historie injekcí zůstane v bezpečí, i když se datový soubor aplikace poškodí.

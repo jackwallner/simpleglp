@@ -1,1 +1,3 @@
-Dieses Update bringt klarere Abo- und Preisangaben auf die App-Store-Seite. Die App selbst funktioniert genau wie zuvor: ein privater Tipp, um die wöchentliche Injektion zu erfassen, kostenlos und ohne Konto.
+• Der Verlauf zeigt Monate jetzt in Datumsreihenfolge.
+• Wenn sich eine Injektion nicht löschen lässt, erscheint jetzt ein Hinweis, statt dass sie still zurückkehrt.
+• Dein Injektionsverlauf bleibt erhalten, falls die Datendatei der App beschädigt wird.

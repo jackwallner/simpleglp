@@ -1,1 +1,3 @@
-Această actualizare aduce detalii mai clare despre abonament și prețuri pe pagina din App Store. Aplicația funcționează exact ca înainte: o atingere privată pentru a înregistra injecția săptămânală, gratuit și fără cont.
+• Istoricul afișează acum lunile în ordinea datei.
+• Vei vedea un mesaj dacă o injecție nu poate fi ștearsă, în loc să reapară pe tăcute.
+• Istoricul injecțiilor rămâne în siguranță dacă fișierul de date al aplicației se deteriorează.

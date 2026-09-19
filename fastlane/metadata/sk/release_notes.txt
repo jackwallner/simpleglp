@@ -1,1 +1,3 @@
-Táto aktualizácia sprehľadňuje informácie o predplatnom a cenách na stránke App Store. Samotná aplikácia funguje presne ako predtým: jedno súkromné ťuknutie na zaznamenanie týždennej dávky, zadarmo a bez účtu.
+• História teraz radí mesiace podľa dátumu.
+• Ak injekciu nemožno odstrániť, zobrazí sa správa namiesto toho, aby sa potichu vrátila.
+• História injekcií zostane v bezpečí, aj keď sa dátový súbor aplikácie poškodí.
