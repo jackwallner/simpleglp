@@ -1,1 +1,3 @@
-Aquesta actualització refresca la fitxa de l'App Store amb detalls més clars de subscripció i preus. L'app funciona exactament igual: un toc privat per registrar la injecció setmanal, gratis i sense compte.
+• L'historial ara mostra els mesos per ordre de data.
+• Veuràs un missatge si no es pot eliminar una injecció, en lloc que torni a aparèixer sense avís.
+• El teu historial d'injeccions es conserva si el fitxer de dades de l'app es fa malbé.

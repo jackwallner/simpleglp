@@ -1,1 +1,3 @@
-Den här uppdateringen ger App Store-sidan tydligare prenumerations- och prisuppgifter. Själva appen fungerar precis som förut: en privat tryckning för att logga veckans spruta, gratis och utan konto.
+• Historiken visar nu månaderna i datumordning.
+• Du får ett meddelande om en injektion inte kan raderas, i stället för att den tyst dyker upp igen.
+• Din injektionshistorik är skyddad om appens datafil skulle skadas.

@@ -1,1 +1,3 @@
-Questo aggiornamento rinnova la scheda App Store con dettagli più chiari su abbonamento e prezzi. L'app funziona esattamente come prima: un tocco privato per registrare l'iniezione settimanale, gratis e senza account.
+• La cronologia ora mostra i mesi in ordine di data.
+• Vedrai un messaggio se un'iniezione non può essere eliminata, invece di vederla ricomparire in silenzio.
+• La cronologia delle iniezioni resta al sicuro se il file dati dell'app si danneggia.

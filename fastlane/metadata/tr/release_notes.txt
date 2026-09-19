@@ -1,1 +1,3 @@
-Bu güncelleme App Store sayfasındaki abonelik ve fiyat bilgilerini netleştiriyor. Uygulamanın kendisi tamamen eskisi gibi çalışıyor: haftalık iğneyi kaydetmek için tek bir özel dokunuş, ücretsiz ve hesap gerekmeden.
+• Geçmiş artık ayları tarih sırasına göre listeliyor.
+• Bir enjeksiyon silinemezse, sessizce geri gelmek yerine bir mesaj görürsünüz.
+• Uygulamanın veri dosyası bozulsa bile enjeksiyon geçmişiniz korunur.

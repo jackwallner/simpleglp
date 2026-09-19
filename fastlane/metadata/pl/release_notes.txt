@@ -1,1 +1,3 @@
-Ta aktualizacja porządkuje informacje o subskrypcji i cenach na stronie App Store. Sama aplikacja działa dokładnie tak jak wcześniej: jedno prywatne dotknięcie, aby zapisać cotygodniowy zastrzyk, za darmo i bez konta.
+• Historia pokazuje teraz miesiące w kolejności dat.
+• Jeśli nie da się usunąć zastrzyku, zobaczysz komunikat, zamiast by po cichu wrócił.
+• Historia zastrzyków jest bezpieczna, nawet jeśli plik danych aplikacji ulegnie uszkodzeniu.

@@ -1,1 +1,3 @@
-Ovo ažuriranje donosi jasnije podatke o pretplati i cijenama na stranici App Storea. Sama aplikacija radi jednako kao prije: jedan privatan dodir za bilježenje tjedne injekcije, besplatno i bez računa.
+• Povijest sada prikazuje mjesece redoslijedom datuma.
+• Ako se injekcija ne može izbrisati, vidjet ćete poruku umjesto da se tiho vrati.
+• Vaša povijest injekcija ostaje sačuvana ako se podatkovna datoteka aplikacije ošteti.

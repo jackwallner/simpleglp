@@ -1,1 +1,3 @@
-Pembaruan ini menyegarkan halaman App Store dengan detail langganan dan harga yang lebih jelas. Aplikasinya sendiri bekerja persis seperti sebelumnya: satu ketuk privat untuk mencatat suntikan mingguan, gratis dan tanpa akun.
+• Riwayat kini menampilkan bulan sesuai urutan tanggal.
+• Anda akan melihat pesan jika suntikan tidak dapat dihapus, alih-alih muncul kembali diam-diam.
+• Riwayat suntikan Anda tetap aman jika file data aplikasi rusak.

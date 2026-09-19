@@ -1,1 +1,3 @@
-Ez a frissítés áttekinthetőbb előfizetési és árinformációkat hoz az App Store-oldalra. Maga az alkalmazás pontosan ugyanúgy működik: egy privát koppintás a heti injekció rögzítéséhez, ingyen és fiók nélkül.
+• Az előzmények most dátum szerint sorolják a hónapokat.
+• Üzenetet látsz, ha egy injekciót nem lehet törölni, ahelyett hogy csendben visszatérne.
+• Az injekciós előzményeid megmaradnak, ha az app adatfájlja megsérül.

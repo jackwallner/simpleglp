@@ -1,1 +1,3 @@
-This update refreshes the App Store listing with clearer subscription and pricing details. The app itself works exactly as before: one private tap to log your weekly shot, free, with no account required.
+• History now lists months in date order.
+• You'll see a message if a shot can't be deleted, instead of it quietly coming back.
+• Your shot history is kept safe if the app's data file is ever damaged.

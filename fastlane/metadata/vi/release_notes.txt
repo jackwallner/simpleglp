@@ -1,1 +1,3 @@
-Bản cập nhật này làm rõ thông tin đăng ký và giá trên trang App Store. Bản thân ứng dụng vẫn hoạt động y như trước: một lần chạm riêng tư để ghi lại mũi tiêm hằng tuần, miễn phí và không cần tài khoản.
+• Lịch sử giờ hiển thị các tháng theo thứ tự ngày.
+• Bạn sẽ thấy thông báo nếu không thể xóa một mũi tiêm, thay vì nó âm thầm quay lại.
+• Lịch sử tiêm của bạn vẫn an toàn nếu tệp dữ liệu của ứng dụng bị hỏng.

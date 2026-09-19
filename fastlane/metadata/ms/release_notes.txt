@@ -1,1 +1,3 @@
-Kemas kini ini menyegarkan halaman App Store dengan butiran langganan dan harga yang lebih jelas. Apl itu sendiri berfungsi sama seperti sebelumnya: satu ketikan peribadi untuk merekod suntikan mingguan, percuma dan tanpa akaun.
+• Sejarah kini memaparkan bulan mengikut susunan tarikh.
+• Anda akan melihat mesej jika suntikan tidak dapat dipadam, bukannya kembali secara senyap.
+• Sejarah suntikan anda kekal selamat jika fail data apl rosak.
