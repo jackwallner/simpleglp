@@ -11,6 +11,7 @@ struct RootTabView: View {
     @AppStorage(GLPStorageKey.hasSeenFirstRunOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenFirstRunOffer = false
     @AppStorage(GLPStorageKey.hasSeenTrialOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenTrialOffer = false
     @AppStorage(GLPStorageKey.hasSeenPatternsTrialOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenPatternsTrialOffer = false
+    @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     /// Count-only awareness of logged shots. Drives the first-shot trial trigger
     /// and the existing-user catch-up without hydrating full events on every change.
     @Query private var events: [ShotEvent]
@@ -83,7 +84,7 @@ struct RootTabView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationStack { HomeView() }
-                .tabItem { Label("One Tap", systemImage: "syringe.fill") }
+                .tabItem { Label("One Tap", systemImage: isPillPlan ? "pills.fill" : "syringe.fill") }
                 .tag(0)
 
             NavigationStack { HistoryView() }

@@ -76,6 +76,8 @@ enum GLPStorageKey: String {
     case proAlertLastFiredAt = "glpProAlertLastFiredAt"
     case healthContextEnabled = "glpHealthContextEnabled"
     case proAlertLastFiredKind = "glpProAlertLastFiredKind"
+    /// Mirrors `GLPGlance.isPill` so views can switch vocabulary through `@AppStorage`.
+    case isPillPlan = "glpIsPillPlan"
 }
 
 enum GLPOnboardingStore {

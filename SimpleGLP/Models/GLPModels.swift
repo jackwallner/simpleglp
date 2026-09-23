@@ -15,6 +15,24 @@ enum CaptureSourceStatus: String, Codable, CaseIterable, Sendable {
     case failed
 }
 
+/// How a medication is taken. Drives the vocabulary ("shot" vs "pill"), the default
+/// cadence, and whether logging starts a wait-before-eating countdown.
+enum DoseForm: String, Codable, CaseIterable, Identifiable, Sendable {
+    case injection
+    case pill
+
+    var id: String { rawValue }
+
+    /// Lowercase noun for copy: "shot" / "pill".
+    var noun: String { self == .pill ? "pill" : "shot" }
+    var pluralNoun: String { self == .pill ? "pills" : "shots" }
+    var pickerLabel: String { self == .pill ? "Daily pill" : "Shot" }
+    var symbolName: String { self == .pill ? "pills.fill" : "syringe.fill" }
+    var logButtonTitle: String { "I took my \(noun)" }
+    var defaultIntervalDays: Int { self == .pill ? 1 : 7 }
+    var defaultHour: Int { self == .pill ? 7 : 9 }
+}
+
 enum GLPMedication: String, Codable, CaseIterable, Identifiable, Sendable {
     case ozempic = "Ozempic"
     case wegovy = "Wegovy"
@@ -23,15 +41,46 @@ enum GLPMedication: String, Codable, CaseIterable, Identifiable, Sendable {
     case compoundedSemaglutide = "Compounded semaglutide"
     case compoundedTirzepatide = "Compounded tirzepatide"
     case other = "Other"
+    case wegovyPill = "Wegovy pill"
+    case foundayo = "Foundayo"
+    case rybelsus = "Rybelsus"
+    case otherPill = "Other pill"
 
     var id: String { rawValue }
 
+    var form: DoseForm {
+        switch self {
+        case .wegovyPill, .foundayo, .rybelsus, .otherPill: .pill
+        default: .injection
+        }
+    }
+
+    var isCustom: Bool { self == .other || self == .otherPill }
+
+    static func options(for form: DoseForm) -> [GLPMedication] {
+        allCases.filter { $0.form == form }
+    }
+
+    /// Strengths the product ships in, used only to fill the dose picker. The app records
+    /// whatever the user says they take; it never suggests a dose.
     var standardDoseStepsMg: [Double] {
         switch self {
         case .ozempic: [0.25, 0.5, 1.0, 2.0]
         case .wegovy, .compoundedSemaglutide: [0.25, 0.5, 1.0, 1.7, 2.4]
         case .mounjaro, .zepbound, .compoundedTirzepatide: [2.5, 5.0, 7.5, 10.0, 12.5, 15.0]
-        case .other: []
+        case .wegovyPill: [1.5, 4.0, 9.0, 25.0]
+        case .foundayo: [0.8, 2.5, 5.5, 9.0, 14.5, 17.2]
+        case .rybelsus: [1.5, 3.0, 4.0, 7.0, 9.0, 14.0]
+        case .other, .otherPill: []
+        }
+    }
+
+    /// Minutes the product's patient instructions ask people to wait before food, drink or
+    /// other oral meds. Only a starting value for the user's own setting.
+    var defaultWaitMinutes: Int {
+        switch self {
+        case .wegovyPill, .rybelsus: 30
+        default: 0
         }
     }
 }
@@ -120,6 +169,12 @@ final class MedicationPlan {
     /// Days between doses. 7 = weekly (the default). Anything else drives an "every N days"
     /// cadence anchored on `scheduleStartDate`. Defaulted for SwiftData lightweight migration.
     var intervalDays: Int = 7
+    /// Minutes to count down after a pill before food and drink. 0 = no countdown.
+    var waitMinutes: Int = 0
+    /// Doses on hand as of `supplyUpdatedAt`. Remaining supply is derived from the shots
+    /// logged since, so undo and delete never drift the count.
+    var supplyCount: Int = 0
+    var supplyUpdatedAt: Date?
     var reminderEnabled: Bool
     var reminderLeadMinutes: Int
     var createdAt: Date
@@ -135,6 +190,7 @@ final class MedicationPlan {
         preferredHour: Int = 9,
         preferredMinute: Int = 0,
         intervalDays: Int = 7,
+        waitMinutes: Int = 0,
         reminderEnabled: Bool = true,
         reminderLeadMinutes: Int = 0,
         doseSteps: [DoseStep] = []
@@ -148,6 +204,7 @@ final class MedicationPlan {
         self.preferredHour = preferredHour
         self.preferredMinute = preferredMinute
         self.intervalDays = intervalDays
+        self.waitMinutes = waitMinutes
         self.reminderEnabled = reminderEnabled
         self.reminderLeadMinutes = reminderLeadMinutes
         self.createdAt = .now
@@ -203,8 +260,13 @@ final class MedicationPlan {
         set { medicationRaw = newValue.rawValue }
     }
 
+    var form: DoseForm { medication.form }
+
+    /// Countdown length after logging, or 0 when this plan has none.
+    var effectiveWaitMinutes: Int { form == .pill ? max(0, waitMinutes) : 0 }
+
     var displayMedicationName: String {
-        if medication == .other, let customMedicationName, !customMedicationName.isEmpty {
+        if medication.isCustom, let customMedicationName, !customMedicationName.isEmpty {
             return customMedicationName
         }
         return medication.rawValue

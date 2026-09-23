@@ -22,6 +22,7 @@ struct TrialOfferSheet: View {
     let onSeeAllPlans: () -> Void
     let onDismiss: () -> Void
     @EnvironmentObject private var store: StoreService
+    @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var animateGlow = false
     @State private var shimmerPhase: CGFloat = -1
@@ -78,29 +79,22 @@ struct TrialOfferSheet: View {
     }
 
     private var subheadline: String {
+        let pitch = isPillPlan
+            ? "A Lock Screen countdown and refill reminders"
+            : "Dose-day nudges and refill reminders"
         if trialPeriodPhrase != nil {
-            return "Dose-day nudges and drift alerts, on autopilot. Free until your trial ends."
+            return "\(pitch), on autopilot. Free until your trial ends."
         }
-        return "Dose-day nudges and drift alerts, free for eligible new subscribers."
+        return "\(pitch), free for eligible new subscribers."
     }
 
     /// Leads with the alerts payoff. "On-device" is intentionally demoted to a
     /// single trust line below the cards so the value props get top billing.
     private var trialBullets: [TrialBullet] {
-        [
-            TrialBullet(
-                icon: "bell.badge.fill",
-                tint: AppTheme.warm,
-                title: "Never miss a dose",
-                detail: "A nudge before a dose slips, tuned to your real schedule."
-            ),
-            TrialBullet(
-                icon: "waveform.path.ecg",
-                tint: AppTheme.calm,
-                title: "Catch drift early",
-                detail: "Know when shots creep later week over week."
-            )
-        ]
+        let tints = [AppTheme.brand, AppTheme.warm, AppTheme.calm]
+        return ProFeatures.bullets(isPill: isPillPlan).prefix(2).enumerated().map { index, bullet in
+            TrialBullet(icon: bullet.icon, tint: tints[index % tints.count], title: bullet.title, detail: bullet.detail + ".")
+        }
     }
 
     /// Compliant billing disclosure shown beside the buy control (Apple 3.1.2): trial
@@ -186,7 +180,7 @@ struct TrialOfferSheet: View {
                     }
                     .padding(.horizontal, 4)
 
-                    Label("All on-device. Your shots never leave your phone.", systemImage: "lock.shield")
+                    Label("All on-device. Your log never leaves your phone.", systemImage: "lock.shield")
                         .font(.system(.caption, design: .rounded))
                         .foregroundStyle(AppTheme.muted)
                         .labelStyle(.titleAndIcon)

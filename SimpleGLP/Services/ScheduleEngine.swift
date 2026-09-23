@@ -38,10 +38,15 @@ enum ScheduleEngine {
 
     static let onScheduleWindow: TimeInterval = 18 * 60 * 60
     static let matchWindow: TimeInterval = 4 * 24 * 60 * 60
+    /// A daily dose within this much of its planned time counts as on schedule.
+    static let dailyOnScheduleWindow: TimeInterval = 3 * 60 * 60
 
     static func match(timestamp: Date, plan: MedicationPlan?, existingEvents: [ShotEvent] = [], calendar: Calendar = .current) -> Match {
         guard let plan else {
             return Match(scheduledDate: nil, doseMg: 0, status: .unknown, minutesFromSchedule: nil)
+        }
+        if plan.cadenceDays == 1 {
+            return dailyMatch(timestamp: timestamp, plan: plan, existingEvents: existingEvents, calendar: calendar)
         }
 
         let nearby = expectedDates(around: timestamp, plan: plan, calendar: calendar)
@@ -76,6 +81,33 @@ enum ScheduleEngine {
             status: status,
             minutesFromSchedule: Int((delta / 60).rounded())
         )
+    }
+
+    /// Daily doses belong to their calendar day. Nearest-slot matching would hand a late
+    /// 11 PM pill to tomorrow morning's slot and mark it "early".
+    private static func dailyMatch(timestamp: Date, plan: MedicationPlan, existingEvents: [ShotEvent], calendar: Calendar) -> Match {
+        let day = calendar.startOfDay(for: timestamp)
+        guard let first = firstScheduledDate(plan: plan, calendar: calendar),
+              day >= calendar.startOfDay(for: first),
+              let slot = calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: day)
+        else {
+            return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
+        }
+        let alreadyClaimed = existingEvents.contains { event in
+            guard let scheduled = event.scheduledDate else { return false }
+            return abs(scheduled.timeIntervalSince(slot)) < 60
+        }
+        if alreadyClaimed {
+            return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
+        }
+        let delta = timestamp.timeIntervalSince(slot)
+        let status: ScheduleMatchStatus
+        if abs(delta) <= dailyOnScheduleWindow {
+            status = .onSchedule
+        } else {
+            status = delta < 0 ? .early : .late
+        }
+        return Match(scheduledDate: slot, doseMg: dose(on: slot, plan: plan), status: status, minutesFromSchedule: Int((delta / 60).rounded()))
     }
 
     /// The first canonical scheduled dose: the start date at the preferred time of day.
@@ -127,5 +159,79 @@ enum ScheduleEngine {
             candidate = prev
         }
         return candidate > date ? nil : candidate
+    }
+}
+
+/// Day-level adherence for daily plans: the week strip and the running streak on Home.
+enum DailyAdherence {
+    struct Day: Identifiable, Equatable {
+        let date: Date
+        let taken: Bool
+        var id: Date { date }
+    }
+
+    /// The last `count` calendar days ending today, oldest first.
+    static func recentDays(doseDates: [Date], count: Int = 7, now: Date = .now, calendar: Calendar = .current) -> [Day] {
+        let takenDays = Set(doseDates.map { calendar.startOfDay(for: $0) })
+        let today = calendar.startOfDay(for: now)
+        return (0..<count).reversed().compactMap { offset in
+            guard let day = calendar.date(byAdding: .day, value: -offset, to: today) else { return nil }
+            return Day(date: day, taken: takenDays.contains(day))
+        }
+    }
+
+    /// Consecutive days with a logged dose. Today only breaks the streak once it's over, so
+    /// a morning before the pill still shows yesterday's run.
+    static func streak(doseDates: [Date], now: Date = .now, calendar: Calendar = .current) -> Int {
+        let takenDays = Set(doseDates.map { calendar.startOfDay(for: $0) })
+        var day = calendar.startOfDay(for: now)
+        if !takenDays.contains(day) {
+            guard let yesterday = calendar.date(byAdding: .day, value: -1, to: day) else { return 0 }
+            day = yesterday
+        }
+        var count = 0
+        while takenDays.contains(day) {
+            count += 1
+            guard let previous = calendar.date(byAdding: .day, value: -1, to: day) else { break }
+            day = previous
+        }
+        return count
+    }
+
+    /// The most recent dose logged today, if any.
+    static func todaysDose(doseDates: [Date], now: Date = .now, calendar: Calendar = .current) -> Date? {
+        doseDates.filter { calendar.isDate($0, inSameDayAs: now) && $0 <= now }.max()
+    }
+}
+
+/// Doses on hand, derived from the last refill count and what's been logged since.
+enum SupplyMath {
+    /// Refill reminders fire this many days before the supply is used up.
+    static let reminderLeadDays = 7
+
+    static func remaining(plan: MedicationPlan, doseDates: [Date]) -> Int? {
+        guard let since = plan.supplyUpdatedAt else { return nil }
+        let used = doseDates.filter { $0 >= since }.count
+        return max(0, plan.supplyCount - used)
+    }
+
+    static func daysLeft(remaining: Int, plan: MedicationPlan) -> Int {
+        remaining * plan.cadenceDays
+    }
+
+    static func isLow(remaining: Int, plan: MedicationPlan) -> Bool {
+        daysLeft(remaining: remaining, plan: plan) <= reminderLeadDays
+    }
+
+    /// When to send the refill heads-up: `reminderLeadDays` before the supply runs out, at
+    /// the plan's dose time. Nil when that moment has already passed.
+    static func reminderDate(remaining: Int, plan: MedicationPlan, now: Date = .now, calendar: Calendar = .current) -> Date? {
+        let offset = daysLeft(remaining: remaining, plan: plan) - reminderLeadDays
+        guard offset > 0,
+              let day = calendar.date(byAdding: .day, value: offset, to: calendar.startOfDay(for: now)),
+              let fire = calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: day),
+              fire > now
+        else { return nil }
+        return fire
     }
 }

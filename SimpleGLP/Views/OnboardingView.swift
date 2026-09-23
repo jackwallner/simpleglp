@@ -8,7 +8,9 @@ struct OnboardingView: View {
     @AppStorage(GLPStorageKey.hasSeenTrialOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenTrialOffer = false
     @AppStorage(GLPStorageKey.hasSeenFirstRunOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenFirstRunOffer = false
     @State private var step = 0
+    @State private var form: DoseForm = .injection
     @State private var medication: GLPMedication = .ozempic
+    @State private var waitMinutes = 0
     @State private var customMedicationName = ""
     @State private var doseMg = 0.25
     @State private var useCustomDose = false
@@ -130,12 +132,12 @@ struct OnboardingView: View {
     private var welcomeStep: some View {
         VStack(alignment: .leading, spacing: 24) {
             stepHeader(
-                icon: "syringe.fill",
+                icon: "hand.tap.fill",
                 iconColor: AppTheme.brand,
                 title: "One big button.",
-                subtitle: "Tap it when you take your shot. That's it."
+                subtitle: "Weekly shot or daily pill: tap it when you take your dose. That's it."
             )
-            Text("Optional details, history, and reminders are there if you want them.")
+            Text("On a pill, the same tap starts your wait-before-eating countdown. Reminders, history, and a streak are there if you want them.")
                 .font(.body)
                 .foregroundStyle(AppTheme.muted)
                 .lineSpacing(4)
@@ -149,20 +151,20 @@ struct OnboardingView: View {
                 icon: "pills.fill",
                 iconColor: AppTheme.brand,
                 title: "What are you taking?",
-                subtitle: "Pick your medication and current dose."
+                subtitle: "Pick how you take it, then your medication and current dose."
             )
+            HStack(spacing: 12) {
+                formCard(.injection, title: "Shot", detail: "Weekly or custom")
+                formCard(.pill, title: "Pill", detail: "Once a day")
+            }
             VStack(spacing: 14) {
                 HStack {
                     Text("Medication")
                         .font(.body)
                     Spacer()
-                    Picker("Medication", selection: $medication) {
-                        ForEach(GLPMedication.allCases) { med in
-                            Text(med.rawValue).tag(med)
-                        }
-                    }
-                    .pickerStyle(.menu)
-                    .labelsHidden()
+                    MedicationPicker(medication: $medication, forms: [form])
+                        .pickerStyle(.menu)
+                        .labelsHidden()
                 }
                 .onChange(of: medication) { _, newValue in
                     let presets = newValue.standardDoseStepsMg
@@ -172,8 +174,9 @@ struct OnboardingView: View {
                         doseMg = presets.first ?? doseMg
                         useCustomDose = false
                     }
+                    waitMinutes = newValue.defaultWaitMinutes
                 }
-                if medication == .other {
+                if medication.isCustom {
                     TextField("Medication name", text: $customMedicationName)
                         .textFieldStyle(.roundedBorder)
                 }
@@ -182,6 +185,46 @@ struct OnboardingView: View {
             .padding(18)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
+    }
+
+    private func formCard(_ option: DoseForm, title: String, detail: String) -> some View {
+        let selected = form == option
+        return Button {
+            selectForm(option)
+        } label: {
+            VStack(alignment: .leading, spacing: 8) {
+                Image(systemName: option.symbolName)
+                    .font(.title2.weight(.semibold))
+                    .foregroundStyle(selected ? .white : AppTheme.brand)
+                Text(title)
+                    .font(.headline)
+                    .foregroundStyle(selected ? .white : AppTheme.text)
+                Text(detail)
+                    .font(.caption)
+                    .foregroundStyle(selected ? .white.opacity(0.85) : AppTheme.muted)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(16)
+            .background(selected ? AppTheme.brand : AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: 18, style: .continuous)
+                    .strokeBorder(selected ? Color.clear : AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
+            )
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(selected ? .isSelected : [])
+    }
+
+    /// Switching between shot and pill resets the defaults that differ between them.
+    private func selectForm(_ option: DoseForm) {
+        guard form != option else { return }
+        form = option
+        medication = GLPMedication.options(for: option).first ?? medication
+        doseMg = medication.standardDoseStepsMg.first ?? doseMg
+        useCustomDose = medication.standardDoseStepsMg.isEmpty
+        waitMinutes = medication.defaultWaitMinutes
+        intervalDays = option.defaultIntervalDays
+        firstDose = Calendar.current.date(bySettingHour: option.defaultHour, minute: 0, second: 0, of: .now) ?? firstDose
     }
 
     @ViewBuilder
@@ -231,7 +274,41 @@ struct OnboardingView: View {
         return (formatter.string(from: value as NSNumber) ?? "\(value)") + " mg"
     }
 
+    @ViewBuilder
     private var scheduleStep: some View {
+        if form == .pill {
+            pillScheduleStep
+        } else {
+            shotScheduleStep
+        }
+    }
+
+    private var pillScheduleStep: some View {
+        VStack(alignment: .leading, spacing: 24) {
+            stepHeader(
+                icon: "sunrise.fill",
+                iconColor: AppTheme.calm,
+                title: "Your daily routine",
+                subtitle: "When you usually take it, and how long you wait before eating or drinking."
+            )
+            VStack(alignment: .leading, spacing: 16) {
+                DatePicker("Usual time", selection: $firstDose, displayedComponents: .hourAndMinute)
+                Divider()
+                WaitField(minutes: $waitMinutes)
+                Text(waitMinutes > 0
+                     ? "Tapping “I took my pill” starts a \(waitMinutes)-minute countdown and pings you when it’s done. Match it to your prescriber’s instructions."
+                     : "No countdown. Set one if your instructions include a wait before food or drink.")
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .font(.body)
+            .padding(18)
+            .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+        }
+    }
+
+    private var shotScheduleStep: some View {
         VStack(alignment: .leading, spacing: 24) {
             stepHeader(
                 icon: "calendar",
@@ -254,10 +331,12 @@ struct OnboardingView: View {
                 icon: "bell.fill",
                 iconColor: AppTheme.warm,
                 title: "Reminders",
-                subtitle: "A gentle nudge so a busy week doesn't push your shot."
+                subtitle: form == .pill
+                    ? "A nudge each day, skipped once you've logged your pill."
+                    : "A gentle nudge so a busy week doesn't push your shot."
             )
             VStack(alignment: .leading, spacing: 14) {
-                Toggle("Remind me on shot day", isOn: $reminderEnabled)
+                Toggle(form == .pill ? "Remind me daily" : "Remind me on shot day", isOn: $reminderEnabled)
                     .font(.body)
                 if reminderEnabled {
                     Divider()
@@ -287,12 +366,12 @@ struct OnboardingView: View {
                 icon: "heart.text.square.fill",
                 iconColor: .pink,
                 title: "Health context",
-                subtitle: "See how each dose lands against your real data."
+                subtitle: "See how your doses line up with your real data."
             )
             VStack(alignment: .leading, spacing: 14) {
                 Toggle("Auto-capture Health context", isOn: $enableHealth)
                     .font(.body)
-                Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a shot. If you skip this or deny permission, you can turn it on later in Settings.")
+                Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a dose. If you skip this or deny permission, you can turn it on later in Settings.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -317,13 +396,13 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "sparkles",
                 iconColor: AppTheme.brand,
-                title: "Get more from every shot",
-                subtitle: "Simple GLP Pro turns your logs into a clear picture of your journey."
+                title: form == .pill ? "Make the daily routine effortless" : "Get more from every shot",
+                subtitle: "Simple GLP Pro takes care of the parts that are easy to forget."
             )
             VStack(alignment: .leading, spacing: 14) {
-                trialBullet(icon: "chart.bar.xaxis", text: "See patterns across weight, dose timing, and how you feel")
-                trialBullet(icon: "square.and.arrow.up", text: "Export a clean history to share at your next check-in")
-                trialBullet(icon: "bell.badge", text: "Smarter reminders so a busy week never skips a shot")
+                ForEach(ProFeatures.bullets(isPill: form == .pill), id: \.title) { bullet in
+                    trialBullet(icon: bullet.icon, text: bullet.line)
+                }
                 trialBullet(icon: "lock.shield", text: "Your data stays private, on your device")
             }
             .padding(18)
@@ -497,20 +576,24 @@ struct OnboardingView: View {
             saveError = "Enter a dose greater than 0 mg."
             return
         }
-        guard medication != .other || !trimmedCustomName.isEmpty else {
+        guard !medication.isCustom || !trimmedCustomName.isEmpty else {
             saveError = "Enter the medication name."
             return
         }
 
+        let isPill = medication.form == .pill
         let plan = MedicationPlan(
             medication: medication,
-            customMedicationName: medication == .other ? trimmedCustomName : nil,
+            customMedicationName: medication.isCustom ? trimmedCustomName : nil,
             doseMg: doseMg,
-            intervalDays: intervalDays,
+            intervalDays: isPill ? 1 : intervalDays,
+            waitMinutes: isPill ? waitMinutes : 0,
             reminderEnabled: reminderEnabled,
             reminderLeadMinutes: reminderLeadMinutes
         )
-        plan.firstDoseAnchor = firstDose
+        plan.firstDoseAnchor = isPill
+            ? PlanEditorView.dailyAnchor(time: firstDose, existing: .now)
+            : firstDose
         modelContext.insert(plan)
         do {
             try modelContext.save()
@@ -525,9 +608,7 @@ struct OnboardingView: View {
                 try? await HealthKitService.shared.prepareAuthorizationDuringOnboarding()
             }
         }
-        if reminderEnabled {
-            Task { await ReminderService.scheduleNextShotReminder(for: plan) }
-        }
+        DoseRoutineService.refresh(in: modelContext)
         // Suppress the post-onboarding trial sheets (covered on trial-step appear too,
         // but a purchase-then-finish path may not have lingered on the step).
         hasSeenFirstRunOffer = true

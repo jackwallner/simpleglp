@@ -4,6 +4,7 @@ import SwiftUI
 struct HistoryView: View {
     @Environment(\.modelContext) private var modelContext
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
+    @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var selectedEvent: ShotEvent?
     @State private var showEdit = false
     @State private var pendingDeletion: [ShotEvent] = []
@@ -13,9 +14,9 @@ struct HistoryView: View {
         Group {
             if events.isEmpty {
                 ContentUnavailableView {
-                    Label("No shots logged yet", systemImage: "syringe")
+                    Label("Nothing logged yet", systemImage: isPillPlan ? "pills" : "syringe")
                 } description: {
-                    Text("Your shots will appear here. Tap the big button on the One Tap tab to log your first.")
+                    Text("Your doses will appear here. Tap the big button on the One Tap tab to log your first.")
                 }
             } else {
                 List {
@@ -54,7 +55,7 @@ struct HistoryView: View {
             Button("Delete", role: .destructive) { performPendingDeletion() }
             Button("Cancel", role: .cancel) { pendingDeletion = [] }
         } message: {
-            Text("Deleting a shot removes its dose, schedule status, and any logged details and Health context. This can't be undone.")
+            Text("Deleting an entry removes its dose, schedule status, and any logged details and Health context. This can't be undone.")
         }
         .alert(
             "Couldn't delete",
@@ -70,7 +71,7 @@ struct HistoryView: View {
     }
 
     private var confirmDeleteTitle: String {
-        pendingDeletion.count == 1 ? "Delete this shot?" : "Delete \(pendingDeletion.count) shots?"
+        pendingDeletion.count == 1 ? "Delete this entry?" : "Delete \(pendingDeletion.count) entries?"
     }
 
     /// Keyed by the first instant of each month so sections sort by date, not by month name.
@@ -125,8 +126,9 @@ struct HistoryView: View {
             // Put the rows back rather than showing a delete that will undo
             // itself on the next launch.
             modelContext.rollback()
-            deleteError = "The shot could not be deleted. Please try again."
+            deleteError = "The entry could not be deleted. Please try again."
         }
         pendingDeletion = []
+        DoseRoutineService.historyDidChange(in: modelContext)
     }
 }

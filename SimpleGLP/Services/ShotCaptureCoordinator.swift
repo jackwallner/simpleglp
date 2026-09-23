@@ -124,7 +124,7 @@ final class ShotCaptureCoordinator: ObservableObject {
             // the next successful save writes both.
             context.rollback()
             lastCapturedEventID = nil
-            bannerMessage = "Could not save your shot. Try again."
+            bannerMessage = "Could not save that. Try again."
             return false
         }
 
@@ -145,10 +145,10 @@ final class ShotCaptureCoordinator: ObservableObject {
                 doseMg: event.doseMg
             )
         )
-        PhoneWatchSession.shared.syncRecentShots()
+        DoseRoutineService.didLogDose(at: timestamp, plan: plan, in: context)
 
         isCapturing = true
-        bannerMessage = "Saved. Adding Health context…"
+        bannerMessage = GLPOnboardingStore.healthContextEnabled ? "Saved. Adding Health context…" : nil
         let eventID = event.id
 
         Task { @MainActor in
@@ -174,20 +174,11 @@ final class ShotCaptureCoordinator: ObservableObject {
             }
 
             isCapturing = false
-            switch found.captureStatus {
-            case .complete:
-                bannerMessage = "You took your shot. Nice. See you next week."
-            case .partial:
-                bannerMessage = "Shot logged. Some Health context was unavailable."
-            case .failed:
-                bannerMessage = "Shot logged. Health context was unavailable."
-            case .pending:
-                bannerMessage = nil
+            if lastCapturedEventID == eventID {
+                bannerMessage = Self.loggedBanner(status: found.captureStatus, plan: plan)
             }
             WidgetCenter.shared.reloadAllTimelines()
-            if let plan {
-                await ReminderService.scheduleNextShotReminder(for: plan)
-            }
+            await DoseRoutineService.rescheduleReminders(in: context)
             await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
             if !GLPAppGroup.pendingWidgetShots().isEmpty {
                 _ = ingestPendingWidgetShot(in: context)
@@ -207,16 +198,34 @@ final class ShotCaptureCoordinator: ObservableObject {
                 try context.save()
             } catch {
                 context.rollback()
-                bannerMessage = "Could not undo that shot. Delete it from History instead."
+                bannerMessage = "Could not undo that. Delete it from History instead."
                 return
             }
         }
         RecentShotsStore.remove(id: eventID)
-        PhoneWatchSession.shared.syncRecentShots()
         lastCapturedEventID = nil
         showUndoOption = false
-        bannerMessage = "Last shot undone."
-        WidgetCenter.shared.reloadAllTimelines()
+        bannerMessage = "Undone."
+        DoseRoutineService.historyDidChange(in: context)
+    }
+
+    /// Banner after Health context settles. Pills get no "see you" line: the countdown on
+    /// Home already says what happens next.
+    private static func loggedBanner(status: CaptureStatus, plan: MedicationPlan?) -> String? {
+        let noun = plan?.form.noun ?? "shot"
+        // With Health off, "unavailable" is the expected outcome, not news.
+        let status = GLPOnboardingStore.healthContextEnabled ? status : .complete
+        switch status {
+        case .complete:
+            if plan?.form == .pill { return nil }
+            return plan?.isWeekly == false ? "You took your shot. Nice." : "You took your shot. Nice. See you next week."
+        case .partial:
+            return "\(noun.capitalized) logged. Some Health context was unavailable."
+        case .failed:
+            return "\(noun.capitalized) logged. Health context was unavailable."
+        case .pending:
+            return nil
+        }
     }
 
     private func fetchPendingEvents(in context: ModelContext) -> [ShotEvent] {

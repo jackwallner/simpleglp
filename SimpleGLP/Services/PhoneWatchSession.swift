@@ -38,10 +38,13 @@ final class PhoneWatchSession: NSObject, ObservableObject {
             if let doseMg = shot.doseMg { entry["doseMg"] = doseMg }
             return entry
         }
-        let context: [String: Any] = [
+        var context: [String: Any] = [
             "recentShots": payload,
             "updatedAt": Date().timeIntervalSince1970
         ]
+        if let glance = GLPGlanceStore.encoded(GLPGlanceStore.load()) {
+            context["glance"] = glance
+        }
         do {
             try session.updateApplicationContext(context)
         } catch {

@@ -5,14 +5,17 @@ struct InsightsView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var store: StoreService
     @Query(sort: \ShotEvent.timestamp, order: .forward) private var events: [ShotEvent]
+    @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var showPaywall = false
+
+    private var noun: String { isPillPlan ? "pill" : "shot" }
 
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 if events.count < ProactiveAlertsEngine.minimumSampleSize {
                     Card {
-                        Text("Keep logging your shots. Insights appear once you've logged \(ProactiveAlertsEngine.minimumSampleSize). You have \(events.count) so far.")
+                        Text("Keep logging your \(noun)s. Insights appear once you've logged \(ProactiveAlertsEngine.minimumSampleSize). You have \(events.count) so far.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -33,7 +36,29 @@ struct InsightsView: View {
                                     Text("Proactive Alerts")
                                         .font(.headline)
                                         .foregroundStyle(AppTheme.text)
-                                    Text("Pattern detection and dose-day nudges.")
+                                    Text(isPillPlan ? "Missed-dose nudges." : "Pattern detection and dose-day nudges.")
+                                        .font(.caption)
+                                        .foregroundStyle(AppTheme.muted)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .foregroundStyle(.secondary)
+                            }
+                        }
+                        .padding(.horizontal)
+                    }
+                    .buttonStyle(.plain)
+                    NavigationLink(destination: SupplyView()) {
+                        Card {
+                            HStack(spacing: 12) {
+                                Image(systemName: "shippingbox.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(AppTheme.brand)
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Supply & refills")
+                                        .font(.headline)
+                                        .foregroundStyle(AppTheme.text)
+                                    Text("Count down what's on hand and get a heads-up before you run out.")
                                         .font(.caption)
                                         .foregroundStyle(AppTheme.muted)
                                 }
@@ -76,7 +101,7 @@ struct InsightsView: View {
                 Text("\(Int(percentage * 100))% on schedule")
                     .font(.title2.weight(.bold))
                     .foregroundStyle(AppTheme.brand)
-                Text("\(onTime) of \(total) shots logged within the expected window.")
+                Text("\(onTime) of \(total) \(noun)s logged within the expected window.")
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -84,7 +109,35 @@ struct InsightsView: View {
         .padding(.horizontal)
     }
 
+    @ViewBuilder
     private var timingCard: some View {
+        if isPillPlan {
+            usualTimeCard
+        } else {
+            weekdayCard
+        }
+    }
+
+    /// Daily pills all land on every weekday, so the useful pattern is the time of day.
+    private var usualTimeCard: some View {
+        let minutes = events.map { Calendar.current.component(.hour, from: $0.timestamp) * 60 + Calendar.current.component(.minute, from: $0.timestamp) }.sorted()
+        let median = minutes.isEmpty ? 0 : minutes[minutes.count / 2]
+        let usual = Calendar.current.date(bySettingHour: median / 60, minute: median % 60, second: 0, of: .now) ?? .now
+        return Card {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Timing pattern")
+                    .font(.headline)
+                Text("Usually around \(usual.formatted(date: .omitted, time: .shortened))")
+                    .font(.title3.weight(.semibold))
+                Text("Median time of day across your logged pills.")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    private var weekdayCard: some View {
         let days = events.map(\.weekdayIndex)
         let counts = Dictionary(grouping: days, by: { $0 }).mapValues(\.count)
         let top = counts.max { $0.value < $1.value }
@@ -138,24 +191,45 @@ struct InsightsView: View {
     // the bottom fades into the page so it feels like there's more behind the wall.
     private var previewStack: some View {
         VStack(spacing: 14) {
-            ProLockedPreviewCard(
-                icon: "bell.badge.fill",
-                title: "Proactive Alerts",
-                headline: "Dose day in 2 days",
-                detail: "Quiet hours respected. Your usual Tuesday window is 8:00-10:00 AM."
-            )
-            ProLockedPreviewCard(
-                icon: "waveform.path.ecg",
-                title: "Pattern detection",
-                headline: "Drift detected: +6 hrs over 3 weeks",
-                detail: "Shots are creeping later in the day. A reset nudge can pull your window back in line."
-            )
-            ProLockedPreviewCard(
-                icon: "calendar.badge.clock",
-                title: "Smart timing",
-                headline: "Best next dose: Tue 8:42 AM",
-                detail: "Based on your last 12 shots, mornings yield your most consistent rhythm."
-            )
+            if isPillPlan {
+                ProLockedPreviewCard(
+                    icon: "lock.iphone",
+                    title: "Lock Screen countdown",
+                    headline: "18:42 left in your wait",
+                    detail: "On your Lock Screen and in the Dynamic Island, no app to open."
+                )
+                ProLockedPreviewCard(
+                    icon: "shippingbox.fill",
+                    title: "Refill reminders",
+                    headline: "7 pills left",
+                    detail: "A heads-up a week before you run out, based on what you log."
+                )
+                ProLockedPreviewCard(
+                    icon: "bell.badge.fill",
+                    title: "Missed-dose nudges",
+                    headline: "Pill not logged yet today",
+                    detail: "A second reminder a few hours after your usual time. Quiet hours respected."
+                )
+            } else {
+                ProLockedPreviewCard(
+                    icon: "bell.badge.fill",
+                    title: "Proactive Alerts",
+                    headline: "Dose day in 2 days",
+                    detail: "Quiet hours respected. Your usual Tuesday window is 8:00-10:00 AM."
+                )
+                ProLockedPreviewCard(
+                    icon: "waveform.path.ecg",
+                    title: "Pattern detection",
+                    headline: "Drift detected: +6 hrs over 3 weeks",
+                    detail: "Shots are creeping later in the day. A reset nudge can pull your window back in line."
+                )
+                ProLockedPreviewCard(
+                    icon: "shippingbox.fill",
+                    title: "Refill reminders",
+                    headline: "1 dose left in your pen",
+                    detail: "A heads-up a week before you run out, based on what you log."
+                )
+            }
         }
         .blur(radius: 2.5)
         .allowsHitTesting(false)
@@ -189,7 +263,7 @@ struct InsightsView: View {
                     Text("Unlock with Pro")
                         .font(.headline.weight(.bold))
                         .foregroundStyle(AppTheme.text)
-                    Text("Pattern alerts and dose-day nudges, on autopilot.")
+                    Text(isPillPlan ? "Lock Screen countdown and refill reminders, on autopilot." : "Dose-day nudges and refill reminders, on autopilot.")
                         .font(.caption)
                         .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)

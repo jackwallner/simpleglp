@@ -21,6 +21,27 @@ struct SettingsView: View {
                 NavigationLink("Dose schedule") {
                     DoseScheduleView()
                 }
+                if store.isProUnlocked || isScreenshotMode {
+                    NavigationLink("Supply & refills") {
+                        SupplyView()
+                    }
+                } else {
+                    Button {
+                        showPaywall = true
+                    } label: {
+                        HStack {
+                            Text("Supply & refills")
+                                .foregroundStyle(AppTheme.text)
+                            Spacer()
+                            Text("PRO")
+                                .font(.system(size: 10, weight: .heavy))
+                                .foregroundStyle(AppTheme.brand)
+                                .padding(.horizontal, 8)
+                                .padding(.vertical, 4)
+                                .background(AppTheme.brandSoft, in: Capsule())
+                        }
+                    }
+                }
             }
 
             Section("Display") {
@@ -32,7 +53,7 @@ struct SettingsView: View {
             }
 
             Section("Logging") {
-                Toggle("Prompt for details after shot", isOn: $promptForDetails)
+                Toggle("Prompt for details after logging", isOn: $promptForDetails)
             }
 
             Section {
@@ -44,7 +65,7 @@ struct SettingsView: View {
             } header: {
                 Text("Health")
             } footer: {
-                Text("When enabled, Simple GLP reads optional Health data when you log a shot. It never writes back to Apple Health.")
+                Text("When enabled, Simple GLP reads optional Health data when you log a dose. It never writes back to Apple Health.")
             }
 
             if !isScreenshotMode {
@@ -115,6 +136,7 @@ struct PlanEditorView: View {
     @State private var doseMg = 0.25
     @State private var useCustomDose = false
     @State private var intervalDays = 7
+    @State private var waitMinutes = 0
     @State private var firstDose = Date()
     @State private var reminderEnabled = true
     @State private var reminderLeadMinutes = 0
@@ -124,28 +146,43 @@ struct PlanEditorView: View {
     var body: some View {
         Form {
             Section("Medication") {
-                Picker("Medication", selection: $medication) {
-                    ForEach(GLPMedication.allCases) { Text($0.rawValue).tag($0) }
-                }
-                .onChange(of: medication) { _, newValue in
-                    let presets = newValue.standardDoseStepsMg
-                    if presets.isEmpty {
-                        useCustomDose = true
-                    } else if !presets.contains(doseMg) {
-                        doseMg = presets.first ?? doseMg
-                        useCustomDose = false
+                MedicationPicker(medication: $medication)
+                    .onChange(of: medication) { oldValue, newValue in
+                        let presets = newValue.standardDoseStepsMg
+                        if presets.isEmpty {
+                            useCustomDose = true
+                        } else if !presets.contains(doseMg) {
+                            doseMg = presets.first ?? doseMg
+                            useCustomDose = false
+                        }
+                        if newValue.form == .pill {
+                            waitMinutes = newValue.defaultWaitMinutes
+                        }
+                        if oldValue.form != newValue.form {
+                            intervalDays = newValue.form.defaultIntervalDays
+                        }
                     }
-                }
-                if medication == .other {
+                if medication.isCustom {
                     TextField("Custom name", text: $customName)
                 }
                 doseField
             }
-            Section("Schedule") {
-                ScheduleFields(firstDose: $firstDose, intervalDays: $intervalDays)
+            if medication.form == .pill {
+                Section {
+                    DatePicker("Time", selection: $firstDose, displayedComponents: .hourAndMinute)
+                    WaitField(minutes: $waitMinutes)
+                } header: {
+                    Text("Daily routine")
+                } footer: {
+                    Text("Logging your pill starts this countdown. Set it to match your prescriber’s instructions.")
+                }
+            } else {
+                Section("Schedule") {
+                    ScheduleFields(firstDose: $firstDose, intervalDays: $intervalDays)
+                }
             }
-            Section("Reminders") {
-                Toggle("Enabled", isOn: $reminderEnabled)
+            Section {
+                Toggle(medication.form == .pill ? "Daily reminder" : "Enabled", isOn: $reminderEnabled)
                 if reminderEnabled {
                     Stepper(value: $reminderLeadMinutes, in: 0...180, step: 15) {
                         HStack {
@@ -158,6 +195,12 @@ struct PlanEditorView: View {
                     if notificationsDenied {
                         notificationsOffWarning
                     }
+                }
+            } header: {
+                Text("Reminders")
+            } footer: {
+                if medication.form == .pill {
+                    Text("Skipped on days you’ve already logged your pill.")
                 }
             }
         }
@@ -180,6 +223,7 @@ struct PlanEditorView: View {
             doseMg = p.doseMg
             useCustomDose = !p.medication.standardDoseStepsMg.contains(p.doseMg)
             intervalDays = p.cadenceDays
+            waitMinutes = p.waitMinutes
             firstDose = p.firstDoseAnchor
             reminderEnabled = p.reminderEnabled
             reminderLeadMinutes = p.reminderLeadMinutes
@@ -257,15 +301,23 @@ struct PlanEditorView: View {
             saveError = "Enter a dose greater than 0 mg."
             return
         }
-        guard medication != .other || !trimmedCustomName.isEmpty else {
+        guard !medication.isCustom || !trimmedCustomName.isEmpty else {
             saveError = "Enter the medication name."
             return
         }
         plan.medication = medication
-        plan.customMedicationName = medication == .other ? trimmedCustomName : nil
+        plan.customMedicationName = medication.isCustom ? trimmedCustomName : nil
         plan.doseMg = doseMg
-        plan.intervalDays = intervalDays
-        plan.firstDoseAnchor = firstDose
+        if medication.form == .pill {
+            plan.intervalDays = 1
+            plan.waitMinutes = waitMinutes
+            // A daily plan starts no later than today; a future anchor left over from a
+            // weekly shot schedule would leave today's pill unmatched.
+            plan.firstDoseAnchor = Self.dailyAnchor(time: firstDose, existing: plan.scheduleStartDate)
+        } else {
+            plan.intervalDays = intervalDays
+            plan.firstDoseAnchor = firstDose
+        }
         plan.reminderEnabled = reminderEnabled
         plan.reminderLeadMinutes = reminderLeadMinutes
         plan.updatedAt = .now
@@ -276,12 +328,15 @@ struct PlanEditorView: View {
             saveError = "Your medication plan could not be saved. Please try again."
             return
         }
-        if reminderEnabled {
-            Task { await ReminderService.scheduleNextShotReminder(for: plan) }
-        } else {
-            UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [ReminderService.shotReminderIdentifier])
-        }
+        DoseRoutineService.refresh(in: modelContext)
         dismiss()
+    }
+
+    /// The pill's time of day on the earlier of the existing start day and today.
+    static func dailyAnchor(time: Date, existing: Date, now: Date = .now, calendar: Calendar = .current) -> Date {
+        let day = min(calendar.startOfDay(for: existing), calendar.startOfDay(for: now))
+        let parts = calendar.dateComponents([.hour, .minute], from: time)
+        return calendar.date(bySettingHour: parts.hour ?? 7, minute: parts.minute ?? 0, second: 0, of: day) ?? day
     }
 }
 

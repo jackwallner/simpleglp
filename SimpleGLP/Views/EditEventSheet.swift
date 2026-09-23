@@ -5,6 +5,7 @@ struct EditEventSheet: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.modelContext) private var modelContext
     let event: ShotEvent
+    @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var timestamp: Date = .now
     @State private var doseMg: Double = 0
     @State private var site: InjectionSite = .abdomen
@@ -18,7 +19,7 @@ struct EditEventSheet: View {
     var body: some View {
         NavigationStack {
             Form {
-                Section("Shot") {
+                Section(isPillPlan ? "Pill" : "Shot") {
                     DatePicker("When", selection: $timestamp)
                     HStack {
                         Text("Dose (mg)")
@@ -30,8 +31,10 @@ struct EditEventSheet: View {
                     }
                 }
                 Section("Basics") {
-                    Picker("Injection site", selection: $site) {
-                        ForEach(InjectionSite.allCases) { Text($0.rawValue).tag($0) }
+                    if !isPillPlan {
+                        Picker("Injection site", selection: $site) {
+                            ForEach(InjectionSite.allCases) { Text($0.rawValue).tag($0) }
+                        }
                     }
                     TextField("Notes", text: $notes, axis: .vertical)
                         .lineLimit(3...6)
@@ -82,7 +85,7 @@ struct EditEventSheet: View {
             wellbeing = event.wellbeing ?? 0
         }
         .alert(
-            "Couldn't save shot",
+            "Couldn't save",
             isPresented: Binding(
                 get: { saveError != nil },
                 set: { if !$0 { saveError = nil } }
@@ -169,7 +172,9 @@ struct EditEventSheet: View {
         let timestampChanged = timestamp != event.timestamp
         event.timestamp = timestamp
         event.doseMg = doseMg
-        event.injectionSite = site
+        if !isPillPlan {
+            event.injectionSite = site
+        }
         event.userNotes = notes.isEmpty ? nil : notes
         event.nausea = nausea
         event.appetite = appetite
@@ -189,8 +194,11 @@ struct EditEventSheet: View {
         do {
             try modelContext.save()
         } catch {
-            saveError = "The shot could not be saved. Please try again."
+            saveError = "The entry could not be saved. Please try again."
             return
+        }
+        if timestampChanged {
+            DoseRoutineService.historyDidChange(in: modelContext)
         }
         dismiss()
     }

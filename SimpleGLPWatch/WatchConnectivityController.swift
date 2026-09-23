@@ -6,6 +6,9 @@ final class WatchConnectivityController: NSObject, ObservableObject {
     @Published var statusMessage: String?
     @Published var showConfirmation = false
     @Published var recentShots: [RecentShot] = []
+    @Published var glance = GLPGlanceStore.load()
+    /// A dose logged here that the phone may not have seen yet.
+    private var pendingLocalDoseAt: Date?
 
     private let session = WCSession.default
     private var confirmationTask: Task<Void, Never>?
@@ -23,7 +26,7 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         if session.activationState != .activated {
             session.activate()
         }
-        applyShots(Self.decodeShots(from: session.receivedApplicationContext))
+        applyContext(session.receivedApplicationContext)
     }
 
     func requestShotLog() {
@@ -32,6 +35,9 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         // Optimistically insert into the local recent shots so the list updates immediately.
         let optimistic = RecentShot(timestamp: now)
         recentShots = RecentShotsStore.record(optimistic)
+        glance.lastDoseAt = now
+        pendingLocalDoseAt = now
+        GLPGlanceStore.save(glance)
 
         let payload: [String: Any] = [
             "type": "logShot",
@@ -66,6 +72,27 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         recentShots = RecentShotsStore.replaceAll(decoded)
     }
 
+    fileprivate func applyGlance(_ decoded: GLPGlance?) {
+        guard let decoded else { return }
+        // Keep a dose logged here that the phone hasn't acknowledged yet, but only briefly:
+        // after that the phone is the source of truth (it may have been undone there).
+        var merged = decoded
+        if let pending = pendingLocalDoseAt {
+            if pending > (decoded.lastDoseAt ?? .distantPast), Date().timeIntervalSince(pending) < 10 * 60 {
+                merged.lastDoseAt = pending
+            } else {
+                pendingLocalDoseAt = nil
+            }
+        }
+        glance = merged
+        GLPGlanceStore.save(merged)
+    }
+
+    private func applyContext(_ context: [String: Any]) {
+        applyShots(Self.decodeShots(from: context))
+        applyGlance(GLPGlanceStore.decode(context["glance"] as? Data))
+    }
+
     nonisolated static func decodeShots(from context: [String: Any]) -> [RecentShot] {
         guard let raw = context["recentShots"] as? [[String: Any]] else { return [] }
         return raw.compactMap { entry in
@@ -85,15 +112,19 @@ final class WatchConnectivityController: NSObject, ObservableObject {
 extension WatchConnectivityController: WCSessionDelegate {
     nonisolated func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         let shots = Self.decodeShots(from: session.receivedApplicationContext)
+        let glance = GLPGlanceStore.decode(session.receivedApplicationContext["glance"] as? Data)
         Task { @MainActor in
             self.applyShots(shots)
+            self.applyGlance(glance)
         }
     }
 
     nonisolated func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String: Any]) {
         let shots = Self.decodeShots(from: applicationContext)
+        let glance = GLPGlanceStore.decode(applicationContext["glance"] as? Data)
         Task { @MainActor in
             self.applyShots(shots)
+            self.applyGlance(glance)
         }
     }
 }

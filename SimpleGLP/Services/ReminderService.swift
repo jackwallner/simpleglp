@@ -1,35 +1,118 @@
 import Foundation
+import SwiftData
 import UserNotifications
 
 enum ReminderService {
     static let shotReminderIdentifier = "simpleglp.next-shot"
+    static let waitEndIdentifier = "simpleglp.wait-end"
+    static let refillIdentifier = "simpleglp.refill"
+    /// Daily plans queue two weeks of reminders so they keep firing if the app isn't opened.
+    static let dailyReminderSlots = 14
+
+    static var doseReminderIdentifiers: [String] {
+        [shotReminderIdentifier] + (1..<dailyReminderSlots).map { "\(shotReminderIdentifier)-\($0)" }
+    }
+
+    static func cancelDoseReminders() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: doseReminderIdentifiers)
+    }
 
     // `@MainActor`: `MedicationPlan` is a non-Sendable SwiftData model bound to the
     // main actor. Pinning this method to the main actor keeps `plan` from being
-    // "sent" across an actor boundary (Swift 6 data-race diagnostic) at the three
-    // call sites (onboarding finish, settings save, shot capture).
+    // "sent" across an actor boundary (Swift 6 data-race diagnostic).
     @MainActor
-    static func scheduleNextShotReminder(for plan: MedicationPlan) async {
-        let center = UNUserNotificationCenter.current()
-        guard plan.reminderEnabled, let next = ScheduleEngine.nextExpectedDate(plan: plan) else {
-            center.removePendingNotificationRequests(withIdentifiers: [shotReminderIdentifier])
-            return
-        }
+    static func scheduleNextShotReminder(for plan: MedicationPlan, in context: ModelContext) async {
+        let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        await scheduleNextShotReminder(for: plan, events: events)
+    }
+
+    @MainActor
+    static func scheduleNextShotReminder(for plan: MedicationPlan, events: [ShotEvent]) async {
+        cancelDoseReminders()
+        let now = Date()
+        let lead = TimeInterval(plan.reminderLeadMinutes * 60)
+        let fireDates = upcomingReminderSlots(plan: plan, events: events, now: now)
+            .map { $0.addingTimeInterval(-lead) }
+            .filter { $0 > now }
+        guard plan.reminderEnabled, !fireDates.isEmpty else { return }
 
         let granted = await ensureAuthorization()
         guard granted else { return }
 
-        center.removePendingNotificationRequests(withIdentifiers: [shotReminderIdentifier])
-        let fireDate = next.addingTimeInterval(TimeInterval(-plan.reminderLeadMinutes * 60))
-        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
+        let center = UNUserNotificationCenter.current()
+        for (index, fireDate) in fireDates.enumerated() {
+            let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
+            let content = UNMutableNotificationContent()
+            if plan.form == .pill {
+                content.title = "Pill time"
+                content.body = "Time for your \(plan.displayMedicationName). One tap when it’s done."
+            } else {
+                content.title = "Shot day"
+                content.body = "Your \(plan.displayMedicationName) dose is planned for today. One tap when it’s done."
+            }
+            content.sound = .default
+            content.threadIdentifier = "shot-reminders"
+            let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
+            let request = UNNotificationRequest(identifier: doseReminderIdentifiers[index], content: content, trigger: trigger)
+            try? await center.add(request)
+        }
+    }
+
+    /// Upcoming scheduled doses nobody has logged yet. A pill taken before its reminder
+    /// time claims that day's slot, so the reminder for it is skipped.
+    @MainActor
+    static func upcomingReminderSlots(plan: MedicationPlan, events: [ShotEvent], now: Date = .now, calendar: Calendar = .current) -> [Date] {
+        let limit = plan.cadenceDays == 1 ? dailyReminderSlots : 2
+        var slots: [Date] = []
+        var cursor = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar)
+        while let slot = cursor, slots.count < limit {
+            if !ProactiveAlertsEngine.isOccurrenceClaimed(slot, by: events) {
+                slots.append(slot)
+            }
+            cursor = calendar.date(byAdding: .day, value: plan.cadenceDays, to: slot)
+        }
+        return slots
+    }
+
+    /// "Wait's over" alert at the end of the countdown a pill starts.
+    static func scheduleWaitEnd(medicationName: String, waitMinutes: Int, endsAt: Date) async {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [waitEndIdentifier])
+        guard waitMinutes > 0, endsAt > .now else { return }
+        let granted = await ensureAuthorization()
+        guard granted else { return }
         let content = UNMutableNotificationContent()
-        content.title = "Shot day"
-        content.body = "Your \(plan.displayMedicationName) dose is planned for today. One tap when it’s done."
+        content.title = "Your \(waitMinutes)-minute wait is done"
+        content.body = "\(waitMinutes) minutes since you logged your \(medicationName)."
         content.sound = .default
-        content.threadIdentifier = "shot-reminders"
+        content.threadIdentifier = "wait-timer"
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, endsAt.timeIntervalSinceNow), repeats: false)
+        try? await center.add(UNNotificationRequest(identifier: waitEndIdentifier, content: content, trigger: trigger))
+    }
+
+    static func cancelWaitEnd() {
+        UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [waitEndIdentifier])
+    }
+
+    /// Pro: a heads-up `SupplyMath.reminderLeadDays` before logged doses use up the supply.
+    @MainActor
+    static func scheduleRefillReminder(for plan: MedicationPlan, events: [ShotEvent], isPro: Bool) async {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [refillIdentifier])
+        guard isPro,
+              let remaining = SupplyMath.remaining(plan: plan, doseDates: events.map(\.timestamp)),
+              let fireDate = SupplyMath.reminderDate(remaining: remaining, plan: plan)
+        else { return }
+        let granted = await ensureAuthorization()
+        guard granted else { return }
+        let content = UNMutableNotificationContent()
+        content.title = "Refill soon"
+        content.body = "About \(SupplyMath.reminderLeadDays) days of \(plan.displayMedicationName) left, based on what you’ve logged."
+        content.sound = .default
+        content.threadIdentifier = "refill"
+        let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
-        let request = UNNotificationRequest(identifier: shotReminderIdentifier, content: content, trigger: trigger)
-        try? await center.add(request)
+        try? await center.add(UNNotificationRequest(identifier: refillIdentifier, content: content, trigger: trigger))
     }
 
     /// True when the user has explicitly denied notifications — used to warn that

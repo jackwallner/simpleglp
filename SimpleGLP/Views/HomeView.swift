@@ -5,13 +5,18 @@ struct HomeView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @EnvironmentObject private var coordinator: ShotCaptureCoordinator
+    @EnvironmentObject private var store: StoreService
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
+    @Query(sort: \MedicationPlan.updatedAt, order: .reverse) private var plans: [MedicationPlan]
     @AppStorage(GLPStorageKey.promptForDetails.rawValue, store: GLPAppGroup.userDefaults) private var promptForDetails = false
     @State private var showConfirmation = false
     @State private var confirmationTask: Task<Void, Never>?
     @State private var selectedEvent: ShotEvent?
+    @State private var showPaywall = false
 
     private var recentEvents: [ShotEvent] { Array(events.prefix(5)) }
+    private var plan: MedicationPlan? { plans.first }
+    private var form: DoseForm { plan?.form ?? .injection }
 
     var body: some View {
         ScrollView {
@@ -25,9 +30,19 @@ struct HomeView: View {
                         .padding(.horizontal)
                 }
 
-                nextShotSection
-
-                shotButton
+                if let plan, plan.form == .pill {
+                    PillRoutineView(
+                        plan: plan,
+                        doseDates: events.map(\.timestamp),
+                        isLogging: coordinator.isCapturing,
+                        isPro: store.isProUnlocked,
+                        onLog: logDose,
+                        onUpgrade: { showPaywall = true }
+                    )
+                } else {
+                    nextShotSection
+                    shotButton
+                }
 
                 if coordinator.showUndoOption, coordinator.lastCapturedEventID != nil {
                     Button("Undo") {
@@ -37,6 +52,16 @@ struct HomeView: View {
                     }
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
+                }
+
+                if let plan, store.isProUnlocked, plan.supplyUpdatedAt != nil {
+                    NavigationLink {
+                        SupplyView()
+                    } label: {
+                        SupplyCard(plan: plan, doseDates: events.map(\.timestamp))
+                    }
+                    .buttonStyle(.plain)
+                    .padding(.horizontal)
                 }
 
                 recentShotsSection
@@ -49,21 +74,28 @@ struct HomeView: View {
         .sheet(item: $selectedEvent) { event in
             EditEventSheet(event: event)
         }
+        .sheet(isPresented: $showPaywall) {
+            SimplePaywallView(paywallImpressionId: "simpleglp_lockscreen_countdown")
+                .environmentObject(store)
+        }
+        .sensoryFeedback(.success, trigger: coordinator.lastCapturedEventID) { _, new in new != nil }
+    }
+
+    private func logDose() {
+        let ok = coordinator.captureShot(in: modelContext)
+        guard ok else { return }
+        triggerConfirmation()
+        if promptForDetails, let id = coordinator.lastCapturedEventID {
+            // The @Query array hasn't refreshed yet in this run loop turn, so
+            // fetch the just-saved event straight from the context.
+            var descriptor = FetchDescriptor<ShotEvent>(predicate: #Predicate { $0.id == id })
+            descriptor.fetchLimit = 1
+            selectedEvent = try? modelContext.fetch(descriptor).first
+        }
     }
 
     private var shotButton: some View {
-        Button {
-            let ok = coordinator.captureShot(in: modelContext)
-            guard ok else { return }
-            triggerConfirmation()
-            if promptForDetails, let id = coordinator.lastCapturedEventID {
-                // The @Query array hasn't refreshed yet in this run loop turn, so
-                // fetch the just-saved event straight from the context.
-                var descriptor = FetchDescriptor<ShotEvent>(predicate: #Predicate { $0.id == id })
-                descriptor.fetchLimit = 1
-                selectedEvent = try? modelContext.fetch(descriptor).first
-            }
-        } label: {
+        Button(action: logDose) {
             ZStack {
                 Circle()
                     .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brand)
@@ -91,7 +123,7 @@ struct HomeView: View {
     private var recentShotsSection: some View {
         if !recentEvents.isEmpty {
             VStack(alignment: .leading, spacing: 12) {
-                Text("Last few shots")
+                Text(form == .pill ? "Recent pills" : "Last few shots")
                     .font(.headline)
                     .foregroundStyle(AppTheme.text)
                 ForEach(recentEvents) { event in
@@ -109,8 +141,7 @@ struct HomeView: View {
 
     @ViewBuilder
     private var nextShotSection: some View {
-        if let plan = PlanStore.currentPlan(in: modelContext),
-           let next = ScheduleEngine.nextExpectedDate(plan: plan) {
+        if let plan, let next = ScheduleEngine.nextExpectedDate(plan: plan) {
             let copy = relativeShotCopy(plan: plan, nextExpected: next)
             Card {
                 HStack {
@@ -147,7 +178,7 @@ struct HomeView: View {
                     Text("No plan yet")
                         .font(.headline)
                         .foregroundStyle(AppTheme.text)
-                    Text("Add your medication and shot day in Settings to see what’s next.")
+                    Text("Add your medication and schedule in Settings to see what’s next.")
                         .font(.subheadline)
                         .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)

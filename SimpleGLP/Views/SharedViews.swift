@@ -110,3 +110,39 @@ struct StatusPill: View {
             .background(tint.opacity(0.12), in: Capsule())
     }
 }
+
+/// Minutes to count down after a pill before food and drink. The user sets it to match
+/// their own instructions; the medication only supplies the starting value.
+struct WaitField: View {
+    @Binding var minutes: Int
+
+    var body: some View {
+        Stepper(value: $minutes, in: 0...120, step: 5) {
+            HStack {
+                Text("Wait before food & drink")
+                Spacer()
+                Text(minutes == 0 ? "None" : "\(minutes) min")
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+            }
+        }
+    }
+}
+
+/// Medication menu grouped by how it's taken, shared by onboarding and Settings.
+struct MedicationPicker: View {
+    @Binding var medication: GLPMedication
+    var forms: [DoseForm] = DoseForm.allCases
+
+    var body: some View {
+        Picker("Medication", selection: $medication) {
+            ForEach(forms) { form in
+                Section(form == .pill ? "Daily pills" : "Shots") {
+                    ForEach(GLPMedication.options(for: form)) { med in
+                        Text(med.rawValue).tag(med)
+                    }
+                }
+            }
+        }
+    }
+}

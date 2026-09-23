@@ -24,6 +24,7 @@ struct SimplePaywallView: View {
     @EnvironmentObject private var store: StoreService
     @Environment(\.dismiss) private var dismiss
     @Query private var events: [ShotEvent]
+    @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
 
     var displayCloseButton: Bool = true
     var paywallImpressionId: String?
@@ -34,11 +35,11 @@ struct SimplePaywallView: View {
     @State private var restoreMessage: String?
     @State private var isRestoring = false
 
-    private let benefits: [(icon: String, title: String)] = [
-        ("bell.badge.fill", "Dose-day nudges: before a shot slips your schedule"),
-        ("waveform.path.ecg", "Drift alerts: when timing creeps off your rhythm"),
-        ("lock.shield.fill", "On-device private: no accounts, everything stays local")
-    ]
+    private var benefits: [(icon: String, title: String)] {
+        ProFeatures.bullets(isPill: isPillPlan).map { ($0.icon, $0.line) }
+            + [("lock.shield.fill", "On-device private: no accounts, everything stays local")]
+    }
+    private var noun: String { isPillPlan ? "pill" : "shot" }
 
     var body: some View {
         ZStack {
@@ -109,14 +110,14 @@ struct SimplePaywallView: View {
                 Text("\(pct)% on schedule")
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
-                Text("Across \(shots) shots. Pro keeps your timing locked in.")
+                Text("Across \(shots) \(noun)s. Pro keeps your timing locked in.")
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .minimumScaleFactor(0.9)
             } else if shots >= 1 {
-                Text(shots == 1 ? "Your first shot is logged" : "\(shots) shots logged")
+                Text(shots == 1 ? "Your first \(noun) is logged" : "\(shots) \(noun)s logged")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
                 Text("You're building a rhythm. Pro keeps the next dose on time.")

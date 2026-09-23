@@ -103,6 +103,7 @@ private struct SimpleGLPRootContent: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.scenePhase) private var scenePhase
     @EnvironmentObject private var shotCoordinator: ShotCaptureCoordinator
+    @EnvironmentObject private var store: StoreService
     @AppStorage(GLPStorageKey.hasCompletedOnboarding.rawValue, store: GLPAppGroup.userDefaults) private var hasCompletedOnboarding = false
 
     var body: some View {
@@ -121,6 +122,7 @@ private struct SimpleGLPRootContent: View {
             }
             shotCoordinator.ingestPendingWidgetShot(in: modelContext)
             shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
+            DoseRoutineService.refresh(in: modelContext)
             #if DEBUG
             SimpleGLPScreenshotData.seedIfRequested(in: modelContext)
             #endif
@@ -129,7 +131,15 @@ private struct SimpleGLPRootContent: View {
             if phase == .active {
                 shotCoordinator.ingestPendingWidgetShot(in: modelContext)
                 shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
+                DoseRoutineService.refresh(in: modelContext)
             }
+        }
+        .onChange(of: store.hasResolvedEntitlements) { _, _ in
+            Task { await DoseRoutineService.rescheduleReminders(in: modelContext) }
+        }
+        .onChange(of: store.isProUnlocked) { _, _ in
+            DoseRoutineService.startLiveActivityIfWaiting(in: modelContext)
+            Task { await DoseRoutineService.rescheduleReminders(in: modelContext) }
         }
     }
 }
@@ -145,6 +155,10 @@ private enum SimpleGLPScreenshotData {
         existingPlans.forEach(context.delete)
 
         let now = Date()
+        if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotPill") {
+            seedPill(in: context, now: now)
+            return
+        }
         let plan = MedicationPlan(
             medication: .mounjaro,
             doseMg: 5.0,
@@ -183,6 +197,46 @@ private enum SimpleGLPScreenshotData {
             context.insert(event)
         }
 
+        try? context.save()
+    }
+
+    /// A Wegovy pill user eleven days in, with today's pill logged ten minutes ago so Home
+    /// shows the running wait.
+    private static func seedPill(in context: ModelContext, now: Date) {
+        let calendar = Calendar.current
+        let start = calendar.date(byAdding: .day, value: -20, to: now) ?? now
+        let plan = MedicationPlan(
+            medication: .wegovyPill,
+            doseMg: 4,
+            scheduleStartDate: start,
+            preferredHour: calendar.component(.hour, from: now.addingTimeInterval(-15 * 60)),
+            preferredMinute: calendar.component(.minute, from: now.addingTimeInterval(-15 * 60)),
+            intervalDays: 1,
+            waitMinutes: 30,
+            reminderEnabled: true
+        )
+        plan.supplyCount = 30
+        plan.supplyUpdatedAt = calendar.date(byAdding: .day, value: -22, to: now)
+        context.insert(plan)
+        var logged: [ShotEvent] = []
+        let offsets = [0] + Array(1...11) + [13, 14, 15, 17, 18, 19]
+        for offset in offsets.reversed() {
+            guard let day = calendar.date(byAdding: .day, value: -offset, to: now) else { continue }
+            let timestamp = offset == 0 ? now.addingTimeInterval(-10 * 60) : day.addingTimeInterval(TimeInterval((offset % 4) * 9 * 60) - 20 * 60)
+            let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: logged)
+            let event = ShotEvent(
+                timestamp: timestamp,
+                medicationName: plan.displayMedicationName,
+                doseMg: match.doseMg,
+                scheduledDate: match.scheduledDate,
+                scheduleStatus: match.status,
+                minutesFromSchedule: match.minutesFromSchedule
+            )
+            event.captureStatus = .complete
+            event.healthStatus = .captured
+            context.insert(event)
+            logged.append(event)
+        }
         try? context.save()
     }
 }
