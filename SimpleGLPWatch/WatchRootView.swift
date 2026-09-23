@@ -5,7 +5,8 @@ struct WatchRootView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 1)) { context in
+        // Per-second ticks only drive the pill countdown ring; a shot plan just needs the day.
+        TimelineView(.periodic(from: .now, by: controller.glance.isPill ? 1 : 60)) { context in
             ScrollView {
                 VStack(spacing: 14) {
                     if let end = controller.glance.waitEndsAt(now: context.date), let taken = controller.glance.lastDoseAt {

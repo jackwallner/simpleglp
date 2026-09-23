@@ -122,7 +122,7 @@ private struct SimpleGLPRootContent: View {
             }
             shotCoordinator.ingestPendingWidgetShot(in: modelContext)
             shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
-            DoseRoutineService.refresh(in: modelContext)
+            DoseRoutineService.refresh(in: modelContext, mayPrompt: false)
             #if DEBUG
             SimpleGLPScreenshotData.seedIfRequested(in: modelContext)
             #endif
@@ -131,15 +131,15 @@ private struct SimpleGLPRootContent: View {
             if phase == .active {
                 shotCoordinator.ingestPendingWidgetShot(in: modelContext)
                 shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
-                DoseRoutineService.refresh(in: modelContext)
+                DoseRoutineService.refresh(in: modelContext, mayPrompt: false)
             }
         }
         .onChange(of: store.hasResolvedEntitlements) { _, _ in
-            Task { await DoseRoutineService.rescheduleReminders(in: modelContext) }
+            Task { await DoseRoutineService.rescheduleReminders(in: modelContext, mayPrompt: false) }
         }
         .onChange(of: store.isProUnlocked) { _, _ in
             DoseRoutineService.startLiveActivityIfWaiting(in: modelContext)
-            Task { await DoseRoutineService.rescheduleReminders(in: modelContext) }
+            Task { await DoseRoutineService.rescheduleReminders(in: modelContext, mayPrompt: false) }
         }
     }
 }

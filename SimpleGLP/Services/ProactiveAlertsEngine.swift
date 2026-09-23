@@ -85,7 +85,8 @@ enum ProactiveAlertsEngine {
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
         let content = UNMutableNotificationContent()
         content.title = "Dose slipping?"
-        content.body = "Your \(plan.displayMedicationName) dose was planned for \(next.formatted(.dateTime.hour().minute())) today. One tap to log it and stay on track."
+        let day = calendar.isDate(next, inSameDayAs: fireDate) ? " today" : ""
+        content.body = "Your \(plan.displayMedicationName) dose was planned for \(next.formatted(.dateTime.hour().minute()))\(day). One tap to log it and stay on track."
         content.sound = .default
         content.threadIdentifier = "pro-alerts"
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
@@ -120,7 +121,11 @@ enum ProactiveAlertsEngine {
         if let overdue = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
            let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: calendar),
            overdue >= first,
-           !isOccurrenceClaimed(overdue, by: events) {
+           !isOccurrenceClaimed(overdue, by: events),
+           // A dose logged since then (say today's pill, taken early after a missed day)
+           // means the user has moved on; nudging about the missed one would fire right
+           // after they log.
+           !events.contains(where: { $0.timestamp >= overdue }) {
             return overdue
         }
 

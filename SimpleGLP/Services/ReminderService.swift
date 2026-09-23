@@ -27,7 +27,7 @@ enum ReminderService {
     }
 
     @MainActor
-    static func scheduleNextShotReminder(for plan: MedicationPlan, events: [ShotEvent]) async {
+    static func scheduleNextShotReminder(for plan: MedicationPlan, events: [ShotEvent], mayPrompt: Bool = true) async {
         cancelDoseReminders()
         let now = Date()
         let lead = TimeInterval(plan.reminderLeadMinutes * 60)
@@ -36,7 +36,7 @@ enum ReminderService {
             .filter { $0 > now }
         guard plan.reminderEnabled, !fireDates.isEmpty else { return }
 
-        let granted = await ensureAuthorization()
+        let granted = await ensureAuthorization(mayPrompt: mayPrompt)
         guard granted else { return }
 
         let center = UNUserNotificationCenter.current()
@@ -96,14 +96,14 @@ enum ReminderService {
 
     /// Pro: a heads-up `SupplyMath.reminderLeadDays` before logged doses use up the supply.
     @MainActor
-    static func scheduleRefillReminder(for plan: MedicationPlan, events: [ShotEvent], isPro: Bool) async {
+    static func scheduleRefillReminder(for plan: MedicationPlan, events: [ShotEvent], isPro: Bool, mayPrompt: Bool = true) async {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [refillIdentifier])
         guard isPro,
               let remaining = SupplyMath.remaining(plan: plan, doseDates: events.map(\.timestamp)),
               let fireDate = SupplyMath.reminderDate(remaining: remaining, plan: plan)
         else { return }
-        let granted = await ensureAuthorization()
+        let granted = await ensureAuthorization(mayPrompt: mayPrompt)
         guard granted else { return }
         let content = UNMutableNotificationContent()
         content.title = "Refill soon"
@@ -122,7 +122,10 @@ enum ReminderService {
         return settings.authorizationStatus == .denied
     }
 
-    static func ensureAuthorization() async -> Bool {
+    /// `mayPrompt: false` is for background refreshes (launch, foreground, entitlement
+    /// changes): they schedule only when already allowed, so the system prompt only ever
+    /// follows something the user did.
+    static func ensureAuthorization(mayPrompt: Bool = true) async -> Bool {
         let center = UNUserNotificationCenter.current()
         let settings = await center.notificationSettings()
         switch settings.authorizationStatus {
@@ -131,6 +134,7 @@ enum ReminderService {
         case .denied:
             return false
         case .notDetermined:
+            guard mayPrompt else { return false }
             return (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
         @unknown default:
             return false

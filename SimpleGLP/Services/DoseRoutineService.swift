@@ -31,14 +31,16 @@ enum DoseRoutineService {
             ReminderService.cancelWaitEnd()
             LiveActivityService.endAll()
         }
-        Task { await rescheduleReminders(in: context) }
+        Task { await rescheduleReminders(in: context, mayPrompt: false) }
     }
 
-    /// Foreground refresh: roll the reminder window forward and clear finished countdowns.
-    static func refresh(in context: ModelContext) {
+    /// Roll the reminder window forward and clear finished countdowns. Launch and
+    /// foreground pass `mayPrompt: false` so an existing user never gets a cold
+    /// notification prompt; onboarding and a plan save may ask.
+    static func refresh(in context: ModelContext, mayPrompt: Bool = true) {
         publishGlance(in: context)
         LiveActivityService.endFinished()
-        Task { await rescheduleReminders(in: context) }
+        Task { await rescheduleReminders(in: context, mayPrompt: mayPrompt) }
     }
 
     /// After an upgrade mid-countdown, put the running wait on the Lock Screen right away.
@@ -51,13 +53,13 @@ enum DoseRoutineService {
         LiveActivityService.startWait(medicationName: glance.medicationName, takenAt: takenAt, endsAt: endsAt)
     }
 
-    static func rescheduleReminders(in context: ModelContext) async {
+    static func rescheduleReminders(in context: ModelContext, mayPrompt: Bool = true) async {
         guard let plan = PlanStore.currentPlan(in: context) else { return }
         let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
-        await ReminderService.scheduleNextShotReminder(for: plan, events: events)
+        await ReminderService.scheduleNextShotReminder(for: plan, events: events, mayPrompt: mayPrompt)
         // Before entitlements resolve a Pro user reads as free; leave their refill alert alone.
         guard StoreService.shared.hasResolvedEntitlements else { return }
-        await ReminderService.scheduleRefillReminder(for: plan, events: events, isPro: StoreService.shared.isProUnlocked)
+        await ReminderService.scheduleRefillReminder(for: plan, events: events, isPro: StoreService.shared.isProUnlocked, mayPrompt: mayPrompt)
     }
 
     @discardableResult

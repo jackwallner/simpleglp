@@ -146,22 +146,9 @@ struct PlanEditorView: View {
     var body: some View {
         Form {
             Section("Medication") {
-                MedicationPicker(medication: $medication)
-                    .onChange(of: medication) { oldValue, newValue in
-                        let presets = newValue.standardDoseStepsMg
-                        if presets.isEmpty {
-                            useCustomDose = true
-                        } else if !presets.contains(doseMg) {
-                            doseMg = presets.first ?? doseMg
-                            useCustomDose = false
-                        }
-                        if newValue.form == .pill {
-                            waitMinutes = newValue.defaultWaitMinutes
-                        }
-                        if oldValue.form != newValue.form {
-                            intervalDays = newValue.form.defaultIntervalDays
-                        }
-                    }
+                // A binding rather than onChange: loading the saved plan in onAppear also
+                // changes `medication`, and must not reset the saved dose or wait.
+                MedicationPicker(medication: Binding(get: { medication }, set: { selectMedication($0) }))
                 if medication.isCustom {
                     TextField("Custom name", text: $customName)
                 }
@@ -238,6 +225,26 @@ struct PlanEditorView: View {
             Button("OK", role: .cancel) {}
         } message: {
             Text(saveError ?? "Try again.")
+        }
+    }
+
+    /// The user picked a different medication: move the dose, wait and cadence to its defaults.
+    private func selectMedication(_ newValue: GLPMedication) {
+        let oldValue = medication
+        guard newValue != oldValue else { return }
+        medication = newValue
+        let presets = newValue.standardDoseStepsMg
+        if presets.isEmpty {
+            useCustomDose = true
+        } else if !presets.contains(doseMg) {
+            doseMg = presets.first ?? doseMg
+            useCustomDose = false
+        }
+        if newValue.form == .pill {
+            waitMinutes = newValue.defaultWaitMinutes
+        }
+        if oldValue.form != newValue.form {
+            intervalDays = newValue.form.defaultIntervalDays
         }
     }
 

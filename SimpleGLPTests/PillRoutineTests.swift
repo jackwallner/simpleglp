@@ -161,4 +161,21 @@ final class PillRoutineTests: XCTestCase {
         let kept = PlanEditorView.dailyAnchor(time: date(1, 6, 45), existing: date(2, 9), now: date(10, 12))
         XCTAssertEqual(kept, date(2, 6, 45))
     }
+
+    // MARK: - Late-dose nudge
+
+    func testLateNudgeSkipsAMissedDayOnceTodaysPillIsLogged() {
+        let plan = dailyPlan(hour: 7)
+        // Day 9 missed; day 10's pill taken early at 6:00, before its 7:00 slot.
+        let early = event(at: date(10, 6), plan: plan)
+        let next = ProactiveAlertsEngine.nextUnclaimedOccurrence(now: date(10, 6, 5), plan: plan, events: [early], calendar: cal)
+        XCTAssertEqual(next, date(11, 7))
+    }
+
+    func testLateNudgeStillTargetsAnUnloggedDoseToday() {
+        let plan = dailyPlan(hour: 7)
+        let yesterday = event(at: date(9, 7), plan: plan)
+        let next = ProactiveAlertsEngine.nextUnclaimedOccurrence(now: date(10, 9), plan: plan, events: [yesterday], calendar: cal)
+        XCTAssertEqual(next, date(10, 7))
+    }
 }
