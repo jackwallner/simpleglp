@@ -1,3 +1,2 @@
-• Riwayat kini menampilkan bulan sesuai urutan tanggal.
-• Anda akan melihat pesan jika suntikan tidak dapat dihapus, alih-alih muncul kembali diam-diam.
-• Riwayat suntikan Anda tetap aman jika file data aplikasi rusak.
+Baru: pil GLP-1 harian (Wegovy pil, Rybelsus, Foundayo). Sekali ketuk mencatat pil hari ini dan memulai timer tunggu di Beranda, widget, dan Apple Watch.
+Pro menambahkan hitung mundur di Layar Terkunci dan pengingat isi ulang.

@@ -1,24 +1,30 @@
 Gratuit și privat. Înregistrează injecția săptămânală cu o atingere, fără cont.
 
-Simple GLP to najszybszy sposób na zapisanie cotygodniowego zastrzyku GLP-1 — dla osób, które chcą odnotować chwilę bez zamiany leczenia w arkusz kalkulacyjny.
+Simple GLP este cel mai rapid și mai privat mod de a-ți înregistra medicamentul GLP-1, fie că e o injecție săptămânală, fie un comprimat zilnic. E gratuit, nu cere cont și se configurează într-un minut.
 
-O ATINGERE, BY ZAPISAĆ
-Otwórz aplicația, dotknij widżetu na ekranie głównym lub unieś nadgarstek z Apple Watch. Zastrzyk jest natychmiast oznaczony czasem. Dawka, miejsce, notatki i objawy — później, jeśli chcesz.
+ÎNREGISTRARE CU O ATINGERE
+Deschide aplicația, atinge widgetul de pe ecranul principal sau ridică încheietura cu Apple Watch. Doza primește imediat ora. Poți adăuga doza, locul injecției, note și simptome mai târziu.
 
-HARMONOGRAM ZNAJĄCY TWÓJ TYDZIEŃ
-Ustaw lek, plan dawek, preferowany dzień i godzinę. Simple GLP wie, czy zastrzyk był wcześniej, na czas czy później, i przypomina o następnym.
+INJECȚII SĂPTĂMÂNALE
+Ozempic, Wegovy, Mounjaro, Zepbound, semaglutidă sau tirzepatidă magistrală sau propriul medicament. Setează planul de doze, ziua și ora. Simple GLP marchează fiecare injecție ca devreme, la timp sau târziu și îți amintește de următoarea.
 
-KONTEKST HEALTHKIT (OPCJONALNIE)
-Za zgodą Simple GLP może dołączyć dane z Apple Health — waga, glukoza, aktywność, sen, tętno, treningi, woda, kofeina, kalorie i białko. Tylko odczyt. Bez zapisu zwrotnego.
+COMPRIMATE ZILNICE
+Wegovy comprimat, Rybelsus, Foundayo sau propriul medicament. O atingere înregistrează comprimatul de azi și pornește un cronometru de așteptare pe care îl setezi după indicațiile medicului, cu o notificare la final. Numărătoarea apare și în widget și pe Apple Watch. Mementoul zilnic sare peste zilele deja înregistrate.
 
-PRYWATNOŚĆ
-Bez kont. Bez reklam. Bez analityki. Bez sprzedaży danych. Historia zostaje na urządzeniu, współdzielona między aplikacją, widżetem i zegarkiem przez App Group.
+GRATUIT, FĂRĂ CONT
+Înregistrarea, mementourile, istoricul, cronometrul pentru comprimate și statisticile sunt gratuite și rămân așa. Fără înregistrare, fără e-mail.
 
-SIMPLE GLP PRO (OPCJONALNIE)
-Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anuluj w Setări.
+CONFIDENȚIALITATE
+Fără conturi, reclame sau analize. Nu vindem date. Istoricul și datele opționale din Sănătate rămân pe dispozitivul tău.
 
-NIE JEST WYROBEM MEDYCZNYM
-Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+DATE OPȚIONALE DIN SĂNĂTATE
+Cu permisiunea ta, Simple GLP poate atașa fiecărei doze date din Apple Health (greutate, glicemie, activitate, somn, puls, antrenamente, apă, cafeină, calorii și proteine). Doar citire, nimic nu este scris înapoi.
+
+SIMPLE GLP PRO (OPȚIONAL)
+Pro adaugă numărătoarea inversă pe ecranul blocat și în Dynamic Island, urmărirea stocului cu avertizare înainte să se termine și alerte pentru doze ratate. Abonament în aplicație, anulezi oricând din Configurări.
+
+NU ESTE UN DISPOZITIV MEDICAL
+Simple GLP înregistrează ce spui că ai luat și când. Nu oferă sfaturi medicale, instrucțiuni de dozare, diagnostic sau recomandări de tratament. Urmează întotdeauna indicațiile medicului.
 
 Detalii abonament
 Simple GLP Pro este disponibil ca abonament cu reînnoire automată (lunar sau anual, ambele cu 7 zile de probă gratuită) sau ca achiziție unică Lifetime. Prețurile apar în aplicație înainte de cumpărare și diferă în funcție de regiune. Plata se face din contul tău Apple ID la confirmare. Abonamentele se reînnoiesc automat dacă nu sunt anulate cu cel puțin 24 de ore înainte de sfârșitul perioadei curente. Le poți gestiona sau anula oricând în Setări → Apple ID → Abonamente.

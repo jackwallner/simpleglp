@@ -1,3 +1,2 @@
-• El historial ahora muestra los meses por orden de fecha.
-• Verás un aviso si no se puede eliminar una inyección, en lugar de que vuelva a aparecer sin avisar.
-• Tu historial de inyecciones se conserva si el archivo de datos de la app se daña.
+Nuevo: pastillas diarias de GLP-1 (Wegovy en pastilla, Rybelsus, Foundayo). Un toque registra la pastilla del día e inicia el temporizador de espera en Inicio, el widget y el Apple Watch.
+Pro agrega la cuenta regresiva en la pantalla bloqueada y recordatorios para resurtir.

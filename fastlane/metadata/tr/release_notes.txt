@@ -1,3 +1,2 @@
-• Geçmiş artık ayları tarih sırasına göre listeliyor.
-• Bir enjeksiyon silinemezse, sessizce geri gelmek yerine bir mesaj görürsünüz.
-• Uygulamanın veri dosyası bozulsa bile enjeksiyon geçmişiniz korunur.
+Yeni: günlük GLP-1 tabletleri (Wegovy tablet, Rybelsus, Foundayo). Tek dokunuş bugünkü tableti kaydeder ve Ana ekranda, widget'ta ve Apple Watch'ta bekleme zamanlayıcısını başlatır.
+Pro, kilit ekranında geri sayım ve yenileme hatırlatıcıları ekler.

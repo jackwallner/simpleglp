@@ -1,24 +1,30 @@
 Δωρεάν και ιδιωτικό. Καταγράψτε την εβδομαδιαία ένεση με ένα άγγιγμα, χωρίς λογαριασμό.
 
-Simple GLP to najszybszy sposób na zapisanie cotygodniowego zastrzyku GLP-1 — dla osób, które chcą odnotować chwilę bez zamiany leczenia w arkusz kalkulacyjny.
+Το Simple GLP είναι ο πιο γρήγορος και ιδιωτικός τρόπος να καταγράφετε το φάρμακο GLP-1, είτε είναι εβδομαδιαία ένεση είτε καθημερινό χάπι. Είναι δωρεάν, δεν χρειάζεται λογαριασμό και η ρύθμιση παίρνει ένα λεπτό.
 
-ΜΙΑ ΠΙΕΣΗ, BY ZAPISAĆ
-Otwórz εφαρμογή, dotknij widżetu na ekranie głównym lub unieś nadgarstek z Apple Watch. Zastrzyk jest natychmiast oznaczony czasem. Dawka, miejsce, notatki i objawy — później, jeśli chcesz.
+ΚΑΤΑΓΡΑΦΗ ΜΕ ΕΝΑ ΠΑΤΗΜΑ
+Ανοίξτε την εφαρμογή, πατήστε το widget στην αρχική οθόνη ή σηκώστε τον καρπό με το Apple Watch. Η δόση καταγράφεται αμέσως με ώρα. Προσθέστε δόση, σημείο ένεσης, σημειώσεις και συμπτώματα αργότερα, αν θέλετε.
 
-HARMONOGRAM ZNAJĄCY TWÓJ TYDZIEŃ
-Ustaw lek, plan dawek, preferowany dzień i godzinę. Simple GLP wie, czy zastrzyk był wcześniej, na czas czy później, i przypomina o następnym.
+ΕΒΔΟΜΑΔΙΑΙΕΣ ΕΝΕΣΕΙΣ
+Ozempic, Wegovy, Mounjaro, Zepbound, παρασκευαζόμενη σεμαγλουτίδη ή τιρζεπατίδη ή το δικό σας. Ορίστε πλάνο δόσεων, ημέρα και ώρα. Το Simple GLP σημειώνει αν κάθε ένεση έγινε νωρίς, στην ώρα της ή αργά και σας υπενθυμίζει την επόμενη.
 
-KONTEKST HEALTHKIT (OPCJONALNIE)
-Za zgodą Simple GLP może dołączyć dane z Apple Health — waga, glukoza, aktywność, sen, tętno, treningi, woda, kofeina, kalorie i białko. Tylko odczyt. Bez zapisu zwrotnego.
+ΚΑΘΗΜΕΡΙΝΑ ΧΑΠΙΑ
+Wegovy σε χάπι, Rybelsus, Foundayo ή το δικό σας. Ένα πάτημα καταγράφει το σημερινό χάπι και ξεκινά έναν χρονομετρητή αναμονής που ορίζετε σύμφωνα με τις οδηγίες του γιατρού σας, με ειδοποίηση όταν τελειώσει. Η αντίστροφη μέτρηση φαίνεται και στο widget και στο Apple Watch. Η καθημερινή υπενθύμιση παραλείπει τις μέρες που έχετε ήδη καταγράψει.
 
-PRYWATNOŚĆ
-Bez kont. Bez reklam. Bez analityki. Bez sprzedaży danych. Historia zostaje na urządzeniu, współdzielona między aplikacją, widżetem i zegarkiem przez App Group.
+ΔΩΡΕΑΝ, ΧΩΡΙΣ ΛΟΓΑΡΙΑΣΜΟ
+Η καταγραφή, οι υπενθυμίσεις, το ιστορικό, ο χρονομετρητής για τα χάπια και οι αναλύσεις είναι δωρεάν και θα παραμείνουν. Χωρίς εγγραφή και email.
 
-SIMPLE GLP PRO (OPCJONALNIE)
-Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anuluj w Ρυθμίσεις.
+ΙΔΙΩΤΙΚΟΤΗΤΑ
+Χωρίς λογαριασμούς, διαφημίσεις ή αναλύσεις. Δεν πουλάμε δεδομένα. Το ιστορικό και τα προαιρετικά δεδομένα Υγείας μένουν στη συσκευή σας.
 
-NIE JEST WYROBEM MEDYCZNYM
-Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+ΠΡΟΑΙΡΕΤΙΚΑ ΔΕΔΟΜΕΝΑ ΥΓΕΙΑΣ
+Με την άδειά σας, το Simple GLP μπορεί να προσθέτει σε κάθε δόση δεδομένα από το Apple Health (βάρος, γλυκόζη, δραστηριότητα, ύπνος, καρδιακός ρυθμός, προπονήσεις, νερό, καφεΐνη, θερμίδες και πρωτεΐνη). Μόνο ανάγνωση, τίποτα δεν γράφεται πίσω.
+
+SIMPLE GLP PRO (ΠΡΟΑΙΡΕΤΙΚΟ)
+Το Pro προσθέτει αντίστροφη μέτρηση στην οθόνη κλειδώματος και στο Dynamic Island, παρακολούθηση αποθέματος με ειδοποίηση πριν τελειώσει και ειδοποιήσεις για δόση που ξεχάσατε. Συνδρομή μέσα στην εφαρμογή, ακύρωση οποτεδήποτε από τις Ρυθμίσεις.
+
+ΔΕΝ ΕΙΝΑΙ ΙΑΤΡΟΤΕΧΝΟΛΟΓΙΚΟ ΠΡΟΪΟΝ
+Το Simple GLP καταγράφει ό,τι δηλώνετε ότι πήρατε και πότε. Δεν παρέχει ιατρικές συμβουλές, οδηγίες δοσολογίας, διάγνωση ή συστάσεις θεραπείας. Ακολουθείτε πάντα τις οδηγίες του γιατρού σας.
 
 Λεπτομέρειες συνδρομής
 Το Simple GLP Pro διατίθεται ως συνδρομή με αυτόματη ανανέωση (μηνιαία ή ετήσια, και οι δύο με 7 ημέρες δωρεάν δοκιμή) ή ως εφάπαξ αγορά Lifetime. Οι τιμές εμφανίζονται στην εφαρμογή πριν από την αγορά και διαφέρουν ανά περιοχή. Η χρέωση γίνεται στο Apple ID σας κατά την επιβεβαίωση. Οι συνδρομές ανανεώνονται αυτόματα εκτός αν ακυρωθούν τουλάχιστον 24 ώρες πριν από το τέλος της τρέχουσας περιόδου. Διαχειριστείτε ή ακυρώστε οποιαδήποτε στιγμή από Ρυθμίσεις → Apple ID → Συνδρομές.

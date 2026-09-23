@@ -5,6 +5,9 @@ Simple GLP är det snabbaste sättet att logga en veckovänt GLP-1-spruta — f�
 ETT TRYCK FÖR ATT LOGGA
 Öppna appen, tryck på widgeten på hemskärmen eller lyft handleden med Apple Watch. Sprutan tidsstämplas direkt. Lägg till dos, injektionsställe, anteckningar och symtom senare om du vill.
 
+DAGLIGA TABLETTER
+Wegovy-tablett, Rybelsus, Foundayo eller ditt eget läkemedel. Ett tryck loggar dagens tablett och startar en väntetimer som du ställer in efter läkarens anvisningar, med en notis när den är klar. Den dagliga påminnelsen hoppar över dagar du redan har loggat.
+
 ETT SCHEMA SOM KÄNNER DIN VECKA
 Ställ in medicin, dosplan, önskad veckodag och tid. Simple GLP ser om varje spruta var tidig, i tid eller sen och påminner före nästa.
 

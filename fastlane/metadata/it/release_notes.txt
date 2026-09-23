@@ -1,3 +1,2 @@
-• La cronologia ora mostra i mesi in ordine di data.
-• Vedrai un messaggio se un'iniezione non può essere eliminata, invece di vederla ricomparire in silenzio.
-• La cronologia delle iniezioni resta al sicuro se il file dati dell'app si danneggia.
+Novità: compresse giornaliere di GLP-1 (Wegovy in compresse, Rybelsus, Foundayo). Un tocco registra la compressa di oggi e avvia il timer di attesa in Home, nel widget e su Apple Watch.
+Pro aggiunge il conto alla rovescia nella schermata di blocco e i promemoria di riacquisto.

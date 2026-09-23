@@ -1,3 +1,2 @@
-• História teraz radí mesiace podľa dátumu.
-• Ak injekciu nemožno odstrániť, zobrazí sa správa namiesto toho, aby sa potichu vrátila.
-• História injekcií zostane v bezpečí, aj keď sa dátový súbor aplikácie poškodí.
+Novinka: denné tablety GLP-1 (Wegovy v tabletách, Rybelsus, Foundayo). Jedným ťuknutím zapíšete dnešnú tabletu a spustíte odpočet čakania na ploche, vo widgete aj na Apple Watch.
+Pro pridáva odpočet na zamknutej obrazovke a pripomienky doplnenia zásob.

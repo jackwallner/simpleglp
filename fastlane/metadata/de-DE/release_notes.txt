@@ -1,3 +1,2 @@
-• Der Verlauf zeigt Monate jetzt in Datumsreihenfolge.
-• Wenn sich eine Injektion nicht löschen lässt, erscheint jetzt ein Hinweis, statt dass sie still zurückkehrt.
-• Dein Injektionsverlauf bleibt erhalten, falls die Datendatei der App beschädigt wird.
+Neu: tägliche GLP-1-Tabletten (Wegovy-Tablette, Rybelsus, Foundayo). Ein Tippen erfasst die heutige Tablette und startet den Warte-Timer auf dem Startbildschirm, im Widget und auf der Apple Watch.
+Pro ergänzt einen Countdown auf dem Sperrbildschirm und Nachfüll-Erinnerungen.

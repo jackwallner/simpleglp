@@ -1,3 +1,2 @@
-• Zgodovina zdaj prikazuje mesece po vrstnem redu datumov.
-• Če injekcije ni mogoče izbrisati, se prikaže sporočilo, namesto da se tiho vrne.
-• Zgodovina injekcij ostane varna, tudi če se podatkovna datoteka aplikacije poškoduje.
+Novo: dnevne tablete GLP-1 (Wegovy v tabletah, Rybelsus, Foundayo). En dotik zabeleži današnjo tableto in zažene odštevanje čakanja na začetnem zaslonu, v pripomočku in na uri Apple Watch.
+Pro doda odštevanje na zaklenjenem zaslonu in opomnike za dopolnitev zaloge.

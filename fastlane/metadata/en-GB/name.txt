@@ -1,1 +1,1 @@
-Simple GLP: GLP-1 Shot Tracker
+Simple GLP: GLP-1 Dose Tracker

@@ -1,3 +1,2 @@
-• Historia näyttää nyt kuukaudet päivämääräjärjestyksessä.
-• Näet viestin, jos pistosta ei voi poistaa, sen sijaan että se palaisi hiljaa takaisin.
-• Pistoshistoriasi säilyy, vaikka sovelluksen datatiedosto vaurioituisi.
+Uutta: päivittäiset GLP-1-tabletit (Wegovy-tabletti, Rybelsus, Foundayo). Yksi napautus kirjaa päivän tabletin ja käynnistää odotusajastimen Kotiin, widgettiin ja Apple Watchiin.
+Pro lisää lukitusnäytön ajastimen ja muistutukset uusimisesta.

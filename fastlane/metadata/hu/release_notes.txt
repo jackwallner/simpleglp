@@ -1,3 +1,2 @@
-• Az előzmények most dátum szerint sorolják a hónapokat.
-• Üzenetet látsz, ha egy injekciót nem lehet törölni, ahelyett hogy csendben visszatérne.
-• Az injekciós előzményeid megmaradnak, ha az app adatfájlja megsérül.
+Újdonság: napi GLP-1 tabletták (Wegovy tabletta, Rybelsus, Foundayo). Egy koppintás rögzíti a mai tablettát, és elindítja a várakozási időzítőt a kezdőképernyőn, a widgeten és az Apple Watchon.
+A Pro zárolási képernyős visszaszámlálót és utánpótlási emlékeztetőket ad.

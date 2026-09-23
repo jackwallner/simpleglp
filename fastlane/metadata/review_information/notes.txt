@@ -1,22 +1,22 @@
-Simple GLP is a private, on-device GLP-1 shot tracker. No account or sign-in exists — the app launches straight into onboarding, so the demo credential fields are intentionally blank.
+Simple GLP is a private, on-device tracker for GLP-1 medication: weekly shots and, new in 1.2.0, daily pills. No account or sign-in exists; the app launches straight into onboarding, so the demo credential fields are intentionally blank.
 
 CORE FLOW
-1. Launch → 5-step onboarding (welcome, medication, schedule, reminders, Health context). The HealthKit read prompt and the notification prompt are both optional and may be declined; the app works fully without them.
-2. The first tab is named "One Tap". Tap the large green "I took my shot" button to log a shot. A confirmation appears with an "Undo" option.
-3. "History" tab lists logged shots (tap a row to edit details; swipe to delete, with confirmation). "Patterns" tab shows adherence/timing stats once 5 shots are logged.
-4. The Home Screen widget (small/medium) and the Apple Watch app offer the same one-tap log via App Intents and WatchConnectivity.
+1. Launch → onboarding (welcome, medication, schedule, reminders, Health context, optional Pro offer). On the medication step, choose "Shot" or "Pill". The HealthKit read prompt and the notification prompt are optional and may be declined; the app works fully without them.
+2. The first tab is "One Tap". For a shot plan, tap the large green "I took my shot" button. A confirmation appears with an "Undo" option.
+3. NEW, daily pills: pick "Pill" in onboarding (Wegovy pill, Rybelsus, Foundayo, or Other pill) or change the plan later in Settings → Medication & schedule. "I took my pill" logs the dose and starts a countdown whose length the user sets (the "Wait before food & drink" stepper, 0-120 min). The app sends a local notification when it ends. The same countdown shows on the Home Screen widget and the Apple Watch app. The wait length is a user setting to match their own prescriber's instructions; the app does not recommend it.
+4. "History" lists logged doses (tap to edit; swipe to delete with confirmation). "Patterns" shows adherence and timing stats once 5 doses are logged.
+5. The Home Screen widget (small/medium) and the Apple Watch app offer the same one-tap log via App Intents and WatchConnectivity.
 
-SUBSCRIPTION (Simple GLP Pro — optional, never required)
+SUBSCRIPTION (Simple GLP Pro, optional, never required)
 Products: yearly and monthly auto-renewing subscriptions plus a lifetime one-time purchase, served via RevenueCat.
 Where to find the paywall:
-- Settings tab → "Upgrade to Pro", or
-- Patterns tab → tap the blurred "What Pro watches for you" preview or the "See Plans" button.
-- A dismissible offer sheet also appears once after onboarding and once after the first logged shot (close via the X button).
-Pro unlocks "Proactive alerts" (Settings → Pro section after purchase): pattern-based dose-day notifications and a late-dose nudge. Price, renewal term, free-trial language (shown only to trial-eligible Apple IDs), Restore Purchases, Terms (standard EULA), and Privacy Policy links are all on the paywall. Restore Purchases is also in Settings → Pro.
+- Settings tab → "Upgrade to Pro" or "Supply & refills" (PRO badge), or
+- Patterns tab → the blurred Pro preview or "See Plans", or
+- on a pill plan, the "Put this countdown on your Lock Screen" row under a running countdown.
+- A dismissible offer sheet also appears once after onboarding and once after the first logged dose.
+Pro unlocks: the pill countdown as a Live Activity on the Lock Screen and in the Dynamic Island (starts when a pill is logged in the app), supply tracking with a refill reminder (Settings → Supply & refills), and Proactive alerts (late-dose nudge, timing patterns). Price, renewal term, free-trial language (only for trial-eligible Apple IDs), Restore Purchases, Terms (standard EULA) and Privacy Policy links are on the paywall. Restore Purchases is also in Settings → Pro.
 
 DATA & PRIVACY
-All shot data stays on device (SwiftData in an App Group). HealthKit is read-only context attached to logged shots; nothing is written back and nothing leaves the device. Settings → Data offers CSV "Export" and "Import". No analytics SDKs; RevenueCat processes purchases only.
+All data stays on device (SwiftData in an App Group). HealthKit is read-only context attached to logged doses; nothing is written back and nothing leaves the device. Settings → Data offers CSV Export and Import. No analytics SDKs; RevenueCat processes purchases only.
 
-The app does not provide medical advice or dosing instructions; a disclaimer is shown in Settings → About. "GLP-1" refers to the medication category the user is prescribed; the app records timestamps and user-entered context only.
-
-Contact: Jack Wallner, [redacted], jtest0979@gmail.com
+The app does not provide medical advice or dosing instructions; a disclaimer is shown in Settings → About. It records what the user says they took and when. Dose strengths and the wait length are only picker defaults the user sets to match their prescriber.

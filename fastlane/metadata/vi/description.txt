@@ -5,6 +5,9 @@ Simple GLP là cách nhanh nhất để ghi lại mũi tiêm GLP-1 hàng tuần 
 Một chạm để ghi
 Mở app, chạm widget Màn hình chính, hoặc nhấc cổ tay Apple Watch. Mũi tiêm được đóng dấu thời gian ngay. Thêm liều, vị trí tiêm, ghi chú và triệu chứng sau nếu muốn.
 
+VIÊN UỐNG HẰNG NGÀY
+Wegovy dạng viên, Rybelsus, Foundayo hoặc thuốc của bạn. Một chạm ghi lại viên thuốc hôm nay và bắt đầu hẹn giờ chờ mà bạn đặt theo hướng dẫn của bác sĩ, kèm thông báo khi kết thúc. Lời nhắc hằng ngày bỏ qua những ngày bạn đã ghi.
+
 Lịch hiểu tuần của bạn
 Đặt thuốc, kế hoạch liều, ngày và giờ ưa thích. Simple GLP biết mỗi mũi sớm, đúng giờ hay trễ và nhắc mũi tiếp theo.
 

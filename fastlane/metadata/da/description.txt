@@ -1,24 +1,30 @@
 Gratis og privat. Log din ugentlige injektion med ét tryk, uden konto.
 
-Simple GLP är det snabbaste sättet att logga en veckovänt GLP-1-spruta — för dig som vill fånga ögonblicket utan att göra behandlingen till ett kalkylblad.
+Simple GLP er den hurtigste og mest private måde at logge din GLP-1-medicin på, uanset om det er en ugentlig injektion eller en daglig tablet. Den er gratis, kræver ingen konto og er sat op på et minut.
 
-ETT TRYK FÖR ATT LOGGA
-Öppna appen, tryck på widgeten på hemskärmen eller lyft handleden med Apple Watch. Sprutan tidsstämplas direkt. Lägg till dos, injektionsställe, anteckningar och symtom senare om du vill.
+LOG MED ÉT TRYK
+Åbn appen, tryk på widgetten på hjemmeskærmen, eller løft håndleddet med Apple Watch. Dosen får straks et tidsstempel. Tilføj dosis, injektionssted, noter og symptomer senere, hvis du vil.
 
-ETT SCHEMA SOM KÄNNER DIN VECKA
-Ställ in medicin, dosplan, önskad veckodag och tid. Simple GLP ser om varje spruta var tidig, i tid eller sen och påminner före nästa.
+UGENTLIGE INJEKTIONER
+Ozempic, Wegovy, Mounjaro, Zepbound, magistrel semaglutid eller tirzepatid eller din egen. Indstil doseringsplan, ugedag og tidspunkt. Simple GLP markerer hver injektion som tidlig, til tiden eller sen og minder dig om den næste.
 
-VALFRITT HEALTHKIT-SAMMANHANG
-Med ditt tillstånd kan Simple GLP bifoga kontext från Apple Health — vikt, glukos, aktivitet, sömn, puls, träning, vatten, koffein, kalorier och protein. Endast läsning. Skriver aldrig tillbaka.
+DAGLIGE TABLETTER
+Wegovy-tablet, Rybelsus, Foundayo eller din egen. Ét tryk logger dagens tablet og starter en ventetimer, som du indstiller efter din læges anvisninger, med en notifikation, når den er færdig. Nedtællingen vises også i widgetten og på Apple Watch. Den daglige påmindelse springer dage over, hvor du allerede har logget.
 
-INTEGRITET
-Inga konton. Ingen reklam. Ingen analys. Ingen dataförsäljning. Historiken stannar på enheten och delas mellan app, widget och klocka via säker App Group.
+GRATIS OG UDEN KONTO
+Logning, påmindelser, historik, tablet-timeren og indsigter er gratis og forbliver gratis. Ingen tilmelding, ingen e-mail.
 
-SIMPLE GLP PRO (VALFRITT)
-Pro lägger till proaktiva varningar vid tidsavvikelse. Prenumeration i appen. Avsluta när som helst i Indstillinger.
+PRIVATLIV
+Ingen konti, ingen reklamer, ingen analyse. Vi sælger ingen data. Din historik og eventuelle Sundhedsdata bliver på din enhed.
 
-INTE EN MEDICINTEKNISK PRODUKT
-Simple GLP ger inte medicinsk rådgivning, dosinstruktioner, diagnos eller behandlingsrekommendationer. Följ alltid din ordinerendes vägledning.
+VALGFRIE SUNDHEDSDATA
+Med din tilladelse kan Simple GLP knytte data fra Apple Health til hver dosis (vægt, glukose, aktivitet, søvn, puls, træning, vand, koffein, kalorier og protein). Kun læsning, intet skrives tilbage.
+
+SIMPLE GLP PRO (VALGFRIT)
+Pro tilføjer nedtælling på låseskærmen og i Dynamic Island, sporing af beholdning med en påmindelse, før den slipper op, og advarsler om glemte doser. Abonnement i appen, kan opsiges når som helst i Indstillinger.
+
+IKKE ET MEDICINSK UDSTYR
+Simple GLP registrerer, hvad du selv angiver at have taget og hvornår. Appen giver ikke medicinsk rådgivning, doseringsvejledning, diagnose eller behandlingsanbefalinger. Følg altid din læges anvisninger.
 
 Abonnementsoplysninger
 Simple GLP Pro fås som et abonnement med automatisk fornyelse (månedligt eller årligt, begge med 7 dages gratis prøveperiode) eller som et engangskøb af Lifetime. Priserne vises i appen, inden du køber, og varierer fra region til region. Betalingen trækkes på dit Apple ID ved bekræftelse. Abonnementer fornyes automatisk, medmindre de opsiges mindst 24 timer før den aktuelle periode slutter. Administrer eller opsig når som helst i Indstillinger → Apple ID → Abonnementer.

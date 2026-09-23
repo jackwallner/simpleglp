@@ -1,3 +1,2 @@
-• Sejarah kini memaparkan bulan mengikut susunan tarikh.
-• Anda akan melihat mesej jika suntikan tidak dapat dipadam, bukannya kembali secara senyap.
-• Sejarah suntikan anda kekal selamat jika fail data apl rosak.
+Baharu: pil GLP-1 harian (pil Wegovy, Rybelsus, Foundayo). Satu ketikan merekod pil hari ini dan memulakan pemasa menunggu di Laman Utama, widget dan Apple Watch.
+Pro menambah kira detik di Skrin Kunci dan peringatan isi semula.

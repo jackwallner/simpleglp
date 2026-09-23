@@ -1,3 +1,2 @@
-• Historiken visar nu månaderna i datumordning.
-• Du får ett meddelande om en injektion inte kan raderas, i stället för att den tyst dyker upp igen.
-• Din injektionshistorik är skyddad om appens datafil skulle skadas.
+Nytt: dagliga GLP-1-tabletter (Wegovy-tablett, Rybelsus, Foundayo). Ett tryck loggar dagens tablett och startar väntetimern på Hem, i widgeten och på Apple Watch.
+Pro lägger till nedräkning på låsskärmen och påminnelser om påfyllning.

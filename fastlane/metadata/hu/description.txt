@@ -1,24 +1,30 @@
 Ingyenes és privát. Rögzítsd a heti injekciódat egy koppintással, fiók nélkül.
 
-Simple GLP to najszybszy sposób na zapisanie cotygodniowego zastrzyku GLP-1 — dla osób, które chcą odnotować chwilę bez zamiany leczenia w arkusz kalkulacyjny.
+A Simple GLP a leggyorsabb és legprivátabb módja a GLP-1 gyógyszered rögzítésének, legyen az heti injekció vagy napi tabletta. Ingyenes, nem kell hozzá fiók, és egy perc alatt beállítható.
 
-EGY ÉRINTÉS, BY ZAPISAĆ
-Otwórz alkalmazást, dotknij widżetu na ekranie głównym lub unieś nadgarstek z Apple Watch. Zastrzyk jest natychmiast oznaczony czasem. Dawka, miejsce, notatki i objawy — później, jeśli chcesz.
+RÖGZÍTÉS EGY KOPPINTÁSSAL
+Nyisd meg az appot, koppints a kezdőképernyő widgetjére, vagy emeld fel a csuklód az Apple Watch-csal. Az adag azonnal időbélyeget kap. Az adagot, a beadás helyét, jegyzeteket és tüneteket később is hozzáadhatod.
 
-HARMONOGRAM ZNAJĄCY TWÓJ TYDZIEŃ
-Ustaw lek, plan dawek, preferowany dzień i godzinę. Simple GLP wie, czy zastrzyk był wcześniej, na czas czy później, i przypomina o następnym.
+HETI INJEKCIÓK
+Ozempic, Wegovy, Mounjaro, Zepbound, patikai szemaglutid vagy tirzepatid, vagy saját gyógyszered. Állítsd be az adagolási tervet, a napot és az időpontot. A Simple GLP minden injekciónál jelzi, hogy korán, időben vagy későn volt, és emlékeztet a következőre.
 
-KONTEKST HEALTHKIT (OPCJONALNIE)
-Za zgodą Simple GLP może dołączyć dane z Apple Health — waga, glukoza, aktywność, sen, tętno, treningi, woda, kofeina, kalorie i białko. Tylko odczyt. Bez zapisu zwrotnego.
+NAPI TABLETTÁK
+Wegovy tabletta, Rybelsus, Foundayo vagy a saját gyógyszered. Egy koppintás rögzíti a mai tablettát, és elindít egy várakozási időzítőt, amelyet az orvosod utasításai szerint állítasz be, a végén értesítéssel. A visszaszámlálás a widgeten és az Apple Watchon is látszik. A napi emlékeztető kihagyja a már rögzített napokat.
 
-PRYWATNOŚĆ
-Bez kont. Bez reklam. Bez analityki. Bez sprzedaży danych. Historia zostaje na urządzeniu, współdzielona między aplikacją, widżetem i zegarkiem przez App Group.
+INGYENES, FIÓK NÉLKÜL
+A rögzítés, az emlékeztetők, az előzmények, a tabletta-időzítő és az elemzések ingyenesek, és azok is maradnak. Nincs regisztráció, nincs e-mail.
 
-SIMPLE GLP PRO (OPCJONALNIE)
-Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anuluj w Beállításokban.
+ADATVÉDELEM
+Nincs fiók, hirdetés vagy analitika. Nem adunk el adatot. Az előzmények és az opcionális Egészség-adatok az eszközödön maradnak.
 
-NIE JEST WYROBEM MEDYCZNYM
-Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+OPCIONÁLIS EGÉSZSÉG-ADATOK
+Engedélyeddel a Simple GLP minden adaghoz csatolhat adatokat az Apple Healthből (testsúly, vércukor, aktivitás, alvás, pulzus, edzések, víz, koffein, kalória és fehérje). Csak olvasás, semmit nem ír vissza.
+
+SIMPLE GLP PRO (OPCIONÁLIS)
+A Pro visszaszámlálást ad a zárolási képernyőn és a Dynamic Islandben, készletkövetést figyelmeztetéssel, mielőtt kifogysz, valamint értesítést kihagyott adagnál. Előfizetés az appban, bármikor lemondható a Beállításokban.
+
+NEM ORVOSTECHNIKAI ESZKÖZ
+A Simple GLP azt rögzíti, amit megadsz, hogy mit és mikor vettél be. Nem ad orvosi tanácsot, adagolási utasítást, diagnózist vagy kezelési javaslatot. Mindig kövesd az orvosod utasításait.
 
 Előfizetési információk
 A Simple GLP Pro automatikusan megújuló előfizetésként (havi vagy éves, mindkettő 7 napos ingyenes próbaidőszakkal) vagy egyszeri Lifetime vásárlásként érhető el. Az árak vásárlás előtt az appban láthatók, és régiónként eltérnek. A díjat megerősítéskor terheljük az Apple ID-dra. Az előfizetés automatikusan megújul, ha nem mondod le legalább 24 órával az aktuális időszak vége előtt. Bármikor kezelheted vagy lemondhatod a Beállítások → Apple ID → Előfizetések menüben.

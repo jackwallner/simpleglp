@@ -5,6 +5,9 @@ Simple GLP é a forma mais rápida de registrar uma injeção semanal de GLP-1 �
 UM TOQUE PARA REGISTRAR
 Abra o app, toque no widget na Tela de Início ou levante o pulso com o Apple Watch. A injeção é registrada na hora. Adicione dose, local, notas e sintomas depois, se quiser.
 
+COMPRIMIDOS DIÁRIOS
+Wegovy em comprimido, Rybelsus, Foundayo ou o seu próprio. Um toque registra o comprimido de hoje e inicia um timer de espera que você ajusta conforme as orientações do seu médico, com uma notificação ao terminar. O lembrete diário pula os dias já registrados.
+
 UMA AGENDA QUE CONHECE SUA SEMANA
 Defina medicamento, plano de dose, dia e horário. O Simple GLP mostra se cada injeção foi adiantada, no horário ou atrasada e lembra a próxima.
 

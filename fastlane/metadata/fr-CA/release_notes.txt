@@ -1,3 +1,2 @@
-• L'historique affiche maintenant les mois par ordre de date.
-• Un message s'affiche si une injection ne peut pas être supprimée, au lieu qu'elle réapparaisse sans avertissement.
-• Votre historique d'injections est préservé si le fichier de données de l'app est endommagé.
+Nouveau : comprimés quotidiens de GLP-1 (Wegovy en comprimé, Rybelsus, Foundayo). Un toucher consigne le comprimé du jour et lance la minuterie d'attente sur l'accueil, le widget et l'Apple Watch.
+Pro ajoute le compte à rebours sur l'écran verrouillé et des rappels de renouvellement.

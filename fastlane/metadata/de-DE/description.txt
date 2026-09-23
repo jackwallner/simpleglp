@@ -5,6 +5,9 @@ Simple GLP ist der schnellste Weg, eine wöchentliche GLP-1-Spritze zu protokoll
 EIN TIPPEN ZUM EINTRAGEN
 App öffnen, Widget auf dem Home Screen tippen oder die Apple Watch heben. Die Spritze wird sofort mit Zeitstempel gespeichert. Dosis, Injektionsstelle, Notizen und Symptome können Sie später ergänzen.
 
+TÄGLICHE TABLETTEN
+Wegovy-Tablette, Rybelsus, Foundayo oder dein eigenes Präparat. Ein Tippen erfasst die heutige Tablette und startet einen Warte-Timer, den du nach den Anweisungen deiner Ärztin oder deines Arztes einstellst, mit einer Mitteilung, wenn er abgelaufen ist. Die tägliche Erinnerung entfällt an Tagen, die du schon erfasst hast.
+
 EIN PLAN, DER IHRE WOCHE KENNT
 Medikament, Dosisplan, Wochentag und Uhrzeit festlegen. Simple GLP erkennt, ob jede Spritze früh, pünktlich oder spät war, und erinnert Sie vor der nächsten.
 

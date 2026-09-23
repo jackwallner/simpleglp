@@ -1,25 +1,28 @@
-Simple GLP is the fastest, most private way to log a weekly GLP-1 shot. It's free, needs no account, and takes nothing to set up. Built for people who just want the moment recorded, not another subscription or a spreadsheet.
+Simple GLP is the fastest, most private way to log your GLP-1 medication, whether it's a weekly shot or a daily pill. It's free, needs no account, and takes a minute to set up. Built for people who just want the dose recorded, not another subscription or a spreadsheet.
 
 ONE TAP TO LOG
-Open the app, tap the Home Screen widget, or raise your wrist with Apple Watch. Your shot is timestamped instantly. Add dose, injection site, notes, and symptoms later if you want.
+Open the app, tap the Home Screen widget, or raise your wrist with Apple Watch. Your dose is timestamped instantly. Add dose, injection site, notes, and symptoms later if you want.
+
+WEEKLY SHOTS
+Ozempic, Wegovy, Mounjaro, Zepbound, compounded semaglutide or tirzepatide, or your own. Set your dose plan, weekday, and time. Simple GLP marks each shot early, on time, or late and reminds you before the next one.
+
+DAILY PILLS
+Wegovy pill, Rybelsus, Foundayo, or your own. One tap logs today's pill and starts a wait timer you set to match your prescriber's instructions, with a notification when it's done. The countdown also shows on the widget and Apple Watch. A daily reminder skips days you've already logged, and a streak and week view show how the routine is going.
 
 FREE, WITH NO ACCOUNT
-Core logging is free and stays free. No sign-up, no login, no email. Open the app and log. That's it.
+Logging, reminders, history, the pill wait timer, and insights are free and stay free. No sign-up, no login, no email.
 
 PRIVATE BY DESIGN
-No accounts. No ads. No analytics. No data sold. Your shot history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
-
-A SCHEDULE THAT KNOWS YOUR WEEK
-Set your medication, dose plan, preferred weekday, and time. Simple GLP figures out whether each shot was early, on-time, or late and reminds you ahead of the next one.
+No accounts. No ads. No analytics. No data sold. Your history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
 
 OPTIONAL HEALTHKIT CONTEXT
-With your permission, Simple GLP can attach context from Apple Health (weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein) to each shot. Read-only. Never written back.
+With your permission, Simple GLP can attach context from Apple Health (weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein) to each dose. Read-only. Never written back.
 
 SIMPLE GLP PRO (OPTIONAL)
-Everything you need to log is free. Pro is an optional upgrade that adds pattern-based proactive alerts so timing drift gets caught early. Subscribe in-app. Cancel anytime in Settings.
+Everything you need to log is free. Pro adds the wait countdown on your Lock Screen and in the Dynamic Island, supply tracking with a refill heads-up before you run out, and missed-dose and timing alerts. Subscribe in-app. Cancel anytime in Settings.
 
 NOT A MEDICAL DEVICE
-Simple GLP does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations. Always follow your prescriber's guidance.
+Simple GLP records what you tell it you took and when. It does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations. Always follow your prescriber's guidance.
 
 Subscription Details
 Simple GLP Pro is available as an auto-renewing subscription (Monthly or Yearly, both with a 7-day free trial) or as a one-time Lifetime purchase. Prices are shown in the app before you buy and vary by region. Payment is charged to your Apple ID at confirmation. Subscriptions renew automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in Settings → Apple ID → Subscriptions.

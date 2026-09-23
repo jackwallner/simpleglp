@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,inyeccion,semanal,recordatorio
+ozempic,wegovy,mounjaro,rybelsus,foundayo,orforglipron,pastilla,inyeccion,semanal,recordatorio

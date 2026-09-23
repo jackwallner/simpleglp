@@ -1,3 +1,2 @@
-• Lịch sử giờ hiển thị các tháng theo thứ tự ngày.
-• Bạn sẽ thấy thông báo nếu không thể xóa một mũi tiêm, thay vì nó âm thầm quay lại.
-• Lịch sử tiêm của bạn vẫn an toàn nếu tệp dữ liệu của ứng dụng bị hỏng.
+Mới: viên uống GLP-1 hằng ngày (Wegovy dạng viên, Rybelsus, Foundayo). Một chạm ghi lại viên thuốc hôm nay và bắt đầu hẹn giờ chờ trên Màn hình chính, widget và Apple Watch.
+Pro bổ sung đếm ngược trên Màn hình khóa và nhắc mua thêm thuốc.

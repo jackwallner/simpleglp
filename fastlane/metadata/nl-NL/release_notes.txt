@@ -1,3 +1,2 @@
-• Geschiedenis toont maanden nu op datumvolgorde.
-• Je ziet een melding als een injectie niet kan worden verwijderd, in plaats van dat hij stilletjes terugkomt.
-• Je injectiegeschiedenis blijft bewaard als het gegevensbestand van de app beschadigd raakt.
+Nieuw: dagelijkse GLP-1-tabletten (Wegovy-tablet, Rybelsus, Foundayo). Eén tik legt de tablet van vandaag vast en start de wachttimer op het beginscherm, in de widget en op de Apple Watch.
+Pro voegt een aftelling op het toegangsscherm en herinneringen om bij te bestellen toe.

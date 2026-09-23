@@ -1,3 +1,4 @@
-• History now lists months in date order.
-• You'll see a message if a shot can't be deleted, instead of it quietly coming back.
-• Your shot history is kept safe if the app's data file is ever damaged.
+New: daily GLP-1 pills. Pick Wegovy pill, Rybelsus, Foundayo, or your own, and one tap logs today's pill and starts your wait timer on Home, the widget, and Apple Watch.
+• Daily reminders skip days you've already logged, plus a streak and week view.
+• Pro adds a Lock Screen and Dynamic Island countdown and supply tracking with refill reminders.
+• Editing your plan now keeps your saved dose and wait time.

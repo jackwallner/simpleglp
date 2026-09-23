@@ -1,3 +1,2 @@
-• O histórico agora mostra os meses em ordem de data.
-• Você verá uma mensagem se uma aplicação não puder ser excluída, em vez de ela voltar sem aviso.
-• Seu histórico de aplicações fica protegido se o arquivo de dados do app for danificado.
+Novo: comprimidos diários de GLP-1 (Wegovy em comprimido, Rybelsus, Foundayo). Um toque registra o comprimido do dia e inicia o timer de espera na tela inicial, no widget e no Apple Watch.
+O Pro adiciona a contagem regressiva na tela bloqueada e lembretes de reposição.

@@ -5,6 +5,9 @@ Simple GLP to najszybszy sposób na zapisanie cotygodniowego zastrzyku GLP-1 —
 JEDNO DOTKNIĘCIE, BY ZAPISAĆ
 Otwórz aplikację, dotknij widżetu na ekranie głównym lub unieś nadgarstek z Apple Watch. Zastrzyk jest natychmiast oznaczony czasem. Dawka, miejsce, notatki i objawy — później, jeśli chcesz.
 
+CODZIENNE TABLETKI
+Wegovy w tabletkach, Rybelsus, Foundayo lub własny lek. Jedno dotknięcie zapisuje dzisiejszą tabletkę i uruchamia odliczanie oczekiwania, które ustawiasz według zaleceń lekarza, z powiadomieniem na koniec. Codzienne przypomnienie pomija dni, które już zapisano.
+
 HARMONOGRAM ZNAJĄCY TWÓJ TYDZIEŃ
 Ustaw lek, plan dawek, preferowany dzień i godzinę. Simple GLP wie, czy zastrzyk był wcześniej, na czas czy później, i przypomina o następnym.
 

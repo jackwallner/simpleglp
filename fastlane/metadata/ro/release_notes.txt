@@ -1,3 +1,2 @@
-• Istoricul afișează acum lunile în ordinea datei.
-• Vei vedea un mesaj dacă o injecție nu poate fi ștearsă, în loc să reapară pe tăcute.
-• Istoricul injecțiilor rămâne în siguranță dacă fișierul de date al aplicației se deteriorează.
+Nou: comprimate zilnice GLP-1 (Wegovy comprimat, Rybelsus, Foundayo). O atingere înregistrează comprimatul de azi și pornește cronometrul de așteptare pe ecranul principal, în widget și pe Apple Watch.
+Pro adaugă numărătoarea inversă pe ecranul blocat și mementouri de reaprovizionare.

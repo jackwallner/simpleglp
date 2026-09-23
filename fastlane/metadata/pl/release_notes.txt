@@ -1,3 +1,2 @@
-• Historia pokazuje teraz miesiące w kolejności dat.
-• Jeśli nie da się usunąć zastrzyku, zobaczysz komunikat, zamiast by po cichu wrócił.
-• Historia zastrzyków jest bezpieczna, nawet jeśli plik danych aplikacji ulegnie uszkodzeniu.
+Nowość: codzienne tabletki GLP-1 (Wegovy w tabletkach, Rybelsus, Foundayo). Jedno dotknięcie zapisuje dzisiejszą tabletkę i uruchamia odliczanie oczekiwania na ekranie głównym, w widżecie i na Apple Watch.
+Pro dodaje odliczanie na ekranie blokady i przypomnienia o uzupełnieniu zapasu.

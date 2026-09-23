@@ -1,24 +1,30 @@
 Ücretsiz ve özel. Haftalık iğneni tek dokunuşla kaydet, hesap olmadan.
 
-Simple GLP to najszybszy sposób na zapisanie cotygodniowego zastrzyku GLP-1 — dla osób, które chcą odnotować chwilę bez zamiany leczenia w arkusz kalkulacyjny.
+Simple GLP, GLP-1 ilacını kaydetmenin en hızlı ve en gizli yolu; ister haftalık iğne ister günlük tablet olsun. Ücretsizdir, hesap gerektirmez ve bir dakikada kurulur.
 
-TEK DOKUNUŞ, BY ZAPISAĆ
-Otwórz uygulamayı, dotknij widżetu na ekranie głównym lub unieś nadgarstek z Apple Watch. Zastrzyk jest natychmiast oznaczony czasem. Dawka, miejsce, notatki i objawy — później, jeśli chcesz.
+TEK DOKUNUŞLA KAYIT
+Uygulamayı aç, Ana ekrandaki widget'a dokun ya da Apple Watch ile bileğini kaldır. Doz anında saatiyle kaydedilir. Doz, enjeksiyon bölgesi, not ve belirtileri istersen sonra eklersin.
 
-HARMONOGRAM ZNAJĄCY TWÓJ TYDZIEŃ
-Ustaw lek, plan dawek, preferowany dzień i godzinę. Simple GLP wie, czy zastrzyk był wcześniej, na czas czy później, i przypomina o następnym.
+HAFTALIK İĞNELER
+Ozempic, Wegovy, Mounjaro, Zepbound, magistral semaglutid veya tirzepatid ya da kendi ilacın. Doz planını, günü ve saati ayarla. Simple GLP her iğnenin erken, zamanında ya da geç olduğunu işaretler ve bir sonrakini hatırlatır.
 
-KONTEKST HEALTHKIT (OPCJONALNIE)
-Za zgodą Simple GLP może dołączyć dane z Apple Health — waga, glukoza, aktywność, sen, tętno, treningi, woda, kofeina, kalorie i białko. Tylko odczyt. Bez zapisu zwrotnego.
+GÜNLÜK TABLETLER
+Wegovy tablet, Rybelsus, Foundayo ya da kendi ilacın. Tek dokunuş bugünkü tableti kaydeder ve doktorunun talimatlarına göre ayarladığın bekleme zamanlayıcısını başlatır, bitince bildirim gönderir. Geri sayım widget'ta ve Apple Watch'ta da görünür. Günlük hatırlatıcı, kaydettiğin günleri atlar.
 
-PRYWATNOŚĆ
-Bez kont. Bez reklam. Bez analityki. Bez sprzedaży danych. Historia zostaje na urządzeniu, współdzielona między aplikacją, widżetem i zegarkiem przez App Group.
+ÜCRETSİZ, HESAPSIZ
+Kayıt, hatırlatıcılar, geçmiş, tablet zamanlayıcısı ve içgörüler ücretsizdir ve öyle kalır. Kayıt olma ya da e-posta yok.
 
-SIMPLE GLP PRO (OPCJONALNIE)
-Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anuluj w Ayarlar.
+GİZLİLİK
+Hesap, reklam ya da analiz yok. Veri satmıyoruz. Geçmişin ve isteğe bağlı Sağlık verilerin cihazında kalır.
 
-NIE JEST WYROBEM MEDYCZNYM
-Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+İSTEĞE BAĞLI SAĞLIK VERİLERİ
+İznin olursa Simple GLP her doza Apple Health verileri ekleyebilir (kilo, glikoz, aktivite, uyku, nabız, antrenmanlar, su, kafein, kalori ve protein). Yalnızca okuma, hiçbir şey geri yazılmaz.
+
+SIMPLE GLP PRO (İSTEĞE BAĞLI)
+Pro, kilit ekranında ve Dynamic Island'da geri sayım, bitmeden önce uyaran stok takibi ve kaçırılan doz uyarıları ekler. Abonelik uygulama içinden, istediğin zaman Ayarlar'dan iptal edilebilir.
+
+TIBBİ CİHAZ DEĞİLDİR
+Simple GLP, ne aldığını ve ne zaman aldığını söylediğin şekilde kaydeder. Tıbbi tavsiye, dozaj talimatı, teşhis ya da tedavi önerisi vermez. Her zaman doktorunun talimatlarına uy.
 
 Abonelik Ayrıntıları
 Simple GLP Pro, otomatik yenilenen abonelik (Aylık veya Yıllık, ikisinde de 7 günlük ücretsiz deneme) ya da tek seferlik Lifetime satın alma olarak sunulur. Fiyatlar satın almadan önce uygulamada gösterilir ve bölgeye göre değişir. Ödeme, onay sırasında Apple Kimliğinizden tahsil edilir. Geçerli dönemin bitiminden en az 24 saat önce iptal edilmediği sürece abonelikler otomatik olarak yenilenir. Ayarlar → Apple Kimliği → Abonelikler bölümünden istediğiniz zaman yönetin veya iptal edin.

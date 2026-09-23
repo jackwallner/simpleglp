@@ -1,3 +1,2 @@
-• L'historial ara mostra els mesos per ordre de data.
-• Veuràs un missatge si no es pot eliminar una injecció, en lloc que torni a aparèixer sense avís.
-• El teu historial d'injeccions es conserva si el fitxer de dades de l'app es fa malbé.
+Novetat: pastilles diàries de GLP-1 (Wegovy en pastilla, Rybelsus, Foundayo). Un toc registra la pastilla del dia i inicia el temporitzador d'espera a l'inici, al widget i a l'Apple Watch.
+Pro afegeix el compte enrere a la pantalla de bloqueig i recordatoris de reposició.

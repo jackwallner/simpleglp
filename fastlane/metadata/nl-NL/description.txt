@@ -5,6 +5,9 @@ Simple GLP is de snelste manier om een wekelijkse GLP-1-injectie te loggen — v
 ÉÉN TIK OM TE LOGGEN
 Open de app, tik op de widget op je beginscherm of hef je pols met Apple Watch. De injectie krijgt direct een tijdstempel. Dosis, injectieplaats, notities en symptomen kun je later toevoegen.
 
+DAGELIJKSE TABLETTEN
+Wegovy-tablet, Rybelsus, Foundayo of je eigen middel. Eén tik legt de tablet van vandaag vast en start een wachttimer die je instelt volgens de instructies van je arts, met een melding als hij klaar is. De dagelijkse herinnering slaat dagen over die je al hebt vastgelegd.
+
 EEN SCHEMA DAT JE WEEK KENT
 Stel medicatie, dosisplan, voorkeursdag en tijd in. Simple GLP ziet of elke injectie vroeg, op tijd of laat was en herinnert je aan de volgende.
 

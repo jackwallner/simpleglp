@@ -1,24 +1,30 @@
 Zdarma a soukromě. Zaznamenejte týdenní injekci jedním klepnutím, bez účtu.
 
-Simple GLP to najszybszy sposób na zapisanie cotygodniowego zastrzyku GLP-1 — dla osób, które chcą odnotować chwilę bez zamiany leczenia w arkusz kalkulacyjny.
+Simple GLP je nejrychlejší a nejsoukromější způsob, jak zaznamenávat lék GLP-1, ať jde o týdenní injekci, nebo denní tabletu. Je zdarma, nepotřebuje účet a nastavení zabere minutu.
 
-JEDNO KLEPNUTÍ, BY ZAPISAĆ
-Otwórz aplikaci, dotknij widżetu na ekranie głównym lub unieś nadgarstek z Apple Watch. Zastrzyk jest natychmiast oznaczony czasem. Dawka, miejsce, notatki i objawy — później, jeśli chcesz.
+ZÁZNAM JEDNÍM KLEPNUTÍM
+Otevřete aplikaci, klepněte na widget na ploše nebo zvedněte zápěstí s Apple Watch. Dávka se okamžitě uloží s časem. Dávku, místo vpichu, poznámky a příznaky můžete doplnit později.
 
-HARMONOGRAM ZNAJĄCY TWÓJ TYDZIEŃ
-Ustaw lek, plan dawek, preferowany dzień i godzinę. Simple GLP wie, czy zastrzyk był wcześniej, na czas czy później, i przypomina o następnym.
+TÝDENNÍ INJEKCE
+Ozempic, Wegovy, Mounjaro, Zepbound, připravovaný semaglutid či tirzepatid nebo vlastní lék. Nastavte plán dávek, den a čas. Simple GLP u každé injekce označí, zda byla dříve, včas, nebo později, a připomene další.
 
-KONTEKST HEALTHKIT (OPCJONALNIE)
-Za zgodą Simple GLP może dołączyć dane z Apple Health — waga, glukoza, aktywność, sen, tętno, treningi, woda, kofeina, kalorie i białko. Tylko odczyt. Bez zapisu zwrotnego.
+DENNÍ TABLETY
+Wegovy v tabletách, Rybelsus, Foundayo nebo vlastní lék. Jedno klepnutí zapíše dnešní tabletu a spustí odpočet čekání, který nastavíte podle pokynů lékaře, s upozorněním na konci. Odpočet vidíte i ve widgetu a na Apple Watch. Denní připomínka vynechá dny, kdy už máte zapsáno.
 
-PRYWATNOŚĆ
-Bez kont. Bez reklam. Bez analityki. Bez sprzedaży danych. Historia zostaje na urządzeniu, współdzielona między aplikacją, widżetem i zegarkiem przez App Group.
+ZDARMA A BEZ ÚČTU
+Záznamy, připomínky, historie, odpočet u tablet a přehledy jsou zdarma a zdarma zůstanou. Žádná registrace ani e-mail.
 
-SIMPLE GLP PRO (OPCJONALNIE)
-Pro dodaje proaktywne alerty przy odchyleniu czasu. Subskrypcja w aplikacji. Anuluj w Nastavení.
+SOUKROMÍ
+Žádné účty, reklamy ani analytika. Data neprodáváme. Historie i případná data ze Zdraví zůstávají ve vašem zařízení.
 
-NIE JEST WYROBEM MEDYCZNYM
-Simple GLP nie udziela porad medycznych, instrukcji dawkowania, diagnozy ani zaleceń terapeutycznych. Zawsze stosuj się do zaleceń przepisującego.
+VOLITELNĚ DATA ZE ZDRAVÍ
+S vaším svolením může Simple GLP ke každé dávce připojit údaje z Apple Health (hmotnost, glukóza, aktivita, spánek, tep, tréninky, voda, kofein, kalorie a bílkoviny). Pouze čtení, nic se nezapisuje zpět.
+
+SIMPLE GLP PRO (VOLITELNĚ)
+Pro přidává odpočet na zamčené obrazovce a v Dynamic Islandu, sledování zásob s upozorněním před doplněním a upozornění na vynechanou dávku. Předplatné v aplikaci, zrušit jde kdykoli v Nastavení.
+
+NENÍ ZDRAVOTNICKÝ PROSTŘEDEK
+Simple GLP zaznamenává, co a kdy jste podle svých slov užili. Neposkytuje lékařské rady, pokyny k dávkování, diagnózu ani doporučení léčby. Vždy se řiďte pokyny svého lékaře.
 
 Podrobnosti předplatného
 Simple GLP Pro je k dispozici jako automaticky obnovované předplatné (měsíční nebo roční, obojí se 7denní bezplatnou zkušební verzí) nebo jako jednorázový nákup Lifetime. Ceny se zobrazují v aplikaci před nákupem a liší se podle regionu. Platba se strhne z vašeho Apple ID při potvrzení. Předplatné se automaticky obnovuje, pokud ho nezrušíte alespoň 24 hodin před koncem aktuálního období. Spravovat nebo zrušit můžete kdykoli v Nastavení → Apple ID → Předplatné.
