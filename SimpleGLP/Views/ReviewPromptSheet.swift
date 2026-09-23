@@ -101,7 +101,7 @@ struct ReviewPromptSheet: View {
             }
             .padding(.top, 8)
 
-            Text("If Simple GLP is making shot day easier, a quick rating on the App Store helps more people find a private tracker.")
+            Text("If Simple GLP is making your \(GLPAppGroup.userDefaults.bool(forKey: GLPStorageKey.isPillPlan.rawValue) ? "daily pill" : "shot day") easier, a quick rating on the App Store helps more people find a private tracker.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
@@ -130,14 +130,14 @@ struct ReviewPromptSheet: View {
 
     private var reviewPitchContent: some View {
         VStack(spacing: 18) {
-            Text("Simple GLP is built by one indie developer. No ads, no accounts, and your shot history stays on your device.")
+            Text("Simple GLP is built by one indie developer. No ads, no accounts, and your dose history stays on your device.")
                 .font(.subheadline)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.top, 8)
 
-            Text("An honest App Store review takes seconds and helps others find a fast, private GLP-1 shot log.")
+            Text("An honest App Store review takes seconds and helps others find a fast, private GLP-1 tracker.")
                 .font(.footnote)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)

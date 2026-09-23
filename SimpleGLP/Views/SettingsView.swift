@@ -357,7 +357,7 @@ struct DoseScheduleView: View {
     var body: some View {
         List {
             Section {
-                Text("Schedule your titration in advance. On each step's start date, new shots automatically use that dose, so you don't have to remember to change it.")
+                Text("Schedule your titration in advance. On each step's start date, new doses you log automatically use that dose, so you don't have to remember to change it.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -558,7 +558,7 @@ struct ExportView: View {
     var body: some View {
         Form {
             Section {
-                Text("Export every logged shot as a CSV file you can share or back up.")
+                Text("Export every logged dose as a CSV file you can share or back up.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -608,7 +608,7 @@ struct ImportView: View {
     var body: some View {
         Form {
             Section {
-                Text("Import a Simple GLP CSV export to restore your shot history. Imported shots are added; they don't replace existing entries.")
+                Text("Import a Simple GLP CSV export to restore your dose history. Imported doses are added; they don't replace existing entries.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -644,7 +644,7 @@ struct ImportView: View {
             do {
                 let count = try ImportService.importEvents(from: url, into: modelContext)
                 isError = false
-                statusMessage = count == 1 ? "Imported 1 shot." : "Imported \(count) shots."
+                statusMessage = count == 1 ? "Imported 1 dose." : "Imported \(count) doses."
             } catch {
                 isError = true
                 statusMessage = "Could not import: \(error.localizedDescription)"

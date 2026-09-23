@@ -21,7 +21,7 @@ struct ProAlertsConfigView: View {
                         }
                     }
             } footer: {
-                Text("When enabled, the app analyzes your shot history and notifies you about upcoming dose days.")
+                Text(GLPAppGroup.userDefaults.bool(forKey: GLPStorageKey.isPillPlan.rawValue) ? "When enabled, you get a second nudge if today’s pill isn’t logged a few hours after its time." : "When enabled, the app analyzes your shot history and notifies you about upcoming dose days.")
             }
 
             Section("Status") {

@@ -19,7 +19,7 @@ struct SupplyCard: View {
                         Text(SupplyView.countLabel(remaining, form: plan.form))
                             .font(.headline)
                             .foregroundStyle(AppTheme.text)
-                        Text(low ? "About \(days) days left. Time to line up a refill." : "About \(days) days left")
+                        Text(SupplyView.coverage(days: days, low: low))
                             .font(.caption)
                             .foregroundStyle(low ? AppTheme.warm : AppTheme.muted)
                     }
@@ -91,6 +91,15 @@ struct SupplyView: View {
         } message: {
             Text(saveError ?? "Try again.")
         }
+    }
+
+    /// "Lasts until about Mon, Oct 5", plus a nudge once it's inside the refill window.
+    static func coverage(days: Int, low: Bool, now: Date = .now) -> String {
+        guard days > 0, let last = Calendar.current.date(byAdding: .day, value: days, to: now) else {
+            return "Time to line up a refill."
+        }
+        let through = "Lasts until about \(last.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))"
+        return low ? "\(through). Time to line up a refill." : through
     }
 
     static func countLabel(_ remaining: Int, form: DoseForm) -> String {

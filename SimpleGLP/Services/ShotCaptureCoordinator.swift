@@ -32,23 +32,8 @@ final class ShotCaptureCoordinator: ObservableObject {
         return captured
     }
 
-    /// Rebuilds the shared recent-shots cache from SwiftData so widget/watch displays match the
-    /// real history (and any placeholder entry the widget wrote gets replaced).
     func rebuildRecentShots(in context: ModelContext) {
-        var descriptor = FetchDescriptor<ShotEvent>(sortBy: [SortDescriptor(\.timestamp, order: .reverse)])
-        descriptor.fetchLimit = RecentShotsStore.maxEntries
-        let events = (try? context.fetch(descriptor)) ?? []
-        let shots = events.map {
-            RecentShot(
-                id: $0.id,
-                timestamp: $0.timestamp,
-                scheduleStatusRaw: $0.scheduleStatusRaw,
-                medicationName: $0.medicationName,
-                doseMg: $0.doseMg
-            )
-        }
-        RecentShotsStore.replaceAll(shots)
-        PhoneWatchSession.shared.syncRecentShots()
+        DoseRoutineService.rebuildRecentShots(in: context)
     }
 
     func enrichPendingCapturesIfNeeded(in context: ModelContext) {
@@ -72,7 +57,7 @@ final class ShotCaptureCoordinator: ObservableObject {
                 }
             }
             if updated > 0 {
-                bannerMessage = updated == 1 ? "Updated context for a pending shot." : "Updated context for \(updated) pending shots."
+                bannerMessage = nil
                 WidgetCenter.shared.reloadAllTimelines()
                 await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
             }
@@ -90,10 +75,13 @@ final class ShotCaptureCoordinator: ObservableObject {
         )
     }
 
+    /// `deferHealthContext` is for logs made with no UI in front (notification action, Siri):
+    /// Health reads fail while the phone is locked, so the event stays pending and the next
+    /// foreground pass fills it in.
     @discardableResult
-    func captureShot(in context: ModelContext, tapDate: Date? = nil, eventID: UUID? = nil) -> Bool {
+    func captureShot(in context: ModelContext, tapDate: Date? = nil, eventID: UUID? = nil, deferHealthContext: Bool = false) -> Bool {
         guard !isCapturing || eventID != nil else {
-            bannerMessage = "Finishing the last shot. Try again in a moment."
+            bannerMessage = "Finishing the last log. Try again in a moment."
             return false
         }
 
@@ -146,6 +134,7 @@ final class ShotCaptureCoordinator: ObservableObject {
             )
         )
         DoseRoutineService.didLogDose(at: timestamp, plan: plan, in: context)
+        if deferHealthContext { return true }
 
         isCapturing = true
         bannerMessage = GLPOnboardingStore.healthContextEnabled ? "Saved. Adding Health context…" : nil

@@ -78,6 +78,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
         UNUserNotificationCenter.current().delegate = self
+        ReminderService.registerCategories()
         DiagnosticsService.shared.start()
         let fallbackCoordinator = backgroundShotCoordinator
         PhoneWatchSession.shared.start()
@@ -97,6 +98,42 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
     ) {
         completionHandler([.banner, .sound])
     }
+
+    nonisolated func userNotificationCenter(
+        _ center: UNUserNotificationCenter,
+        didReceive response: UNNotificationResponse,
+        withCompletionHandler completionHandler: @escaping () -> Void
+    ) {
+        let action = response.actionIdentifier
+        let content = response.notification.request.content
+        let tappedAt = Date()
+        // UNNotificationContent is immutable, so handing it to the main actor is safe.
+        nonisolated(unsafe) let sendableContent = content
+        let done = UncheckedCompletion(completionHandler)
+        Task { @MainActor in
+            switch action {
+            case ReminderService.tookItAction:
+                let context = GLPModelStore.sharedModelContainer.mainContext
+                // A stale reminder for a dose already logged elsewhere must not double it.
+                if DoseRoutineService.alreadyLogged(at: tappedAt, in: context) == nil {
+                    self.backgroundShotCoordinator.captureShot(in: context, tapDate: tappedAt, deferHealthContext: true)
+                }
+                await DoseRoutineService.settleBackgroundLog(in: context)
+            case ReminderService.snoozeAction:
+                await ReminderService.snooze(sendableContent)
+            default:
+                break
+            }
+            done.call()
+        }
+    }
+}
+
+/// Carries a UIKit completion handler onto the main actor; it is only ever called once.
+private struct UncheckedCompletion: @unchecked Sendable {
+    let handler: () -> Void
+    init(_ handler: @escaping () -> Void) { self.handler = handler }
+    func call() { handler() }
 }
 
 private struct SimpleGLPRootContent: View {

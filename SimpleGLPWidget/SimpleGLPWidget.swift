@@ -34,9 +34,14 @@ struct SimpleGLPWidgetProvider: TimelineProvider {
         if let end = entry.waitEndsAt {
             entries.append(entry.at(end))
         }
-        if entry.glance.isPill, let midnight = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0), matchingPolicy: .nextTime) {
+        // A planned dose passing turns "Due" into "late"; midnight rolls every day count.
+        if let next = entry.glance.upcomingDose(now: now), next > now {
+            entries.append(entry.at(next))
+        }
+        if let midnight = Calendar.current.nextDate(after: now, matching: DateComponents(hour: 0, minute: 0), matchingPolicy: .nextTime) {
             entries.append(entry.at(midnight))
         }
+        entries.sort { $0.date < $1.date }
         completion(Timeline(entries: entries, policy: .after(now.addingTimeInterval(15 * 60))))
     }
 
@@ -132,8 +137,10 @@ struct SimpleGLPWidgetEntryView: View {
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
-                if let last = entry.lastShotDate, !entry.showConfirmation {
-                    Text(last, style: .relative)
+                if !entry.showConfirmation, let next = entry.glance.upcomingDose(now: entry.date) {
+                    Text(entry.glance.isPill
+                         ? "Planned \(next.formatted(date: .omitted, time: .shortened))"
+                         : "\(GLPGlance.dayDistance(to: next, now: entry.date)) · \(next.formatted(.dateTime.weekday(.abbreviated)))")
                         .font(.caption2)
                         .foregroundStyle(.white.opacity(0.85))
                 }
@@ -215,6 +222,7 @@ struct SimpleGLPWidgetEntryView: View {
 struct SimpleGLPWidgets: WidgetBundle {
     var body: some Widget {
         SimpleGLPWidget()
+        SimpleGLPLockScreenWidget()
         WaitLiveActivity()
     }
 }

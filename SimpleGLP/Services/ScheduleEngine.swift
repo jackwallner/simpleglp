@@ -128,6 +128,66 @@ enum ScheduleEngine {
         return candidate
     }
 
+    /// The planned dose the user still owes. Daily: today's slot until a pill is logged
+    /// today, then tomorrow's. Otherwise the overdue or next slot no logged shot has
+    /// claimed, so a shot taken a day early doesn't leave that week reading "due".
+    /// Home, the widgets and Siri all read this.
+    @MainActor
+    static func nextDue(plan: MedicationPlan, events: [ShotEvent], now: Date = .now, calendar: Calendar = .current) -> Date? {
+        guard plan.cadenceDays == 1 else {
+            return nextUnclaimedOccurrence(now: now, plan: plan, events: events, calendar: calendar)
+        }
+        let takenToday = events.contains { calendar.isDate($0.timestamp, inSameDayAs: now) && $0.timestamp <= now }
+        let today = calendar.startOfDay(for: now)
+        guard let day = takenToday ? calendar.date(byAdding: .day, value: 1, to: today) : today,
+              let slot = calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: day)
+        else { return nil }
+        return max(slot, firstScheduledDate(plan: plan, calendar: calendar) ?? slot)
+    }
+
+    /// True when a logged shot already claimed this scheduled occurrence (same matching
+    /// tolerance ScheduleEngine uses), so the late-dose nudge shouldn't fire for it.
+    @MainActor
+    static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent]) -> Bool {
+        events.contains { event in
+            guard let scheduled = event.scheduledDate else { return false }
+            return abs(scheduled.timeIntervalSince(occurrence)) < 60
+        }
+    }
+
+    /// Returns the current unclaimed occurrence when a dose is overdue, otherwise the next
+    /// future occurrence. The previous implementation always used the next future occurrence,
+    /// so a missed dose never generated a late-dose nudge.
+    @MainActor
+    static func nextUnclaimedOccurrence(
+        now: Date,
+        plan: MedicationPlan,
+        events: [ShotEvent],
+        calendar: Calendar = .current
+    ) -> Date? {
+        if let overdue = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
+           let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: calendar),
+           overdue >= first,
+           !isOccurrenceClaimed(overdue, by: events),
+           // A dose logged since then (say today's pill, taken early after a missed day)
+           // means the user has moved on; nudging about the missed one would fire right
+           // after they log.
+           !events.contains(where: { $0.timestamp >= overdue }) {
+            return overdue
+        }
+
+        guard var next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar) else {
+            return nil
+        }
+        while isOccurrenceClaimed(next, by: events) {
+            guard let following = calendar.date(byAdding: .day, value: plan.cadenceDays, to: next) else {
+                return nil
+            }
+            next = following
+        }
+        return next
+    }
+
     static func dose(on date: Date, plan: MedicationPlan) -> Double {
         let steps = plan.doseSteps.sorted { $0.startDate < $1.startDate }
         return steps.last(where: { $0.startDate <= date })?.doseMg ?? plan.doseMg
@@ -196,6 +256,58 @@ enum DailyAdherence {
             day = previous
         }
         return count
+    }
+
+    /// Logged days against planned days in one month, counting only days from the plan's
+    /// start through today so a new user isn't marked down for days before they began.
+    static func monthSummary(takenDays: Set<Date>, month: Date, planStart: Date?, now: Date = .now, calendar: Calendar = .current) -> (taken: Int, planned: Int) {
+        guard let interval = calendar.dateInterval(of: .month, for: month) else { return (0, 0) }
+        let today = calendar.startOfDay(for: now)
+        let start = max(interval.start, planStart.map { calendar.startOfDay(for: $0) } ?? interval.start)
+        var day = start
+        var planned = 0
+        var taken = 0
+        while day < interval.end, day <= today {
+            planned += 1
+            if takenDays.contains(day) { taken += 1 }
+            guard let next = calendar.date(byAdding: .day, value: 1, to: day) else { break }
+            day = next
+        }
+        return (taken, planned)
+    }
+
+    /// Days with a logged dose among the last `days` days (today included), and how many of
+    /// those days the plan was running.
+    static func recentSummary(doseDates: [Date], days: Int, planStart: Date?, now: Date = .now, calendar: Calendar = .current) -> (taken: Int, planned: Int) {
+        let takenDays = Set(doseDates.map { calendar.startOfDay(for: $0) })
+        let today = calendar.startOfDay(for: now)
+        let floor = planStart.map { calendar.startOfDay(for: $0) } ?? .distantPast
+        var taken = 0
+        var planned = 0
+        for offset in 0..<max(0, days) {
+            guard let day = calendar.date(byAdding: .day, value: -offset, to: today), day >= floor else { break }
+            planned += 1
+            if takenDays.contains(day) { taken += 1 }
+        }
+        return (taken, planned)
+    }
+
+    /// The longest run of consecutive logged days in the history.
+    static func longestStreak(doseDates: [Date], calendar: Calendar = .current) -> Int {
+        let days = Set(doseDates.map { calendar.startOfDay(for: $0) }).sorted()
+        var best = 0
+        var run = 0
+        var previous: Date?
+        for day in days {
+            if let previous, let expected = calendar.date(byAdding: .day, value: 1, to: previous), calendar.isDate(day, inSameDayAs: expected) {
+                run += 1
+            } else {
+                run = 1
+            }
+            best = max(best, run)
+            previous = day
+        }
+        return best
     }
 
     /// The most recent dose logged today, if any.

@@ -84,7 +84,7 @@ actor HealthKitService {
         await synchronizeReadAuthorizationForCapture()
         let snapshot = await loadSnapshotWithRetry(at: date)
         let status: CaptureSourceStatus = snapshot.hasMeaningfulValue ? .captured : .unavailable
-        return HealthCaptureResult(status: status, message: status == .captured ? nil : "No Health context was available for this shot.", snapshot: snapshot)
+        return HealthCaptureResult(status: status, message: status == .captured ? nil : "No Health context was available for this dose.", snapshot: snapshot)
     }
 
     private func synchronizeReadAuthorizationForCapture() async {

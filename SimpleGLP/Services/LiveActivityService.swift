@@ -27,6 +27,23 @@ enum LiveActivityService {
         Task { await end { activity in activity.id != keepID } }
     }
 
+    /// Point the running countdown at a corrected dose time (an edited log), or start one
+    /// when none is showing. Started only from the foreground, like `startWait`.
+    static func sync(medicationName: String, takenAt: Date, endsAt: Date) {
+        guard !Activity<GLPWaitActivityAttributes>.activities.isEmpty else {
+            startWait(medicationName: medicationName, takenAt: takenAt, endsAt: endsAt)
+            return
+        }
+        let state = GLPWaitActivityAttributes.ContentState(takenAt: takenAt, endsAt: endsAt)
+        Task { await update(to: state) }
+    }
+
+    nonisolated private static func update(to state: GLPWaitActivityAttributes.ContentState) async {
+        for activity in Activity<GLPWaitActivityAttributes>.activities where activity.content.state != state {
+            await activity.update(ActivityContent(state: state, staleDate: state.endsAt))
+        }
+    }
+
     static func endAll() {
         Task { await end { _ in true } }
     }

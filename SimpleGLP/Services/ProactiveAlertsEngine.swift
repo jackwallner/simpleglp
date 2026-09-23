@@ -76,7 +76,7 @@ enum ProactiveAlertsEngine {
               )
         else { return }
 
-        let granted = await ReminderService.ensureAuthorization()
+        let granted = await ReminderService.ensureAuthorization(mayPrompt: false)
         guard granted else { return }
 
         let now = Date()
@@ -89,6 +89,7 @@ enum ProactiveAlertsEngine {
         content.body = "Your \(plan.displayMedicationName) dose was planned for \(next.formatted(.dateTime.hour().minute()))\(day). One tap to log it and stay on track."
         content.sound = .default
         content.threadIdentifier = "pro-alerts"
+        content.categoryIdentifier = ReminderService.doseCategory
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         let request = UNNotificationRequest(identifier: lateDoseIdentifier, content: content, trigger: trigger)
         try? await UNUserNotificationCenter.current().add(request)
@@ -98,47 +99,14 @@ enum ProactiveAlertsEngine {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [lateDoseIdentifier])
     }
 
-    /// True when a logged shot already claimed this scheduled occurrence (same matching
-    /// tolerance ScheduleEngine uses), so the late-dose nudge shouldn't fire for it.
     @MainActor
     static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent]) -> Bool {
-        events.contains { event in
-            guard let scheduled = event.scheduledDate else { return false }
-            return abs(scheduled.timeIntervalSince(occurrence)) < 60
-        }
+        ScheduleEngine.isOccurrenceClaimed(occurrence, by: events)
     }
 
-    /// Returns the current unclaimed occurrence when a dose is overdue, otherwise the next
-    /// future occurrence. The previous implementation always used the next future occurrence,
-    /// so a missed dose never generated a late-dose nudge.
     @MainActor
-    static func nextUnclaimedOccurrence(
-        now: Date,
-        plan: MedicationPlan,
-        events: [ShotEvent],
-        calendar: Calendar = .current
-    ) -> Date? {
-        if let overdue = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
-           let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: calendar),
-           overdue >= first,
-           !isOccurrenceClaimed(overdue, by: events),
-           // A dose logged since then (say today's pill, taken early after a missed day)
-           // means the user has moved on; nudging about the missed one would fire right
-           // after they log.
-           !events.contains(where: { $0.timestamp >= overdue }) {
-            return overdue
-        }
-
-        guard var next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar) else {
-            return nil
-        }
-        while isOccurrenceClaimed(next, by: events) {
-            guard let following = calendar.date(byAdding: .day, value: plan.cadenceDays, to: next) else {
-                return nil
-            }
-            next = following
-        }
-        return next
+    static func nextUnclaimedOccurrence(now: Date, plan: MedicationPlan, events: [ShotEvent], calendar: Calendar = .current) -> Date? {
+        ScheduleEngine.nextUnclaimedOccurrence(now: now, plan: plan, events: events, calendar: calendar)
     }
 
     /// Planned time + grace, shifted forward out of quiet hours if needed.
@@ -155,7 +123,7 @@ enum ProactiveAlertsEngine {
     static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues) async {
         let center = UNUserNotificationCenter.current()
         await cancelPatternNotifications()
-        let granted = await ReminderService.ensureAuthorization()
+        let granted = await ReminderService.ensureAuthorization(mayPrompt: false)
         guard granted else { return }
 
         for cluster in clusters.prefix(3) {

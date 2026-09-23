@@ -15,6 +15,12 @@ struct WatchRootView: View {
                         doneToday
                     } else {
                         logButton
+                        if !controller.glance.isPill, !controller.showConfirmation, let next = controller.glance.upcomingDose(now: context.date) {
+                            Text("Next shot: \(GLPGlance.dayDistance(to: next, now: context.date)) · \(next.formatted(.dateTime.weekday(.abbreviated).hour().minute()))")
+                                .font(.caption2)
+                                .foregroundStyle(.secondary)
+                                .multilineTextAlignment(.center)
+                        }
                     }
 
                     if let status = controller.statusMessage, !controller.showConfirmation {

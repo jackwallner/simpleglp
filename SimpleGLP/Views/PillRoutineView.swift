@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 
 /// Home for a daily pill: today's status and streak, one button that logs the pill and
 /// turns into the wait-before-eating countdown, then a quiet "done for today".
@@ -9,9 +10,15 @@ struct PillRoutineView: View {
     let isLogging: Bool
     let isPro: Bool
     let onLog: () -> Void
+    /// Opens the "when did you take it?" sheet, starting at the given time.
+    let onLogEarlier: (Date) -> Void
+    /// Opens the logged dose for that day to view or fix.
+    let onEditDose: (Date) -> Void
     let onUpgrade: () -> Void
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
+    @State private var notificationsDenied = false
 
     var body: some View {
         let waiting = waitEnd(now: .now) != nil
@@ -26,6 +33,7 @@ struct PillRoutineView: View {
                 }
             }
         }
+        .task(id: scenePhase) { notificationsDenied = await ReminderService.isDenied() }
     }
 
     // MARK: - State
@@ -41,7 +49,20 @@ struct PillRoutineView: View {
     }
 
     private var plannedTime: Date {
-        Calendar.current.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: .now) ?? .now
+        plannedTime(on: .now)
+    }
+
+    private func plannedTime(on day: Date) -> Date {
+        Calendar.current.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: day) ?? day
+    }
+
+    /// Tapping a day in the strip: open its dose, or log a missed one at its planned time.
+    private func selectDay(_ day: DailyAdherence.Day, now: Date) {
+        if day.taken {
+            onEditDose(day.date)
+        } else {
+            onLogEarlier(min(plannedTime(on: day.date), now))
+        }
     }
 
     // MARK: - Today card
@@ -56,9 +77,20 @@ struct PillRoutineView: View {
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(AppTheme.muted)
                     if let taken {
-                        Text("Taken at \(taken.formatted(date: .omitted, time: .shortened))")
-                            .font(.headline)
-                            .foregroundStyle(AppTheme.text)
+                        Button {
+                            onEditDose(taken)
+                        } label: {
+                            HStack(spacing: 6) {
+                                Text("Taken at \(taken.formatted(date: .omitted, time: .shortened))")
+                                    .font(.headline)
+                                    .foregroundStyle(AppTheme.text)
+                                Image(systemName: "pencil")
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundStyle(AppTheme.muted)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityHint("Change the time or add details")
                     } else {
                         Text("Not taken yet")
                             .font(.headline)
@@ -80,7 +112,9 @@ struct PillRoutineView: View {
                         .foregroundStyle(streak > 0 ? AppTheme.brand : AppTheme.muted)
                 }
             }
-            WeekStrip(days: DailyAdherence.recentDays(doseDates: doseDates, now: now))
+            WeekStrip(days: DailyAdherence.recentDays(doseDates: doseDates, now: now)) { day in
+                selectDay(day, now: now)
+            }
         }
     }
 
@@ -90,8 +124,8 @@ struct PillRoutineView: View {
     private func routineButton(now: Date) -> some View {
         if let end = waitEnd(now: now), let taken = todaysDose(now: now) {
             countdown(taken: taken, end: end, now: now)
-        } else if let taken = todaysDose(now: now) {
-            doneCircle(taken: taken)
+        } else if todaysDose(now: now) != nil {
+            doneCircle
         } else {
             logButton
         }
@@ -124,6 +158,10 @@ struct PillRoutineView: View {
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 32)
             }
+            Button("Took it earlier?") { onLogEarlier(.now) }
+                .font(.footnote.weight(.semibold))
+                .foregroundStyle(AppTheme.brand)
+                .disabled(isLogging)
         }
         .padding(.vertical, 8)
     }
@@ -162,14 +200,31 @@ struct PillRoutineView: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityLabel("Waiting until \(end.formatted(date: .omitted, time: .shortened)) before food and drink")
-            Text("We'll notify you when it's done.")
+            if notificationsDenied {
+                Button {
+                    if let url = URL(string: UIApplication.openSettingsURLString) {
+                        UIApplication.shared.open(url)
+                    }
+                } label: {
+                    Text("Notifications are off, so there’s no ping when it’s over. ")
+                        .foregroundStyle(AppTheme.muted)
+                    + Text("Turn on")
+                        .foregroundStyle(AppTheme.brand)
+                        .fontWeight(.semibold)
+                }
                 .font(.footnote)
-                .foregroundStyle(AppTheme.muted)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 32)
+            } else {
+                Text("We’ll ping you when it’s over.")
+                    .font(.footnote)
+                    .foregroundStyle(AppTheme.muted)
+            }
         }
         .padding(.vertical, 8)
     }
 
-    private func doneCircle(taken: Date) -> some View {
+    private var doneCircle: some View {
         ZStack {
             Circle()
                 .fill(AppTheme.brandSoft)
@@ -181,7 +236,7 @@ struct PillRoutineView: View {
                 Text("Done for today")
                     .font(.title3.weight(.semibold))
                     .foregroundStyle(AppTheme.text)
-                Text("See you tomorrow")
+                Text("Next one tomorrow, \(plannedTime.formatted(date: .omitted, time: .shortened))")
                     .font(.subheadline)
                     .foregroundStyle(AppTheme.muted)
             }
@@ -226,12 +281,28 @@ struct PillRoutineView: View {
 /// Seven days, oldest to today: a filled dot for each day with a logged dose.
 struct WeekStrip: View {
     let days: [DailyAdherence.Day]
+    var onSelect: ((DailyAdherence.Day) -> Void)?
 
     var body: some View {
         HStack(spacing: 0) {
             ForEach(days) { day in
-                let isToday = Calendar.current.isDateInToday(day.date)
-                VStack(spacing: 6) {
+                Button {
+                    onSelect?(day)
+                } label: {
+                    dayCell(day)
+                }
+                .buttonStyle(.plain)
+                .disabled(onSelect == nil)
+                .accessibilityElement(children: .ignore)
+                .accessibilityLabel("\(day.date.formatted(.dateTime.weekday(.wide))), \(day.taken ? "taken" : "not logged")")
+                .accessibilityHint(day.taken ? "Opens this dose" : "Logs a dose for this day")
+            }
+        }
+    }
+
+    private func dayCell(_ day: DailyAdherence.Day) -> some View {
+        let isToday = Calendar.current.isDateInToday(day.date)
+        return VStack(spacing: 6) {
                     Text(day.date.formatted(.dateTime.weekday(.narrow)))
                         .font(.caption2.weight(isToday ? .bold : .regular))
                         .foregroundStyle(isToday ? AppTheme.text : AppTheme.muted)
@@ -247,11 +318,8 @@ struct WeekStrip: View {
                         }
                     }
                     .frame(width: 24, height: 24)
-                }
-                .frame(maxWidth: .infinity)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel("\(day.date.formatted(.dateTime.weekday(.wide))), \(day.taken ? "taken" : "not logged")")
-            }
         }
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
     }
 }

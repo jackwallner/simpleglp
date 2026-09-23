@@ -5,6 +5,7 @@ struct InsightsView: View {
     @Environment(\.modelContext) private var modelContext
     @EnvironmentObject private var store: StoreService
     @Query(sort: \ShotEvent.timestamp, order: .forward) private var events: [ShotEvent]
+    @Query(sort: \MedicationPlan.updatedAt, order: .reverse) private var plans: [MedicationPlan]
     @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var showPaywall = false
 
@@ -21,7 +22,11 @@ struct InsightsView: View {
                     }
                     .padding(.horizontal)
                 } else {
-                    adherenceCard
+                    if isPillPlan {
+                        dailyAdherenceCard
+                    } else {
+                        adherenceCard
+                    }
                     timingCard
                 }
 
@@ -107,6 +112,42 @@ struct InsightsView: View {
             }
         }
         .padding(.horizontal)
+    }
+
+    /// For a daily pill the question is "how many days did I take it", not "how many
+    /// logs landed in a window".
+    private var dailyAdherenceCard: some View {
+        let dates = events.map(\.timestamp)
+        let recent = DailyAdherence.recentSummary(doseDates: dates, days: 30, planStart: plans.first?.scheduleStartDate)
+        let current = DailyAdherence.streak(doseDates: dates)
+        let best = DailyAdherence.longestStreak(doseDates: dates)
+        return Card {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(recent.planned >= 30 ? "Last 30 days" : "Since you started")
+                    .font(.headline)
+                Text("\(recent.taken) of \(recent.planned) days logged")
+                    .font(.title2.weight(.bold))
+                    .foregroundStyle(AppTheme.brand)
+                    .monospacedDigit()
+                HStack(spacing: 24) {
+                    stat("Current streak", days: current)
+                    stat("Best streak", days: best)
+                }
+                .padding(.top, 4)
+            }
+        }
+        .padding(.horizontal)
+    }
+
+    private func stat(_ title: String, days: Int) -> some View {
+        VStack(alignment: .leading, spacing: 2) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(days == 1 ? "1 day" : "\(days) days")
+                .font(.subheadline.weight(.semibold))
+                .monospacedDigit()
+        }
     }
 
     @ViewBuilder

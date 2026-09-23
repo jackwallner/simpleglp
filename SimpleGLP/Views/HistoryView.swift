@@ -3,12 +3,18 @@ import SwiftUI
 
 struct HistoryView: View {
     @Environment(\.modelContext) private var modelContext
+    @EnvironmentObject private var coordinator: ShotCaptureCoordinator
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
+    @Query(sort: \MedicationPlan.updatedAt, order: .reverse) private var plans: [MedicationPlan]
     @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var selectedEvent: ShotEvent?
     @State private var showEdit = false
     @State private var pendingDeletion: [ShotEvent] = []
     @State private var deleteError: String?
+    @State private var logEarlierStart: LogEarlierStart?
+    @State private var shownMonth = Calendar.current.dateInterval(of: .month, for: .now)?.start ?? .now
+
+    private var plan: MedicationPlan? { plans.first }
 
     var body: some View {
         Group {
@@ -20,6 +26,16 @@ struct HistoryView: View {
                 }
             } else {
                 List {
+                    if isPillPlan {
+                        Section {
+                            MonthAdherenceView(
+                                month: $shownMonth,
+                                doseDates: events.map(\.timestamp),
+                                planStart: plan?.scheduleStartDate,
+                                onSelect: selectDay
+                            )
+                        }
+                    }
                     ForEach(groupedEvents.keys.sorted(by: >), id: \.self) { month in
                         Section(month.formatted(.dateTime.year().month())) {
                             ForEach(groupedEvents[month] ?? []) { event in
@@ -41,8 +57,27 @@ struct HistoryView: View {
         }
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("History")
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button {
+                    logEarlierStart = LogEarlierStart(date: .now)
+                } label: {
+                    Label("Log a past dose", systemImage: "plus")
+                }
+            }
+        }
         .sheet(item: $selectedEvent) { event in
             EditEventSheet(event: event)
+        }
+        .sheet(item: $logEarlierStart) { start in
+            LogEarlierSheet(
+                form: plan?.form ?? .injection,
+                waitMinutes: plan?.effectiveWaitMinutes ?? 0,
+                doseDates: events.map(\.timestamp),
+                initialDate: start.date
+            ) { date in
+                coordinator.captureShot(in: modelContext, tapDate: date)
+            }
         }
         .confirmationDialog(
             confirmDeleteTitle,
@@ -84,7 +119,7 @@ struct HistoryView: View {
 
     private func historyRow(event: ShotEvent) -> some View {
         let pillTint: Color = event.scheduleStatus == .onSchedule ? AppTheme.brand : AppTheme.warm
-        let doseText = String(format: "%.2f mg", event.doseMg)
+        let doseText = DoseScheduleView.format(event.doseMg)
         return HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(event.timestamp, style: .date)
@@ -92,7 +127,7 @@ struct HistoryView: View {
                     .foregroundStyle(AppTheme.text)
                 Text(event.timestamp, style: .time)
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
             Spacer(minLength: 12)
             Text(doseText)
@@ -104,11 +139,23 @@ struct HistoryView: View {
                 if let rationale = event.scheduleRationale {
                     Text(rationale)
                         .font(.caption2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                 }
             }
         }
         .padding(.vertical, 4)
+    }
+
+    /// A day in the calendar: open its dose, or log a missed one at its planned time.
+    private func selectDay(_ day: Date) {
+        if let event = events.first(where: { Calendar.current.isDate($0.timestamp, inSameDayAs: day) }) {
+            selectedEvent = event
+            return
+        }
+        let planned = plan.flatMap {
+            Calendar.current.date(bySettingHour: $0.preferredHour, minute: $0.preferredMinute, second: 0, of: day)
+        } ?? day
+        logEarlierStart = LogEarlierStart(date: min(planned, .now))
     }
 
     private func requestDelete(at offsets: IndexSet, in month: Date) {

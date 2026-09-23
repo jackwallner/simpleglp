@@ -9,12 +9,16 @@ struct GLPGlance: Codable, Equatable, Sendable {
     var medicationName: String
     var waitMinutes: Int
     var lastDoseAt: Date?
+    /// The planned dose nobody has logged yet: today's pill, or the next (or overdue) shot.
+    /// Optional so a glance saved by an older build still decodes.
+    var nextDoseAt: Date?
 
-    init(isPill: Bool = false, medicationName: String = "GLP-1", waitMinutes: Int = 0, lastDoseAt: Date? = nil) {
+    init(isPill: Bool = false, medicationName: String = "GLP-1", waitMinutes: Int = 0, lastDoseAt: Date? = nil, nextDoseAt: Date? = nil) {
         self.isPill = isPill
         self.medicationName = medicationName
         self.waitMinutes = waitMinutes
         self.lastDoseAt = lastDoseAt
+        self.nextDoseAt = nextDoseAt
     }
 
     var noun: String { isPill ? "pill" : "shot" }
@@ -31,6 +35,28 @@ struct GLPGlance: Codable, Equatable, Sendable {
     func takenToday(now: Date = .now, calendar: Calendar = .current) -> Bool {
         guard let lastDoseAt else { return false }
         return calendar.isDate(lastDoseAt, inSameDayAs: now)
+    }
+
+    /// The next planned dose as of `now`. A pill logged after this glance was written (from
+    /// the widget or Watch) moves today's slot to tomorrow without waiting for the phone.
+    func upcomingDose(now: Date = .now, calendar: Calendar = .current) -> Date? {
+        guard let nextDoseAt else { return nil }
+        if isPill, takenToday(now: now, calendar: calendar), calendar.isDate(nextDoseAt, inSameDayAs: now) {
+            return calendar.date(byAdding: .day, value: 1, to: nextDoseAt)
+        }
+        return nextDoseAt
+    }
+
+    /// Short plain-language countdown to a shot: "Today", "Tomorrow", "In 3 days", "2 days late".
+    static func dayDistance(to date: Date, now: Date = .now, calendar: Calendar = .current) -> String {
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: date)).day ?? 0
+        switch days {
+        case ..<(-1): return "\(-days) days late"
+        case -1: return "1 day late"
+        case 0: return "Today"
+        case 1: return "Tomorrow"
+        default: return "In \(days) days"
+        }
     }
 }
 

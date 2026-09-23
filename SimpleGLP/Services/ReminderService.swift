@@ -6,6 +6,13 @@ enum ReminderService {
     static let shotReminderIdentifier = "simpleglp.next-shot"
     static let waitEndIdentifier = "simpleglp.wait-end"
     static let refillIdentifier = "simpleglp.refill"
+    static let snoozeIdentifier = "simpleglp.snooze"
+    /// Dose reminders and the late-dose nudge carry "Took it" and "Snooze" so the dose can
+    /// be logged straight from the Lock Screen.
+    static let doseCategory = "simpleglp.dose"
+    static let tookItAction = "simpleglp.took-it"
+    static let snoozeAction = "simpleglp.snooze"
+    static let snoozeMinutes = 15
     /// Daily plans queue two weeks of reminders so they keep firing if the app isn't opened.
     static let dailyReminderSlots = 14
 
@@ -15,6 +22,29 @@ enum ReminderService {
 
     static func cancelDoseReminders() {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: doseReminderIdentifiers)
+    }
+
+    static func registerCategories() {
+        let tookIt = UNNotificationAction(identifier: tookItAction, title: "Took it", options: [], icon: UNNotificationActionIcon(systemImageName: "checkmark.circle"))
+        let snooze = UNNotificationAction(identifier: snoozeAction, title: "Remind me in \(snoozeMinutes) min", options: [], icon: UNNotificationActionIcon(systemImageName: "clock"))
+        let category = UNNotificationCategory(identifier: doseCategory, actions: [tookIt, snooze], intentIdentifiers: [])
+        UNUserNotificationCenter.current().setNotificationCategories([category])
+    }
+
+    /// Once a dose is logged, its reminders are stale: drop them from Notification Center
+    /// along with any snoozed repeat.
+    static func clearDoseNudges() {
+        let center = UNUserNotificationCenter.current()
+        center.removePendingNotificationRequests(withIdentifiers: [snoozeIdentifier])
+        center.removeDeliveredNotifications(withIdentifiers: doseReminderIdentifiers + [snoozeIdentifier, ProactiveAlertsEngine.lateDoseIdentifier])
+    }
+
+    /// Re-sends a dose reminder `snoozeMinutes` from now.
+    static func snooze(_ content: UNNotificationContent) async {
+        guard let copy = content.mutableCopy() as? UNMutableNotificationContent else { return }
+        copy.categoryIdentifier = doseCategory
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: TimeInterval(snoozeMinutes * 60), repeats: false)
+        try? await UNUserNotificationCenter.current().add(UNNotificationRequest(identifier: snoozeIdentifier, content: copy, trigger: trigger))
     }
 
     // `@MainActor`: `MedicationPlan` is a non-Sendable SwiftData model bound to the
@@ -52,6 +82,7 @@ enum ReminderService {
             }
             content.sound = .default
             content.threadIdentifier = "shot-reminders"
+            content.categoryIdentifier = doseCategory
             let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
             let request = UNNotificationRequest(identifier: doseReminderIdentifiers[index], content: content, trigger: trigger)
             try? await center.add(request)
@@ -75,15 +106,15 @@ enum ReminderService {
     }
 
     /// "Wait's over" alert at the end of the countdown a pill starts.
-    static func scheduleWaitEnd(medicationName: String, waitMinutes: Int, endsAt: Date) async {
+    static func scheduleWaitEnd(medicationName: String, waitMinutes: Int, endsAt: Date, takenAt: Date, mayPrompt: Bool = true) async {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [waitEndIdentifier])
         guard waitMinutes > 0, endsAt > .now else { return }
-        let granted = await ensureAuthorization()
+        let granted = await ensureAuthorization(mayPrompt: mayPrompt)
         guard granted else { return }
         let content = UNMutableNotificationContent()
-        content.title = "Your \(waitMinutes)-minute wait is done"
-        content.body = "\(waitMinutes) minutes since you logged your \(medicationName)."
+        content.title = "Your \(waitMinutes)-minute wait is over"
+        content.body = "\(medicationName) taken at \(takenAt.formatted(date: .omitted, time: .shortened))."
         content.sound = .default
         content.threadIdentifier = "wait-timer"
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, endsAt.timeIntervalSinceNow), repeats: false)

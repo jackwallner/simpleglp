@@ -13,6 +13,8 @@ struct HomeView: View {
     @State private var confirmationTask: Task<Void, Never>?
     @State private var selectedEvent: ShotEvent?
     @State private var showPaywall = false
+    /// Non-nil while the "when did you take it?" sheet is up, holding its starting time.
+    @State private var logEarlierStart: LogEarlierStart?
 
     private var recentEvents: [ShotEvent] { Array(events.prefix(5)) }
     private var plan: MedicationPlan? { plans.first }
@@ -37,11 +39,17 @@ struct HomeView: View {
                         isLogging: coordinator.isCapturing,
                         isPro: store.isProUnlocked,
                         onLog: logDose,
+                        onLogEarlier: { logEarlierStart = LogEarlierStart(date: $0) },
+                        onEditDose: editDose(on:),
                         onUpgrade: { showPaywall = true }
                     )
                 } else {
                     nextShotSection
                     shotButton
+                    Button("Took it earlier?") { logEarlierStart = LogEarlierStart(date: .now) }
+                        .font(.footnote.weight(.semibold))
+                        .foregroundStyle(AppTheme.brand)
+                        .disabled(coordinator.isCapturing || showConfirmation)
                 }
 
                 if coordinator.showUndoOption, coordinator.lastCapturedEventID != nil {
@@ -74,6 +82,15 @@ struct HomeView: View {
         .sheet(item: $selectedEvent) { event in
             EditEventSheet(event: event)
         }
+        .sheet(item: $logEarlierStart) { start in
+            LogEarlierSheet(
+                form: form,
+                waitMinutes: plan?.effectiveWaitMinutes ?? 0,
+                doseDates: events.map(\.timestamp),
+                initialDate: start.date,
+                onLog: logDose(at:)
+            )
+        }
         .sheet(isPresented: $showPaywall) {
             SimplePaywallView(paywallImpressionId: "simpleglp_lockscreen_countdown")
                 .environmentObject(store)
@@ -82,7 +99,11 @@ struct HomeView: View {
     }
 
     private func logDose() {
-        let ok = coordinator.captureShot(in: modelContext)
+        logDose(at: nil)
+    }
+
+    private func logDose(at date: Date?) {
+        let ok = coordinator.captureShot(in: modelContext, tapDate: date)
         guard ok else { return }
         triggerConfirmation()
         if promptForDetails, let id = coordinator.lastCapturedEventID {
@@ -92,6 +113,11 @@ struct HomeView: View {
             descriptor.fetchLimit = 1
             selectedEvent = try? modelContext.fetch(descriptor).first
         }
+    }
+
+    /// The latest dose logged on that day, opened for editing.
+    private func editDose(on day: Date) {
+        selectedEvent = events.first { Calendar.current.isDate($0.timestamp, inSameDayAs: day) }
     }
 
     private var shotButton: some View {
@@ -141,23 +167,23 @@ struct HomeView: View {
 
     @ViewBuilder
     private var nextShotSection: some View {
-        if let plan, let next = ScheduleEngine.nextExpectedDate(plan: plan) {
-            let copy = relativeShotCopy(plan: plan, nextExpected: next)
+        if let plan, let next = ScheduleEngine.nextDue(plan: plan, events: events) {
+            let isOverdue = next <= .now
             Card {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
                         HStack(spacing: 4) {
-                            if copy.isOverdue {
+                            if isOverdue {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .font(.caption2)
                             }
-                            Text(copy.headline)
+                            Text(Self.headline(for: next))
                                 .font(.caption.weight(.semibold))
                         }
-                        .foregroundStyle(copy.isOverdue ? AppTheme.warm : AppTheme.muted)
-                        Text(copy.dateToShow, style: .date)
+                        .foregroundStyle(isOverdue ? AppTheme.warm : AppTheme.muted)
+                        Text(next, style: .date)
                             .font(.headline)
-                        Text(copy.dateToShow, style: .time)
+                        Text(next, style: .time)
                             .font(.subheadline)
                             .foregroundStyle(AppTheme.muted)
                     }
@@ -166,8 +192,13 @@ struct HomeView: View {
                         Text("Dose")
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(AppTheme.muted)
-                        Text("\(ScheduleEngine.dose(on: copy.dateToShow, plan: plan), specifier: "%.2f") mg")
+                        Text(DoseScheduleView.format(ScheduleEngine.dose(on: next, plan: plan)))
                             .font(.headline)
+                        if let site = lastSite {
+                            Text("Last site: \(site.rawValue.lowercased())")
+                                .font(.caption)
+                                .foregroundStyle(AppTheme.muted)
+                        }
                     }
                 }
             }
@@ -188,36 +219,22 @@ struct HomeView: View {
         }
     }
 
-    private struct ShotCopy {
-        var headline: String
-        var dateToShow: Date
-        var isOverdue: Bool
+    /// Where the last shot went, when it was recorded, to help with rotation.
+    private var lastSite: InjectionSite? {
+        guard let site = events.first?.injectionSite, site != .other else { return nil }
+        return site
     }
 
-    private func relativeShotCopy(plan: MedicationPlan, nextExpected: Date) -> ShotCopy {
-        let calendar = Calendar.current
-        let now = Date()
-        let lastShot = events.first?.timestamp
-        if let prior = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
-           prior >= plan.scheduleStartDate,
-           (lastShot ?? .distantPast) < prior {
-            let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: prior), to: calendar.startOfDay(for: now)).day ?? 0
-            let headline: String
-            switch days {
-            case 0: headline = "Due today"
-            case 1: headline = "Overdue by 1 day"
-            default: headline = "Overdue by \(days) days"
-            }
-            return ShotCopy(headline: headline, dateToShow: prior, isOverdue: true)
-        }
-        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: nextExpected)).day ?? 0
-        let headline: String
+    /// "Due today", "Tomorrow", "In 3 days", "Overdue by 2 days".
+    static func headline(for next: Date, now: Date = .now, calendar: Calendar = .current) -> String {
+        let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: next)).day ?? 0
         switch days {
-        case 0: headline = "Due today"
-        case 1: headline = "Tomorrow"
-        default: headline = "In \(days) days"
+        case ..<(-1): return "Overdue by \(-days) days"
+        case -1: return "Overdue by 1 day"
+        case 0: return "Due today"
+        case 1: return "Tomorrow"
+        default: return "In \(days) days"
         }
-        return ShotCopy(headline: headline, dateToShow: nextExpected, isOverdue: false)
     }
 
     private func triggerConfirmation() {
@@ -228,6 +245,11 @@ struct HomeView: View {
             if !Task.isCancelled { showConfirmation = false }
         }
     }
+}
+
+struct LogEarlierStart: Identifiable {
+    let id = UUID()
+    let date: Date
 }
 
 struct RecentShotRow: View {

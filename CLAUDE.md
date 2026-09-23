@@ -30,6 +30,10 @@ Group.
 - `Models/` — `GLPModels`, `ProAlertPreferences`
 - `Services/`
   - `ShotCaptureCoordinator` — the log path every surface goes through
+  - `DoseIntents`: Siri / Shortcuts / Action Button (`LogDoseIntent`,
+    `DoseStatusIntent`). Hands-free logs (these and the reminder's "Took it"
+    action) pass `deferHealthContext: true`, check `DoseRoutineService.alreadyLogged`
+    first, then await `settleBackgroundLog`
   - `DoseRoutineService`: everything after a log/undo/delete (wait notification,
     Live Activity via `LiveActivityService`, reminders, refill alert, glance publish)
   - `GLPModelStore`, `PlanStore`, `ScheduleEngine` — the dose plan, its cadence,
@@ -40,7 +44,8 @@ Group.
   - `ExportService` / `ImportService`, `StoreService`, `PhoneWatchSession`,
     `DiagnosticsService`, `ConversionDiagnostics`
 - `Views/` — `RootTabView`, `HomeView` (`PillRoutineView` for pills), `SupplyView`,
-  `HistoryView`, `InsightsView`,
+  `HistoryView` (`MonthAdherenceView` for pills), `InsightsView`, `LogEarlierSheet`
+  (log at the real time taken, or a missed day),
   `OnboardingView`, `SimplePaywallView`, `TrialOfferSheet`, `SettingsView`,
   `ProAlertsConfigView`
 - `Utilities/` — `AppTheme`, `AppEnvironment`, `PaywallScreenshotMode`
@@ -63,6 +68,10 @@ Group.
   says they took and when. Never phrase a schedule, a reminder, the wait timer or
   an insight as a dosing recommendation (App Review 1.4.1). Pill strengths and the
   30-minute wait are only picker defaults the user sets to match their prescriber.
+- **Next dose has one source:** `ScheduleEngine.nextDue`. Home, `GLPGlance.nextDoseAt`
+  (widgets, Lock Screen widget, Watch) and Siri all read it.
+- **Background paths never prompt for notifications.** Only onboarding, a plan save,
+  a user log in the foreground and the Pro alerts screen may ask.
 - **Vocabulary follows the plan.** `DoseForm.noun` / `GLPStorageKey.isPillPlan`
   ("shot" vs "pill"); never hardcode "shot" in shared UI.
 - Debug seeds: `-uitesting -GLPScreenshotSeed` (weekly shot); add

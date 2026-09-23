@@ -8,15 +8,28 @@ struct EditEventSheet: View {
     @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var timestamp: Date = .now
     @State private var doseMg: Double = 0
-    @State private var site: InjectionSite = .abdomen
+    /// nil = not recorded. A default here would write a site nobody chose.
+    @State private var site: InjectionSite?
     @State private var notes = ""
-    @State private var nausea: Int = 0
-    @State private var appetite: Int = 0
-    @State private var foodNoise: Int = 0
-    @State private var wellbeing: Int = 0
+    /// -1 = not rated, so opening the sheet for a note doesn't record a 0 for every feeling.
+    @State private var nausea = FeelingRow.unrated
+    @State private var appetite = FeelingRow.unrated
+    @State private var foodNoise = FeelingRow.unrated
+    @State private var wellbeing = FeelingRow.unrated
     @State private var saveError: String?
+    @State private var confirmDelete = false
+    /// Set before the delete so the sheet stops reading the model it is about to remove.
+    @State private var isDeleted = false
 
     var body: some View {
+        if isDeleted {
+            Color.clear
+        } else {
+            editor
+        }
+    }
+
+    private var editor: some View {
         NavigationStack {
             Form {
                 Section(isPillPlan ? "Pill" : "Shot") {
@@ -33,35 +46,27 @@ struct EditEventSheet: View {
                 Section("Basics") {
                     if !isPillPlan {
                         Picker("Injection site", selection: $site) {
-                            ForEach(InjectionSite.allCases) { Text($0.rawValue).tag($0) }
+                            Text("Not recorded").tag(InjectionSite?.none)
+                            ForEach(InjectionSite.allCases) { Text($0.rawValue).tag(InjectionSite?.some($0)) }
                         }
                     }
                     TextField("Notes", text: $notes, axis: .vertical)
                         .lineLimit(3...6)
                 }
-                Section("How do you feel?") {
-                    HStack {
-                        Text("Nausea")
-                        Spacer()
-                        Stepper("\(nausea)", value: $nausea, in: 0...5)
-                    }
-                    HStack {
-                        Text("Appetite")
-                        Spacer()
-                        Stepper("\(appetite)", value: $appetite, in: 0...5)
-                    }
-                    HStack {
-                        Text("Food noise")
-                        Spacer()
-                        Stepper("\(foodNoise)", value: $foodNoise, in: 0...5)
-                    }
-                    HStack {
-                        Text("Wellbeing")
-                        Spacer()
-                        Stepper("\(wellbeing)", value: $wellbeing, in: 0...5)
-                    }
+                Section {
+                    FeelingRow(title: "Nausea", value: $nausea)
+                    FeelingRow(title: "Appetite", value: $appetite)
+                    FeelingRow(title: "Food noise", value: $foodNoise)
+                    FeelingRow(title: "Wellbeing", value: $wellbeing)
+                } header: {
+                    Text("How do you feel?")
+                } footer: {
+                    Text("0 to 5. Leave any you don’t want to rate.")
                 }
                 healthContextSection
+                Section {
+                    Button("Delete this \(isPillPlan ? "pill" : "shot")", role: .destructive) { confirmDelete = true }
+                }
             }
             .navigationTitle("Details")
             .navigationBarTitleDisplayMode(.inline)
@@ -77,12 +82,18 @@ struct EditEventSheet: View {
         .onAppear {
             timestamp = event.timestamp
             doseMg = event.doseMg
-            site = event.injectionSite ?? .abdomen
+            site = event.injectionSite
             notes = event.userNotes ?? ""
-            nausea = event.nausea ?? 0
-            appetite = event.appetite ?? 0
-            foodNoise = event.foodNoise ?? 0
-            wellbeing = event.wellbeing ?? 0
+            nausea = event.nausea ?? FeelingRow.unrated
+            appetite = event.appetite ?? FeelingRow.unrated
+            foodNoise = event.foodNoise ?? FeelingRow.unrated
+            wellbeing = event.wellbeing ?? FeelingRow.unrated
+        }
+        .confirmationDialog("Delete this entry?", isPresented: $confirmDelete, titleVisibility: .visible) {
+            Button("Delete", role: .destructive) { delete() }
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text("This removes the dose and its details. It can’t be undone.")
         }
         .alert(
             "Couldn't save",
@@ -176,10 +187,10 @@ struct EditEventSheet: View {
             event.injectionSite = site
         }
         event.userNotes = notes.isEmpty ? nil : notes
-        event.nausea = nausea
-        event.appetite = appetite
-        event.foodNoise = foodNoise
-        event.wellbeing = wellbeing
+        event.nausea = FeelingRow.stored(nausea)
+        event.appetite = FeelingRow.stored(appetite)
+        event.foodNoise = FeelingRow.stored(foodNoise)
+        event.wellbeing = FeelingRow.stored(wellbeing)
 
         if timestampChanged {
             let plan = PlanStore.currentPlan(in: modelContext)
@@ -197,9 +208,43 @@ struct EditEventSheet: View {
             saveError = "The entry could not be saved. Please try again."
             return
         }
-        if timestampChanged {
-            DoseRoutineService.historyDidChange(in: modelContext)
-        }
+        DoseRoutineService.historyDidChange(in: modelContext)
         dismiss()
+    }
+
+    private func delete() {
+        isDeleted = true
+        modelContext.delete(event)
+        do {
+            try modelContext.save()
+        } catch {
+            modelContext.rollback()
+            isDeleted = false
+            saveError = "The entry could not be deleted. Please try again."
+            return
+        }
+        DoseRoutineService.historyDidChange(in: modelContext)
+        dismiss()
+    }
+}
+
+/// A 0 to 5 rating that starts unrated and can be cleared again.
+struct FeelingRow: View {
+    static let unrated = -1
+    let title: String
+    @Binding var value: Int
+
+    static func stored(_ value: Int) -> Int? { value == unrated ? nil : value }
+
+    var body: some View {
+        Stepper(value: $value, in: Self.unrated...5) {
+            HStack {
+                Text(title)
+                Spacer()
+                Text(value == Self.unrated ? "–" : "\(value)")
+                    .monospacedDigit()
+                    .foregroundStyle(.secondary)
+            }
+        }
     }
 }
