@@ -1,2 +1,4 @@
-Novo: dnevne GLP-1 tablete (Wegovy tableta, Rybelsus, Foundayo). Jedan dodir bilježi današnju tabletu i pokreće odbrojavanje čekanja na početnom zaslonu, widgetu i Apple Watchu.
-Pro dodaje odbrojavanje na zaključanom zaslonu i podsjetnike za nadopunu.
+• Bilježite bez otvaranja aplikacije: dodirnite „Took it” u podsjetniku ili koristite Siri i aplikaciju Prečaci.
+• Uzeli ste ranije? Unesite stvarno vrijeme i čekanje se računa od tada. Dodirnite dan u tjednoj traci ili u novom kalendaru povijesti da nadopunite propušteni unos.
+• Novi widget za zaključani zaslon: sljedeća injekcija, današnja tableta ili kraj čekanja.
+• Ispravci pogrešaka.

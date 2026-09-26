@@ -1,2 +1,4 @@
-Novità: compresse giornaliere di GLP-1 (Wegovy in compresse, Rybelsus, Foundayo). Un tocco registra la compressa di oggi e avvia il timer di attesa in Home, nel widget e su Apple Watch.
-Pro aggiunge il conto alla rovescia nella schermata di blocco e i promemoria di riacquisto.
+• Registra senza aprire l’app: tocca «Took it» su un promemoria, oppure usa Siri e l’app Comandi.
+• Presa prima? Inserisci l’ora reale e l’attesa parte da lì. Tocca un giorno della settimana o del nuovo calendario della cronologia per recuperare una dose non registrata.
+• Nuovo widget per la schermata di blocco: prossima iniezione, pillola di oggi o fine dell’attesa.
+• Correzioni di bug.

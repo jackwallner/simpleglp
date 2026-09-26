@@ -1,2 +1,4 @@
-Yeni: günlük GLP-1 tabletleri (Wegovy tablet, Rybelsus, Foundayo). Tek dokunuş bugünkü tableti kaydeder ve Ana ekranda, widget'ta ve Apple Watch'ta bekleme zamanlayıcısını başlatır.
-Pro, kilit ekranında geri sayım ve yenileme hatırlatıcıları ekler.
+• Uygulamayı açmadan kaydet: hatırlatmada “Took it”a dokun ya da Siri ve Kestirmeler uygulamasını kullan.
+• Daha önce mi aldın? Gerçek saati gir, bekleme süresi oradan başlasın. Unutulan bir kaydı tamamlamak için haftalık şeritte veya yeni geçmiş takviminde bir güne dokun.
+• Yeni kilit ekranı widget’ı: sonraki enjeksiyon, bugünün hapı ya da beklemenin bitişi.
+• Hata düzeltmeleri.

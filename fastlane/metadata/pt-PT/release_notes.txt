@@ -1,2 +1,4 @@
-Novo: comprimidos diários de GLP-1 (Wegovy em comprimido, Rybelsus, Foundayo). Um toque regista o comprimido do dia e inicia o temporizador de espera no ecrã principal, no widget e no Apple Watch.
-O Pro acrescenta a contagem decrescente no ecrã bloqueado e lembretes de reposição.
+• Registe sem abrir a app: toque em “Took it” no lembrete ou use a Siri e a app Atalhos.
+• Tomou mais cedo? Registe a hora real e a espera conta a partir daí. Toque num dia da semana ou no novo calendário do histórico para completar um registo esquecido.
+• Novo widget do ecrã bloqueado: próxima injeção, comprimido de hoje ou fim da espera.
+• Correções de erros.

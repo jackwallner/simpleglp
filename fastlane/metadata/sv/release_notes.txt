@@ -1,2 +1,4 @@
-Nytt: dagliga GLP-1-tabletter (Wegovy-tablett, Rybelsus, Foundayo). Ett tryck loggar dagens tablett och startar väntetimern på Hem, i widgeten och på Apple Watch.
-Pro lägger till nedräkning på låsskärmen och påminnelser om påfyllning.
+• Logga utan att öppna appen: tryck på ”Took it” i en påminnelse, eller använd Siri och appen Genvägar.
+• Tog du den tidigare? Ange den verkliga tiden så räknas väntetiden därifrån. Tryck på en dag i veckoraden eller i den nya historikkalendern för att fylla i en missad loggning.
+• Ny widget för låsskärmen: nästa spruta, dagens tablett eller när väntan är slut.
+• Buggfixar.

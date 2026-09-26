@@ -1,2 +1,4 @@
-Novedad: pastillas diarias de GLP-1 (Wegovy en pastilla, Rybelsus, Foundayo). Un toque registra la pastilla del día e inicia el temporizador de espera en Inicio, el widget y el Apple Watch.
-Pro añade la cuenta atrás en la pantalla de bloqueo y recordatorios de reposición.
+• Registra sin abrir la app: toca «Took it» en un recordatorio o usa Siri y la app Atajos.
+• ¿La tomaste antes? Registra la hora real y la espera cuenta desde entonces. Toca un día de la semana o del nuevo calendario del historial para completar un registro olvidado.
+• Nuevo widget de pantalla bloqueada: próxima inyección, pastilla de hoy o fin de la espera.
+• Correcciones de errores.

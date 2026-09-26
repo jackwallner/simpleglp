@@ -1,2 +1,4 @@
-Nouveau : comprimés quotidiens de GLP-1 (Wegovy en comprimé, Rybelsus, Foundayo). Un toucher consigne le comprimé du jour et lance la minuterie d'attente sur l'accueil, le widget et l'Apple Watch.
-Pro ajoute le compte à rebours sur l'écran verrouillé et des rappels de renouvellement.
+• Enregistrez sans ouvrir l’app : touchez « Took it » sur un rappel, ou utilisez Siri et l’app Raccourcis.
+• Pris plus tôt ? Indiquez l’heure réelle, l’attente compte à partir de là. Touchez un jour de la semaine ou du nouveau calendrier de l’historique pour rattraper un oubli.
+• Nouveau widget d’écran verrouillé : prochaine injection, comprimé du jour ou fin de l’attente.
+• Corrections de bugs.

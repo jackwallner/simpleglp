@@ -1,2 +1,4 @@
-Neu: tägliche GLP-1-Tabletten (Wegovy-Tablette, Rybelsus, Foundayo). Ein Tippen erfasst die heutige Tablette und startet den Warte-Timer auf dem Startbildschirm, im Widget und auf der Apple Watch.
-Pro ergänzt einen Countdown auf dem Sperrbildschirm und Nachfüll-Erinnerungen.
+• Erfassen, ohne die App zu öffnen: Tippe in der Erinnerung auf „Took it“ oder nutze Siri und die Kurzbefehle-App.
+• Früher genommen? Trage die echte Uhrzeit ein, die Wartezeit zählt ab dann. Tippe auf einen Tag in der Wochenleiste oder im neuen Verlaufskalender, um eine vergessene Einnahme nachzutragen.
+• Neues Sperrbildschirm-Widget: nächste Spritze, heutige Tablette oder Ende der Wartezeit.
+• Fehlerbehebungen.

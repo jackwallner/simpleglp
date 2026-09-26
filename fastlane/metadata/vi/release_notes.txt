@@ -1,2 +1,4 @@
-Mới: viên uống GLP-1 hằng ngày (Wegovy dạng viên, Rybelsus, Foundayo). Một chạm ghi lại viên thuốc hôm nay và bắt đầu hẹn giờ chờ trên Màn hình chính, widget và Apple Watch.
-Pro bổ sung đếm ngược trên Màn hình khóa và nhắc mua thêm thuốc.
+• Ghi lại mà không cần mở app: chạm “Took it” trên lời nhắc, hoặc dùng Siri và app Phím tắt.
+• Đã uống sớm hơn? Nhập giờ thực tế và thời gian chờ tính từ lúc đó. Chạm vào một ngày trên dải tuần hoặc lịch lịch sử mới để bổ sung lần ghi bị sót.
+• Widget Màn hình khóa mới: mũi tiêm tiếp theo, viên thuốc hôm nay hoặc lúc hết thời gian chờ.
+• Sửa lỗi.

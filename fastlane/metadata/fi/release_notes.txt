@@ -1,2 +1,4 @@
-Uutta: päivittäiset GLP-1-tabletit (Wegovy-tabletti, Rybelsus, Foundayo). Yksi napautus kirjaa päivän tabletin ja käynnistää odotusajastimen Kotiin, widgettiin ja Apple Watchiin.
-Pro lisää lukitusnäytön ajastimen ja muistutukset uusimisesta.
+• Kirjaa avaamatta appia: napauta muistutuksessa ”Took it” tai käytä Siriä ja Pikakomennot-appia.
+• Otitko aiemmin? Kirjaa todellinen aika, niin odotus lasketaan siitä. Napauta päivää viikkorivillä tai uudessa historiakalenterissa täydentääksesi unohtuneen kirjauksen.
+• Uusi lukitusnäytön widget: seuraava pistos, päivän tabletti tai odotuksen päättyminen.
+• Virhekorjauksia.

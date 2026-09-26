@@ -1,2 +1,4 @@
-Baru: pil GLP-1 harian (Wegovy pil, Rybelsus, Foundayo). Sekali ketuk mencatat pil hari ini dan memulai timer tunggu di Beranda, widget, dan Apple Watch.
-Pro menambahkan hitung mundur di Layar Terkunci dan pengingat isi ulang.
+• Catat tanpa membuka app: ketuk “Took it” di pengingat, atau gunakan Siri dan app Pintasan.
+• Sudah diminum lebih awal? Masukkan waktu sebenarnya dan waktu tunggu dihitung dari situ. Ketuk hari di strip minggu atau kalender riwayat baru untuk melengkapi catatan yang terlewat.
+• Widget Layar Terkunci baru: suntikan berikutnya, pil hari ini, atau kapan waktu tunggu berakhir.
+• Perbaikan bug.

@@ -1,2 +1,4 @@
-Nieuw: dagelijkse GLP-1-tabletten (Wegovy-tablet, Rybelsus, Foundayo). Eén tik legt de tablet van vandaag vast en start de wachttimer op het beginscherm, in de widget en op de Apple Watch.
-Pro voegt een aftelling op het toegangsscherm en herinneringen om bij te bestellen toe.
+• Registreren zonder de app te openen: tik op ‘Took it’ in een herinnering, of gebruik Siri en de Opdrachten-app.
+• Eerder genomen? Vul de echte tijd in, de wachttijd telt vanaf dan. Tik op een dag in de weekbalk of de nieuwe geschiedeniskalender om een vergeten dosis aan te vullen.
+• Nieuwe toegangsschermwidget: volgende injectie, pil van vandaag of einde van de wachttijd.
+• Bugfixes.

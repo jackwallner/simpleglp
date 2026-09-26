@@ -1,2 +1,4 @@
-Nou: comprimate zilnice GLP-1 (Wegovy comprimat, Rybelsus, Foundayo). O atingere înregistrează comprimatul de azi și pornește cronometrul de așteptare pe ecranul principal, în widget și pe Apple Watch.
-Pro adaugă numărătoarea inversă pe ecranul blocat și mementouri de reaprovizionare.
+• Înregistrează fără să deschizi aplicația: atinge „Took it” în memento sau folosește Siri și aplicația Scurtături.
+• Ai luat-o mai devreme? Introdu ora reală și așteptarea se numără de atunci. Atinge o zi din bara săptămânii sau din noul calendar al istoricului pentru a completa o înregistrare uitată.
+• Widget nou pentru ecranul blocat: următoarea injecție, pastila de azi sau finalul așteptării.
+• Remedieri de erori.

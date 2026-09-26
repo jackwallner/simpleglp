@@ -1,2 +1,4 @@
-Baharu: pil GLP-1 harian (pil Wegovy, Rybelsus, Foundayo). Satu ketikan merekod pil hari ini dan memulakan pemasa menunggu di Laman Utama, widget dan Apple Watch.
-Pro menambah kira detik di Skrin Kunci dan peringatan isi semula.
+• Log tanpa membuka app: ketik “Took it” pada peringatan, atau guna Siri dan app Pintasan.
+• Sudah ambil lebih awal? Masukkan masa sebenar dan masa menunggu dikira dari situ. Ketik hari pada jalur minggu atau kalendar sejarah baharu untuk melengkapkan log yang terlepas.
+• Widget Skrin Kunci baharu: suntikan seterusnya, pil hari ini atau bila masa menunggu tamat.
+• Pembaikan pepijat.

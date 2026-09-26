@@ -1,2 +1,4 @@
-Újdonság: napi GLP-1 tabletták (Wegovy tabletta, Rybelsus, Foundayo). Egy koppintás rögzíti a mai tablettát, és elindítja a várakozási időzítőt a kezdőképernyőn, a widgeten és az Apple Watchon.
-A Pro zárolási képernyős visszaszámlálót és utánpótlási emlékeztetőket ad.
+• Rögzíts az app megnyitása nélkül: koppints az emlékeztetőben a „Took it” gombra, vagy használd a Sirit és a Parancsok appot.
+• Korábban vetted be? Add meg a valódi időpontot, és a várakozás onnan számít. Koppints egy napra a heti sávban vagy az új előzménynaptárban egy kimaradt bejegyzés pótlásához.
+• Új zárolási képernyő widget: következő injekció, mai tabletta vagy a várakozás vége.
+• Hibajavítások.

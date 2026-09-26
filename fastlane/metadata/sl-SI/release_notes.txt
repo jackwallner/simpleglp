@@ -1,2 +1,4 @@
-Novo: dnevne tablete GLP-1 (Wegovy v tabletah, Rybelsus, Foundayo). En dotik zabeleži današnjo tableto in zažene odštevanje čakanja na začetnem zaslonu, v pripomočku in na uri Apple Watch.
-Pro doda odštevanje na zaklenjenem zaslonu in opomnike za dopolnitev zaloge.
+• Beležite brez odpiranja aplikacije: v opomniku tapnite »Took it« ali uporabite Siri in aplikacijo Bližnjice.
+• Ste jo vzeli prej? Vnesite pravi čas in čakanje se šteje od takrat. Tapnite dan v tedenskem traku ali v novem koledarju zgodovine, da dopolnite pozabljen vnos.
+• Nov pripomoček za zaklenjen zaslon: naslednja injekcija, današnja tableta ali konec čakanja.
+• Popravki napak.
