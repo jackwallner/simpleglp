@@ -1,4 +1,4 @@
-# Simple GLP — Project Guide
+# Simple GLP Project Guide
 
 GLP-1 tracker for weekly shots and daily pills (Wegovy pill, Foundayo, Rybelsus):
 log the dose, see the schedule, and for pills run the wait-before-eating
@@ -12,10 +12,10 @@ sim lease owner `simpleglp`. App Store ID `6770137909`.
 - RevenueCat, gate is `StoreService.isProUnlocked`
 
 ## Targets / bundle IDs
-- `SimpleGLP` — `com.jackwallner.glp`
-- `SimpleGLPWidget` — `.widget`
-- `SimpleGLPWatch` — `.watch`
-- `SimpleGLPTests` — `.tests`, `SimpleGLPUITests` — `.uitests`
+- `SimpleGLP`: `com.jackwallner.glp`
+- `SimpleGLPWidget`: `.widget`
+- `SimpleGLPWatch`: `.watch`
+- `SimpleGLPTests`: `.tests`, `SimpleGLPUITests` — `.uitests`
 - App Group: `group.com.jackwallner.glp`
 
 ## Architecture
@@ -27,9 +27,9 @@ Anything a glance surface needs has to live there or reach it through the App
 Group.
 
 `SimpleGLP/` is the phone app:
-- `Models/` — `GLPModels`, `ProAlertPreferences`
+- `Models/`: `GLPModels`, `ProAlertPreferences`
 - `Services/`
-  - `ShotCaptureCoordinator` — the log path every surface goes through
+  - `ShotCaptureCoordinator`: the log path every surface goes through
   - `DoseIntents`: Siri / Shortcuts / Action Button (`LogDoseIntent`,
     `DoseStatusIntent`). Hands-free logs (these and the reminder's "Took it"
     action) pass `deferHealthContext: true`, check `DoseRoutineService.alreadyLogged`
@@ -40,15 +40,15 @@ Group.
     and the next-dose arithmetic. Daily plans match by calendar day; `DailyAdherence`
     (streak) and `SupplyMath` (refills) live in `ScheduleEngine.swift`
   - `ReminderService`, `ProactiveAlertsEngine` — local notifications
-  - `HealthKitService` — the optional Health reads behind Insights
+  - `HealthKitService`: the optional Health reads behind Insights
   - `ExportService` / `ImportService`, `StoreService`, `PhoneWatchSession`,
     `DiagnosticsService`, `ConversionDiagnostics`
-- `Views/` — `RootTabView`, `HomeView` (`PillRoutineView` for pills), `SupplyView`,
+- `Views/`: `RootTabView`, `HomeView` (`PillRoutineView` for pills), `SupplyView`,
   `HistoryView` (`MonthAdherenceView` for pills), `InsightsView`, `LogEarlierSheet`
   (log at the real time taken, or a missed day),
   `OnboardingView`, `SimplePaywallView`, `TrialOfferSheet`, `SettingsView`,
   `ProAlertsConfigView`
-- `Utilities/` — `AppTheme`, `AppEnvironment`, `PaywallScreenshotMode`
+- `Utilities/`: `AppTheme`, `AppEnvironment`, `PaywallScreenshotMode`
 
 ## Rules that hold everywhere
 - **Free vs Pro.** Logging, the schedule, reminders, the in-app pill countdown +
@@ -84,4 +84,4 @@ Group.
 
 ---
 Shared iOS conventions (build, simulator, release/TestFlight, ASC key, signing,
-review funnel, gotchas): always-loaded global CLAUDE.md + the `ios-dev` skill.
+review funnel, gotchas): the global agent rules + the `ios-dev` skill.
