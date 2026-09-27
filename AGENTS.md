@@ -15,7 +15,7 @@ sim lease owner `simpleglp`. App Store ID `6770137909`.
 - `SimpleGLP`: `com.jackwallner.glp`
 - `SimpleGLPWidget`: `.widget`
 - `SimpleGLPWatch`: `.watch`
-- `SimpleGLPTests`: `.tests`, `SimpleGLPUITests` — `.uitests`
+- `SimpleGLPTests`: `.tests`; `SimpleGLPUITests`: `.uitests`
 - App Group: `group.com.jackwallner.glp`
 
 ## Architecture
@@ -36,10 +36,11 @@ Group.
     first, then await `settleBackgroundLog`
   - `DoseRoutineService`: everything after a log/undo/delete (wait notification,
     Live Activity via `LiveActivityService`, reminders, refill alert, glance publish)
-  - `GLPModelStore`, `PlanStore`, `ScheduleEngine` — the dose plan, its cadence,
-    and the next-dose arithmetic. Daily plans match by calendar day; `DailyAdherence`
+  - `GLPModelStore`, `PlanStore`, and `ScheduleEngine` handle the dose plan, its
+    cadence, and next-dose arithmetic. Daily plans match by calendar day;
+    `DailyAdherence`
     (streak) and `SupplyMath` (refills) live in `ScheduleEngine.swift`
-  - `ReminderService`, `ProactiveAlertsEngine` — local notifications
+  - `ReminderService` and `ProactiveAlertsEngine` handle local notifications
   - `HealthKitService`: the optional Health reads behind Insights
   - `ExportService` / `ImportService`, `StoreService`, `PhoneWatchSession`,
     `DiagnosticsService`, `ConversionDiagnostics`
