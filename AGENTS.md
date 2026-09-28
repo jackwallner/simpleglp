@@ -81,7 +81,7 @@ Group.
   shot (`ShotCaptureCoordinator`) and from Settings. App Store ID above.
 - **`scripts/aso-apply-locale-optimizations.py` is stale and renames the app.**
   Do not run it blindly; read it first and prefer the current ASC upload flow.
-  Keyword reasoning lives in `aso-plan.md`.
+  Keyword reasoning lives in `project-docs/marketing/aso-plan.md`.
 
 ---
 Shared iOS conventions (build, simulator, release/TestFlight, ASC key, signing,

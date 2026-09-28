@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Build v1.0.2 metadata: capture-surface subtitle + drug-indexing keywords, per locale.
 
-Strategy (see aso-plan.md + 2026-06-29 per-region SERP research):
+Strategy (see project-docs/marketing/aso-plan.md + 2026-06-29 per-region SERP research):
 - Name: keep existing localized "Simple GLP / GLP-1 Shot Tracker" (untouched).
 - Subtitle: capture-surface wedge ("GLP1 <shot> · Widget & Watch"), localized. This is
   conversion copy; no market is won on a drug-name subtitle (every competitor stuffs them).
