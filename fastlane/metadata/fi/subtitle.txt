@@ -1,1 +1,1 @@
-Ilmainen, yksityinen loki
+Pistos- ja pilleriloki
