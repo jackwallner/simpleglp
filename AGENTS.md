@@ -77,12 +77,17 @@ Group.
   ("shot" vs "pill"); never hardcode "shot" in shared UI.
 - Debug seeds: `-uitesting -GLPScreenshotSeed` (weekly shot); add
   `-GLPScreenshotPill` for a pill user mid-countdown.
-- **Review funnel:** `ReviewPromptTracker.recordPositiveMoment()` after a logged
-  shot (`ShotCaptureCoordinator`) and from Settings. App Store ID above.
+- **Ratings:** no in-app rating question (App Review 5.6.1). After a logged
+  dose (`ShotCaptureCoordinator`) or a finished CSV export, `RootTabView` calls
+  the system `requestReview()` about 3.5s later if One Tap or Settings is in
+  front, no sheet, alert or trial pitch is up and notification permission is
+  already answered (from the 2nd launch, 30-day cooldown). A blocked ask stays
+  pending for the next moment. Settings has separate "Send Feedback" and
+  "Rate Simple GLP" rows. App Store ID above.
 - **`scripts/aso-apply-locale-optimizations.py` is stale and renames the app.**
   Do not run it blindly; read it first and prefer the current ASC upload flow.
   Keyword reasoning lives in `project-docs/marketing/aso-plan.md`.
 
 ---
 Shared iOS conventions (build, simulator, release/TestFlight, ASC key, signing,
-review funnel, gotchas): the global agent rules + the `ios-dev` skill.
+ratings, gotchas): the global agent rules + the `ios-dev` skill.

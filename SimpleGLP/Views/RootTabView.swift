@@ -1,6 +1,8 @@
 import StoreKit
 import SwiftData
 import SwiftUI
+import UIKit
+import UserNotifications
 @preconcurrency import RevenueCat
 
 struct RootTabView: View {
@@ -15,7 +17,6 @@ struct RootTabView: View {
     /// Count-only awareness of logged shots. Drives the first-shot trial trigger
     /// and the existing-user catch-up without hydrating full events on every change.
     @Query private var events: [ShotEvent]
-    @StateObject private var reviewPromptCoordinator = ReviewPromptCoordinator.shared
     @State private var selectedTab = 0
     /// True once the first-run paywall has actually been presented this session
     /// (confirmed by the sheet's `.onAppear`). `hasSeenFirstRunOffer` is consumed only
@@ -25,14 +26,14 @@ struct RootTabView: View {
     /// actually presented. A watchdog resets a dropped attempt (present rejected because
     /// a permission dialog grabbed the window) so a later scenePhase→active retry works.
     @State private var firstRunPaywallPending = false
-    /// Single source of truth for every root-level promo / review sheet. One
+    /// Single source of truth for every root-level promo sheet. One
     /// `.sheet(item:)` instead of stacked `.sheet(isPresented:)` modifiers
     /// guarantees only one ever presents — stacked sheets on the same view can
     /// race and present an empty shell.
     @State private var activeSheet: RootPromoSheet?
-    @State private var reviewPromptInitialStep: ReviewPromptSheet.Step = .enjoyment
     @State private var reviewPromptShownThisSession = false
-    @State private var pendingNativeReviewAfterDismiss = false
+    /// A trial pitch is waiting out its delay. The rating ask never runs into it.
+    @State private var trialPitchScheduled = false
     /// One Pro moment per session, shared across the first-run paywall and every
     /// trial-offer trigger so they never stack back-to-back.
     @State private var paywallShownThisSession = false
@@ -63,7 +64,6 @@ struct RootTabView: View {
         case firstRunPaywall
         case trialOffer
         case trialPaywall
-        case reviewPrompt
         var id: String { rawValue }
     }
 
@@ -176,23 +176,10 @@ struct RootTabView: View {
             case .trialPaywall:
                 SimplePaywallView(paywallImpressionId: "simpleglp_trial_sheet")
                     .environmentObject(store)
-            case .reviewPrompt:
-                ReviewPromptSheet(initialStep: reviewPromptInitialStep, onFinish: handleReviewPromptFinish)
             }
         }
         .onReceive(NotificationCenter.default.publisher(for: .glpPositiveMomentForReview)) { _ in
-            scheduleReviewPromptAfterPositiveMoment()
-        }
-        .onChange(of: reviewPromptCoordinator.pendingPresentation) { _, presentation in
-            guard let presentation else { return }
-            defer { reviewPromptCoordinator.clear() }
-            guard activeSheet == nil else { return }
-            switch presentation {
-            case .enjoymentPrompt:
-                presentReviewPrompt(step: .enjoyment)
-            case .feedbackOnly:
-                presentReviewPrompt(step: .feedback)
-            }
+            scheduleReviewRequestAfterPositiveMoment()
         }
         .onReceive(NotificationCenter.default.publisher(for: .glpFirstShotLogged)) { _ in
             evaluateFirstShotTrialOffer()
@@ -313,8 +300,10 @@ struct RootTabView: View {
               hasTrialOffer
         else { return }
         let epoch = foregroundEpoch
+        trialPitchScheduled = true
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 4_000_000_000)
+            trialPitchScheduled = false
             guard epoch == foregroundEpoch else { return }
             presentTrialOfferIfReady(source: .firstShot)
         }
@@ -330,8 +319,10 @@ struct RootTabView: View {
               events.count > 0
         else { return }
         let epoch = foregroundEpoch
+        trialPitchScheduled = true
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 3_000_000_000)
+            trialPitchScheduled = false
             guard epoch == foregroundEpoch else { return }
             presentTrialOfferIfReady(source: .existingUser)
         }
@@ -427,10 +418,10 @@ struct RootTabView: View {
         }
     }
 
-    /// Single dismissal handler for the root promo / review sheet. Runs trial-purchase
-    /// cleanup and the two deferred follow-ups (chained paywall, native review prompt)
-    /// that must fire only after the sheet has fully dismissed. Both follow-ups are
-    /// gated on flags only their own flow sets, so this is safe to run for any sheet.
+    /// Single dismissal handler for the root promo sheet. Runs trial-purchase cleanup
+    /// and the chained paywall, which must fire only after the sheet has fully
+    /// dismissed. Every root sheet is a pitch, so a dismissal never leads into a
+    /// rating request.
     private func handleRootSheetDismiss() {
         trialPurchaseInFlight = false
         trialPurchaseError = nil
@@ -446,49 +437,52 @@ struct RootTabView: View {
             pendingPaywallAfterTrialDismiss = false
             activeSheet = .trialPaywall
         }
-        if pendingNativeReviewAfterDismiss {
-            pendingNativeReviewAfterDismiss = false
-            requestReview()
-        }
     }
 
-    private func scheduleReviewPromptAfterPositiveMoment() {
-        guard ReviewPromptTracker.shouldShowAfterPositiveMoment(hasCompletedSetup: hasCompletedOnboarding),
+    /// The rating ask after a positive moment: Apple's own prompt, no question in
+    /// front of it. Waits for the log animation to settle, then asks only if the
+    /// screen is still clear and no permission question is open. A blocked ask
+    /// keeps the moment pending in the tracker and the next moment asks.
+    private func scheduleReviewRequestAfterPositiveMoment() {
+        guard ReviewPromptTracker.shouldRequestAfterPositiveMoment(hasCompletedSetup: hasCompletedOnboarding),
               !reviewPromptShownThisSession,
-              reviewPromptTabAllowed,
-              activeSheet == nil
+              isClearForReviewRequest
         else { return }
 
         let epoch = foregroundEpoch
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 3_500_000_000)
-            guard epoch == foregroundEpoch,
-                  reviewPromptTabAllowed,
-                  activeSheet == nil,
-                  ReviewPromptTracker.shouldShowAfterPositiveMoment(hasCompletedSetup: hasCompletedOnboarding)
+            // A foreground log may have raised the notification permission alert.
+            // While that question is still open, never stack the rating prompt on it.
+            let notifications = await UNUserNotificationCenter.current().notificationSettings()
+            guard notifications.authorizationStatus != .notDetermined,
+                  epoch == foregroundEpoch,
+                  !reviewPromptShownThisSession,
+                  isClearForReviewRequest,
+                  ReviewPromptTracker.shouldRequestAfterPositiveMoment(hasCompletedSetup: hasCompletedOnboarding)
             else { return }
-            ReviewPromptTracker.consumePendingPositiveMoment()
-            presentReviewPrompt(step: .enjoyment)
+            reviewPromptShownThisSession = true
+            ReviewPromptTracker.markShown()
+            requestReview()
         }
     }
 
-    private func handleReviewPromptFinish(_ outcome: ReviewPromptDismissOutcome) {
-        // Set the deferred follow-up flag before dismissing so `handleRootSheetDismiss`
-        // fires the native review prompt once the sheet closes.
-        if outcome == .enjoyedMaybeLater {
-            pendingNativeReviewAfterDismiss = true
-        }
-        activeSheet = nil
+    /// One Tap (dose logged) or Settings (export done) is in front, the app is
+    /// active, no trial pitch is queued, and nothing is presented anywhere: no
+    /// root promo, Home or Settings sheet, alert, or share sheet.
+    private var isClearForReviewRequest: Bool {
+        (selectedTab == 0 || selectedTab == 3)
+            && scenePhase == .active
+            && activeSheet == nil
+            && !trialPitchScheduled
+            && !Self.isAnythingPresented
     }
 
-    private func presentReviewPrompt(step: ReviewPromptSheet.Step) {
-        reviewPromptInitialStep = step
-        reviewPromptShownThisSession = true
-        activeSheet = .reviewPrompt
-    }
-
-    /// Passive prompts only on One Tap (shot logged) or Settings (export success).
-    private var reviewPromptTabAllowed: Bool {
-        selectedTab == 0 || selectedTab == 3
+    /// Sheets and alerts from any tab present over the window's root controller.
+    private static var isAnythingPresented: Bool {
+        UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap(\.windows)
+            .contains { $0.isKeyWindow && $0.rootViewController?.presentedViewController != nil }
     }
 }

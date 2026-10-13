@@ -10,7 +10,6 @@
 		00E023AAC5A9DD5913BEF449 /* GLPWaitActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE2957177D2AB2471F910D /* GLPWaitActivity.swift */; };
 		0533A1E80A506B9FBD3D4F0A /* DoseIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62176DB93A31794EA0A099CB /* DoseIntents.swift */; };
 		0AAF01DFEED9B922085DF7D0 /* EditEventSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EFA633DF7EE0F692370926 /* EditEventSheet.swift */; };
-		0C50968E42448580FC0564CF /* ReviewPromptSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 277F143457A552933D07C4FB /* ReviewPromptSheet.swift */; };
 		0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423148D3B21BF730934FCC05 /* ImportService.swift */; };
 		0FA2535F49C60C15448E30FD /* PillRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CCBCCCD0813C481A351EA5 /* PillRoutineView.swift */; };
 		1062CD6D096B5D82A413377F /* SimpleGLPWidget.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -23,6 +22,7 @@
 		3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
 		33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72BB2053E8DC8186F41B380 /* SettingsView.swift */; };
+		3B765B5194C6C324E8EEBC3F /* ReviewPromptTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */; };
 		3CB495635750C499935D1F28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 89D51D7C41B4EE64885B9B1C /* RevenueCat */; };
 		416EEB0DD9D55AB6CEA17824 /* PaywallScreenshotMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7642962625DDC83DD536C6CA /* PaywallScreenshotMode.swift */; };
 		41A716256A34FEF0A42657D3 /* GLPGlance.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDF755224D34BFDDF8989136 /* GLPGlance.swift */; };
@@ -155,6 +155,7 @@
 		051EB15D1CA10D7846D38B94 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPApp.swift; sourceTree = "<group>"; };
 		0AE6DC832EA029F3D3C3BFD7 /* LiveActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityService.swift; sourceTree = "<group>"; };
+		0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptTrackerTests.swift; sourceTree = "<group>"; };
 		0DADB560B88F76955016CB54 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
 		14FB9DE7694EACE2FFD1B838 /* LogEarlierSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEarlierSheet.swift; sourceTree = "<group>"; };
 		15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialOfferSheet.swift; sourceTree = "<group>"; };
@@ -162,7 +163,6 @@
 		1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallFunnelUITests.swift; sourceTree = "<group>"; };
 		1F8D51AD66946F59E77221EE /* GLPModelStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModelStore.swift; sourceTree = "<group>"; };
 		23E3314EB4DFCA1877119D00 /* DoseRoutineService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseRoutineService.swift; sourceTree = "<group>"; };
-		277F143457A552933D07C4FB /* ReviewPromptSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptSheet.swift; sourceTree = "<group>"; };
 		28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		2982A1D0CD628DDEBED03EBB /* SimpleGLPWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWatch.entitlements; sourceTree = "<group>"; };
 		31E0ACF179758207836E22C9 /* ProAlertPreferences.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProAlertPreferences.swift; sourceTree = "<group>"; };
@@ -332,6 +332,7 @@
 				3C3BB1F84829233327AB37D1 /* DoseRoutinePolishTests.swift */,
 				8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */,
 				92258E2A91B4142D81240641 /* PillRoutineTests.swift */,
+				0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */,
 				6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */,
 				72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */,
 			);
@@ -416,7 +417,6 @@
 				8FF0051BC21B7D05834D21C3 /* PaywallScreenshotHarness.swift */,
 				39CCBCCCD0813C481A351EA5 /* PillRoutineView.swift */,
 				5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */,
-				277F143457A552933D07C4FB /* ReviewPromptSheet.swift */,
 				A971E826B1D07DAAEBB0A89D /* RootTabView.swift */,
 				E72BB2053E8DC8186F41B380 /* SettingsView.swift */,
 				397B9E408E138DCFE4202926 /* SharedViews.swift */,
@@ -699,7 +699,6 @@
 				991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */,
 				4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */,
 				22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */,
-				0C50968E42448580FC0564CF /* ReviewPromptSheet.swift in Sources */,
 				50B7C83B435EB3DF0A133D8E /* ReviewPromptTracker.swift in Sources */,
 				8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */,
 				954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */,
@@ -721,6 +720,7 @@
 				68D0F38366A10ECB715E9A08 /* DoseRoutinePolishTests.swift in Sources */,
 				6F693C5F54297E4117D4F6E1 /* PaywallFunnelTests.swift in Sources */,
 				76499CE2D0D7797D2ADFBCF0 /* PillRoutineTests.swift in Sources */,
+				3B765B5194C6C324E8EEBC3F /* ReviewPromptTrackerTests.swift in Sources */,
 				AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */,
 				B3F413CB28D74B364C7B6F5B /* StoreQuarantineTests.swift in Sources */,
 			);

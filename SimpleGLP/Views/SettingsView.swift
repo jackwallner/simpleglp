@@ -12,6 +12,14 @@ struct SettingsView: View {
     @State private var showPaywall = false
     @State private var showProAlerts = false
 
+    private static let feedbackMailURL: URL = {
+        var components = URLComponents()
+        components.scheme = "mailto"
+        components.path = "jackwallner@gmail.com"
+        components.queryItems = [URLQueryItem(name: "subject", value: "Simple GLP feedback")]
+        return components.url!
+    }()
+
     var body: some View {
         List {
             Section("Plan") {
@@ -90,9 +98,13 @@ struct SettingsView: View {
                 }
             }
 
+            // Separate feedback and review rows, with no question in front of
+            // either (App Review 5.6.1).
             Section("Help") {
-                Button("Rate or Send Feedback") {
-                    ReviewPromptCoordinator.shared.requestEnjoymentPrompt()
+                Link("Send Feedback", destination: Self.feedbackMailURL)
+                Button("Rate Simple GLP") {
+                    ReviewPromptTracker.markOpenedWriteReview()
+                    UIApplication.shared.open(AppStoreReviewLinks.writeReviewURL)
                 }
                 Link("Support", destination: PaywallLinks.support)
                 Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
