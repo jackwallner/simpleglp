@@ -1,1 +1,1 @@
-Log every GLP-1 shot in one tap. Free, private, and it reminds you before the next one is due.
+现在也支持每日 GLP-1 口服药：轻点一下即可记录 Wegovy 口服片、Rybelsus 或 Foundayo，并开始等待计时。每周注射同样一键记录。

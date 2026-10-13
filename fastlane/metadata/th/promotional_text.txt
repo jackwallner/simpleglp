@@ -1,1 +1,1 @@
-Log every GLP-1 shot in one tap. Free, private, and it reminds you before the next one is due.
+ตอนนี้รองรับยาเม็ด GLP-1 รายวันด้วย: แตะครั้งเดียวบันทึก Wegovy ชนิดเม็ด, Rybelsus หรือ Foundayo และเริ่มตัวจับเวลารอ ส่วนยาฉีดรายสัปดาห์ก็แตะครั้งเดียวเหมือนเดิม
