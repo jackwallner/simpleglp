@@ -27,6 +27,7 @@
   "@graph": [
     {
       "@type": "MobileApplication",
+      "dateModified": "2026-10-15",
       "@id": "https://jackwallner.com/ios/simpleglp/#app",
       "name": "Simple GLP: GLP-1 Dose Tracker",
       "description": "Simple GLP: GLP-1 Dose Tracker is a free GLP-1 shot tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill in one tap from the Home Screen widget, review your dose history, and add optional read-only Apple Health context. It is a logging tool and does not give medical advice or dosing instructions.",
@@ -200,10 +201,10 @@
         .hero img { width: 96px; height: 96px; border-radius: 22px; margin-bottom: 28px; box-shadow: 0 16px 42px rgba(21, 122, 73, 0.18); }
         .hero h1 { font-size: 54px; font-weight: 730; letter-spacing: -1.7px; line-height: 1.06; margin-bottom: 16px; }
         .hero h1 span {
-            color: #2fb86f;
+            color: #29a060;
         }
         .hero .tagline { font-size: 19px; color: #666; line-height: 1.5; max-width: 520px; margin: 0 auto 12px; }
-        .hero .platforms { font-size: 13px; color: #8a857d; letter-spacing: 0.3px; margin-bottom: 34px; }
+        .hero .platforms { font-size: 13px; color: #757069; letter-spacing: 0.3px; margin-bottom: 34px; }
         .download-btn {
             display: inline-block;
             background: #1a1a1a;
@@ -253,16 +254,6 @@
             border-bottom: 1px solid rgba(0,0,0,0.06);
         }
         .feature-card { background: #fff; padding: 36px 32px; }
-        .feature-card .label {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.8px;
-            color: #8a857d;
-            margin-bottom: 10px;
-        }
-        .feature-card .label.pro { color: #1f9d5b; }
         .feature-card h3 { font-size: 20px; font-weight: 600; letter-spacing: -0.2px; margin-bottom: 8px; }
         .feature-card p { font-size: 14px; color: #6e6e73; line-height: 1.55; }
         .privacy { padding: 80px 0; }
@@ -286,17 +277,17 @@
         .more-info-header p { font-size: 17px; color: #6e6e73; }
         .more-info-content { max-width: 720px; margin: 0 auto; }
         .more-info-section { margin-bottom: 40px; }
-        .more-info-section h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #8a857d; margin-bottom: 12px; }
+        .more-info-section h3 { font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.8px; color: #757069; margin-bottom: 12px; }
         .more-info-section p { font-size: 15px; line-height: 1.6; color: #1a1a1a; margin-bottom: 12px; }
         .more-info-section p:last-child { margin-bottom: 0; }
         .more-info-section strong { font-weight: 600; }
         .specs-table { width: 100%; font-size: 14px; border-collapse: collapse; margin-top: 16px; }
         .specs-table td { padding: 8px 0; border-bottom: 1px solid rgba(0,0,0,0.06); }
-        .specs-table td:first-child { color: #8a857d; width: 140px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .specs-table td:first-child { color: #757069; width: 140px; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
         .cta { text-align: center; padding: 64px 24px 80px; background: #fff; border-top: 1px solid rgba(0,0,0,0.06); }
-        .cta p { font-size: 15px; color: #86868b; margin-bottom: 28px; }
-        footer { text-align: center; padding: 20px 24px; font-size: 12px; color: #8a857d; }
-        footer a { margin: 0 10px; color: #8a857d; }
+        .cta p { font-size: 15px; color: #6e6e73; margin-bottom: 28px; }
+        footer { text-align: center; padding: 20px 24px; font-size: 12px; color: #757069; }
+        footer a { margin: 0 10px; color: #757069; }
         @media (max-width: 768px) {
             .hero { padding: 72px 20px 48px; }
             .hero h1 { font-size: 36px; letter-spacing: -1px; }
@@ -343,6 +334,12 @@
             line-height: 1.6;
             color: #6e6e73;
             margin-top: 10px;
+        }
+        .feature-card .tier {
+            margin-top: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1a864d;
         }
     </style>
 </head>
@@ -394,49 +391,41 @@
         </div>
         <div class="features-grid">
             <div class="feature-card">
-                <span class="label">One Tap</span>
                 <h3>Log instantly</h3>
                 <p>Open the app, tap the widget, or use Apple Watch to record a weekly shot or daily pill.</p>
             </div>
             <div class="feature-card">
-                <span class="label">Schedule</span>
                 <h3>Know what is next</h3>
                 <p>Set a weekly shot day or daily pill time, dose, and reminder lead time. Pill plans can include a wait timer set for your routine.</p>
             </div>
             <div class="feature-card">
-                <span class="label">History</span>
                 <h3>See the pattern</h3>
                 <p>Review dose timing, notes, and schedule status. Shot logs can include an injection site; pill plans also show their wait countdown.</p>
             </div>
             <div class="feature-card">
-                <span class="label">HealthKit</span>
                 <h3>Optional context</h3>
                 <p>Read weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein when available.</p>
             </div>
             <div class="feature-card">
-                <span class="label">Insights</span>
                 <h3>Adherence &amp; timing</h3>
                 <p>See your schedule history and timing patterns after logging a few doses. Free, no upgrade required.</p>
             </div>
             <div class="feature-card">
-                <span class="label">Apple Watch</span>
                 <h3>Log from your wrist</h3>
                 <p>A dedicated watch app puts dose logging at your wrist and keeps recent history synced with iPhone.</p>
             </div>
             <div class="feature-card">
-                <span class="label">Export</span>
                 <h3>Your data, portable</h3>
                 <p>Export your full dose history to CSV anytime from Settings. No account, no lock-in.</p>
             </div>
             <div class="feature-card">
-                <span class="label">Privacy</span>
                 <h3>On-device by design</h3>
                 <p>Your dose history and Health context are stored locally using SwiftData and an App Group.</p>
             </div>
             <div class="feature-card">
-                <span class="label pro">Simple GLP Pro</span>
                 <h3>Countdown, supply, and alerts</h3>
                 <p>The pill wait countdown on your Lock Screen and in the Dynamic Island, supply tracking with a refill heads-up, and missed-dose and timing alerts.</p>
+                <p class="tier">Included with Simple GLP Pro</p>
             </div>
         </div>
     </section>
@@ -541,7 +530,7 @@
     </section>
 
     <footer>
-        <div>&copy; 2026 Jack Wallner</div>
+        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-10-15" data-updated>October 15, 2026</time></div>
         <div>
             <a href="glp-1-injection-site-rotation.html">Injection site rotation guide</a>
             <a href="best-glp-1-tracker-app.html">Best GLP-1 tracker app</a>
