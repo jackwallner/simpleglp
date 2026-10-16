@@ -1,4 +1,1 @@
-• Registra sin abrir la app: toca «Took it» en un recordatorio o usa Siri y la app Atajos.
-• ¿La tomaste antes? Registra la hora real y la espera cuenta desde entonces. Toca un día de la semana o del nuevo calendario del historial para completar un registro olvidado.
-• Nuevo widget de pantalla bloqueada: próxima inyección, pastilla de hoy o fin de la espera.
-• Correcciones de errores.
+Mejoras internas y correcciones de errores para que Simple GLP funcione mejor. Gracias por estar aquí.

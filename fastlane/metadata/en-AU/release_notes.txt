@@ -1,4 +1,1 @@
-• Log without opening the app: tap “Took it” on a reminder, or tell Siri “Log my dose in Simple GLP”.
-• Took it earlier? Log the real time and your pill wait counts from then. Tap a day in the week strip or the new History calendar to fill in a missed log.
-• New Lock Screen widget: your next jab, today’s pill, or when your wait ends.
-• Fixes for edited dose times, jabs taken early, and the details sheet.
+Behind-the-scenes improvements and fixes to keep Simple GLP running smoothly. Thank you for being here.

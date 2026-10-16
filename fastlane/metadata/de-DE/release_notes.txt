@@ -1,4 +1,1 @@
-• Erfassen, ohne die App zu öffnen: Tippe in der Erinnerung auf „Took it“ oder nutze Siri und die Kurzbefehle-App.
-• Früher genommen? Trage die echte Uhrzeit ein, die Wartezeit zählt ab dann. Tippe auf einen Tag in der Wochenleiste oder im neuen Verlaufskalender, um eine vergessene Einnahme nachzutragen.
-• Neues Sperrbildschirm-Widget: nächste Spritze, heutige Tablette oder Ende der Wartezeit.
-• Fehlerbehebungen.
+Verbesserungen und Fehlerbehebungen im Hintergrund, damit Simple GLP reibungslos läuft. Danke, dass du dabei bist.

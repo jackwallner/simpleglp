@@ -1,4 +1,1 @@
-• Registra sense obrir l’app: toca «Took it» en un recordatori o fes servir Siri i l’app Dreceres.
-• L’has presa abans? Registra l’hora real i l’espera compta des d’aleshores. Toca un dia de la setmana o del nou calendari de l’historial per completar un registre oblidat.
-• Nou giny de la pantalla bloquejada: propera injecció, pastilla d’avui o final de l’espera.
-• Correccions d’errors.
+Millores internes i correccions d'errors perquè Simple GLP funcioni bé. Gràcies per ser aquí.

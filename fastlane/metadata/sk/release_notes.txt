@@ -1,4 +1,1 @@
-• Zapisujte bez otvorenia apky: ťuknite v pripomienke na „Took it“ alebo použite Siri a apku Skratky.
-• Užili ste ju skôr? Zadajte skutočný čas a čakanie sa počíta od neho. Ťuknutím na deň v týždennom páse alebo v novom kalendári histórie doplníte zabudnutý záznam.
-• Nový widget na zamknutú obrazovku: ďalšia injekcia, dnešná tabletka alebo koniec čakania.
-• Opravy chýb.
+Vylepšenia na pozadí a opravy chýb, aby Simple GLP fungoval hladko. Ďakujeme, že ste tu.

@@ -1,4 +1,1 @@
-• Ghi lại mà không cần mở app: chạm “Took it” trên lời nhắc, hoặc dùng Siri và app Phím tắt.
-• Đã uống sớm hơn? Nhập giờ thực tế và thời gian chờ tính từ lúc đó. Chạm vào một ngày trên dải tuần hoặc lịch lịch sử mới để bổ sung lần ghi bị sót.
-• Widget Màn hình khóa mới: mũi tiêm tiếp theo, viên thuốc hôm nay hoặc lúc hết thời gian chờ.
-• Sửa lỗi.
+Cải tiến phía sau và sửa lỗi để Simple GLP chạy mượt mà. Cảm ơn bạn đã đồng hành.

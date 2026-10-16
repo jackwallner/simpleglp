@@ -1,4 +1,1 @@
-• Registra senza aprire l’app: tocca «Took it» su un promemoria, oppure usa Siri e l’app Comandi.
-• Presa prima? Inserisci l’ora reale e l’attesa parte da lì. Tocca un giorno della settimana o del nuovo calendario della cronologia per recuperare una dose non registrata.
-• Nuovo widget per la schermata di blocco: prossima iniezione, pillola di oggi o fine dell’attesa.
-• Correzioni di bug.
+Miglioramenti dietro le quinte e correzioni di bug per far funzionare Simple GLP senza intoppi. Grazie di esserci.

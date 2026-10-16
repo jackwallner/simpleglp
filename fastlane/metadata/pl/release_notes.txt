@@ -1,4 +1,1 @@
-• Zapisuj bez otwierania aplikacji: stuknij „Took it” w przypomnieniu albo użyj Siri i aplikacji Skróty.
-• Wziąłeś wcześniej? Wpisz prawdziwą godzinę, a czas oczekiwania liczy się od niej. Stuknij dzień na pasku tygodnia lub w nowym kalendarzu historii, aby uzupełnić pominięty wpis.
-• Nowy widżet ekranu blokady: następny zastrzyk, dzisiejsza tabletka lub koniec oczekiwania.
-• Poprawki błędów.
+Ulepszenia w tle i poprawki błędów, aby Simple GLP działał płynnie. Dziękujemy, że jesteś.

@@ -1,4 +1,1 @@
-• Kirjaa avaamatta appia: napauta muistutuksessa ”Took it” tai käytä Siriä ja Pikakomennot-appia.
-• Otitko aiemmin? Kirjaa todellinen aika, niin odotus lasketaan siitä. Napauta päivää viikkorivillä tai uudessa historiakalenterissa täydentääksesi unohtuneen kirjauksen.
-• Uusi lukitusnäytön widget: seuraava pistos, päivän tabletti tai odotuksen päättyminen.
-• Virhekorjauksia.
+Taustaparannuksia ja virhekorjauksia, jotta Simple GLP toimii sujuvasti. Kiitos, että olet mukana.

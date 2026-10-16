@@ -1,4 +1,1 @@
-• Rögzíts az app megnyitása nélkül: koppints az emlékeztetőben a „Took it” gombra, vagy használd a Sirit és a Parancsok appot.
-• Korábban vetted be? Add meg a valódi időpontot, és a várakozás onnan számít. Koppints egy napra a heti sávban vagy az új előzménynaptárban egy kimaradt bejegyzés pótlásához.
-• Új zárolási képernyő widget: következő injekció, mai tabletta vagy a várakozás vége.
-• Hibajavítások.
+Háttérbeli fejlesztések és hibajavítások, hogy a Simple GLP gördülékenyen működjön. Köszönjük, hogy itt vagy.

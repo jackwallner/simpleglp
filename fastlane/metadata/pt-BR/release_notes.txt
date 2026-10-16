@@ -1,4 +1,1 @@
-• Registre sem abrir o app: toque em “Took it” no lembrete ou use a Siri e o app Atalhos.
-• Tomou mais cedo? Registre o horário real e a espera conta a partir dele. Toque em um dia da semana ou no novo calendário do histórico para completar um registro esquecido.
-• Novo widget da Tela Bloqueada: próxima injeção, comprimido de hoje ou fim da espera.
-• Correções de bugs.
+Melhorias nos bastidores e correções de erros para o Simple GLP funcionar melhor. Obrigado por estar aqui.

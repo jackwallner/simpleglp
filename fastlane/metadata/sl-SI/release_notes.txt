@@ -1,4 +1,1 @@
-• Beležite brez odpiranja aplikacije: v opomniku tapnite »Took it« ali uporabite Siri in aplikacijo Bližnjice.
-• Ste jo vzeli prej? Vnesite pravi čas in čakanje se šteje od takrat. Tapnite dan v tedenskem traku ali v novem koledarju zgodovine, da dopolnite pozabljen vnos.
-• Nov pripomoček za zaklenjen zaslon: naslednja injekcija, današnja tableta ali konec čakanja.
-• Popravki napak.
+Izboljšave v ozadju in popravki napak, da Simple GLP deluje gladko. Hvala, da ste z nami.
