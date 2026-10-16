@@ -503,7 +503,11 @@ struct OnboardingView: View {
         VStack(spacing: 10) {
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
-            Button("Get Started") { finishOnboarding() }
+            Button("Get Started") {
+                ConversionDiagnostics.record(.freeVersionChosen)
+                store.syncConversionAttributes()
+                finishOnboarding()
+            }
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
                 .buttonStyle(.plain)
@@ -541,6 +545,7 @@ struct OnboardingView: View {
     private func handleTrialStepAppear() {
         hasSeenFirstRunOffer = true
         hasSeenTrialOffer = true
+        ConversionDiagnostics.record(.trialOfferReached)
         store.trackPaywallImpression(id: "simpleglp_onboarding_trial", oncePerSession: true)
     }
 
@@ -554,16 +559,23 @@ struct OnboardingView: View {
         }
         trialError = nil
         isPurchasing = true
+        ConversionDiagnostics.record(.trialCTATapped)
         Task { @MainActor in
-            defer { isPurchasing = false }
+            defer {
+                isPurchasing = false
+                store.syncConversionAttributes()
+            }
             do {
                 switch try await store.purchase(package) {
                 case .purchased, .pending:
+                    ConversionDiagnostics.record(.purchaseSucceeded)
                     finishOnboarding()
                 case .cancelled:
+                    ConversionDiagnostics.record(.purchaseCancelled)
                     trialError = "Trial wasn't started. Tap again, or choose Get Started."
                 }
             } catch {
+                ConversionDiagnostics.record(.purchaseFailed)
                 trialError = store.lastError ?? "Couldn't start your trial. Please try again."
             }
         }

@@ -39,6 +39,20 @@ final class PaywallFunnelTests: XCTestCase {
         XCTAssertEqual(attributes["pitch_last"], "insights_sheet")
     }
 
+    func testFunnelStepsAreSentAsFleetKeys() {
+        ConversionDiagnostics.recordPitchView(impressionID: "simpleglp_onboarding_trial")
+        ConversionDiagnostics.record(.trialOfferReached)
+        ConversionDiagnostics.record(.trialCTATapped)
+        ConversionDiagnostics.record(.purchaseCancelled)
+        ConversionDiagnostics.record(.trialCTATapped)
+
+        let attributes = ConversionDiagnostics.subscriberAttributes
+        XCTAssertEqual(attributes["funnel_trialOfferReached"], "1")
+        XCTAssertEqual(attributes["funnel_trialCTATapped"], "2")
+        XCTAssertEqual(attributes["funnel_purchaseCancelled"], "1")
+        XCTAssertNil(attributes["funnel_freeVersionChosen"])
+    }
+
     func testNoAttributesBeforeAnyPitchIsSeen() {
         // Someone never shown a paywall has nothing to say about paywalls.
         // Zeros would make them look like a funnel failure.
