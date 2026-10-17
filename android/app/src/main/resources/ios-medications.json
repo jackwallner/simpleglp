@@ -1,0 +1,140 @@
+[
+  {
+    "custom" : false,
+    "doses" : [
+      0.25,
+      0.5,
+      1,
+      2
+    ],
+    "form" : "injection",
+    "name" : "Ozempic",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      0.25,
+      0.5,
+      1,
+      1.7,
+      2.3999999999999999
+    ],
+    "form" : "injection",
+    "name" : "Wegovy",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      2.5,
+      5,
+      7.5,
+      10,
+      12.5,
+      15
+    ],
+    "form" : "injection",
+    "name" : "Mounjaro",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      2.5,
+      5,
+      7.5,
+      10,
+      12.5,
+      15
+    ],
+    "form" : "injection",
+    "name" : "Zepbound",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      0.25,
+      0.5,
+      1,
+      1.7,
+      2.3999999999999999
+    ],
+    "form" : "injection",
+    "name" : "Compounded semaglutide",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      2.5,
+      5,
+      7.5,
+      10,
+      12.5,
+      15
+    ],
+    "form" : "injection",
+    "name" : "Compounded tirzepatide",
+    "wait" : 0
+  },
+  {
+    "custom" : true,
+    "doses" : [
+
+    ],
+    "form" : "injection",
+    "name" : "Other",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      1.5,
+      4,
+      9,
+      25
+    ],
+    "form" : "pill",
+    "name" : "Wegovy pill",
+    "wait" : 30
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      0.80000000000000004,
+      2.5,
+      5.5,
+      9,
+      14.5,
+      17.199999999999999
+    ],
+    "form" : "pill",
+    "name" : "Foundayo",
+    "wait" : 0
+  },
+  {
+    "custom" : false,
+    "doses" : [
+      1.5,
+      3,
+      4,
+      7,
+      9,
+      14
+    ],
+    "form" : "pill",
+    "name" : "Rybelsus",
+    "wait" : 30
+  },
+  {
+    "custom" : true,
+    "doses" : [
+
+    ],
+    "form" : "pill",
+    "name" : "Other pill",
+    "wait" : 0
+  }
+]
