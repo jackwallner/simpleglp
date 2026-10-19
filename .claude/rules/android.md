@@ -53,9 +53,10 @@ Temporary AVD `simpleglp_agent_test`, serial `emulator-5574`. Coordinate with
 other agents first. Do not target `small_phone`, `bridge_agent_test`, or an
 unqualified ADB device. No local emulator, no ADB forwarding.
 
-JDK 17 is required. Keep a verified temporary Temurin 17 runtime at
-`/Users/jackwallner/simpleglp-agent-test/jdk/Contents/Home` on Pro, then set
-`JAVA_HOME` to that path. The temporary runtime is removed after testing. Sync source excluding `build/`,
+JDK 17 is required. Set `JAVA_HOME` to the Pro's installed
+`$HOME/jdks/temurin-17/Contents/Home` (no temporary runtime). Non-connected
+builds and tests use `fm-gradle <tasks>` from `android/`, never `./gradlew` on
+the Air. For serial-targeted connected tests, sync source excluding `build/`,
 `.gradle/`, `local.properties`, and all signing credentials. Create remote
 `local.properties` containing only `sdk.dir=/Users/jackwallner/Library/Android/sdk`.
 
@@ -82,7 +83,7 @@ Shutdown only this test device:
 ssh -o BatchMode=yes -o StrictHostKeyChecking=yes jackwallner@192.168.4.25 '/Users/jackwallner/Library/Android/sdk/platform-tools/adb -s emulator-5574 emu kill; /Users/jackwallner/Library/Android/sdk/platform-tools/adb devices -l'
 ```
 
-Remove only the temporary Simple GLP AVD and synchronized source/runtime when
+Remove only the temporary Simple GLP AVD and synchronized source when
 finished. Preserve every existing Play AVD and account.
 
 ## Platform gaps and Play state
