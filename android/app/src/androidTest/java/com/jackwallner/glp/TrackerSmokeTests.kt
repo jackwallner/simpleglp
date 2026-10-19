@@ -12,6 +12,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.jackwallner.glp.model.*
 import com.jackwallner.glp.data.NotificationService
+import com.jackwallner.glp.data.StoreService
+import kotlinx.coroutines.runBlocking
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Rule
@@ -35,6 +37,23 @@ class TrackerSmokeTests {
     private fun node(text: String) = compose.onNodeWithText(text, useUnmergedTree = true)
     private fun tab(text: String) = compose.onNode(hasText(text) and hasClickAction())
     @After fun close() { scenario?.close() }
+    @Test fun reviewerAccessRejectsWrongCodeAndPersistsValidGrant() = runBlocking {
+        val code = checkNotNull(InstrumentationRegistry.getArguments().getString("reviewCode")) { "Supply the private reviewer code through the local harness." }
+        launch(false)
+        tab("Settings").performClick()
+        node("Version 1.2.2").performScrollTo().performTouchInput { longClick() }
+        node("Reviewer code").performTextInput("wrong")
+        node("Unlock").performClick()
+        node("That code isn't valid.").assertIsDisplayed()
+        assertFalse(context.graph.store.isPro)
+        node("Reviewer code").performTextClearance()
+        node("Reviewer code").performTextInput(code)
+        node("Unlock").performClick()
+        assertTrue(context.graph.store.isPro)
+        context.graph.store.refresh()
+        assertTrue(context.graph.store.isPro)
+        assertTrue(StoreService(context).isPro)
+    }
     @Test fun firstRunSavesPlan() {
         launch()
         repeat(5) { node("Continue").performClick() }

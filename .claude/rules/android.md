@@ -104,3 +104,24 @@ External upload PKCS12, encrypted backup, and app-specific Play SDK key are
 configured locally. Production billing, store pricing, license-tester
 purchases/restore, service-account package access, and final Play declarations
 remain unverified. This session is builds/testing only.
+
+## Pro Play queue checkpoint, 2026-10-18
+
+The queue runs directly on jmbp with its installed JDK21 and SDK; the handoff
+supersedes older Air/SSH examples. One owned `sol-*` emulator and one constrained
+Gradle build at a time. Existing RevenueCat Play credentials are confirmed.
+
+Unaccepted private reviewer access is on `wip/android-port`, pending all build,
+JVM, actual-dialog device, optimized QA and artifact checks. Long-press Settings
+Version to enter the private `SIMPLEGLP_PLAY_REVIEW_CODE` field from existing
+`~/.config/google-play/simpleglp-upload-signing.json`. Only its SHA-256 goes in
+ignored properties. Masked input uses a Password keyboard with autocorrect off.
+The grant stores only the digest, survives RevenueCat refresh and invalidates on
+rotation. Four JVM tests and a private-argument device case cover this path.
+The grant is stored separately from the user's medication records and purchases.
+
+The Play listing/icon and offline products script are prepared. US ladder is
+7.99/31.99/71.99, about 20 percent below the iOS StoreKit reference, with eligible
+seven-day subscription trials and fleet PPP adjustments. No API writes made.
+Feature graphic, real free-screen captures, Android policies and Console work
+remain pending. Keep unfinished work off main.

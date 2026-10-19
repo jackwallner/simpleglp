@@ -8,6 +8,8 @@ import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
@@ -30,7 +32,7 @@ import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable fun RootScreen(graph: AppGraph, activity: MainActivity, automation: Boolean) {
     val tracker = graph.tracker; val store = graph.store; val scope = rememberCoroutineScope()
     var tab by remember { mutableIntStateOf(0) }
@@ -41,6 +43,7 @@ import java.time.format.DateTimeFormatter
     var duplicate by remember { mutableStateOf(false) }
     var deleteAll by remember { mutableStateOf(false) }
     var paywall by remember { mutableStateOf(false) }
+    var reviewer by remember { mutableStateOf(false) }
     var now by remember { mutableStateOf(Instant.now()) }
     var pendingImport by remember { mutableStateOf<String?>(null) }
     val snackbar = remember { SnackbarHostState() }
@@ -166,11 +169,13 @@ import java.time.format.DateTimeFormatter
                         RowAction("Rate Simple GLP") { activity.getSharedPreferences("reviews", Context.MODE_PRIVATE).edit().putBoolean("rated", true).apply(); open(activity, "https://play.google.com/store/apps/details?id=com.jackwallner.glp") }
                         listOf("Support" to "support.html", "Privacy Policy" to "privacy-policy.html", "Terms of Use" to "terms.html").forEach { (label, path) -> RowAction(label) { open(activity, "https://jackwallner.github.io/simpleglp/$path") } }
                         Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", style = MaterialTheme.typography.bodySmall)
+                        Text("Version ${com.jackwallner.glp.BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.combinedClickable(onClick = {}, onLongClick = { reviewer = true }))
                     }
                 }
             }
         }
     }
+    if (reviewer) ReviewerCodeDialog(graph) { reviewer = false }
     if (duplicate) AlertDialog(onDismissRequest = { duplicate = false }, title = { Text("Already logged") }, text = { Text("You've already logged this ${tracker.plan?.form?.noun}. Check History before adding another entry.") }, confirmButton = { TextButton({ duplicate = false; tab = 1 }) { Text("View history") } }, dismissButton = { TextButton({ duplicate = false }) { Text("Cancel") } })
     if (paywall) PaywallScreen(store, activity, { paywall = false }, isPill = tracker.plan?.form == DoseForm.PILL)
     if (message != null) AlertDialog(onDismissRequest = { message = null }, title = { Text("Simple GLP") }, text = { Text(message!!) }, confirmButton = { TextButton({ message = null }) { Text("OK") } })
@@ -180,3 +185,18 @@ import java.time.format.DateTimeFormatter
     if (deleteAll) AlertDialog(onDismissRequest = { deleteAll = false }, title = { Text("Delete all data?") }, text = { Text("Your plan, history, and settings will be removed from this device. Export a CSV first if you want to keep your logs.") }, confirmButton = { TextButton({ tracker.clearAll(); graph.notifications.cancelAll(); deleteAll = false; route = null; tab = 0 }) { Text("Delete all data") } }, dismissButton = { TextButton({ deleteAll = false }) { Text("Cancel") } })
 }
 fun open(context: Context, url: String) { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) } }
+
+@Composable private fun ReviewerCodeDialog(graph: AppGraph, close: () -> Unit) {
+    var code by remember { mutableStateOf("") }
+    var failed by remember { mutableStateOf(false) }
+    AlertDialog(onDismissRequest = close, title = { Text("Reviewer access") }, text = {
+        Column {
+            Text("Enter the code provided in the Play review instructions.")
+            OutlinedTextField(code, { code = it; failed = false }, label = { Text("Reviewer code") }, singleLine = true,
+                keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(keyboardType = androidx.compose.ui.text.input.KeyboardType.Password, autoCorrectEnabled = false),
+                visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation())
+            if (failed) Text("That code isn't valid.", color = MaterialTheme.colorScheme.error)
+        }
+    }, confirmButton = { TextButton({ if (graph.store.activateReviewAccess(code)) close() else failed = true }) { Text("Unlock") } },
+        dismissButton = { TextButton(close) { Text("Cancel") } })
+}

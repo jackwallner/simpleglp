@@ -6,6 +6,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.jackwallner.glp.BuildConfig
+import com.jackwallner.glp.model.ReviewAccess
 import com.revenuecat.purchases.*
 import com.revenuecat.purchases.Package
 import com.revenuecat.purchases.interfaces.UpdatedCustomerInfoListener
@@ -14,7 +15,11 @@ import kotlinx.coroutines.CancellationException
 enum class PurchaseOutcome { PURCHASED, PENDING, CANCELLED }
 
 class StoreService(context: Context) {
-    var isPro by mutableStateOf(false); private set
+    private val reviewPreferences = context.getSharedPreferences("simpleglp-review", Context.MODE_PRIVATE)
+    private val reviewAccess = ReviewAccess(BuildConfig.PLAY_REVIEW_CODE_SHA256,
+        { reviewPreferences.getString("reviewAccessDigest", null) },
+        { digest -> check(reviewPreferences.edit().putString("reviewAccessDigest", digest).commit()) })
+    var isPro by mutableStateOf(reviewAccess.isGranted); private set
     var resolved by mutableStateOf(false); private set
     var packages by mutableStateOf<List<Package>>(emptyList()); private set
     var error by mutableStateOf<String?>(null); private set
@@ -30,9 +35,15 @@ class StoreService(context: Context) {
             configured = true
         } else resolved = true
     }
-    fun forceProForDebug(value: Boolean) { if (BuildConfig.DEBUG) { debugPro = value; isPro = value; resolved = true } }
+    fun activateReviewAccess(code: String): Boolean {
+        if (!reviewAccess.activate(code)) return false
+        isPro = true
+        resolved = true
+        return true
+    }
+    fun forceProForDebug(value: Boolean) { if (BuildConfig.DEBUG) { debugPro = value; isPro = reviewAccess.isGranted || value; resolved = true } }
     private fun apply(info: CustomerInfo) {
-        isPro = debugPro || listOf("GLP Pro", "SimpleGLPPro", "pro").any { info.entitlements.active[it]?.isActive == true }
+        isPro = debugPro || reviewAccess.isGranted || listOf("GLP Pro", "SimpleGLPPro", "pro").any { info.entitlements.active[it]?.isActive == true }
         resolved = true
     }
     suspend fun refresh() {
