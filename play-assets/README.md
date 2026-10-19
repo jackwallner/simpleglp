@@ -6,7 +6,9 @@
   seven-day new-subscriber trials and the fleet PPP curve; no API writes without
   `--apply`.
 
-Feature graphic and four real free-screen captures still need preparation.
+`feature-graphic.svg` is the editable source for the rendered RGB1024x500
+feature graphic, inspected at native size. Four real free-screen captures still
+need preparation.
 Internal verification captures in `project-docs/android/screenshots` are not
-store assets. Signed rebuild, Android policies, reviewer access and Console
-staging remain pending. Do not upload this incomplete asset set.
+store assets. Android policies are under `docs/android/` and app links use them. Signed rebuild,
+reviewer validation and Console staging remain pending. Do not upload this incomplete asset set.

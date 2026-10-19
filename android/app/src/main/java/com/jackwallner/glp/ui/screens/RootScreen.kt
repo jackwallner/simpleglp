@@ -167,7 +167,7 @@ import java.time.format.DateTimeFormatter
                     Panel("Support") {
                         RowAction("Send Feedback") { open(activity, "mailto:jackwallner@gmail.com?subject=Simple%20GLP%20feedback") }
                         RowAction("Rate Simple GLP") { activity.getSharedPreferences("reviews", Context.MODE_PRIVATE).edit().putBoolean("rated", true).apply(); open(activity, "https://play.google.com/store/apps/details?id=com.jackwallner.glp") }
-                        listOf("Support" to "support.html", "Privacy Policy" to "privacy-policy.html", "Terms of Use" to "terms.html").forEach { (label, path) -> RowAction(label) { open(activity, "https://jackwallner.github.io/simpleglp/$path") } }
+                        listOf("Support" to "support.html", "Privacy Policy" to "android/privacy-policy.html", "Terms of Use" to "android/terms.html").forEach { (label, path) -> RowAction(label) { open(activity, "https://jackwallner.github.io/simpleglp/$path") } }
                         Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", style = MaterialTheme.typography.bodySmall)
                         Text("Version ${com.jackwallner.glp.BuildConfig.VERSION_NAME}", style = MaterialTheme.typography.bodySmall, modifier = Modifier.combinedClickable(onClick = {}, onLongClick = { reviewer = true }))
                     }

@@ -241,8 +241,8 @@ fun OnboardingScreen(store: StoreService, activity: MainActivity, onComplete: (P
         }
         Box(Modifier.fillMaxWidth().height(48.dp).testTag("onboarding-footer"), contentAlignment = Alignment.Center) {
             if (trialStep) Row(horizontalArrangement = Arrangement.Center) {
-                TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/terms.html") }, enabled = !purchasing) { Text("Terms") }
-                TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/privacy-policy.html") }, enabled = !purchasing) { Text("Privacy") }
+                TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/android/terms.html") }, enabled = !purchasing) { Text("Terms") }
+                TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/android/privacy-policy.html") }, enabled = !purchasing) { Text("Privacy") }
                 TextButton({ scope.launch { store.restore(); if (store.isPro) finish() else error = store.error } }, enabled = !purchasing && !store.busy) { Text("Restore") }
             } else if (step > 0) TextButton({ step -= 1; error = null }, enabled = !purchasing) { Text("Back") }
         }

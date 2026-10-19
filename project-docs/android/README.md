@@ -6,3 +6,6 @@
 
 Regenerate catalog parity data with `python3 scripts/sync-android-content.py`.
 Inspect signed APK/AAB outputs with `python3 scripts/verify-android-artifacts.py`.
+
+- [Android policies](../../docs/android/README.md): Android data practices, deletion and Google Play terms.
+- [Play assets](../../play-assets/README.md): listing and staging preparation.

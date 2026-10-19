@@ -46,8 +46,8 @@ import kotlinx.coroutines.launch
                 Text("Subscriptions renew automatically unless canceled. Cancel in Google Play > Payments & subscriptions. Any trial converts to the displayed recurring price unless canceled before it ends.", style = MaterialTheme.typography.bodySmall)
                 TextButton({ scope.launch { store.restore(); if (store.isPro) dismiss() } }, enabled = !busy && !store.busy) { Text("Restore purchases") }
                 Row {
-                    TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/privacy-policy.html") }) { Text("Privacy") }
-                    TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/terms.html") }) { Text("Terms") }
+                    TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/android/privacy-policy.html") }) { Text("Privacy") }
+                    TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/android/terms.html") }) { Text("Terms") }
                 }
                 TextButton(dismiss, enabled = !busy) { Text("Not now") }
             }
