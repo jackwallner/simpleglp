@@ -407,10 +407,6 @@ struct OnboardingView: View {
             }
             .padding(18)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.")
-                .font(.caption2)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
         }
         .onAppear(perform: handleTrialStepAppear)
     }
@@ -497,10 +493,19 @@ struct OnboardingView: View {
     }
 
     /// Trial-only content that sits ABOVE the primary CTA (absorbed by the ScrollView
-    /// so it never shifts the button): soft free exit, billing disclosure, error.
+    /// so it never shifts the button): medical disclaimer, soft free exit, billing
+    /// disclosure, error. The disclaimer lives here, not in the scrolling content,
+    /// so it can never fall below the fold behind the CTA zone (App Review 1.4.1).
     @ViewBuilder
     private var trialAboveButton: some View {
         VStack(spacing: 10) {
+            Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.")
+                .font(.caption2)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("onboardingMedicalDisclaimer")
+
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
             Button("Get Started") {
