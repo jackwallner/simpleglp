@@ -125,3 +125,11 @@ The Play listing/icon and offline products script are prepared. US ladder is
 seven-day subscription trials and fleet PPP adjustments. No API writes made.
 Feature graphic, real free-screen captures, Android policies and Console work
 remain pending. Keep unfinished work off main.
+
+RevenueCat integration check on2026-10-18: developer notifications plus two
+transaction webhooks, with the same previously verified destination domains as
+VO2 Max. Both disable paywall-event forwarding; no advertising integration is
+listed. No credentials, grants or integration settings were changed. Data safety
+must still disclose actual app-side collection, including purchase history and
+anonymous identifiers, plus custom purchase-screen attributes where used.
+RevenueCat's general guide is https://www.revenuecat.com/docs/platform-resources/google-platform-resources/google-plays-data-safety.
