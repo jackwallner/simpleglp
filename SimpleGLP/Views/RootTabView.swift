@@ -453,13 +453,15 @@ struct RootTabView: View {
         Task { @MainActor in
             try? await Task.sleep(nanoseconds: 3_500_000_000)
             // A foreground log may have raised the notification permission alert.
-            // While that question is still open, never stack the rating prompt on it.
-            let notifications = await UNUserNotificationCenter.current().notificationSettings()
-            guard notifications.authorizationStatus != .notDetermined,
-                  epoch == foregroundEpoch,
+            // While that question is open, never stack the rating prompt on it. A
+            // permission never asked (reminders off) does not block the ask.
+            guard epoch == foregroundEpoch,
                   !reviewPromptShownThisSession,
                   isClearForReviewRequest,
-                  ReviewPromptTracker.shouldRequestAfterPositiveMoment(hasCompletedSetup: hasCompletedOnboarding)
+                  ReviewPromptTracker.shouldRequestAfterPositiveMoment(
+                      hasCompletedSetup: hasCompletedOnboarding,
+                      permissionQuestionOpen: ReminderService.isRequestingAuthorization
+                  )
             else { return }
             reviewPromptShownThisSession = true
             ReviewPromptTracker.markShown()

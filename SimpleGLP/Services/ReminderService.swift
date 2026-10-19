@@ -166,9 +166,20 @@ enum ReminderService {
             return false
         case .notDetermined:
             guard mayPrompt else { return false }
-            return (try? await center.requestAuthorization(options: [.alert, .sound])) ?? false
+            return await requestAuthorization()
         @unknown default:
             return false
         }
+    }
+
+    /// True while the system notification question is on screen, so the rating
+    /// ask never stacks on it.
+    @MainActor private(set) static var isRequestingAuthorization = false
+
+    @MainActor
+    static func requestAuthorization() async -> Bool {
+        isRequestingAuthorization = true
+        defer { isRequestingAuthorization = false }
+        return (try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])) ?? false
     }
 }

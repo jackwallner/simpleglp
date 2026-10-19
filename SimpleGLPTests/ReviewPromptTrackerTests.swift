@@ -103,4 +103,23 @@ final class ReviewPromptTrackerTests: XCTestCase {
             XCTAssertFalse(ReviewPromptTracker.shouldRequestAfterPositiveMoment(hasCompletedSetup: true))
         }
     }
+
+    /// Users who turn reminders off never answer the notification question.
+    /// Only an alert actually on screen may hold the ask, never an unasked one.
+    func testRemindersOffStillGetsAsked() {
+        withCleanTracker {
+            ReviewPromptTracker.appLaunchCount = 2
+            ReviewPromptTracker.recordPositiveMoment()
+            XCTAssertFalse(ReminderService.isRequestingAuthorization)
+            XCTAssertTrue(ReviewPromptTracker.shouldRequestAfterPositiveMoment(
+                hasCompletedSetup: true,
+                permissionQuestionOpen: ReminderService.isRequestingAuthorization
+            ))
+            XCTAssertFalse(ReviewPromptTracker.shouldRequestAfterPositiveMoment(
+                hasCompletedSetup: true,
+                permissionQuestionOpen: true
+            ))
+            XCTAssertTrue(ReviewPromptTracker.hasPendingPositiveMoment, "a held ask keeps the moment")
+        }
+    }
 }

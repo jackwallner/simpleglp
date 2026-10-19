@@ -126,7 +126,7 @@ struct ProAlertsConfigView: View {
 
     private func requestPermissionsIfNeeded() async {
         if await UNUserNotificationCenter.current().notificationSettings().authorizationStatus == .notDetermined {
-            _ = try? await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound])
+            _ = await ReminderService.requestAuthorization()
         }
         await refreshPermissionStatuses()
     }
@@ -135,7 +135,7 @@ struct ProAlertsConfigView: View {
         let center = UNUserNotificationCenter.current()
         var settings = await center.notificationSettings()
         if settings.authorizationStatus == .notDetermined {
-            _ = try? await center.requestAuthorization(options: [.alert, .sound])
+            _ = await ReminderService.requestAuthorization()
             settings = await center.notificationSettings()
         }
         guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional || settings.authorizationStatus == .ephemeral else {

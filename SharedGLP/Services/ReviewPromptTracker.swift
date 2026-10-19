@@ -123,11 +123,15 @@ enum ReviewPromptTracker {
         return appLaunchCount >= minimumLaunchCount
     }
 
+    /// `permissionQuestionOpen` is true only while a system permission alert is
+    /// actually on screen. A permission that was never asked (reminders off)
+    /// must not block the ask, or those users are never asked to rate.
     static func shouldRequestAfterPositiveMoment(
         hasCompletedSetup: Bool,
+        permissionQuestionOpen: Bool = false,
         now: Date = .now
     ) -> Bool {
-        guard hasPendingPositiveMoment else { return false }
+        guard hasPendingPositiveMoment, !permissionQuestionOpen else { return false }
         return canRequestReview(hasCompletedSetup: hasCompletedSetup, now: now)
     }
 
