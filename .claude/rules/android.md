@@ -53,12 +53,10 @@ Temporary AVD `simpleglp_agent_test`, serial `emulator-5574`. Coordinate with
 other agents first. Do not target `small_phone`, `bridge_agent_test`, or an
 unqualified ADB device. No local emulator, no ADB forwarding.
 
-JDK 17 is required. Set `JAVA_HOME` to the Pro's installed
-`$HOME/jdks/temurin-17/Contents/Home` (no temporary runtime). Non-connected
-builds and tests use `fm-gradle <tasks>` from `android/`, never `./gradlew` on
-the Air. For serial-targeted connected tests, sync source excluding `build/`,
-`.gradle/`, `local.properties`, and all signing credentials. Create remote
-`local.properties` containing only `sdk.dir=/Users/jackwallner/Library/Android/sdk`.
+Builds and tests use `fm-gradle <tasks>` from `android/`, never `./gradlew` on
+the Air. It runs on the Pro with its JDK 17, syncs the source with a debug-only
+`local.properties` (no Play key or signing credentials) and forwards
+`ANDROID_SERIAL`, so connected tests need no hand sync.
 
 Check readiness:
 
@@ -72,9 +70,13 @@ Boot only when the device is not already running:
 ssh -o BatchMode=yes -o StrictHostKeyChecking=yes jackwallner@192.168.4.25 'nohup /Users/jackwallner/Library/Android/sdk/emulator/emulator -avd simpleglp_agent_test -port 5574 -no-window -no-audio -no-boot-anim -no-metrics -no-snapshot-save > /tmp/simpleglp-agent-emulator.log 2>&1 < /dev/null &'
 ```
 
-Run remote connected tests from the synchronized Android directory, with
-`ANDROID_SERIAL=emulator-5574`, `--no-daemon --max-workers=1` and a 1536 MiB
-Gradle heap. Confirm the XML/HTML report contains a nonzero executed count.
+Run connected tests from `android/` with a 1536 MiB Gradle heap:
+
+```sh
+ANDROID_SERIAL=emulator-5574 fm-gradle --max-workers=1 -Dorg.gradle.jvmargs=-Xmx1536m connectedDebugAndroidTest
+```
+
+Confirm the XML/HTML report contains a nonzero executed count.
 Do not accept a successful Gradle exit with zero tests.
 
 Shutdown only this test device:
@@ -83,8 +85,7 @@ Shutdown only this test device:
 ssh -o BatchMode=yes -o StrictHostKeyChecking=yes jackwallner@192.168.4.25 '/Users/jackwallner/Library/Android/sdk/platform-tools/adb -s emulator-5574 emu kill; /Users/jackwallner/Library/Android/sdk/platform-tools/adb devices -l'
 ```
 
-Remove only the temporary Simple GLP AVD and synchronized source when
-finished. Preserve every existing Play AVD and account.
+Remove only the temporary Simple GLP AVD when finished. Preserve every existing Play AVD and account.
 
 ## Platform gaps and Play state
 
