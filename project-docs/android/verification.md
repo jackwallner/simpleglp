@@ -104,3 +104,27 @@ Signing material and SDK configuration remain outside source control.
 The temporary MBP emulator was shut down after QA. Its serial and qemu
 process were confirmed absent before removing only the Simple GLP AVD,
 synchronized source, and temporary JDK. Other AVDs and accounts were preserved.
+
+## 2026-10-20 fleet shift (jmbp2)
+
+Source `0cbd5e6`, JDK 17, `./gradlew --max-workers=1 -Dorg.gradle.jvmargs=-Xmx1536m`
+on jmbp2 against `agent-emu-1` (API 36 Play image).
+
+- Ported from iOS: the one-shot trial offer sheet (first dose, existing user,
+  Patterns), the rating ask for reminders-off users with a pending blocked ask,
+  and the medical disclaimer fixed above the onboarding trial CTA.
+- Fixed: debug Test Store plans were filtered out, so the paid path could not
+  run; History cards and switch tracks used Material's lavender containers.
+- JVM: 56 tests (42 parity, 14 prompt policy), 0 failures. Lint: 0 errors.
+- Connected: 21 tests (16 tracker smoke, 3 trial sheet, 2 platform boundary),
+  0 failures. Baseline on the unchanged port: 16/16.
+- Test Store purchase on device: cancel shows the retry message; "Test valid
+  purchase" unlocks Pro ("Pro is active", Supply opens). No real charge.
+- Network: offline, the membership step offers "See Pro plans" with no price
+  and logging stays free; online, Test Store plans load with price and renewal
+  terms. No Health Connect, location, storage, exact-alarm or ad-ID permission;
+  backup disabled.
+- Motion: a recorded pill-log task measured 1.8 fps and 109 ms median frame
+  time on this host, which runs the AVD on one vCPU with a software GPU. That
+  is a host limit, not an app measurement; native cadence is left to the Air
+  motion task.
