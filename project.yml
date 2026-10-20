@@ -72,6 +72,8 @@ targets:
       base:
         PRODUCT_NAME: SimpleGLP
         PRODUCT_BUNDLE_IDENTIFIER: com.jackwallner.glp
+        ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES: "AppIcon-A AppIcon-B AppIcon-C"
+        ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS: YES
         INFOPLIST_FILE: SimpleGLP/Info.plist
         CODE_SIGN_ENTITLEMENTS: SimpleGLP/SimpleGLP.entitlements
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
