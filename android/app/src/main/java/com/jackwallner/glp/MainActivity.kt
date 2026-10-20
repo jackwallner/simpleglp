@@ -14,8 +14,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState); enableEdgeToEdge()
         if (savedInstanceState == null) DebugLaunchOptions.apply(intent, graph)
-        val prefs = getSharedPreferences("reviews", MODE_PRIVATE)
-        prefs.edit().putInt("launches", prefs.getInt("launches", 0) + 1).apply()
+        if (savedInstanceState == null) graph.reviews.recordLaunch()
         lifecycleScope.launch { graph.store.refresh(); graph.notifications.sync(graph.tracker, graph.store.isPro, graph.store.resolved) }
         setContent { GLPTheme(graph.tracker.appearance) { RootScreen(graph, this, DebugLaunchOptions.automation(intent)) } }
     }

@@ -201,12 +201,14 @@ fun OnboardingScreen(store: StoreService, activity: MainActivity, onComplete: (P
                         Text("Stay ahead of your routine with Proactive Alerts")
                         Text("Your dose history stays private, on your device")
                     }
-                    Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", style = MaterialTheme.typography.bodySmall)
                 }
             }
             if (!trialStep) error?.let { Text(it, color = MaterialTheme.colorScheme.error) }
         }
         if (trialStep) {
+            // Fixed above the CTA, never in the scrolling content, so it can't fall below the fold.
+            Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", Modifier.fillMaxWidth().testTag("onboarding-medical-disclaimer"),
+                style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
             TextButton(::finish, Modifier.fillMaxWidth().testTag("onboarding-free"), enabled = !purchasing) { Text("Get Started") }
             if (store.resolved) preferred?.let { Text(onboardingDisclosure(it), Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center) }
             error?.let { Text(it, Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.error, textAlign = TextAlign.Center) }

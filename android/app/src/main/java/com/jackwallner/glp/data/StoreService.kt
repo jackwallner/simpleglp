@@ -15,6 +15,8 @@ enum class PurchaseOutcome { PURCHASED, PENDING, CANCELLED }
 
 class StoreService(context: Context) {
     var isPro by mutableStateOf(false); private set
+    /** Any Pro entitlement on record, active or lapsed. Lapsed members never get a trial pitch. */
+    var hadPro by mutableStateOf(false); private set
     var resolved by mutableStateOf(false); private set
     var packages by mutableStateOf<List<Package>>(emptyList()); private set
     var error by mutableStateOf<String?>(null); private set
@@ -32,7 +34,8 @@ class StoreService(context: Context) {
     }
     fun forceProForDebug(value: Boolean) { if (BuildConfig.DEBUG) { debugPro = value; isPro = value; resolved = true } }
     private fun apply(info: CustomerInfo) {
-        isPro = debugPro || listOf("GLP Pro", "SimpleGLPPro", "pro").any { info.entitlements.active[it]?.isActive == true }
+        isPro = debugPro || ENTITLEMENTS.any { info.entitlements.active[it]?.isActive == true }
+        hadPro = isPro || ENTITLEMENTS.any { info.entitlements.all[it] != null }
         resolved = true
     }
     suspend fun refresh() {
@@ -68,7 +71,10 @@ class StoreService(context: Context) {
         catch (e: CancellationException) { throw e } catch (_: Exception) { error = "Couldn't restore purchases. Try again." }
         finally { busy = false }
     }
+    /** The yearly package when Play offers this account a free phase on it; drives the one-tap trial pitch. */
+    val trialPackage: Package? get() = packages.firstOrNull { it.packageType == PackageType.ANNUAL && it.product.defaultOption?.freePhase != null }
     companion object {
+        val ENTITLEMENTS = listOf("GLP Pro", "SimpleGLPPro", "pro")
         val PRODUCTS = setOf("com.jackwallner.glp.pro.monthly", "com.jackwallner.glp.pro.yearly", "com.jackwallner.glp.pro.lifetime")
     }
 }

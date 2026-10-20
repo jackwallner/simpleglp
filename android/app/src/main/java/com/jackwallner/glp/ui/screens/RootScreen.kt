@@ -22,6 +22,9 @@ import com.google.android.play.core.review.ReviewManagerFactory
 import com.jackwallner.glp.AppGraph
 import com.jackwallner.glp.MainActivity
 import com.jackwallner.glp.data.Csv
+import com.jackwallner.glp.data.PurchaseOutcome
+import com.jackwallner.glp.data.TrialOfferPolicy
+import com.jackwallner.glp.data.TrialSource
 import com.jackwallner.glp.model.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -44,32 +47,58 @@ import java.time.format.DateTimeFormatter
     var now by remember { mutableStateOf(Instant.now()) }
     var pendingImport by remember { mutableStateOf<String?>(null) }
     val snackbar = remember { SnackbarHostState() }
-    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { graph.notifications.sync(tracker, store.isPro, store.resolved) }
+    var trialSource by remember { mutableStateOf<TrialSource?>(null) }
+    var trialPitchScheduled by remember { mutableStateOf(false) }
+    var trialPurchasing by remember { mutableStateOf(false) }
+    var trialError by remember { mutableStateOf<String?>(null) }
+    var paywallAfterTrial by remember { mutableStateOf(false) }
+    // True only while the system notification dialog is on screen; the rating ask never stacks on it.
+    var permissionOpen by remember { mutableStateOf(false) }
+    val permission = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { permissionOpen = false; graph.notifications.sync(tracker, store.isPro, store.resolved) }
     fun sync(prompt: Boolean = false) {
         graph.notifications.sync(tracker, store.isPro, store.resolved)
-        if (prompt && Build.VERSION.SDK_INT >= 33 && !graph.notifications.permitted()) permission.launch(Manifest.permission.POST_NOTIFICATIONS)
+        if (prompt && Build.VERSION.SDK_INT >= 33 && !graph.notifications.permitted()) { permissionOpen = true; permission.launch(Manifest.permission.POST_NOTIFICATIONS) }
     }
     fun paid(destination: String) { if (store.isPro) route = destination else paywall = true }
+    fun resumed() = activity.lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
+    fun nothingPresented() = route == null && !paywall && !duplicate && message == null && !deleteAll && pendingImport == null && trialSource == null && !permissionOpen && resumed()
+    // Play's review card with no question in front of it. A blocked ask stays pending for the next moment.
     fun positiveMoment() {
         if (automation) return
+        graph.reviews.recordPositiveMoment()
         scope.launch {
             delay(3500)
-            val prefs = activity.getSharedPreferences("reviews", Context.MODE_PRIVATE)
-            val eligible = prefs.getInt("launches", 0) >= 2 && !prefs.getBoolean("rated", false) && System.currentTimeMillis() - prefs.getLong("last", 0) >= 30 * 86400000L
-            if (eligible && route == null && tab in listOf(0, 3) && !paywall && !duplicate && message == null && !deleteAll && pendingImport == null && activity.lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED) && graph.notifications.permitted()) {
+            val clear = tab in listOf(0, 3) && nothingPresented() && !trialPitchScheduled
+            if (!graph.reviewShownThisSession && clear && graph.reviews.shouldAsk(tracker.plan != null, permissionOpen)) {
+                graph.reviewShownThisSession = true
+                graph.reviews.markShown()
                 val manager = ReviewManagerFactory.create(activity)
-                manager.requestReviewFlow().addOnSuccessListener { info ->
-                    prefs.edit().putLong("last", System.currentTimeMillis()).apply()
-                    manager.launchReviewFlow(activity, info)
-                }
+                manager.requestReviewFlow().addOnSuccessListener { info -> manager.launchReviewFlow(activity, info) }
+            }
+        }
+    }
+    fun offerTrial(source: TrialSource, delayMs: Long) {
+        if (automation || graph.promoShownThisSession) return
+        trialPitchScheduled = true
+        scope.launch {
+            delay(delayMs)
+            trialPitchScheduled = false
+            if (TrialOfferPolicy.shouldPresent(source, tracker.plan != null, store.resolved, store.isPro, store.hadPro, store.trialPackage != null,
+                    graph.promoShownThisSession, nothingPresented(), graph.trialOffers.seen, graph.trialOffers.seenPatterns)) {
+                graph.promoShownThisSession = true
+                graph.trialOffers.markSeen(source)
+                trialError = null; trialSource = source
             }
         }
     }
     fun log() {
         runCatching {
+            val first = tracker.events.isEmpty()
             val event = tracker.log(); now = Instant.now(); undo = event.id
             if (tracker.promptDetails) { edit = event; route = "details" }
-            sync(true); positiveMoment()
+            sync(true)
+            if (first) offerTrial(TrialSource.FIRST_DOSE, 4000)
+            positiveMoment()
         }.onFailure { message = "Your dose could not be saved. Please try again." }
     }
     val export = rememberLauncherForActivityResult(ActivityResultContracts.CreateDocument("text/csv")) { uri ->
@@ -88,6 +117,11 @@ import java.time.format.DateTimeFormatter
     }
     LaunchedEffect(Unit) { while (true) { now = Instant.now(); delay(1000) } }
     LaunchedEffect(store.isPro, store.resolved) { sync() }
+    // Existing users who never saw the pitch get it once Home has rendered; Patterns is the second touch.
+    LaunchedEffect(tab, store.resolved, store.trialPackage != null) {
+        if (tab == 0 && tracker.events.isNotEmpty() && !graph.trialOffers.seen) offerTrial(TrialSource.EXISTING_USER, 3000)
+        if (tab == 2 && !graph.trialOffers.seenPatterns) offerTrial(TrialSource.PATTERNS, 450)
+    }
     LaunchedEffect(undo) {
         if (undo != null) {
             val result = snackbar.showSnackbar("${tracker.plan?.form?.noun?.replaceFirstChar(Char::uppercase)} logged", "Undo", duration = SnackbarDuration.Long)
@@ -163,7 +197,7 @@ import java.time.format.DateTimeFormatter
                     }
                     Panel("Support") {
                         RowAction("Send Feedback") { open(activity, "mailto:jackwallner@gmail.com?subject=Simple%20GLP%20feedback") }
-                        RowAction("Rate Simple GLP") { activity.getSharedPreferences("reviews", Context.MODE_PRIVATE).edit().putBoolean("rated", true).apply(); open(activity, "https://play.google.com/store/apps/details?id=com.jackwallner.glp") }
+                        RowAction("Rate Simple GLP") { graph.reviews.markOpenedListing(); open(activity, "https://play.google.com/store/apps/details?id=com.jackwallner.glp") }
                         listOf("Support" to "support.html", "Privacy Policy" to "privacy-policy.html", "Terms of Use" to "terms.html").forEach { (label, path) -> RowAction(label) { open(activity, "https://jackwallner.github.io/simpleglp/$path") } }
                         Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", style = MaterialTheme.typography.bodySmall)
                     }
@@ -172,6 +206,30 @@ import java.time.format.DateTimeFormatter
         }
     }
     if (duplicate) AlertDialog(onDismissRequest = { duplicate = false }, title = { Text("Already logged") }, text = { Text("You've already logged this ${tracker.plan?.form?.noun}. Check History before adding another entry.") }, confirmButton = { TextButton({ duplicate = false; tab = 1 }) { Text("View history") } }, dismissButton = { TextButton({ duplicate = false }) { Text("Cancel") } })
+    trialSource?.let { source ->
+        val pkg = store.trialPackage
+        val trial = pkg?.product?.defaultOption?.freePhase?.billingPeriod
+        val price = pkg?.product?.price?.formatted?.let { "$it per year" }
+        fun close() { trialSource = null; trialPurchasing = false; trialError = null; if (paywallAfterTrial) { paywallAfterTrial = false; paywall = true } }
+        TrialOfferSheet(TrialOfferContent(trial?.value, trial?.unit?.name, price, tracker.plan?.form == DoseForm.PILL), trialPurchasing, trialError, store.busy,
+            onStart = {
+                if (pkg == null) { paywallAfterTrial = true; close() }
+                else { trialPurchasing = true; trialError = null; scope.launch {
+                    try {
+                        when (store.purchase(activity, pkg)) {
+                            PurchaseOutcome.PURCHASED, PurchaseOutcome.PENDING -> { trialPurchasing = false; close(); sync() }
+                            PurchaseOutcome.CANCELLED -> trialError = "Trial wasn't started. Tap again, or pick a different plan."
+                        }
+                    } catch (failure: kotlinx.coroutines.CancellationException) { throw failure }
+                    catch (_: Exception) { trialError = "Couldn't start your trial. Please try again." }
+                    finally { trialPurchasing = false }
+                } }
+            },
+            onSeeAll = { paywallAfterTrial = true; close() },
+            onRestore = { scope.launch { store.restore(); if (store.isPro) { close(); sync() } else trialError = store.error } },
+            onLink = { open(activity, it) },
+            onDismiss = { close() })
+    }
     if (paywall) PaywallScreen(store, activity, { paywall = false }, isPill = tracker.plan?.form == DoseForm.PILL)
     if (message != null) AlertDialog(onDismissRequest = { message = null }, title = { Text("Simple GLP") }, text = { Text(message!!) }, confirmButton = { TextButton({ message = null }) { Text("OK") } })
     if (pendingImport != null) AlertDialog(onDismissRequest = { pendingImport = null }, title = { Text("Import CSV?") }, text = { Text("Imported doses are added to your history. Existing entries stay. Schedule status is recomputed against your current plan.") }, confirmButton = { TextButton({

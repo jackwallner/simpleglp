@@ -38,6 +38,8 @@ class TrackerSmokeTests {
     @Test fun firstRunSavesPlan() {
         launch()
         repeat(5) { node("Continue").performClick() }
+        // The disclaimer sits in the fixed zone above the CTA, visible without scrolling.
+        compose.onNodeWithTag("onboarding-medical-disclaimer", useUnmergedTree = true).assertIsDisplayed()
         node("Get Started").performClick()
         node("I took my shot").assertIsDisplayed()
         assertNotNull(context.graph.tracker.plan)

@@ -27,6 +27,17 @@ the specification. Do not change iOS source while fixing Android.
 - Export/import matches iOS's 23 CSV columns, quoting, and additive merge.
   Imports retain all health context strings and all existing event IDs.
   Imported entries get new IDs because the iOS CSV has no UUID column.
+- Rating ask (`ReviewPrompts`/`ReviewPolicy`): Play card only, about 3.5s after
+  a logged dose or CSV export, from the 2nd launch, 30-day cooldown, One Tap or
+  Settings in front with nothing presented. Only an open notification
+  permission dialog blocks it; reminders-off users are still asked. A blocked
+  ask stays pending. "Rate Simple GLP" opening the listing ends the asks;
+  feedback never does.
+- Trial pitch (`TrialOfferSheet`, `TrialOfferPolicy`): one-shot, after the
+  first logged dose (4s), for existing users on Home (3s) and on Patterns (the
+  second touch). Requires resolved entitlements, no active or lapsed Pro, a
+  yearly package with a Play free phase, and a clear screen; never under
+  `uitesting`. Marked seen when presented.
 - Run `python3 scripts/sync-android-content.py` after medication catalog edits.
   It compiles the actual iOS enums to a JVM parity fixture. Tests compare every
   name, form, strength, wait default, and custom flag.
@@ -44,6 +55,17 @@ requires a Test Store `test_` key to enable billing; no key keeps free tracking
 usable. Release validation rejects missing Play `goog_` key and external upload
 signing. `qa` is the optimized release source with debug signing, no billing
 key, and no test hooks. Never use a production Play key in routine tests.
+
+## Fleet Pro runs (jmbp / jmbp2)
+
+Fleet shift runs work directly on the assigned Pro with the checked-in wrapper:
+`JAVA_HOME=~/jdks/temurin-17/Contents/Home ANDROID_SERIAL=emulator-5574
+./gradlew --max-workers=1 -Dorg.gradle.jvmargs=-Xmx1536m <tasks>` from
+`android/`. On jmbp2 (8 GB, Intel) the only AVD is `agent-emu-1` (API 36 Play
+image, serial `emulator-5574`); boot it headless with `-no-window -no-audio
+-no-boot-anim -no-metrics -no-snapshot-save -gpu swiftshader_indirect` and stop
+it with `adb -s emulator-5574 emu kill`. A full connected run takes about 12
+minutes there.
 
 ## Remote emulator only
 
@@ -101,7 +123,11 @@ timer and completion notification remain free.
 
 RevenueCat Play app is registered in the existing GLP project. Android and iOS
 platform filters are registered in `~/.rc-clean/apps.json` and synced to MBP.
-No Play Console app, product, track, upload, or submission has been created.
+No port session through 2026-10-20 has created a Play Console app, product,
+track, upload, or submission. Listing copy, Data safety, app content answers, product
+and base-plan IDs and the remaining Console steps are in
+`project-docs/android/play-listing.md`; `docs/privacy-policy.html` has an
+Android section that must be published before the Play record points at it.
 External upload PKCS12, encrypted backup, and app-specific Play SDK key are
 configured locally. Production billing, store pricing, license-tester
 purchases/restore, service-account package access, and final Play declarations
