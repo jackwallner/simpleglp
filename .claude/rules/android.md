@@ -65,7 +65,17 @@ Fleet shift runs work directly on the assigned Pro with the checked-in wrapper:
 image, serial `emulator-5574`); boot it headless with `-no-window -no-audio
 -no-boot-anim -no-metrics -no-snapshot-save -gpu swiftshader_indirect` and stop
 it with `adb -s emulator-5574 emu kill`. A full connected run takes about 12
-minutes there.
+minutes there. Its mobile data was found off (no default network, RevenueCat
+unreachable); `adb -s emulator-5574 shell svc data enable` restores it. The AVD
+gets one vCPU and a software GPU there, so frame timing (1.8 fps measured
+2026-10-20) says nothing about the app; native cadence needs the Air motion
+task. jmbp2's `scrcpy` wrapper points at a missing binary; record with
+`adb shell screenrecord` and analyze with `fleet-record60.py verify`.
+
+Debug Test Store products are `monthly`, `yearly`, `lifetime` (simulated
+$79.99/yr, no trial phase). `StoreService` accepts those IDs only with a
+`test_` key; the purchase dialog's "Test valid purchase" unlocks Pro with no
+charge.
 
 ## Remote emulator only
 

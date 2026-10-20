@@ -106,7 +106,7 @@ import java.time.format.DateTimeFormatter
         }
         if (events.isEmpty()) Panel { Text("No ${plan.form.noun}s logged yet. Your history will appear here.") }
         events.sortedByDescending { it.timestamp }.forEach { event ->
-            Card(onClick = { edit(event) }, modifier = Modifier.fillMaxWidth()) {
+            Card(onClick = { edit(event) }, modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
                 Column(Modifier.padding(18.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                     Text(display(event.timestamp), style = MaterialTheme.typography.titleMedium)
                     Text("${event.medication} · ${mg(event.doseMg)} mg"); Text(event.status.label)

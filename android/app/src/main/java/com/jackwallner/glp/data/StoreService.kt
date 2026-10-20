@@ -22,6 +22,7 @@ class StoreService(context: Context) {
     var error by mutableStateOf<String?>(null); private set
     var busy by mutableStateOf(false); private set
     private var configured = false
+    private var testStore = false
     private var debugPro = false
     init {
         val key = BuildConfig.REVENUECAT_API_KEY
@@ -30,6 +31,7 @@ class StoreService(context: Context) {
             Purchases.configure(PurchasesConfiguration.Builder(context, key).build())
             Purchases.sharedInstance.updatedCustomerInfoListener = UpdatedCustomerInfoListener(::apply)
             configured = true
+            testStore = key.startsWith("test_")
         } else resolved = true
     }
     fun forceProForDebug(value: Boolean) { if (BuildConfig.DEBUG) { debugPro = value; isPro = value; resolved = true } }
@@ -45,7 +47,7 @@ class StoreService(context: Context) {
             apply(Purchases.sharedInstance.awaitCustomerInfo())
             val offerings = Purchases.sharedInstance.awaitOfferings()
             packages = (offerings.all["default"] ?: offerings.current)?.availablePackages.orEmpty()
-                .filter { it.product.id.substringBefore(":") in PRODUCTS }
+                .filter { it.product.id.substringBefore(":") in PRODUCTS || (testStore && it.product.id in TEST_STORE_PRODUCTS) }
             error = if (packages.isEmpty()) "Plans are temporarily unavailable. Please try again." else null
         } catch (e: CancellationException) { throw e } catch (_: Exception) { error = "Couldn't load plans. Check your connection and try again." }
         finally { busy = false }
@@ -75,6 +77,8 @@ class StoreService(context: Context) {
     val trialPackage: Package? get() = packages.firstOrNull { it.packageType == PackageType.ANNUAL && it.product.defaultOption?.freePhase != null }
     companion object {
         val ENTITLEMENTS = listOf("GLP Pro", "SimpleGLPPro", "pro")
+        /** RevenueCat Test Store product IDs; only accepted with a debug `test_` key. */
+        val TEST_STORE_PRODUCTS = setOf("monthly", "yearly", "lifetime")
         val PRODUCTS = setOf("com.jackwallner.glp.pro.monthly", "com.jackwallner.glp.pro.yearly", "com.jackwallner.glp.pro.lifetime")
     }
 }
