@@ -142,3 +142,14 @@ External upload PKCS12, encrypted backup, and app-specific Play SDK key are
 configured locally. Production billing, store pricing, license-tester
 purchases/restore, service-account package access, and final Play declarations
 remain unverified. This session is builds/testing only.
+
+## Play staging, 2026-10-21
+
+Play app 4973861751220811917 (Draft). vc1 1.2.2 drafts on internal and
+production; products `com.jackwallner.glp.pro.{monthly,yearly,lifetime}`
+active. RevenueCat Play products (project `proja722b48d`, app
+`app3610516bb2`) are attached to `GLP Pro` and the three packages; the
+lifetime is non-consumable. All App content is saved, data safety included
+(purchase history and device ID, App functionality). Left: reviewer unlock and
+review code, a vc2 rebuild with the code's SHA, then Send for review in its
+pacing slot.
