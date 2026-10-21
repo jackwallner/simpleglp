@@ -1,0 +1,18 @@
+Rutina ta GLP-1 într-un singur loc. Simple GLP salvează dozele pe care le notezi, îți arată programul și păstrează un istoric clar pentru injecțiile săptămânale, cum ar fi stilourile cu semaglutidă sau tirzepatidă, și pastilele GLP-1 zilnice.
+
+RUTINA TA ZILNICĂ
+Notează o doză, adaugă observații sau simptome și revezi intrările anterioare. Adaugă o doză anterioară cu ora reală, corectează o greșeală sau anulează o înregistrare recentă. Planurile cu pastilă zilnică au în aplicație o numărătoare inversă pentru așteptare și o notificare opțională la final.
+
+UN ISTORIC CLAR
+Calendar, istoricul dozelor și regularitatea. Exportă datele în CSV sau importă un export Simple GLP compatibil. Datele tale rămân pe dispozitiv, cu excepția cazului în care alegi să le partajezi.
+
+MEMENTOURI DUPĂ CUM VREI
+Setează mementouri locale pentru planul introdus. Setările de baterie din Android pot întârzia un memento. Mementoul, programul și numărătoarea te ajută să ții evidența, nu sunt niciodată o recomandare de dozare.
+
+SIMPLE GLP PRO, OPȚIONAL
+Pro adaugă evidența stocului cu mementouri de reînnoire, alerte proactive și o notificare continuă cu numărătoarea pentru pastilă. Înregistrarea, programul, mementourile locale, istoricul, cronometrul din aplicație și tiparele de bază rămân gratuite. Abonamentele și orice perioadă de probă disponibilă apar înainte de cumpărare prin Google Play.
+
+FĂCUTĂ PENTRU ANDROID
+Funcționează fără cont. Importul datelor de sănătate, o aplicație pentru ceas și widgeturile pentru ecranul de pornire nu sunt incluse pe Android. Aplicația în sine este în limba engleză.
+
+Simple GLP este un jurnal de medicamente, nu un sfat medical. Introdu medicamentul, doza, programul și timpul de așteptare conform rețetei tale. Întreabă-ți medicul sau farmacistul despre tratament. Nu schimba niciodată medicamentul sau doza pe baza acestei aplicații.

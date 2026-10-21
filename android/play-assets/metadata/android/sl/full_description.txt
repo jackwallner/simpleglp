@@ -1,0 +1,18 @@
+Vaša rutina GLP-1 na enem mestu. Simple GLP shrani odmerke, ki jih vpišete, prikaže vaš urnik in vodi pregledno zgodovino tedenskih injekcij, na primer peresnikov s semaglutidom ali tirzepatidom, in dnevnih tablet GLP-1.
+
+VAŠA DNEVNA RUTINA
+Vpišite odmerek, dodajte opombe ali simptome in preglejte prejšnje vnose. Dodajte prejšnji odmerek z dejanskim časom, popravite napako ali razveljavite nedavni vnos. Načrti z dnevno tableto imajo v aplikaciji odštevanje čakanja in neobvezno obvestilo, ko se izteče.
+
+PREGLEDNA ZGODOVINA
+Koledar, zgodovina odmerkov in rednost. Izvozite zapise v CSV ali uvozite združljiv izvoz Simple GLP. Vaši podatki ostanejo v napravi, razen če jih sami delite.
+
+OPOMNIKI PO VAŠI MERI
+Nastavite lokalne opomnike za načrt, ki ga vnesete. Nastavitve baterije v Androidu lahko opomnik zamaknejo. Opomnik, urnik in odštevanje so pripomoček za beleženje, nikoli priporočilo za odmerjanje.
+
+SIMPLE GLP PRO, NEOBVEZNO
+Pro doda spremljanje zaloge z opomniki za dopolnitev, proaktivna opozorila in stalno obvestilo z odštevanjem za tableto. Beleženje, urnik, lokalni opomniki, zgodovina, časovnik v aplikaciji in osnovni vzorci ostanejo brezplačni. Naročnine in morebitno preizkusno obdobje vidite pred nakupom prek Google Play.
+
+ZA ANDROID
+Deluje brez računa. Uvoz zdravstvenih podatkov, aplikacija za uro in pripomočki na začetnem zaslonu v Androidu niso na voljo. Aplikacija sama je v angleščini.
+
+Simple GLP je dnevnik zdravil, ne zdravniški nasvet. Vnesite zdravilo, odmerek, urnik in čas čakanja po svojem receptu. O zdravljenju se posvetujte z zdravnikom ali farmacevtom. Nikoli ne spreminjajte zdravila ali odmerka na podlagi te aplikacije.

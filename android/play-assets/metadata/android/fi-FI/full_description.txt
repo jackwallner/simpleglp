@@ -1,0 +1,18 @@
+GLP-1 rutiinisi yhdessä paikassa. Simple GLP tallentaa kirjaamasi annokset, näyttää aikataulusi ja pitää selkeää historiaa viikoittaisista pistoksista, kuten semaglutidi- tai tirtsepatidikynistä, ja päivittäisistä GLP-1 pillereistä.
+
+PÄIVITTÄINEN RUTIINI
+Kirjaa annos, lisää muistiinpanoja tai oireita ja katso aiempia merkintöjä. Lisää aiempi annos oikealla kellonajalla, korjaa virhe tai peru juuri tehty kirjaus. Päivittäisissä pilleriaikatauluissa on sovelluksen sisäinen odotusajastin ja valinnainen ilmoitus, kun odotus on ohi.
+
+SELKEÄ HISTORIA
+Kalenteri, annoshistoria ja säännöllisyyden kuviot. Vie tietosi CSV-tiedostoksi tai tuo yhteensopiva Simple GLP vienti. Tietosi pysyvät laitteellasi, ellet itse päätä jakaa niitä.
+
+MUISTUTUKSET OMILLA EHDOILLASI
+Aseta paikalliset muistutukset syöttämällesi suunnitelmalle. Androidin akkuasetukset voivat viivästyttää muistutusta. Muistutus, aikataulu ja ajastin ovat kirjanpidon apuväline, eivät koskaan annostelusuositus.
+
+SIMPLE GLP PRO, VALINNAINEN
+Pro tuo varastoseurannan ja täydennysmuistutukset, ennakoivat hälytykset sekä jatkuvan pillerin lähtölaskentailmoituksen. Kirjaus, aikataulu, paikalliset muistutukset, historia, sovelluksen pilleriajastin ja peruskuviot pysyvät maksuttomina. Tilaukset ja mahdollinen kokeilujakso näytetään ennen ostoa Google Playn kautta.
+
+TEHTY ANDROIDILLE
+Toimii ilman tiliä. Terveystietojen tuonti, kellosovellus ja aloitusnäytön widgetit eivät kuulu Android-versioon. Itse sovellus on englanninkielinen.
+
+Simple GLP on lääkepäiväkirja, ei lääketieteellinen neuvo. Syötä lääke, annos, aikataulu ja pillerin odotusaika reseptisi mukaisesti. Kysy hoidostasi lääkäriltä tai apteekista. Älä koskaan muuta lääkettä tai annosta tämän sovelluksen perusteella.

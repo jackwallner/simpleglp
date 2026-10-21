@@ -1,0 +1,18 @@
+Sua rotina GLP-1 em um só lugar. O Simple GLP registra as doses que você anota, mostra sua agenda e mantém um histórico claro para injeções semanais, como canetas de semaglutida ou tirzepatida, e pílulas GLP-1 diárias.
+
+SUA ROTINA DIÁRIA
+Registre uma dose, adicione notas ou sintomas e veja entradas anteriores. Lance uma dose anterior com o horário real, corrija um erro ou desfaça um registro recente. Planos de pílula diária têm uma contagem regressiva de espera no app e um aviso opcional ao terminar.
+
+HISTÓRICO CLARO
+Calendário, histórico de doses e padrões de regularidade. Exporte seus registros em CSV ou importe uma exportação compatível do Simple GLP. Seus dados ficam no seu aparelho, a menos que você decida compartilhá-los.
+
+LEMBRETES DO SEU JEITO
+Configure lembretes locais para o plano que você informa. As configurações de bateria do Android podem atrasar um lembrete. Lembrete, agenda e contagem regressiva ajudam a registrar, nunca são uma recomendação de dose.
+
+SIMPLE GLP PRO, OPCIONAL
+O Pro adiciona controle de estoque com lembretes de reposição, alertas proativos e uma notificação contínua com a contagem da pílula. Registro, agenda, lembretes locais, histórico, o timer no app e os padrões básicos continuam grátis. Planos e qualquer teste disponível aparecem antes da compra pelo Google Play.
+
+FEITO PARA ANDROID
+Funciona sem conta. Importação de dados de saúde, app para relógio e widgets na tela inicial não estão incluídos no Android. O app em si está em inglês.
+
+O Simple GLP é um registro de medicação, não um conselho médico. Informe o medicamento, a dose, a agenda e o tempo de espera da pílula conforme sua receita. Tire dúvidas sobre o seu tratamento com seu médico ou farmacêutico. Nunca mude medicamento ou dose com base neste app.

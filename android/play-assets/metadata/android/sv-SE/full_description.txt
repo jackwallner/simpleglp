@@ -1,0 +1,18 @@
+Din GLP-1 rutin på ett ställe. Simple GLP sparar de doser du loggar, visar ditt schema och för en tydlig historik för veckosprutor, till exempel pennor med semaglutid eller tirzepatid, och dagliga GLP-1 piller.
+
+DIN DAGLIGA RUTIN
+Logga en dos, lägg till anteckningar eller symtom och se tidigare poster. Lägg in en tidigare dos med rätt klockslag, rätta ett misstag eller ångra en nyss gjord loggning. Dagliga pillerplaner har en väntetimer i appen och en valfri avisering när väntan är över.
+
+TYDLIG HISTORIK
+Kalender, doshistorik och mönster i hur regelbundet du tar dina doser. Exportera dina data som CSV eller importera en kompatibel Simple GLP export. Dina data stannar på din enhet om du inte själv väljer att dela dem.
+
+PÅMINNELSER PÅ DINA VILLKOR
+Ställ in lokala påminnelser för planen du anger. Androids batteriinställningar kan fördröja en påminnelse. Påminnelser, schema och nedräkning är ett stöd för att föra logg, aldrig en doseringsrekommendation.
+
+SIMPLE GLP PRO, VALFRITT
+Pro lägger till lagerkoll med påminnelser om påfyllning, proaktiva aviseringar och en löpande nedräkningsavisering för piller. Loggning, schema, lokala påminnelser, historik, pillertimern i appen och grundläggande mönster är fortsatt gratis. Abonnemang och eventuell provperiod visas före köp via Google Play.
+
+GJORD FÖR ANDROID
+Fungerar utan konto. Import av hälsodata, en klockapp och widgetar för startskärmen ingår inte på Android. Själva appen är på engelska.
+
+Simple GLP är en läkemedelslogg, inte medicinsk rådgivning. Ange läkemedel, dos, schema och väntetid så som de står på ditt recept. Fråga din förskrivare eller ditt apotek om din behandling. Ändra aldrig läkemedel eller dos utifrån den här appen.

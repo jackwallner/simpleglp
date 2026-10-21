@@ -1,0 +1,1 @@
+GLP-1 jab tracker: log weekly jabs and daily pills, with schedule and history.

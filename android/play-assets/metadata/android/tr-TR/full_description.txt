@@ -1,0 +1,18 @@
+GLP-1 rutinin tek bir yerde. Simple GLP girdiğin dozları kaydeder, takvimini gösterir ve semaglutid ya da tirzepatid kalemleri gibi haftalık enjeksiyonlar ile günlük GLP-1 hapları için net bir geçmiş tutar.
+
+GÜNLÜK RUTİNİN
+Bir doz kaydet, not ya da belirti ekle ve eski kayıtlara göz at. Daha önceki bir dozu gerçek saatiyle gir, bir hatayı düzelt ya da son kaydı geri al. Günlük hap planlarında uygulama içi bekleme geri sayımı ve süre dolunca isteğe bağlı bir bildirim bulunur.
+
+NET BİR GEÇMİŞ
+Takvim, doz geçmişi ve düzenlilik örüntüleri. Kayıtlarını CSV olarak dışa aktar ya da uyumlu bir Simple GLP dışa aktarımını içe al. Kayıtların, sen paylaşmayı seçmedikçe cihazında kalır.
+
+SENİN BELİRLEDİĞİN HATIRLATICILAR
+Girdiğin plan için yerel hatırlatıcılar kur. Android pil ayarları bir hatırlatıcıyı geciktirebilir. Hatırlatıcı, takvim ve geri sayım kayıt tutmaya yardımcıdır, asla bir doz önerisi değildir.
+
+SIMPLE GLP PRO, İSTEĞE BAĞLI
+Pro, yenileme hatırlatıcılı stok takibi, proaktif uyarılar ve hap için sürekli bir geri sayım bildirimi ekler. Kayıt, takvim, yerel hatırlatıcılar, geçmiş, uygulama içi hap zamanlayıcısı ve temel örüntüler ücretsiz kalır. Planlar ve varsa deneme süresi satın almadan önce Google Play üzerinden gösterilir.
+
+ANDROID İÇİN
+Hesap gerekmez. Sağlık verisi içe aktarma, saat uygulaması ve ana ekran widget'ları Android'de yoktur. Uygulamanın kendisi İngilizcedir.
+
+Simple GLP bir ilaç günlüğüdür, tıbbi tavsiye değildir. İlacı, dozu, takvimi ve hap bekleme süresini reçetene uygun şekilde gir. Tedavinle ilgili sorularını doktoruna ya da eczacına sor. Bu uygulamaya dayanarak asla ilacını veya dozunu değiştirme.

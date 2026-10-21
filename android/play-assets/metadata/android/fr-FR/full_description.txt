@@ -1,0 +1,18 @@
+Votre routine GLP-1 au même endroit. Simple GLP enregistre les doses que vous notez, affiche votre planning et garde un historique clair pour les injections hebdomadaires, comme les stylos de sémaglutide ou de tirzépatide, et les comprimés GLP-1 quotidiens.
+
+VOTRE ROUTINE AU QUOTIDIEN
+Notez une dose, ajoutez des notes ou des symptômes et consultez vos entrées passées. Saisissez une prise antérieure avec son heure réelle, corrigez une erreur ou annulez un enregistrement récent. Pour les comprimés quotidiens, un compte à rebours d'attente tourne dans l'app, avec une notification facultative à la fin.
+
+UN HISTORIQUE CLAIR
+Calendrier, historique des doses et régularité. Exportez vos données en CSV ou importez un export Simple GLP compatible. Vos données restent sur votre appareil, sauf si vous choisissez de les partager.
+
+DES RAPPELS À VOTRE MAIN
+Programmez des rappels locaux pour le plan que vous saisissez. Les réglages de batterie d'Android peuvent retarder un rappel. Rappels, planning et compte à rebours servent à garder une trace, jamais à recommander une dose.
+
+SIMPLE GLP PRO, EN OPTION
+Pro ajoute le suivi du stock avec rappels de renouvellement, des alertes proactives et une notification de compte à rebours continue pour les comprimés. L'enregistrement, le planning, les rappels locaux, l'historique, le minuteur en app et les tendances de base restent gratuits. Les formules et l'éventuel essai s'affichent avant l'achat via Google Play.
+
+CONÇU POUR ANDROID
+Fonctionne sans compte. L'import de données santé, une app pour montre et les widgets d'écran d'accueil ne sont pas inclus sur Android. L'application elle-même est en anglais.
+
+Simple GLP est un journal de médicaments, pas un avis médical. Saisissez le médicament, la dose, le planning et le délai d'attente indiqués sur votre ordonnance. Posez vos questions sur votre traitement à votre médecin ou à votre pharmacien. Ne modifiez jamais un médicament ou une dose à cause de cette app.

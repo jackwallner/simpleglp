@@ -1,0 +1,18 @@
+Vaša rutina GLP-1 na jednom mieste. Simple GLP ukladá dávky, ktoré zapíšete, ukazuje váš rozvrh a vedie prehľadnú históriu týždenných injekcií, napríklad pier so semaglutidom alebo tirzepatidom, aj denných tabliet GLP-1.
+
+VAŠA DENNÁ RUTINA
+Zapíšte dávku, pridajte poznámky alebo príznaky a pozrite si staršie záznamy. Doplňte skoršiu dávku so skutočným časom, opravte chybu alebo vráťte nedávny záznam. Plány s dennou tabletou majú v aplikácii odpočet čakania a voliteľné upozornenie po jeho skončení.
+
+PREHĽADNÁ HISTÓRIA
+Kalendár, história dávok a pravidelnosť. Exportujte záznamy do CSV alebo importujte kompatibilný export Simple GLP. Vaše údaje zostávajú v zariadení, pokiaľ sa ich sami nerozhodnete zdieľať.
+
+PRIPOMIENKY PODĽA VÁS
+Nastavte miestne pripomienky pre plán, ktorý zadáte. Nastavenia batérie v Androide môžu pripomienku oneskoriť. Pripomienka, rozvrh aj odpočet slúžia na vedenie záznamov, nikdy nie sú odporúčaním dávkovania.
+
+SIMPLE GLP PRO, VOLITEĽNE
+Pro pridáva sledovanie zásob s pripomienkami doplnenia, proaktívne upozornenia a trvalé upozornenie s odpočtom tablety. Zapisovanie, rozvrh, miestne pripomienky, história, časovač v aplikácii a základné vzorce zostávajú zadarmo. Predplatné a prípadné skúšobné obdobie sa zobrazia pred nákupom cez Google Play.
+
+PRE ANDROID
+Funguje bez účtu. Import zdravotných údajov, aplikácia pre hodinky a miniaplikácie na ploche v Androide nie sú. Samotná aplikácia je v angličtine.
+
+Simple GLP je denník liekov, nie lekárska rada. Zadajte liek, dávku, rozvrh a čas čakania podľa svojho predpisu. Na svoju liečbu sa pýtajte lekára alebo lekárnika. Nikdy nemeňte liek ani dávku na základe tejto aplikácie.

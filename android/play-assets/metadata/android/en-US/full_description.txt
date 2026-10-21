@@ -13,6 +13,6 @@ OPTIONAL SIMPLE GLP PRO
 Pro adds supply tracking and refill reminders, proactive alerts and an ongoing Android pill countdown notification. Logging, schedules, local reminders, history, the in-app pill timer and basic patterns remain free. Plans and any eligible trial are shown before purchase through Google Play.
 
 MADE FOR ANDROID
-Works without an account. Apple Health import, Apple Watch and iOS widgets are not included. Health context from a compatible CSV remains in your local records.
+Works without an account. Health data import, a watch app and home screen widgets are not included on Android. Health context from a compatible CSV remains in your local records.
 
 Simple GLP is a medication tracker, not medical advice. Enter medication, dose, schedule and pill waiting instructions that match your prescription. Ask your prescriber or pharmacist about your treatment. Never change medication or dose based on this app.

@@ -1,0 +1,18 @@
+Thói quen GLP-1 của bạn ở một nơi. Simple GLP lưu các liều bạn ghi, hiển thị lịch dùng và giữ lịch sử rõ ràng cho mũi tiêm hằng tuần, như bút semaglutide hoặc tirzepatide, và viên GLP-1 hằng ngày.
+
+THÓI QUEN HẰNG NGÀY
+Ghi một liều, thêm ghi chú hoặc triệu chứng và xem các mục trước. Nhập liều đã dùng trước đó với giờ thực tế, sửa lỗi hoặc hoàn tác lần ghi gần nhất. Kế hoạch uống viên hằng ngày có đồng hồ đếm ngược thời gian chờ trong ứng dụng và thông báo tùy chọn khi hết giờ.
+
+LỊCH SỬ RÕ RÀNG
+Lịch, lịch sử liều và mức đều đặn. Xuất dữ liệu ra CSV hoặc nhập bản xuất Simple GLP tương thích. Dữ liệu của bạn ở trên thiết bị, trừ khi bạn chọn chia sẻ.
+
+NHẮC NHỞ THEO Ý BẠN
+Đặt nhắc nhở cục bộ cho kế hoạch bạn nhập. Cài đặt pin của Android có thể làm nhắc nhở đến muộn. Nhắc nhở, lịch dùng và đếm ngược là công cụ ghi chép, không bao giờ là khuyến nghị liều dùng.
+
+SIMPLE GLP PRO, TÙY CHỌN
+Pro thêm theo dõi lượng thuốc còn lại kèm nhắc mua thêm, cảnh báo chủ động và thông báo đếm ngược liên tục cho viên uống. Ghi liều, lịch dùng, nhắc nhở cục bộ, lịch sử, hẹn giờ trong ứng dụng và xu hướng cơ bản vẫn miễn phí. Các gói và thời gian dùng thử đủ điều kiện được hiển thị trước khi mua qua Google Play.
+
+DÀNH CHO ANDROID
+Dùng không cần tài khoản. Trên Android không có nhập dữ liệu sức khỏe, ứng dụng đồng hồ và tiện ích màn hình chính. Bản thân ứng dụng bằng tiếng Anh.
+
+Simple GLP là nhật ký dùng thuốc, không phải lời khuyên y tế. Nhập thuốc, liều, lịch dùng và thời gian chờ theo đơn thuốc của bạn. Hãy hỏi bác sĩ hoặc dược sĩ về việc điều trị của bạn. Không bao giờ đổi thuốc hoặc liều dựa trên ứng dụng này.

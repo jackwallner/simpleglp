@@ -1,0 +1,18 @@
+Twoja rutyna GLP-1 w jednym miejscu. Simple GLP zapisuje wpisane przez Ciebie dawki, pokazuje harmonogram i prowadzi przejrzystą historię cotygodniowych zastrzyków, na przykład penów z semaglutydem lub tirzepatydem, oraz codziennych tabletek GLP-1.
+
+TWOJA CODZIENNA RUTYNA
+Zapisz dawkę, dodaj notatki lub objawy i przejrzyj wcześniejsze wpisy. Dodaj wcześniejszą dawkę z rzeczywistą godziną, popraw błąd lub cofnij ostatni wpis. Plany z codzienną tabletką mają w aplikacji odliczanie czasu oczekiwania i opcjonalne powiadomienie po jego końcu.
+
+PRZEJRZYSTA HISTORIA
+Kalendarz, historia dawek i regularność. Eksportuj dane do CSV lub importuj zgodny eksport Simple GLP. Twoje dane zostają na urządzeniu, chyba że sam zdecydujesz się je udostępnić.
+
+PRZYPOMNIENIA NA TWOICH ZASADACH
+Ustaw lokalne przypomnienia dla wpisanego planu. Ustawienia baterii w Androidzie mogą opóźnić przypomnienie. Przypomnienie, harmonogram i odliczanie pomagają prowadzić zapis, nigdy nie są zaleceniem dawkowania.
+
+SIMPLE GLP PRO, OPCJONALNIE
+Pro dodaje śledzenie zapasu z przypomnieniami o uzupełnieniu, proaktywne alerty i stałe powiadomienie z odliczaniem dla tabletki. Zapisywanie, harmonogram, lokalne przypomnienia, historia, minutnik w aplikacji i podstawowe wzorce pozostają bezpłatne. Plany i ewentualny okres próbny zobaczysz przed zakupem w Google Play.
+
+STWORZONA NA ANDROIDA
+Działa bez konta. Import danych zdrowotnych, aplikacja na zegarek i widżety ekranu głównego nie są dostępne na Androidzie. Sama aplikacja jest w języku angielskim.
+
+Simple GLP to dziennik leków, a nie porada medyczna. Wpisz lek, dawkę, harmonogram i czas oczekiwania zgodnie z receptą. O swoje leczenie pytaj lekarza lub farmaceutę. Nigdy nie zmieniaj leku ani dawki na podstawie tej aplikacji.

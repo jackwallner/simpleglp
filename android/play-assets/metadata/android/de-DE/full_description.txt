@@ -1,0 +1,18 @@
+Deine GLP-1 Routine an einem Ort. Simple GLP speichert die Dosen, die du einträgst, zeigt deinen Plan und führt einen klaren Verlauf für wöchentliche Spritzen, etwa Semaglutid oder Tirzepatid Pens, und tägliche GLP-1 Tabletten.
+
+DEINE TÄGLICHE ROUTINE
+Dosis eintragen, Notizen oder Symptome ergänzen und frühere Einträge ansehen. Eine frühere Einnahme mit der echten Uhrzeit nachtragen, einen Fehler korrigieren oder den letzten Eintrag rückgängig machen. Bei täglichen Tabletten zählt ein Wartetimer in der App herunter, auf Wunsch mit Benachrichtigung, wenn die Wartezeit vorbei ist.
+
+KLARER VERLAUF
+Kalender, Dosisverlauf und Muster deiner Regelmäßigkeit. Exportiere deine Daten als CSV oder importiere einen passenden Simple GLP Export. Deine Daten bleiben auf deinem Gerät, außer du teilst sie selbst.
+
+ERINNERUNGEN NACH DEINEN REGELN
+Lokale Erinnerungen für den Plan, den du einträgst. Android Akkueinstellungen können eine Erinnerung verzögern. Erinnerung, Plan und Timer helfen beim Festhalten, sie sind nie eine Dosierungsempfehlung.
+
+SIMPLE GLP PRO, OPTIONAL
+Pro ergänzt Vorratsverwaltung mit Nachkauf-Erinnerungen, proaktive Hinweise und eine laufende Countdown-Benachrichtigung für Tabletten. Eintragen, Plan, lokale Erinnerungen, Verlauf, der Tabletten-Timer in der App und einfache Muster bleiben kostenlos. Abos und eine eventuelle Testphase siehst du vor dem Kauf über Google Play.
+
+FÜR ANDROID
+Funktioniert ohne Konto. Gesundheitsdaten-Import, eine Uhren-App und Startbildschirm-Widgets gibt es unter Android nicht. Die App selbst ist auf Englisch.
+
+Simple GLP ist ein Medikamenten-Tagebuch und keine medizinische Beratung. Trage Medikament, Dosis, Plan und Wartezeit so ein, wie sie dir verschrieben wurden. Fragen zu deiner Behandlung klärst du mit Ärztin, Arzt oder Apotheke. Ändere Medikament oder Dosis nie aufgrund dieser App.

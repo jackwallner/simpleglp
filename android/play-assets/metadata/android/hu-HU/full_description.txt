@@ -1,0 +1,18 @@
+A GLP-1 rutinod egy helyen. A Simple GLP elmenti a beírt adagokat, mutatja az ütemtervedet, és átlátható előzményeket vezet a heti injekciókról, például szemaglutid vagy tirzepatid tollakról, és a napi GLP-1 tablettákról.
+
+NAPI RUTIN
+Rögzíts egy adagot, adj hozzá jegyzetet vagy tünetet, és nézd át a korábbi bejegyzéseket. Vigyél fel egy korábbi adagot a valódi időponttal, javíts egy hibát, vagy vonj vissza egy friss bejegyzést. A napi tablettás terveknél az appban visszaszámláló méri a várakozást, és kérésre értesítést kapsz, amikor lejár.
+
+ÁTLÁTHATÓ ELŐZMÉNYEK
+Naptár, adagelőzmények és a rendszeresség mintái. Exportáld az adataidat CSV-be, vagy importálj egy kompatibilis Simple GLP exportot. Az adataid a készülékeden maradnak, hacsak te nem döntesz a megosztásukról.
+
+EMLÉKEZTETŐK A TE SZABÁLYAID SZERINT
+Állíts be helyi emlékeztetőket a megadott tervhez. Az Android akkumulátorbeállításai késleltethetik az emlékeztetőt. Az emlékeztető, az ütemterv és a visszaszámlálás a nyilvántartást segíti, sosem adagolási javaslat.
+
+SIMPLE GLP PRO, OPCIONÁLIS
+A Pro készletkövetést ad utántöltési emlékeztetőkkel, proaktív figyelmeztetéseket és folyamatos visszaszámláló értesítést a tablettához. A rögzítés, az ütemterv, a helyi emlékeztetők, az előzmények, az appbeli időzítő és az alapminták ingyenesek maradnak. A csomagokat és az esetleges próbaidőszakot vásárlás előtt látod a Google Playen.
+
+ANDROIDRA KÉSZÜLT
+Fiók nélkül működik. Egészségügyi adatok importálása, órás app és kezdőképernyő-widgetek Androidon nincsenek. Maga az app angol nyelvű.
+
+A Simple GLP gyógyszernapló, nem orvosi tanács. Add meg a gyógyszert, az adagot, az ütemtervet és a várakozási időt a recepted szerint. A kezeléseddel kapcsolatban kérdezd orvosodat vagy gyógyszerészedet. Soha ne változtass gyógyszeren vagy adagon ennek az appnak az alapján.

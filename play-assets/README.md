@@ -1,6 +1,7 @@
 # Simple GLP Play assets
 
-- `metadata/android/en-US/`: Android-specific listing, no prices or medical claims.
+- `metadata/android/en-US/`: original Android listing. Localized listing text
+  for all 50 Play locales now lives in `android/play-assets/metadata/android/`.
 - `icon-512.png`: RGB512 icon derived from the existing iOS app icon.
 - `../scripts/play-products.py`: offline plan by default, US7.99/31.99/71.99,
   seven-day new-subscriber trials and the fleet PPP curve; no API writes without
