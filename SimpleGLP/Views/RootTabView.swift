@@ -307,7 +307,7 @@ struct RootTabView: View {
             try? await Task.sleep(until: start + .seconds(at), clock: .continuous)
             guard !Task.isCancelled else { return }
             let isSplit = split != nil
-            NSLog("GLPDUOTOUR t=%d split=%d step=%d", at, isSplit ? 1 : 0, index)
+            NSLog("GLPDUOTOUR t=%ld split=%ld step=%ld", at, isSplit ? 1 : 0, index)
             withAnimation(.easeInOut(duration: 0.3)) {
                 switch (isSplit, index) {
                 case (false, 0): selectedTab = 1
