@@ -45,6 +45,18 @@ struct SupplyView: View {
 
     private var plan: MedicationPlan? { plans.first }
     private var form: DoseForm { plan?.form ?? .injection }
+    private var isTracking: Bool { plan?.supplyUpdatedAt != nil }
+
+    /// Before tracking, the count is what's on hand now; once tracking, "Right now"
+    /// shows that and the stepper holds the next refill.
+    private var stepperLabel: String {
+        switch (form, isTracking) {
+        case (.pill, false): "Pills on hand"
+        case (.pill, true): "Pills after refill"
+        case (_, false): "Doses on hand"
+        case (_, true): "Doses after refill"
+        }
+    }
 
     var body: some View {
         Form {
@@ -61,7 +73,7 @@ struct SupplyView: View {
             Section {
                 Stepper(value: $count, in: 0...400) {
                     HStack {
-                        Text(form == .pill ? "Pills on hand" : "Doses on hand")
+                        Text(stepperLabel)
                         Spacer()
                         Text("\(count)")
                             .monospacedDigit()
@@ -110,8 +122,10 @@ struct SupplyView: View {
     private func load() {
         guard !didLoad, let plan else { return }
         didLoad = true
-        if let remaining = SupplyMath.remaining(plan: plan, doseDates: events.map(\.timestamp)), plan.supplyUpdatedAt != nil {
-            count = remaining
+        // Tracking: start from the last refill's size, so "I refilled" is one tap
+        // rather than a reset to what's already left.
+        if plan.supplyUpdatedAt != nil, plan.supplyCount > 0 {
+            count = plan.supplyCount
         } else {
             count = plan.form == .pill ? 30 : 4
         }
