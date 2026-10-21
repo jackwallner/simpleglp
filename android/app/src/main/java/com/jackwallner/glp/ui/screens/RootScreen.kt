@@ -8,18 +8,25 @@ import android.os.Build
 import androidx.activity.compose.BackHandler
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.unit.dp
 import com.google.android.play.core.review.ReviewManagerFactory
 import com.jackwallner.glp.AppGraph
+import com.jackwallner.glp.BuildConfig
 import com.jackwallner.glp.MainActivity
 import com.jackwallner.glp.data.Csv
 import com.jackwallner.glp.data.PurchaseOutcome
@@ -43,6 +50,7 @@ import java.time.format.DateTimeFormatter
     var undo by remember { mutableStateOf<String?>(null) }
     var duplicate by remember { mutableStateOf(false) }
     var deleteAll by remember { mutableStateOf(false) }
+    var reviewerCodeOpen by remember { mutableStateOf(false) }
     var paywall by remember { mutableStateOf(false) }
     var now by remember { mutableStateOf(Instant.now()) }
     var pendingImport by remember { mutableStateOf<String?>(null) }
@@ -61,7 +69,7 @@ import java.time.format.DateTimeFormatter
     }
     fun paid(destination: String) { if (store.isPro) route = destination else paywall = true }
     fun resumed() = activity.lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)
-    fun nothingPresented() = route == null && !paywall && !duplicate && message == null && !deleteAll && pendingImport == null && trialSource == null && !permissionOpen && resumed()
+    fun nothingPresented() = route == null && !paywall && !duplicate && message == null && !deleteAll && !reviewerCodeOpen && pendingImport == null && trialSource == null && !permissionOpen && resumed()
     // Play's review card with no question in front of it. A blocked ask stays pending for the next moment.
     fun positiveMoment() {
         if (automation) return
@@ -199,6 +207,11 @@ import java.time.format.DateTimeFormatter
                         RowAction("Send Feedback") { open(activity, "mailto:jackwallner@gmail.com?subject=Simple%20GLP%20feedback") }
                         RowAction("Rate Simple GLP") { graph.reviews.markOpenedListing(); open(activity, "https://play.google.com/store/apps/details?id=com.jackwallner.glp") }
                         listOf("Support" to "support.html", "Privacy Policy" to "privacy-policy.html", "Terms of Use" to "terms.html").forEach { (label, path) -> RowAction(label) { open(activity, "https://jackwallner.github.io/simpleglp/$path") } }
+                        // A long press opens the Play reviewer unlock; the row has no other action.
+                        Row(Modifier.fillMaxWidth().heightIn(min = 48.dp).testTag("version-row").combinedClickable(onClick = {}, onLongClick = { reviewerCodeOpen = true }).padding(horizontal = 12.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
+                            Text("Version"); Text(BuildConfig.VERSION_NAME, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        }
                         Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", style = MaterialTheme.typography.bodySmall)
                     }
                 }
@@ -230,11 +243,25 @@ import java.time.format.DateTimeFormatter
             onLink = { open(activity, it) },
             onDismiss = { close() })
     }
+    if (reviewerCodeOpen) ReviewerCodeDialog(onUnlock = { code -> store.activateReviewAccess(code).also { if (it) sync() } }, onClose = { reviewerCodeOpen = false })
     if (paywall) PaywallScreen(store, activity, { paywall = false }, isPill = tracker.plan?.form == DoseForm.PILL)
     if (message != null) AlertDialog(onDismissRequest = { message = null }, title = { Text("Simple GLP") }, text = { Text(message!!) }, confirmButton = { TextButton({ message = null }) { Text("OK") } })
     if (pendingImport != null) AlertDialog(onDismissRequest = { pendingImport = null }, title = { Text("Import CSV?") }, text = { Text("Imported doses are added to your history. Existing entries stay. Schedule status is recomputed against your current plan.") }, confirmButton = { TextButton({
         runCatching { tracker.importCsv(pendingImport!!) }.onSuccess { message = "$it doses imported."; sync() }.onFailure { message = "Couldn't import this CSV. Your existing history is unchanged." }; pendingImport = null
     }) { Text("Import") } }, dismissButton = { TextButton({ pendingImport = null }) { Text("Cancel") } })
     if (deleteAll) AlertDialog(onDismissRequest = { deleteAll = false }, title = { Text("Delete all data?") }, text = { Text("Your plan, history, and settings will be removed from this device. Export a CSV first if you want to keep your logs.") }, confirmButton = { TextButton({ tracker.clearAll(); graph.notifications.cancelAll(); deleteAll = false; route = null; tab = 0 }) { Text("Delete all data") } }, dismissButton = { TextButton({ deleteAll = false }) { Text("Cancel") } })
+}
+@Composable private fun ReviewerCodeDialog(onUnlock: (String) -> Boolean, onClose: () -> Unit) {
+    var code by remember { mutableStateOf("") }
+    var failed by remember { mutableStateOf(false) }
+    AlertDialog(onDismissRequest = onClose, title = { Text("Reviewer access") }, text = {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text("Enter the code from the Play review instructions.", style = MaterialTheme.typography.bodyMedium)
+            OutlinedTextField(code, { code = it; failed = false }, Modifier.testTag("reviewer-code"), label = { Text("Reviewer code") }, singleLine = true, isError = failed,
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password, autoCorrectEnabled = false), visualTransformation = PasswordVisualTransformation())
+            if (failed) Text("That code isn't valid.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
+        }
+    }, confirmButton = { TextButton({ if (onUnlock(code)) onClose() else failed = true }) { Text("Unlock") } },
+        dismissButton = { TextButton(onClose) { Text("Cancel") } })
 }
 fun open(context: Context, url: String) { runCatching { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) } }

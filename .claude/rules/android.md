@@ -5,7 +5,7 @@ paths: ["android/**", "scripts/sync-android-content.py", "scripts/verify-android
 # Simple GLP Android
 
 Native Kotlin/Compose port in `android/`. Package and namespace
-`com.jackwallner.glp`; version name 1.2.2, version code 1. The iOS app remains
+`com.jackwallner.glp`; version name 1.2.2, version code 2. The iOS app remains
 the specification. Do not change iOS source while fixing Android.
 
 ## Core contracts
@@ -55,6 +55,23 @@ requires a Test Store `test_` key to enable billing; no key keeps free tracking
 usable. Release validation rejects missing Play `goog_` key and external upload
 signing. `qa` is the optimized release source with debug signing, no billing
 key, and no test hooks. Never use a production Play key in routine tests.
+
+## Play reviewer unlock
+
+Long-press Settings > Support > Version opens a masked Password-keyboard dialog
+(autocorrect off). The code's SHA-256 is compared with `PLAY_REVIEW_CODE_SHA256`
+(ignored `local.properties` into `BuildConfig`; never the plaintext). A match
+stores the digest as `reviewAccessDigest` in the `reviewAccess` preferences
+(separate from tracker data, so Delete all data keeps it) and unlocks Pro for
+that install only (`ReviewAccess`, applied in `StoreService.apply` so a
+customer-info refresh keeps it). No purchase is written, and changing the
+digest revokes every earlier grant. `validateReleaseConfiguration` fails
+without a valid digest; generate it with `printf '%s' CODE | shasum -a 256`.
+Tests: `ReviewAccessTest` (JVM) and `ReviewerUnlockTest` (device, pass a
+throwaway code as `-Pandroid.testInstrumentationRunnerArguments.reviewCode=...`
+with its digest in `local.properties`; never a real code). Without that
+argument the connected test fails by design, so filter it out of routine runs
+or supply a throwaway code.
 
 ## Fleet Pro runs (jmbp / jmbp2)
 
@@ -150,6 +167,8 @@ production; products `com.jackwallner.glp.pro.{monthly,yearly,lifetime}`
 active. RevenueCat Play products (project `proja722b48d`, app
 `app3610516bb2`) are attached to `GLP Pro` and the three packages; the
 lifetime is non-consumable. All App content is saved, data safety included
-(purchase history and device ID, App functionality). Left: reviewer unlock and
-review code, a vc2 rebuild with the code's SHA, then Send for review in its
-pacing slot.
+(purchase history and device ID, App functionality). The reviewer unlock shipped
+in code on 2026-10-21 with versionCode 2. Left: choose the real review code,
+put its SHA in the Air's `local.properties`, rebuild and upload vc2, enter the
+code in the Play app access instructions, then Send for review in its pacing
+slot.
