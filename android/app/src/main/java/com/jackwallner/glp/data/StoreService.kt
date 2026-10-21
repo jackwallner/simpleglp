@@ -28,7 +28,13 @@ class StoreService(context: Context) {
         val key = BuildConfig.REVENUECAT_API_KEY
         if ((BuildConfig.DEBUG && key.startsWith("test_")) || (!BuildConfig.DEBUG && key.startsWith("goog_"))) {
             Purchases.logLevel = if (BuildConfig.DEBUG) LogLevel.DEBUG else LogLevel.ERROR
-            Purchases.configure(PurchasesConfiguration.Builder(context, key).build())
+            val builder = PurchasesConfiguration.Builder(context, key)
+            // Test Store runs share one tester instead of a fresh anonymous customer
+            // per install, so test runs don't inflate the live project's New and
+            // Active Customers. Never with the Play key: real buyers would share one
+            // identity.
+            if (key.startsWith("test_")) builder.appUserID(QA_APP_USER_ID)
+            Purchases.configure(builder.build())
             Purchases.sharedInstance.updatedCustomerInfoListener = UpdatedCustomerInfoListener(::apply)
             configured = true
             testStore = key.startsWith("test_")
@@ -76,6 +82,7 @@ class StoreService(context: Context) {
     /** The yearly package when Play offers this account a free phase on it; drives the one-tap trial pitch. */
     val trialPackage: Package? get() = packages.firstOrNull { it.packageType == PackageType.ANNUAL && it.product.defaultOption?.freePhase != null }
     companion object {
+        private const val QA_APP_USER_ID = "qa-android"
         val ENTITLEMENTS = listOf("GLP Pro", "SimpleGLPPro", "pro")
         /** RevenueCat Test Store product IDs; only accepted with a debug `test_` key. */
         val TEST_STORE_PRODUCTS = setOf("monthly", "yearly", "lifetime")
