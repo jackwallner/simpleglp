@@ -183,6 +183,7 @@ private struct SimpleGLPRootContent: View {
 }
 
 #if DEBUG
+@MainActor
 private enum SimpleGLPScreenshotData {
     static func seedIfRequested(in context: ModelContext) {
         guard ProcessInfo.processInfo.arguments.contains("-GLPScreenshotSeed") else { return }
