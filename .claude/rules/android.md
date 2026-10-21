@@ -150,15 +150,14 @@ timer and completion notification remain free.
 
 RevenueCat Play app is registered in the existing GLP project. Android and iOS
 platform filters are registered in `~/.rc-clean/apps.json` and synced to MBP.
-No port session through 2026-10-20 has created a Play Console app, product,
-track, upload, or submission. Listing copy, Data safety, app content answers, product
+The Play app, products and drafts exist (see Play staging below). Listing copy, Data safety, app content answers, product
 and base-plan IDs and the remaining Console steps are in
 `project-docs/android/play-listing.md`; `docs/privacy-policy.html` has an
 Android section that must be published before the Play record points at it.
 External upload PKCS12, encrypted backup, and app-specific Play SDK key are
 configured locally. Production billing, store pricing, license-tester
 purchases/restore, service-account package access, and final Play declarations
-remain unverified. This session is builds/testing only.
+remain unverified.
 
 ## Play staging, 2026-10-21
 
