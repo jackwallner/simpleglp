@@ -296,23 +296,28 @@ struct RootTabView: View {
 
     #if DEBUG
     /// `-GLPDuoTour`: walks the main screens for headless capture runs, which
-    /// can't tap and whose `simctl openurl` stops on a confirmation alert. Stops
-    /// are timed from launch (gh-sim relaunches after unfolding): One Tap, then
-    /// at 30, 50 and 70 s History, Patterns and Settings folded, or Patterns,
-    /// Supply and Settings unfolded, where History already has its own pane.
+    /// can't tap and whose `simctl openurl` stops on a confirmation alert. How
+    /// late the first shot lands varies by runner, so the tour loops: 13 s each
+    /// on One Tap, History, Patterns and Settings folded, or One Tap, Patterns,
+    /// Supply and Settings unfolded, where History already has its own pane. A
+    /// 52 s loop keeps shots taken every 10 to 20 s from repeating one screen.
     private func runDuoTour() async {
         guard ProcessInfo.processInfo.arguments.contains("-GLPDuoTour") else { return }
         let start = ContinuousClock.now
-        for (index, at) in [30, 50, 70].enumerated() {
-            try? await Task.sleep(until: start + .seconds(at), clock: .continuous)
+        for tick in 1... {
+            try? await Task.sleep(until: start + .seconds(13 * tick), clock: .continuous)
             guard !Task.isCancelled else { return }
             let isSplit = split != nil
-            NSLog("GLPDUOTOUR t=%ld split=%ld step=%ld", at, isSplit ? 1 : 0, index)
+            let step = tick % 4
+            NSLog("GLPDUOTOUR t=%ld split=%ld step=%ld", 13 * tick, isSplit ? 1 : 0, step)
             withAnimation(.easeInOut(duration: 0.3)) {
-                switch (isSplit, index) {
-                case (false, 0): selectedTab = 1
-                case (true, 0), (false, 1): selectedTab = 2
-                case (true, 1): patternsPath.append(PatternsRoute.supply)
+                switch (isSplit, step) {
+                case (_, 0):
+                    patternsPath = NavigationPath()
+                    selectedTab = 0
+                case (false, 1): selectedTab = 1
+                case (true, 1), (false, 2): selectedTab = 2
+                case (true, 2): patternsPath.append(PatternsRoute.supply)
                 default: selectedTab = 3
                 }
             }

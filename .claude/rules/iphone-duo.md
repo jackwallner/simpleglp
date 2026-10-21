@@ -25,11 +25,13 @@ paths:
 - Onboarding uses `.unfoldedLeadingPane`, with `OnboardingFoldPanel` in the
   trailing pane. Sheets (paywall, trial offer, log earlier, edit) are still
   system form sheets centred on the inner display.
-- Captures: `gh-sim all --device 'iPhone Duo' --wait 10 --record-seconds 100
-  --args "-uitesting -GLPScreenshotSeed -GLPScreenshotPill -GLPScreenshotPro
-  -GLPDuoTour"` plus `--url noop://1` through `noop://7`. The noop URLs fail
-  fast and only pace shots (`simctl openurl` to a real scheme raises an alert on
-  iOS 27). `-GLPDuoTour` (DEBUG) is timed from launch, since gh-sim relaunches
-  after unfolding: One Tap, then at 30, 50 and 70 s History, Patterns and
-  Settings folded, or Patterns, Supply and Settings unfolded. `GLPDUOTOUR`
-  lines in app.log map shots to steps.
+- Captures: `gh-sim all --device 'iPhone Duo' --wait 10 --record-seconds 120
+  --env TZ=Australia/Adelaide --args "-uitesting -GLPScreenshotSeed
+  -GLPScreenshotPill -GLPScreenshotPro -GLPDuoTour"` plus `--url noop://1`
+  through `noop://9`. The noop URLs fail fast and only pace shots (`simctl
+  openurl` to a real scheme raises an alert on iOS 27). Pick `TZ` so the
+  runner's UTC clock reads mid-morning, when a pill is taken (Adelaide fits a
+  dispatch around 22:40 UTC). `-GLPDuoTour` (DEBUG) loops 13 s per screen,
+  because when the first shot lands varies by runner: One Tap, History,
+  Patterns, Settings folded, or One Tap, Patterns, Supply, Settings unfolded.
+  `GLPDUOTOUR` lines in app.log map shots to steps.
