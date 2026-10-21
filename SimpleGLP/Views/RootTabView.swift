@@ -52,6 +52,14 @@ struct RootTabView: View {
     /// sheet over a scene that hasn't rendered yet — a blank white shell.
     @State private var foregroundEpoch = 0
     @Environment(\.requestReview) private var requestReview
+    @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    /// The container's width and fold, measured so the unfolded iPhone Duo can
+    /// put One Tap and History on opposite sides of the fold.
+    @State private var paneGeometry = PaneGeometry()
+    /// History's month, owned here because History moves between its tab and
+    /// its own pane when the Duo folds or unfolds.
+    @State private var historyMonth = Calendar.current.dateInterval(of: .month, for: .now)?.start ?? .now
+    @State private var patternsPath = NavigationPath()
 
     private enum TrialOfferSource {
         case firstShot
@@ -81,24 +89,46 @@ struct RootTabView: View {
         return trialPackages.first { $0.glpProPackageKind == .yearly } ?? trialPackages.first
     }
 
+    /// Unfolded, History has its own pane beside One Tap, so it is never a tab.
+    private var split: UnfoldedSplit? {
+        UnfoldedSplit.make(
+            width: paneGeometry.width,
+            isRegularWidth: horizontalSizeClass == .regular,
+            fold: paneGeometry.fold
+        )
+    }
+
+    /// Each unfolded pane is phone-width, so its screen lays out as on a phone.
+    /// Applied to the tab contents, not the `TabView`, whose own bar placement
+    /// is left to the system.
+    private var paneSizeClass: UserInterfaceSizeClass? {
+        split == nil ? horizontalSizeClass : .compact
+    }
+
     var body: some View {
-        TabView(selection: $selectedTab) {
-            NavigationStack { HomeView() }
-                .tabItem { Label("One Tap", systemImage: isPillPlan ? "pills.fill" : "syringe.fill") }
-                .tag(0)
-
-            NavigationStack { HistoryView() }
-                .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
-                .tag(1)
-
-            NavigationStack { InsightsView() }
-                .tabItem { Label("Patterns", systemImage: "chart.bar.xaxis") }
-                .tag(2)
-
-            NavigationStack { SettingsView() }
-                .tabItem { Label("Settings", systemImage: "slider.horizontal.3") }
-                .tag(3)
+        // Opening or closing the Duo only moves these frames, so the tab view is
+        // never rebuilt. History's month lives here for its move between tab and pane.
+        ZStack(alignment: .topLeading) {
+            tabs
+                .frame(maxWidth: split?.primaryWidth ?? .infinity, maxHeight: .infinity)
+            if let split {
+                NavigationStack { HistoryView(shownMonth: $historyMonth) }
+                    .environment(\.horizontalSizeClass, .compact)
+                    .frame(width: split.secondaryWidth)
+                    .frame(maxHeight: .infinity)
+                    .padding(.leading, split.secondaryX)
+            }
         }
+        .background(AppTheme.bg.ignoresSafeArea())
+        .onGeometryChange(for: PaneGeometry.self) { proxy in
+            PaneGeometry(width: proxy.size.width, fold: proxy.verticalFold())
+        } action: { paneGeometry = $0 }
+        .onChange(of: split != nil) { _, isSplit in
+            if isSplit, selectedTab == 1 { selectedTab = 0 }
+        }
+        #if DEBUG
+        .task { await runDuoTour() }
+        #endif
         .tint(AppTheme.brand)
         .preferredColorScheme(AppAppearance.from(storageValue: appearanceRaw).preferredColorScheme)
         .sheet(item: $activeSheet, onDismiss: handleRootSheetDismiss) { sheet in
@@ -230,6 +260,65 @@ struct RootTabView: View {
             evaluateExistingUserTrialOffer()
         }
     }
+
+    private var tabs: some View {
+        TabView(selection: $selectedTab) {
+            NavigationStack { HomeView() }
+                .environment(\.horizontalSizeClass, paneSizeClass)
+                .tabItem { Label("One Tap", systemImage: isPillPlan ? "pills.fill" : "syringe.fill") }
+                .tag(0)
+
+            if split == nil {
+                NavigationStack { HistoryView(shownMonth: $historyMonth) }
+                    .environment(\.horizontalSizeClass, paneSizeClass)
+                    .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
+                    .tag(1)
+            }
+
+            NavigationStack(path: $patternsPath) {
+                InsightsView()
+                    .navigationDestination(for: PatternsRoute.self) { route in
+                        switch route {
+                        case .supply: SupplyView()
+                        }
+                    }
+            }
+            .environment(\.horizontalSizeClass, paneSizeClass)
+            .tabItem { Label("Patterns", systemImage: "chart.bar.xaxis") }
+            .tag(2)
+
+            NavigationStack { SettingsView() }
+                .environment(\.horizontalSizeClass, paneSizeClass)
+                .tabItem { Label("Settings", systemImage: "slider.horizontal.3") }
+                .tag(3)
+        }
+    }
+
+    #if DEBUG
+    /// `-GLPDuoTour`: walks the main screens for headless capture runs, which
+    /// can't tap and whose `simctl openurl` stops on a confirmation alert. Stops
+    /// are timed from launch (gh-sim relaunches after unfolding): One Tap, then
+    /// at 30, 50 and 70 s History, Patterns and Settings folded, or Patterns,
+    /// Supply and Settings unfolded, where History already has its own pane.
+    private func runDuoTour() async {
+        guard ProcessInfo.processInfo.arguments.contains("-GLPDuoTour") else { return }
+        let start = ContinuousClock.now
+        for (index, at) in [30, 50, 70].enumerated() {
+            try? await Task.sleep(until: start + .seconds(at), clock: .continuous)
+            guard !Task.isCancelled else { return }
+            let isSplit = split != nil
+            NSLog("GLPDUOTOUR t=%d split=%d step=%d", at, isSplit ? 1 : 0, index)
+            withAnimation(.easeInOut(duration: 0.3)) {
+                switch (isSplit, index) {
+                case (false, 0): selectedTab = 1
+                case (true, 0), (false, 1): selectedTab = 2
+                case (true, 1): patternsPath.append(PatternsRoute.supply)
+                default: selectedTab = 3
+                }
+            }
+        }
+    }
+    #endif
 
     /// Soft trial offer right after onboarding — the highest-intent moment (most trial
     /// decisions happen on day 0). Dismissible so it never gates the core app.
@@ -487,4 +576,9 @@ struct RootTabView: View {
             .flatMap(\.windows)
             .contains { $0.isKeyWindow && $0.rootViewController?.presentedViewController != nil }
     }
+}
+
+/// Screens the Patterns tab pushes by value.
+enum PatternsRoute: Hashable {
+    case supply
 }

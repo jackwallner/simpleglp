@@ -633,3 +633,35 @@ struct OnboardingView: View {
         hasCompletedOnboarding = true
     }
 }
+
+/// The pane beside onboarding on the unfolded iPhone Duo: the One Tap button the
+/// setup leads to, so the second half of the display previews the app rather
+/// than sitting empty.
+struct OnboardingFoldPanel: View {
+    var body: some View {
+        VStack(spacing: 28) {
+            Circle()
+                .fill(AppTheme.brand)
+                .frame(width: 200, height: 200)
+                .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
+                .overlay {
+                    Image(systemName: "checkmark")
+                        .font(.system(size: 64, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+            VStack(spacing: 8) {
+                Text("One tap. Logged.")
+                    .font(.title2.weight(.semibold))
+                    .foregroundStyle(AppTheme.text)
+                Text("Your next dose and your history, side by side.")
+                    .font(.subheadline)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+            }
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(AppTheme.bg.ignoresSafeArea())
+        .accessibilityElement(children: .combine)
+    }
+}

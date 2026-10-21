@@ -12,7 +12,9 @@ struct HistoryView: View {
     @State private var pendingDeletion: [ShotEvent] = []
     @State private var deleteError: String?
     @State private var logEarlierStart: LogEarlierStart?
-    @State private var shownMonth = Calendar.current.dateInterval(of: .month, for: .now)?.start ?? .now
+    /// Owned by `RootTabView`, so the month survives History moving between its
+    /// tab and its unfolded pane.
+    @Binding var shownMonth: Date
 
     private var plan: MedicationPlan? { plans.first }
 

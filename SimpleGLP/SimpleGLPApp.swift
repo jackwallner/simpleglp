@@ -149,6 +149,7 @@ private struct SimpleGLPRootContent: View {
                 RootTabView()
             } else {
                 OnboardingView()
+                    .unfoldedLeadingPane { OnboardingFoldPanel() }
             }
         }
         .onAppear {
@@ -275,6 +276,9 @@ private enum SimpleGLPScreenshotData {
             logged.append(event)
         }
         try? context.save()
+        // Publish the glance now: launch's refresh ran before this seed, and the
+        // tab icon and "pill" wording read the plan kind from it.
+        DoseRoutineService.refresh(in: context, mayPrompt: false)
     }
 }
 #endif
