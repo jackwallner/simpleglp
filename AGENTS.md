@@ -95,3 +95,4 @@ ratings, gotchas): the global agent rules + the `ios-dev` skill.
 ## Area rules
 
 - [Android](.claude/rules/android.md): native port, parity contracts, remote emulator, billing, and platform gaps.
+- [iPhone Duo](.claude/rules/iphone-duo.md): One Tap beside History when unfolded, split math, and the capture tour.

@@ -1,0 +1,35 @@
+---
+paths:
+  - "SimpleGLP/Views/RootTabView.swift"
+  - "SimpleGLP/Views/HistoryView.swift"
+  - "SimpleGLP/Utilities/UnfoldedSplit.swift"
+  - "SimpleGLP/Views/OnboardingView.swift"
+  - "SimpleGLPTests/UnfoldedSplitTests.swift"
+---
+
+# Simple GLP: iPhone Duo (2026-10-21)
+
+- Unfolded (regular width, room for two panes of at least 360 pt),
+  `RootTabView` puts the tab view (One Tap, Patterns, Settings and its bar) on
+  the leading side of the fold and History in its own pane on the trailing
+  side; the History tab leaves the bar while split. Pane edges come from
+  `GeometryProxy.verticalFold()` (iOS 27.1 `reservedRegions(.division)`), else
+  an even split (`UnfoldedSplit`, tested in `UnfoldedSplitTests`). Folded, every
+  ordinary iPhone and the unfolded Duo in portrait keep the single column.
+- Folding only moves frames: the `TabView` is never rebuilt. History moves
+  between its tab and the pane, so its month lives in `RootTabView`
+  (`historyMonth`). Keep new History state there.
+- Each tab's content and the History pane get `horizontalSizeClass = .compact`,
+  so they lay out as on a phone. Never set it on the `TabView` itself (in Quit
+  Zyn that flipped the Duo's vertical bar to a bottom bar on a tab switch).
+- Onboarding uses `.unfoldedLeadingPane`, with `OnboardingFoldPanel` in the
+  trailing pane. Sheets (paywall, trial offer, log earlier, edit) are still
+  system form sheets centred on the inner display.
+- Captures: `gh-sim all --device 'iPhone Duo' --wait 10 --record-seconds 100
+  --args "-uitesting -GLPScreenshotSeed -GLPScreenshotPill -GLPScreenshotPro
+  -GLPDuoTour"` plus `--url noop://1` through `noop://7`. The noop URLs fail
+  fast and only pace shots (`simctl openurl` to a real scheme raises an alert on
+  iOS 27). `-GLPDuoTour` (DEBUG) is timed from launch, since gh-sim relaunches
+  after unfolding: One Tap, then at 30, 50 and 70 s History, Patterns and
+  Settings folded, or Patterns, Supply and Settings unfolded. `GLPDUOTOUR`
+  lines in app.log map shots to steps.
