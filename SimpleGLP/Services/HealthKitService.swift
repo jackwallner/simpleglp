@@ -4,6 +4,12 @@ import HealthKit
 actor HealthKitService {
     static let shared = HealthKitService()
 
+    // Legacy snapshots lack unit/source provenance because CSV imports share the same
+    // capture status. Existing values cannot safely be rescaled by magnitude.
+    nonisolated static var bloodGlucoseUnit: HKUnit {
+        HKUnit.gramUnit(with: .milli).unitDivided(by: .literUnit(with: .deci))
+    }
+
     private let store = HKHealthStore()
     private var hasRequestedAuthorization = false
 
@@ -116,7 +122,7 @@ actor HealthKitService {
         let dayStart = Calendar.current.startOfDay(for: date)
 
         async let bodyMass = optionalLatestQuantity(identifier: .bodyMass, unit: .gramUnit(with: .kilo), lookbackDays: 30, relativeTo: date)
-        async let glucose = optionalLatestQuantity(identifier: .bloodGlucose, unit: HKUnit.gramUnit(with: .milli).unitDivided(by: .liter()), lookbackDays: 7, relativeTo: date)
+        async let glucose = optionalLatestQuantity(identifier: .bloodGlucose, unit: Self.bloodGlucoseUnit, lookbackDays: 7, relativeTo: date)
         async let steps = optionalCumulativeSum(identifier: .stepCount, unit: .count(), start: dayStart, end: date)
         async let activeEnergy = optionalCumulativeSum(identifier: .activeEnergyBurned, unit: .kilocalorie(), start: dayStart, end: date)
         async let exercise = optionalCumulativeSum(identifier: .appleExerciseTime, unit: .minute(), start: dayStart, end: date)

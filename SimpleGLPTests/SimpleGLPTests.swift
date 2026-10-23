@@ -1,7 +1,67 @@
+import HealthKit
+import SwiftData
 import XCTest
 @testable import SimpleGLP
 
 final class SimpleGLPTests: XCTestCase {
+    @MainActor
+    func testHealthKitGlucoseUsesMgPerDLThroughStorageAndCSV() throws {
+        let quantity = HKQuantity(unit: HKUnit(from: "mg/dL"), doubleValue: 100)
+        let glucose = quantity.doubleValue(for: HealthKitService.bloodGlucoseUnit)
+        XCTAssertEqual(glucose, 100, accuracy: 0.001)
+
+        let container = try ModelContainer(
+            for: ShotEvent.self, MedicationPlan.self, DoseStep.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+        let context = ModelContext(container)
+        let event = ShotEvent()
+        event.apply(HealthCaptureResult(
+            status: .captured,
+            message: nil,
+            snapshot: HealthSnapshot(bloodGlucoseMgPerDL: glucose)
+        ))
+        event.finalizeCapture()
+        context.insert(event)
+        try context.save()
+
+        let stored = try XCTUnwrap(ModelContext(container).fetch(FetchDescriptor<ShotEvent>()).first)
+        XCTAssertEqual(stored.bloodGlucoseMgPerDL, 100)
+
+        let url = try ExportService.exportEvents(from: context)
+        defer { try? FileManager.default.removeItem(at: url) }
+        let records = ImportService.parseCSV(try String(contentsOf: url, encoding: .utf8))
+        let column = try XCTUnwrap(records[0].firstIndex(of: "blood_glucose_mg_per_dl"))
+        XCTAssertEqual(Double(records[1][column]), 100)
+
+        context.delete(event)
+        try context.save()
+        XCTAssertEqual(try ImportService.importEvents(from: url, into: context), 1)
+        let imported = try XCTUnwrap(context.fetch(FetchDescriptor<ShotEvent>()).first)
+        XCTAssertEqual(imported.bloodGlucoseMgPerDL, 100)
+    }
+
+    @MainActor
+    func testImportedGlucoseIsNotRescaledBasedOnMagnitude() throws {
+        let container = try ModelContainer(
+            for: ShotEvent.self, MedicationPlan.self, DoseStep.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+        let context = ModelContext(container)
+        var row = Array(repeating: "", count: ExportService.columns.count)
+        row[0] = "2026-10-22T09:00:00Z"
+        row[1] = "GLP-1"
+        row[2] = "1"
+        row[11] = "1000"
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString + ".csv")
+        defer { try? FileManager.default.removeItem(at: url) }
+        try (ExportService.header + "\n" + row.joined(separator: ",")).write(to: url, atomically: true, encoding: .utf8)
+
+        XCTAssertEqual(try ImportService.importEvents(from: url, into: context), 1)
+        let imported = try XCTUnwrap(context.fetch(FetchDescriptor<ShotEvent>()).first)
+        XCTAssertEqual(imported.bloodGlucoseMgPerDL, 1000)
+    }
+
     func testScheduleEngineMatchOnSchedule() {
         let plan = MedicationPlan(
             scheduleStartDate: Calendar.current.date(from: DateComponents(year: 2026, month: 1, day: 1))!,
