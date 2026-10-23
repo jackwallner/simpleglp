@@ -86,6 +86,11 @@ final class ExperiencedUserAuditUITests: XCTestCase {
     }
 
     func testBackfillFromHistoryAndEditDetails() {
+        addUIInterruptionMonitor(withDescription: "notifications") { alert in
+            let deny = alert.buttons.element(boundBy: 0)
+            if deny.exists { deny.tap(); return true }
+            return false
+        }
         launch()
         tab("History")
         snap("10-history-weekly")
@@ -102,7 +107,7 @@ final class ExperiencedUserAuditUITests: XCTestCase {
         snap("13-history-after-backfill")
 
         // Open the newest row for details.
-        let firstRow = app.cells.firstMatch
+        let firstRow = app.cells.containing(NSPredicate(format: "label CONTAINS 'mg'")).firstMatch
         if firstRow.waitForExistence(timeout: 5) {
             measure("history-row", firstRow)
             firstRow.tap()
@@ -138,7 +143,7 @@ final class ExperiencedUserAuditUITests: XCTestCase {
         note("sheet-dismissed-silently", "Details nav bar still present after swipe: \(app.navigationBars["Details"].exists)")
 
         // Reopen: was anything kept?
-        let again = app.cells.firstMatch
+        let again = app.cells.containing(NSPredicate(format: "label CONTAINS 'mg'")).firstMatch
         if again.exists { again.tap(); sleep(1) }
         snap("18-edit-sheet-reopened-edits-lost?")
     }
