@@ -64,6 +64,9 @@ struct OnboardingView: View {
             SimplePaywallView(paywallImpressionId: "simpleglp_onboarding_trial")
                 .environmentObject(store)
         }
+        .onChange(of: store.isProUnlocked) { _, isPro in
+            if isPro && isTrialStep { finishOnboarding() }
+        }
         .alert(
             "Couldn't save setup",
             isPresented: Binding(
@@ -443,7 +446,7 @@ struct OnboardingView: View {
                     if isPurchasing {
                         ProgressView().tint(.white)
                     } else {
-                        Text(isTrialStep ? store.onboardingTrialCTALabel : "Continue")
+                        Text(isTrialStep ? (store.isPurchasePending ? "Refresh status" : store.onboardingTrialCTALabel) : "Continue")
                     }
                 }
                 .font(.headline.weight(.bold))
@@ -454,7 +457,7 @@ struct OnboardingView: View {
                 .shadow(color: AppTheme.brand.opacity(0.3), radius: 12, x: 0, y: 6)
             }
             .buttonStyle(.plain)
-            .disabled(isPurchasing)
+            .disabled(isPurchasing || (isTrialStep && (store.isLoadingProducts || store.isRefreshingPurchase)))
 
             // Fixed-height footer slot on EVERY step so the button never moves.
             footerSlot
@@ -508,7 +511,7 @@ struct OnboardingView: View {
 
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
-            Button("Get Started") {
+            Button(store.isPurchasePending ? "Continue free" : "Get Started") {
                 ConversionDiagnostics.record(.freeVersionChosen)
                 store.syncConversionAttributes()
                 finishOnboarding()
@@ -525,6 +528,13 @@ struct OnboardingView: View {
                     .foregroundStyle(.tertiary)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
+            }
+
+            if store.isPurchasePending {
+                Text(StoreService.pendingPurchaseMessage)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
             }
 
             if let trialError {
@@ -558,8 +568,16 @@ struct OnboardingView: View {
     /// failing to load presents the full paywall rather than a dead button; a
     /// successful purchase or the emergency paywall both finish onboarding.
     private func startTrialPurchase() {
+        if store.isPurchasePending {
+            Task { await store.refreshPendingPurchaseStatus() }
+            return
+        }
         guard let package = store.directTrialPackage else {
             showPaywallFallback = true
+            return
+        }
+        if store.isIntroEligibilityUnknown(package) {
+            Task { await store.fetchProducts() }
             return
         }
         trialError = nil
@@ -572,9 +590,10 @@ struct OnboardingView: View {
             }
             do {
                 switch try await store.purchase(package) {
-                case .purchased, .pending:
-                    ConversionDiagnostics.record(.purchaseSucceeded)
+                case .purchased:
                     finishOnboarding()
+                case .pending:
+                    break
                 case .cancelled:
                     ConversionDiagnostics.record(.purchaseCancelled)
                     trialError = "Trial wasn't started. Tap again, or choose Get Started."

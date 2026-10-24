@@ -62,16 +62,16 @@ object TrialCopy {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable fun TrialOfferSheet(content: TrialOfferContent, purchasing: Boolean, error: String?, restoring: Boolean,
-                                onStart: () -> Unit, onSeeAll: () -> Unit, onRestore: () -> Unit, onLink: (String) -> Unit, onDismiss: () -> Unit) {
+                                onStart: () -> Unit, onSeeAll: () -> Unit, onRestore: () -> Unit, onLink: (String) -> Unit, onDismiss: () -> Unit, pending: Boolean = false) {
     val state = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     ModalBottomSheet(onDismissRequest = { if (!purchasing) onDismiss() }, sheetState = state, containerColor = MaterialTheme.colorScheme.background,
         properties = ModalBottomSheetProperties(shouldDismissOnBackPress = !purchasing)) {
-        TrialOfferBody(content, purchasing, error, restoring, onStart, onSeeAll, onRestore, onLink, onDismiss)
+        TrialOfferBody(content, purchasing, error, restoring, onStart, onSeeAll, onRestore, onLink, onDismiss, pending)
     }
 }
 
 @Composable fun TrialOfferBody(content: TrialOfferContent, purchasing: Boolean, error: String?, restoring: Boolean,
-                               onStart: () -> Unit, onSeeAll: () -> Unit, onRestore: () -> Unit, onLink: (String) -> Unit, onDismiss: () -> Unit) {
+                               onStart: () -> Unit, onSeeAll: () -> Unit, onRestore: () -> Unit, onLink: (String) -> Unit, onDismiss: () -> Unit, pending: Boolean = false) {
     val colors = MaterialTheme.colorScheme
     Column(Modifier.semantics { testTagsAsResourceId = true }.testTag("trial-offer").fillMaxWidth().verticalScroll(rememberScrollState())
         .padding(horizontal = 24.dp).padding(bottom = 16.dp), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(16.dp)) {
@@ -98,15 +98,16 @@ object TrialCopy {
                 TimelineStep(Icons.Outlined.Event, "Day $days", "Trial ends. Keep Pro, or cancel in Google Play. Your call.")
             }
         }
+        if (pending) Text(com.jackwallner.glp.data.StoreService.PENDING_MESSAGE, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
         error?.let { Text(it, color = colors.error, style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center) }
         Button(onStart, Modifier.fillMaxWidth().height(56.dp).testTag("trial-start"), enabled = !purchasing && !restoring) {
-            if (purchasing) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp, color = colors.onPrimary) else Text(TrialCopy.button(content))
+            if (purchasing) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp, color = colors.onPrimary) else Text(if (pending) "Refresh status" else TrialCopy.button(content))
         }
         content.priceLabel?.let { Text("then $it", style = MaterialTheme.typography.titleSmall, modifier = Modifier.testTag("trial-price")) }
         Text(TrialCopy.disclosure(content), style = MaterialTheme.typography.bodySmall, color = colors.onSurfaceVariant, textAlign = TextAlign.Center)
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
             TextButton(onSeeAll, enabled = !purchasing) { Text("See all plans") }
-            TextButton(onDismiss, Modifier.testTag("trial-dismiss"), enabled = !purchasing) { Text("Not now") }
+            TextButton(onDismiss, Modifier.testTag("trial-dismiss"), enabled = !purchasing) { Text(if (pending) "Continue free" else "Not now") }
         }
         Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
             TextButton(onRestore, enabled = !purchasing && !restoring) { Text(if (restoring) "Restoring…" else "Restore") }

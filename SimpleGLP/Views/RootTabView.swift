@@ -69,7 +69,6 @@ struct RootTabView: View {
 
     private var trialOfferLabel: String? {
         directTrialPackage?.glpProIntroOfferLabel
-            ?? store.products.compactMap(\.glpProIntroOfferLabel).first
     }
 
     private var hasTrialOffer: Bool { directTrialPackage != nil }
@@ -222,6 +221,10 @@ struct RootTabView: View {
             // Products may load after appear — retry the first-run offer (it waits for
             // the trial package so it never presents degraded) and re-evaluate the
             // existing-user path so a returning user with shots still gets pitched.
+            presentFirstRunOfferIfEligible()
+            evaluateExistingUserTrialOffer()
+        }
+        .onChange(of: store.introEligibility) { _, _ in
             presentFirstRunOfferIfEligible()
             evaluateExistingUserTrialOffer()
         }
@@ -406,9 +409,11 @@ struct RootTabView: View {
             defer { trialPurchaseInFlight = false }
             do {
                 switch try await store.purchase(package) {
-                case .purchased, .pending:
+                case .purchased:
                     hasSeenTrialOffer = true
                     activeSheet = nil
+                case .pending:
+                    break
                 case .cancelled:
                     trialPurchaseError = "Trial wasn't started. Tap again, or pick a different plan."
                 }

@@ -19,6 +19,8 @@ import kotlinx.coroutines.launch
 @Composable fun PaywallScreen(store: StoreService, activity: MainActivity, dismiss: () -> Unit, isPill: Boolean = false) {
     val scope = rememberCoroutineScope(); var busy by remember { mutableStateOf(false) }; var result by remember { mutableStateOf<String?>(null) }
     LaunchedEffect(Unit) { store.refresh() }
+    LaunchedEffect(store.purchasePending) { if (store.purchasePending) store.refreshPendingPurchase() }
+    LaunchedEffect(store.isPro) { if (store.isPro) dismiss() }
     Dialog(onDismissRequest = { if (!busy) dismiss() }) {
         Surface(shape = MaterialTheme.shapes.large, modifier = Modifier.semantics { testTagsAsResourceId = true }) {
             Column(Modifier.verticalScroll(rememberScrollState()).padding(24.dp), verticalArrangement = Arrangement.spacedBy(14.dp)) {
@@ -33,13 +35,17 @@ import kotlinx.coroutines.launch
                     val freePhase = pkg.product.defaultOption?.freePhase
                     val trial = freePhase?.billingPeriod?.let { "${it.value} ${it.unit.name.lowercase()} free trial, then " }.orEmpty()
                     Text("$label · $trial${pkg.product.price.formatted}$period${if (lifetime) " · one-time purchase" else ""}")
-                    Action("Continue with $label", !busy && store.resolved) {
+                    Action("Continue with $label", !busy && store.resolved && !store.purchasePending) {
                         busy = true; scope.launch {
                             runCatching { store.purchase(activity, pkg) }.onSuccess { outcome ->
-                                when (outcome) { PurchaseOutcome.PURCHASED -> dismiss(); PurchaseOutcome.PENDING -> result = "Payment pending. Pro unlocks when Google Play completes your purchase."; PurchaseOutcome.CANCELLED -> Unit }
+                                when (outcome) { PurchaseOutcome.PURCHASED -> dismiss(); PurchaseOutcome.PENDING -> Unit; PurchaseOutcome.CANCELLED -> Unit }
                             }.onFailure { result = it.message ?: "Couldn't complete the purchase." }; busy = false
                         }
                     }
+                }
+                if (store.purchasePending) {
+                    Text(StoreService.PENDING_MESSAGE)
+                    TextButton({ scope.launch { store.refreshPendingPurchase() } }, enabled = !store.refreshingPurchase) { Text("Refresh status") }
                 }
                 store.error?.let { Text(it, style = MaterialTheme.typography.bodySmall) }; result?.let { Text(it) }
                 if (store.packages.isEmpty()) TextButton({ scope.launch { store.refresh() } }, enabled = !store.busy) { Text("Retry") }
@@ -49,7 +55,7 @@ import kotlinx.coroutines.launch
                     TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/privacy-policy.html") }) { Text("Privacy") }
                     TextButton({ open(activity, "https://jackwallner.github.io/simpleglp/terms.html") }) { Text("Terms") }
                 }
-                TextButton(dismiss, enabled = !busy) { Text("Not now") }
+                TextButton(dismiss, enabled = !busy) { Text(if (store.purchasePending) "Continue free" else "Not now") }
             }
         }
     }

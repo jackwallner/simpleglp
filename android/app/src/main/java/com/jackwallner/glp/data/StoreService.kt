@@ -10,14 +10,36 @@ import com.revenuecat.purchases.*
 import com.revenuecat.purchases.Package
 import com.revenuecat.purchases.interfaces.UpdatedCustomerInfoListener
 import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.delay
 
 enum class PurchaseOutcome { PURCHASED, PENDING, CANCELLED }
+
+class PurchaseActivation(private val store: StringStore) {
+    var pending = store.getString(KEY) == "true"; private set
+
+    fun completed(isPro: Boolean): PurchaseOutcome {
+        update(isPro)
+        return if (isPro) PurchaseOutcome.PURCHASED else PurchaseOutcome.PENDING
+    }
+
+    private fun update(isPro: Boolean) {
+        pending = !isPro
+        store.putString(KEY, pending.toString())
+    }
+
+    fun entitlementUpdated(isPro: Boolean) { if (isPro && pending) update(true) }
+
+    companion object { private const val KEY = "purchasePending" }
+}
 
 class StoreService(
     context: Context,
     private val reviewAccess: ReviewAccess = ReviewAccess(
         PreferencesStringStore(context.getSharedPreferences("reviewAccess", Context.MODE_PRIVATE)), BuildConfig.PLAY_REVIEW_CODE_SHA256),
 ) {
+    private val activation = PurchaseActivation(PreferencesStringStore(context.getSharedPreferences("billing", Context.MODE_PRIVATE)))
+    var purchasePending by mutableStateOf(activation.pending); private set
+    var refreshingPurchase by mutableStateOf(false); private set
     var isPro by mutableStateOf(reviewAccess.isGranted); private set
     /** Any Pro entitlement on record, active or lapsed. Lapsed members never get a trial pitch. */
     var hadPro by mutableStateOf(false); private set
@@ -57,6 +79,8 @@ class StoreService(
     }
     private fun apply(info: CustomerInfo) {
         isPro = debugPro || reviewAccess.isGranted || ENTITLEMENTS.any { info.entitlements.active[it]?.isActive == true }
+        activation.entitlementUpdated(isPro)
+        purchasePending = activation.pending
         hadPro = isPro || ENTITLEMENTS.any { info.entitlements.all[it] != null }
         resolved = true
     }
@@ -74,17 +98,31 @@ class StoreService(
     }
     suspend fun purchase(activity: Activity, pkg: Package): PurchaseOutcome {
         check(configured)
+        if (purchasePending) return PurchaseOutcome.PENDING
         return try {
             val result = Purchases.sharedInstance.awaitPurchase(PurchaseParams.Builder(activity, pkg).build())
             apply(result.customerInfo)
-            if (isPro) PurchaseOutcome.PURCHASED else PurchaseOutcome.PENDING
+            activation.completed(isPro).also { purchasePending = activation.pending }
         } catch (e: PurchasesTransactionException) {
             when {
                 e.userCancelled || e.code == PurchasesErrorCode.PurchaseCancelledError -> PurchaseOutcome.CANCELLED
-                e.code == PurchasesErrorCode.PaymentPendingError -> PurchaseOutcome.PENDING
+                e.code == PurchasesErrorCode.PaymentPendingError -> activation.completed(false).also { purchasePending = activation.pending }
                 else -> throw IllegalStateException("Couldn't complete the purchase. Please try again.")
             }
         }
+    }
+    suspend fun refreshPendingPurchase() {
+        if (!configured || !purchasePending || refreshingPurchase) return
+        refreshingPurchase = true
+        try {
+            repeat(3) { attempt ->
+                if (!purchasePending) return
+                if (attempt > 0) delay(1000)
+                try { apply(Purchases.sharedInstance.awaitCustomerInfo(CacheFetchPolicy.FETCH_CURRENT)); error = null }
+                catch (e: CancellationException) { throw e }
+                catch (_: Exception) { error = "Couldn't refresh your subscription status. Check your connection and try again." }
+            }
+        } finally { refreshingPurchase = false }
     }
     suspend fun restore() {
         if (!configured) { error = "Purchases are unavailable in this build."; return }
@@ -96,6 +134,7 @@ class StoreService(
     /** The yearly package when Play offers this account a free phase on it; drives the one-tap trial pitch. */
     val trialPackage: Package? get() = packages.firstOrNull { it.packageType == PackageType.ANNUAL && it.product.defaultOption?.freePhase != null }
     companion object {
+        const val PENDING_MESSAGE = "Purchase pending. Pro isn't active yet. Refresh status or continue free while activation finishes."
         private const val QA_APP_USER_ID = "qa-android"
         val ENTITLEMENTS = listOf("GLP Pro", "SimpleGLPPro", "pro")
         /** RevenueCat Test Store product IDs; only accepted with a debug `test_` key. */

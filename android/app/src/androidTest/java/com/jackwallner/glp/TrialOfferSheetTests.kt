@@ -16,8 +16,8 @@ class TrialOfferSheetTests {
     @get:Rule val compose = createComposeRule()
     private var started = 0; private var dismissed = 0; private var seeAll = 0
 
-    private fun show(content: TrialOfferContent, purchasing: Boolean = false, error: String? = null) = compose.setContent {
-        GLPTheme("light") { TrialOfferBody(content, purchasing, error, false, { started++ }, { seeAll++ }, {}, {}, { dismissed++ }) }
+    private fun show(content: TrialOfferContent, purchasing: Boolean = false, error: String? = null, pending: Boolean = false) = compose.setContent {
+        GLPTheme("light") { TrialOfferBody(content, purchasing, error, false, { started++ }, { seeAll++ }, {}, {}, { dismissed++ }, pending = pending) }
     }
 
     @Test fun pillPitchShowsLengthPriceAndTermsBeforePurchase() {
@@ -42,6 +42,16 @@ class TrialOfferSheetTests {
         compose.onNodeWithTag("trial-dismiss").performScrollTo().performClick()
         compose.onNodeWithText("See all plans").performClick()
         assertEquals(1, dismissed); assertEquals(1, seeAll)
+    }
+
+    @Test fun pendingPurchaseShowsRefreshAndKeepsTheFreeExit() {
+        show(TrialOfferContent(7, "DAY", "$29.99 per year", isPill = false), pending = true)
+        compose.onNodeWithText("Purchase pending.", substring = true).performScrollTo().assertIsDisplayed()
+        compose.onNodeWithTag("trial-start").performScrollTo().assertTextEquals("Refresh status").assertIsEnabled()
+        compose.onNodeWithText("Start My 7-Day Free Trial").assertDoesNotExist()
+        compose.onNodeWithTag("trial-dismiss").performScrollTo().assertTextEquals("Continue free").performClick()
+        assertEquals(1, dismissed)
+        assertEquals(0, started)
     }
 
     @Test fun purchaseInFlightLocksTheExits() {

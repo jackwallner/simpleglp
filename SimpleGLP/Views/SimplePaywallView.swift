@@ -345,7 +345,7 @@ struct SimplePaywallView: View {
                 .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
             }
             .buttonStyle(.plain)
-            .disabled(isPurchasing || (store.products.isEmpty == false && selectedPackage == nil))
+            .disabled(isPurchasing || store.isRefreshingPurchase || store.isLoadingProducts || (store.products.isEmpty == false && selectedPackage == nil))
 
             Text(trialReassuranceLine ?? " ")
                 .font(.caption.weight(.semibold))
@@ -367,6 +367,15 @@ struct SimplePaywallView: View {
                 .opacity(disclosureText == nil ? 0 : 1)
                 .accessibilityHidden(disclosureText == nil)
 
+            if store.isPurchasePending {
+                Text(StoreService.pendingPurchaseMessage)
+                    .font(.caption)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+                Button("Continue free") { dismiss() }
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(AppTheme.muted)
+            }
             if let errorMessage {
                 Text(errorMessage)
                     .font(.caption)
@@ -420,10 +429,12 @@ struct SimplePaywallView: View {
     }
 
     private var primaryButtonTitle: String {
+        if store.isPurchasePending { return "Refresh status" }
         if store.products.isEmpty {
             return store.isLoadingProducts ? "Loading…" : "Try Again"
         }
         guard let package = selectedPackage else { return "Continue" }
+        if store.isIntroEligibilityUnknown(package) { return store.isLoadingProducts ? "Checking offer…" : "Try Again" }
         if package.glpProPackageKind == .lifetime { return "Unlock Lifetime Access" }
         if store.isEligibleForIntroOffer(package) {
             // Naming the trial length in the CTA outperforms a generic "Start My Free
@@ -437,7 +448,11 @@ struct SimplePaywallView: View {
     }
 
     private func primaryButtonAction() {
-        if store.products.isEmpty {
+        if store.isPurchasePending {
+            Task { await store.refreshPendingPurchaseStatus() }
+            return
+        }
+        if store.products.isEmpty || selectedPackage.map(store.isIntroEligibilityUnknown) == true {
             Task {
                 await store.fetchProducts()
                 selectDefaultPackageIfNeeded()
@@ -449,7 +464,7 @@ struct SimplePaywallView: View {
 
     /// Apple 3.1.2: full price, renewal, and cancellation — one caption under the CTA (not a separate cancel section).
     private var disclosureText: String? {
-        guard let package = selectedPackage else { return nil }
+        guard let package = selectedPackage, !store.isIntroEligibilityUnknown(package) else { return nil }
         let price = package.glpProPriceLabel
         if package.glpProPackageKind == .lifetime {
             return "\(price). One-time purchase. Lifetime access."
@@ -554,7 +569,9 @@ struct SimplePaywallView: View {
             defer { isPurchasing = false }
             do {
                 switch try await store.purchase(package) {
-                case .purchased, .pending:
+                case .purchased:
+                    dismiss()
+                case .pending:
                     break
                 case .cancelled:
                     errorMessage = "Purchase cancelled. Tap again to continue."

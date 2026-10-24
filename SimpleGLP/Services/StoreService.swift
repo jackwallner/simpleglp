@@ -31,6 +31,12 @@ enum RevenueCatConfig {
     static let fallbackEntitlements = ["SimpleGLPPro", "pro"]
 }
 
+struct PendingPurchase: Codable {
+    let productID: String
+    let startedTrial: Bool
+    let offeringID: String?
+}
+
 enum PurchaseState {
     case purchased
     case cancelled
@@ -39,9 +45,13 @@ enum PurchaseState {
 
 enum StoreServiceError: LocalizedError {
     case unavailableInSimulator
+    case unresolvedIntroEligibility
 
     var errorDescription: String? {
-        "Purchases are unavailable in the iOS Simulator."
+        switch self {
+        case .unavailableInSimulator: "Purchases are unavailable in the iOS Simulator."
+        case .unresolvedIntroEligibility: "Couldn't confirm this offer. Please try again."
+        }
     }
 }
 
@@ -196,12 +206,17 @@ final class StoreService: NSObject, ObservableObject {
     @Published private(set) var customerInfo: CustomerInfo?
     @Published private(set) var isProUnlocked: Bool = false
     @Published private(set) var purchaseInFlight: Bool = false
+    @Published private(set) var pendingPurchase: PendingPurchase?
+    @Published private(set) var isRefreshingPurchase = false
+
+    var isPurchasePending: Bool { pendingPurchase != nil }
+    static let pendingPurchaseMessage = "Purchase pending. Pro isn't active yet. Refresh status or continue free while activation finishes."
     @Published private(set) var isLoadingProducts: Bool = false
     /// True when `products` were loaded directly by ID instead of from a RevenueCat offering
     /// (offering missing/empty on the dashboard). Purchases must then go through the product, not the package.
     @Published private(set) var usingFallbackProducts: Bool = false
     @Published var lastError: String?
-    @Published private(set) var introEligibility: [String: Bool] = [:]
+    @Published private(set) var introEligibility: [String: IntroEligibilityStatus] = [:]
     /// Flips true only after an explicit `customerInfo` fetch resolves. The delegate's
     /// initial push can carry stale/cached non-Pro info; promo surfaces that present on
     /// it get yanked when the authoritative result lands — a blank sheet flash on cold
@@ -230,7 +245,18 @@ final class StoreService: NSObject, ObservableObject {
     private var isConfigured = false
     private var paywallImpressionsThisSession: Set<String> = []
 
-    private override init() {}
+    private static let pendingPurchaseKey = "glp.pendingPurchase"
+    private let defaults: UserDefaults
+
+    init(products: [Package] = [], introEligibility: [String: IntroEligibilityStatus] = [:], defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        if let data = defaults.data(forKey: Self.pendingPurchaseKey) {
+            pendingPurchase = try? JSONDecoder().decode(PendingPurchase.self, from: data)
+        }
+        self.products = products
+        self.introEligibility = introEligibility
+        super.init()
+    }
 
     func start() {
         #if targetEnvironment(simulator)
@@ -241,7 +267,10 @@ final class StoreService: NSObject, ObservableObject {
         return
         #else
         configureIfNeeded()
-        Task { await updateCustomerProductStatus(fetchPolicy: .fetchCurrent) }
+        Task {
+            await updateCustomerProductStatus(fetchPolicy: .fetchCurrent)
+            await refreshPendingPurchaseStatus()
+        }
         Task { await fetchProducts() }
         #endif
     }
@@ -251,6 +280,7 @@ final class StoreService: NSObject, ObservableObject {
     /// configures RevenueCat and is unavailable to Release builds.
     func setLocalOverride(isPro: Bool) {
         isProUnlocked = isPro
+        completePendingPurchaseIfUnlocked()
         hasResolvedEntitlements = true
     }
     #endif
@@ -273,6 +303,7 @@ final class StoreService: NSObject, ObservableObject {
         #endif
         configureIfNeeded()
         isLoadingProducts = true
+        introEligibility = [:]
         defer { isLoadingProducts = false }
         do {
             let offerings = try await Purchases.shared.offerings()
@@ -338,12 +369,17 @@ final class StoreService: NSObject, ObservableObject {
             return
         }
         let result = await Purchases.shared.checkTrialOrIntroDiscountEligibility(productIdentifiers: identifiers)
-        introEligibility = result.mapValues { $0.status == .eligible }
+        introEligibility = result.mapValues(\.status)
     }
 
     func isEligibleForIntroOffer(_ package: Package) -> Bool {
         guard package.glpProIntroOfferLabel != nil else { return false }
-        return introEligibility[package.storeProduct.productIdentifier] ?? true
+        return introEligibility[package.storeProduct.productIdentifier] == .eligible
+    }
+
+    func isIntroEligibilityUnknown(_ package: Package) -> Bool {
+        guard package.glpProIntroOfferLabel != nil else { return false }
+        return (introEligibility[package.storeProduct.productIdentifier] ?? .unknown) == .unknown
     }
 
     // MARK: - Onboarding trial CTA (StatScout / Headaches pattern)
@@ -366,6 +402,7 @@ final class StoreService: NSObject, ObservableObject {
     /// (Apple 3.1.2 — nothing implies Pro is free forever).
     var onboardingTrialCTALabel: String {
         guard let pkg = directTrialPackage else { return "Unlock Simple GLP Pro" }
+        if isIntroEligibilityUnknown(pkg) { return isLoadingProducts ? "Checking offer…" : "Try Again" }
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
             return "Start \(trial)"
         }
@@ -378,7 +415,7 @@ final class StoreService: NSObject, ObservableObject {
     ///
     /// Returns nil until a package loads so no placeholder price is ever rendered.
     var onboardingTrialDisclosureText: String? {
-        guard let pkg = directTrialPackage else { return nil }
+        guard let pkg = directTrialPackage, !isIntroEligibilityUnknown(pkg) else { return nil }
         let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings › Apple ID › Subscriptions."
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
             return "\(trial.capitalized), then \(pkg.glpProPriceLabel). \(renew)"
@@ -437,6 +474,8 @@ final class StoreService: NSObject, ObservableObject {
 
     @discardableResult
     func purchase(_ package: Package) async throws -> PurchaseState {
+        if isPurchasePending { return .pending }
+        guard !isIntroEligibilityUnknown(package) else { throw StoreServiceError.unresolvedIntroEligibility }
         #if DEBUG
         let probing = RevenueCatProbe.isEnabled
         #else
@@ -448,25 +487,58 @@ final class StoreService: NSObject, ObservableObject {
         configureIfNeeded()
         purchaseInFlight = true
         defer { purchaseInFlight = false }
-        let startedTrial = isEligibleForIntroOffer(package)
         // Synthesized fallback packages point at an offering that doesn't exist on the
         // dashboard, so purchase the underlying product directly in that case.
         let result = usingFallbackProducts
             ? try await Purchases.shared.purchase(product: package.storeProduct)
             : try await Purchases.shared.purchase(package: package)
         apply(customerInfo: result.customerInfo)
-        if result.userCancelled {
-            return .cancelled
-        } else if result.customerInfo.hasGLPProEntitlement {
-            ConversionDiagnostics.recordConversion(
-                plan: package.storeProduct.productIdentifier,
-                startedTrial: startedTrial,
-                offeringID: currentOffering?.identifier
-            )
-            syncConversionAttributes()
-            return .purchased
+        let state = completePurchase(package, userCancelled: result.userCancelled)
+        if state == .pending {
+            Task { await refreshPendingPurchaseStatus() }
         }
-        return .pending
+        return state
+    }
+
+    func completePurchase(_ package: Package, userCancelled: Bool) -> PurchaseState {
+        guard !userCancelled else { return .cancelled }
+        pendingPurchase = PendingPurchase(
+            productID: package.storeProduct.productIdentifier,
+            startedTrial: isEligibleForIntroOffer(package),
+            offeringID: currentOffering?.identifier
+        )
+        if let data = try? JSONEncoder().encode(pendingPurchase) {
+            defaults.set(data, forKey: Self.pendingPurchaseKey)
+        }
+        completePendingPurchaseIfUnlocked()
+        return isProUnlocked ? .purchased : .pending
+    }
+
+    private func completePendingPurchaseIfUnlocked() {
+        guard isProUnlocked, let pendingPurchase else { return }
+        ConversionDiagnostics.recordConversion(
+            plan: pendingPurchase.productID,
+            startedTrial: pendingPurchase.startedTrial,
+            offeringID: pendingPurchase.offeringID
+        )
+        ConversionDiagnostics.record(.purchaseSucceeded)
+        self.pendingPurchase = nil
+        defaults.removeObject(forKey: Self.pendingPurchaseKey)
+        syncConversionAttributes()
+    }
+
+    func refreshPendingPurchaseStatus() async {
+        guard isPurchasePending, !isRefreshingPurchase else { return }
+        isRefreshingPurchase = true
+        defer { isRefreshingPurchase = false }
+        for attempt in 0..<3 {
+            if attempt > 0 {
+                do { try await Task.sleep(for: .seconds(1)) }
+                catch { return }
+            }
+            guard isPurchasePending, !Task.isCancelled else { return }
+            await updateCustomerProductStatus(fetchPolicy: .fetchCurrent)
+        }
     }
 
     func updateCustomerProductStatus(fetchPolicy: CacheFetchPolicy = .default) async {
@@ -520,6 +592,7 @@ final class StoreService: NSObject, ObservableObject {
             isProUnlocked = hasPro
             logger.info("isProUnlocked updated to \(hasPro, privacy: .public)")
         }
+        completePendingPurchaseIfUnlocked()
     }
 
     private func configureIfNeeded() {

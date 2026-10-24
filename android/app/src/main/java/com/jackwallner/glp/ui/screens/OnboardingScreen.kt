@@ -113,6 +113,7 @@ fun OnboardingScreen(store: StoreService, activity: MainActivity, onComplete: (P
     }
 
     LaunchedEffect(Unit) { if (store.packages.isEmpty() && !store.busy) store.refresh() }
+    LaunchedEffect(store.purchasePending) { if (store.purchasePending) store.refreshPendingPurchase() }
     LaunchedEffect(step) { scroll.scrollTo(0) }
     LaunchedEffect(step, store.resolved, store.isPro) {
         if (trialStep && store.resolved && store.isPro) finish()
@@ -209,8 +210,9 @@ fun OnboardingScreen(store: StoreService, activity: MainActivity, onComplete: (P
             // Fixed above the CTA, never in the scrolling content, so it can't fall below the fold.
             Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.", Modifier.fillMaxWidth().testTag("onboarding-medical-disclaimer"),
                 style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
-            TextButton(::finish, Modifier.fillMaxWidth().testTag("onboarding-free"), enabled = !purchasing) { Text("Get Started") }
+            TextButton(::finish, Modifier.fillMaxWidth().testTag("onboarding-free"), enabled = !purchasing) { Text(if (store.purchasePending) "Continue free" else "Get Started") }
             if (store.resolved) preferred?.let { Text(onboardingDisclosure(it), Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center) }
+            if (store.purchasePending) Text(StoreService.PENDING_MESSAGE, Modifier.fillMaxWidth(), style = MaterialTheme.typography.bodySmall, textAlign = TextAlign.Center)
             error?.let { Text(it, Modifier.fillMaxWidth(), color = MaterialTheme.colorScheme.error, textAlign = TextAlign.Center) }
         }
         Spacer(Modifier.height(12.dp))
@@ -223,13 +225,15 @@ fun OnboardingScreen(store: StoreService, activity: MainActivity, onComplete: (P
                     step += 1
                 }.onFailure { error = it.message }
             } else if (!store.resolved || store.isPro) finish()
+            else if (store.purchasePending) scope.launch { store.refreshPendingPurchase() }
             else if (preferred == null) showPlans = true
             else {
                 purchasing = true
                 scope.launch {
                     try {
                         when (store.purchase(activity, preferred)) {
-                            PurchaseOutcome.PURCHASED, PurchaseOutcome.PENDING -> finish()
+                            PurchaseOutcome.PURCHASED -> finish()
+                            PurchaseOutcome.PENDING -> Unit
                             PurchaseOutcome.CANCELLED -> error = "Purchase wasn't completed. Tap again, or choose Get Started."
                         }
                     } catch (failure: kotlinx.coroutines.CancellationException) { throw failure }
@@ -237,9 +241,9 @@ fun OnboardingScreen(store: StoreService, activity: MainActivity, onComplete: (P
                     finally { purchasing = false }
                 }
             }
-        }, modifier = Modifier.fillMaxWidth().height(56.dp).testTag("onboarding-primary"), enabled = !purchasing) {
+        }, modifier = Modifier.fillMaxWidth().height(56.dp).testTag("onboarding-primary"), enabled = !purchasing && !store.refreshingPurchase) {
             if (purchasing) CircularProgressIndicator(Modifier.size(22.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
-            else Text(if (!trialStep || !store.resolved || store.isPro) "Continue" else onboardingCTA(preferred))
+            else Text(if (!trialStep || !store.resolved || store.isPro) "Continue" else if (store.purchasePending) "Refresh status" else onboardingCTA(preferred))
         }
         Box(Modifier.fillMaxWidth().height(48.dp).testTag("onboarding-footer"), contentAlignment = Alignment.Center) {
             if (trialStep) Row(horizontalArrangement = Arrangement.Center) {

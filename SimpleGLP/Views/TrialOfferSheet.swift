@@ -64,9 +64,10 @@ struct TrialOfferSheet: View {
     }
 
     /// CTA names the trial length so the button answers "what am I agreeing to?":
-    /// `"Start My 7-Day Free Trial"`. Falls back to the generic phrase when unparsed.
+    /// `"Start My 7-Day Free Trial"`. Falls back to plan comparison without a confirmed offer.
     private var startButtonTitle: String {
-        guard let (value, unit) = trialLength else { return "Start My Free Trial" }
+        if store.isPurchasePending { return "Refresh status" }
+        guard let (value, unit) = trialLength else { return "See all plans" }
         let singular = unit.hasSuffix("s") ? String(unit.dropLast()) : unit
         return "Start My \(value)-\(singular.capitalized) Free Trial"
     }
@@ -75,7 +76,7 @@ struct TrialOfferSheet: View {
         if let period = trialPeriodPhrase {
             return "\(period) of Pro, free."
         }
-        return "Try Simple GLP Pro free."
+        return "Simple GLP Pro"
     }
 
     private var subheadline: String {
@@ -85,7 +86,7 @@ struct TrialOfferSheet: View {
         if trialPeriodPhrase != nil {
             return "\(pitch), on autopilot. Free until your trial ends."
         }
-        return "\(pitch), free for eligible new subscribers."
+        return pitch + "."
     }
 
     /// Leads with the alerts payoff. "On-device" is intentionally demoted to a
@@ -107,7 +108,7 @@ struct TrialOfferSheet: View {
             }
             return "Auto-renews; cancel anytime in Settings at least 24h before it ends."
         }
-        return "Billed through Apple. No charge during the trial."
+        return "Billed through Apple."
     }
 
     private var glowAnimation: Animation {
@@ -185,9 +186,15 @@ struct TrialOfferSheet: View {
                         .foregroundStyle(AppTheme.muted)
                         .labelStyle(.titleAndIcon)
 
-                    trialTimeline
+                    if offerLabel != nil { trialTimeline }
 
                     Group {
+                        if store.isPurchasePending {
+                            Text(StoreService.pendingPurchaseMessage)
+                                .font(.system(.footnote, design: .rounded))
+                                .foregroundStyle(AppTheme.muted)
+                                .multilineTextAlignment(.center)
+                        }
                         if let errorMessage {
                             Text(errorMessage)
                                 .font(.system(.footnote, design: .rounded))
@@ -199,7 +206,13 @@ struct TrialOfferSheet: View {
                     .animation(.easeInOut(duration: 0.18), value: errorMessage)
 
                     VStack(spacing: 10) {
-                        Button(action: onStartTrial) {
+                        Button(action: {
+                            if store.isPurchasePending {
+                                Task { await store.refreshPendingPurchaseStatus() }
+                            } else {
+                                onStartTrial()
+                            }
+                        }) {
                             ZStack {
                                 Text(startButtonTitle)
                                     .font(.system(.headline, design: .rounded, weight: .bold))
@@ -217,7 +230,7 @@ struct TrialOfferSheet: View {
                             .background(brandGradient, in: Capsule())
                         }
                         .buttonStyle(.plain)
-                        .disabled(isPurchasing)
+                        .disabled(isPurchasing || store.isRefreshingPurchase)
 
                         // Apple 3.1.2: the amount the user will be billed must be the most
                         // conspicuous price on the sheet — shown plainly right under the CTA.
@@ -246,7 +259,7 @@ struct TrialOfferSheet: View {
                         }
 
                         Button(action: onDismiss) {
-                            Text("Not now")
+                            Text(store.isPurchasePending ? "Continue free" : "Not now")
                                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                                 .foregroundStyle(AppTheme.muted)
                                 .frame(maxWidth: .infinity)

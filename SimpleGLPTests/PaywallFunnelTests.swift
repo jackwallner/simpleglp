@@ -1,5 +1,6 @@
-import XCTest
 import Foundation
+import XCTest
+@preconcurrency import RevenueCat
 @testable import SimpleGLP
 /// The fleet paywall record, checked in this app's own build.
 ///
@@ -134,5 +135,123 @@ final class PaywallFunnelTests: XCTestCase {
             XCTAssertFalse(value.contains(" "), "\(key) looks like free text: \(value)")
             XCTAssertLessThanOrEqual(value.count, 64, "\(key) is too long to be a label")
         }
+    }
+}
+
+@MainActor
+final class TrialEligibilityTests: XCTestCase {
+    private func testDefaults() -> UserDefaults {
+        UserDefaults(suiteName: "purchase.tests.\(UUID().uuidString)")!
+    }
+
+    private func package(hasTrial: Bool = true) -> Package {
+        let discount = TestStoreProductDiscount(
+            identifier: "trial", price: 0, localizedPriceString: "$0", paymentMode: .freeTrial,
+            subscriptionPeriod: .init(value: 1, unit: .week), numberOfPeriods: 1, type: .introductory
+        )
+        let product = TestStoreProduct(
+            localizedTitle: "Yearly", price: 29.99, currencyCode: "USD", localizedPriceString: "$29.99",
+            productIdentifier: GLPProProduct.yearly, productType: .autoRenewableSubscription,
+            localizedDescription: "Yearly Pro", subscriptionPeriod: .init(value: 1, unit: .year),
+            introductoryDiscount: hasTrial ? discount : nil, locale: Locale(identifier: "en_US")
+        ).toStoreProduct()
+        return Package(identifier: "$rc_annual", packageType: .annual, storeProduct: product,
+                       offeringIdentifier: "test", webCheckoutUrl: nil)
+    }
+
+    func testMissingAndUnknownEligibilityNeverPromiseATrial() {
+        let package = package()
+        for eligibility: [String: IntroEligibilityStatus] in [[:], [GLPProProduct.yearly: .unknown]] {
+            let store = StoreService(products: [package], introEligibility: eligibility, defaults: testDefaults())
+            XCTAssertFalse(store.isEligibleForIntroOffer(package))
+            XCTAssertTrue(store.isIntroEligibilityUnknown(package))
+            XCTAssertEqual(store.onboardingTrialCTALabel, "Try Again")
+            XCTAssertNil(store.onboardingTrialDisclosureText)
+        }
+    }
+
+    func testOnlyConfirmedEligibilityShowsTrialCopy() {
+        let package = package()
+        for status in [IntroEligibilityStatus.eligible, .ineligible, .noIntroOfferExists] {
+            let store = StoreService(products: [package], introEligibility: [GLPProProduct.yearly: status], defaults: testDefaults())
+            XCTAssertEqual(store.isEligibleForIntroOffer(package), status == .eligible)
+            XCTAssertEqual(store.onboardingTrialCTALabel.contains("free trial"), status == .eligible)
+            XCTAssertEqual(store.onboardingTrialDisclosureText?.contains("Free Trial"), status == .eligible)
+            XCTAssertFalse(store.isIntroEligibilityUnknown(package))
+        }
+    }
+
+    func testProductWithoutTrialDoesNotWaitForEligibility() {
+        let package = package(hasTrial: false)
+        let store = StoreService(products: [package], defaults: testDefaults())
+        XCTAssertFalse(store.isIntroEligibilityUnknown(package))
+        XCTAssertFalse(store.isEligibleForIntroOffer(package))
+        XCTAssertTrue(store.onboardingTrialCTALabel.contains("$29.99"))
+    }
+
+    func testUnknownEligibilityBlocksPurchaseAtTheService() async {
+        let package = package()
+        let store = StoreService(products: [package], defaults: testDefaults())
+        do {
+            _ = try await store.purchase(package)
+            XCTFail("An unconfirmed trial must not reach the purchase SDK")
+        } catch StoreServiceError.unresolvedIntroEligibility {
+            XCTAssertFalse(store.purchaseInFlight)
+        } catch {
+            XCTFail("Unexpected error: \(error)")
+        }
+    }
+}
+
+extension TrialEligibilityTests {
+    func testCompletedTransactionWithoutProStaysPendingAcrossRestarts() {
+        let defaults = testDefaults()
+        let store = StoreService(defaults: defaults)
+        let diagnostics = testDefaults()
+        ConversionDiagnostics.defaultsOverride = diagnostics
+        defer { ConversionDiagnostics.defaultsOverride = nil }
+        ConversionDiagnostics.recordPitchView(impressionID: "simpleglp_onboarding_trial")
+
+        XCTAssertEqual(store.completePurchase(package(), userCancelled: false), .pending)
+        XCTAssertTrue(store.isPurchasePending)
+        XCTAssertTrue(StoreService(defaults: defaults).isPurchasePending)
+        XCTAssertNil(ConversionDiagnostics.subscriberAttributes["funnel_purchaseSucceeded"])
+        XCTAssertNil(ConversionDiagnostics.subscriberAttributes["converted_plan"])
+
+        store.setLocalOverride(isPro: false)
+        XCTAssertTrue(store.isPurchasePending)
+        store.setLocalOverride(isPro: true)
+        XCTAssertFalse(store.isPurchasePending)
+        XCTAssertFalse(StoreService(defaults: defaults).isPurchasePending)
+        XCTAssertEqual(ConversionDiagnostics.subscriberAttributes["funnel_purchaseSucceeded"], "1")
+        XCTAssertEqual(ConversionDiagnostics.subscriberAttributes["converted_plan"], GLPProProduct.yearly)
+        store.setLocalOverride(isPro: true)
+        XCTAssertEqual(ConversionDiagnostics.subscriberAttributes["funnel_purchaseSucceeded"], "1")
+    }
+
+    func testCancellationDoesNotBecomePendingOrSuccessful() {
+        let store = StoreService(defaults: testDefaults())
+        XCTAssertEqual(store.completePurchase(package(), userCancelled: true), .cancelled)
+        XCTAssertFalse(store.isPurchasePending)
+    }
+
+    func testVerifiedProCompletesPurchaseImmediately() {
+        let store = StoreService(defaults: testDefaults())
+        ConversionDiagnostics.defaultsOverride = testDefaults()
+        defer { ConversionDiagnostics.defaultsOverride = nil }
+        store.setLocalOverride(isPro: true)
+        XCTAssertEqual(store.completePurchase(package(), userCancelled: false), .purchased)
+        XCTAssertFalse(store.isPurchasePending)
+    }
+}
+
+extension TrialEligibilityTests {
+    func testPendingPurchasePreventsAnotherPurchaseAttempt() async throws {
+        let store = StoreService(defaults: testDefaults())
+        XCTAssertEqual(store.completePurchase(package(), userCancelled: false), .pending)
+        let state = try await store.purchase(package())
+        XCTAssertEqual(state, .pending)
+        XCTAssertFalse(store.purchaseInFlight)
+        XCTAssertTrue(store.isPurchasePending)
     }
 }

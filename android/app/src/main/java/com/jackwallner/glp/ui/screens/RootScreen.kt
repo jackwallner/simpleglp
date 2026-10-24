@@ -124,7 +124,8 @@ import java.time.format.DateTimeFormatter
         }.onFailure { message = "Couldn't read this CSV. Choose a Simple GLP export." }
     }
     LaunchedEffect(Unit) { while (true) { now = Instant.now(); delay(1000) } }
-    LaunchedEffect(store.isPro, store.resolved) { sync() }
+    LaunchedEffect(store.isPro, store.resolved) { if (store.isPro) trialSource = null; sync() }
+    LaunchedEffect(store.purchasePending) { if (store.purchasePending) store.refreshPendingPurchase() }
     // Existing users who never saw the pitch get it once Home has rendered; Patterns is the second touch.
     LaunchedEffect(tab, store.resolved, store.trialPackage != null) {
         if (tab == 0 && tracker.events.isNotEmpty() && !graph.trialOffers.seen) offerTrial(TrialSource.EXISTING_USER, 3000)
@@ -224,13 +225,15 @@ import java.time.format.DateTimeFormatter
         val trial = pkg?.product?.defaultOption?.freePhase?.billingPeriod
         val price = pkg?.product?.price?.formatted?.let { "$it per year" }
         fun close() { trialSource = null; trialPurchasing = false; trialError = null; if (paywallAfterTrial) { paywallAfterTrial = false; paywall = true } }
-        TrialOfferSheet(TrialOfferContent(trial?.value, trial?.unit?.name, price, tracker.plan?.form == DoseForm.PILL), trialPurchasing, trialError, store.busy,
+        TrialOfferSheet(TrialOfferContent(trial?.value, trial?.unit?.name, price, tracker.plan?.form == DoseForm.PILL), trialPurchasing || store.refreshingPurchase, trialError, store.busy,
             onStart = {
-                if (pkg == null) { paywallAfterTrial = true; close() }
+                if (store.purchasePending) scope.launch { store.refreshPendingPurchase() }
+                else if (pkg == null) { paywallAfterTrial = true; close() }
                 else { trialPurchasing = true; trialError = null; scope.launch {
                     try {
                         when (store.purchase(activity, pkg)) {
-                            PurchaseOutcome.PURCHASED, PurchaseOutcome.PENDING -> { trialPurchasing = false; close(); sync() }
+                            PurchaseOutcome.PURCHASED -> { trialPurchasing = false; close(); sync() }
+                            PurchaseOutcome.PENDING -> Unit
                             PurchaseOutcome.CANCELLED -> trialError = "Trial wasn't started. Tap again, or pick a different plan."
                         }
                     } catch (failure: kotlinx.coroutines.CancellationException) { throw failure }
@@ -241,7 +244,7 @@ import java.time.format.DateTimeFormatter
             onSeeAll = { paywallAfterTrial = true; close() },
             onRestore = { scope.launch { store.restore(); if (store.isPro) { close(); sync() } else trialError = store.error } },
             onLink = { open(activity, it) },
-            onDismiss = { close() })
+            onDismiss = { close() }, pending = store.purchasePending)
     }
     if (reviewerCodeOpen) ReviewerCodeDialog(onUnlock = { code -> store.activateReviewAccess(code).also { if (it) sync() } }, onClose = { reviewerCodeOpen = false })
     if (paywall) PaywallScreen(store, activity, { paywall = false }, isPill = tracker.plan?.form == DoseForm.PILL)
