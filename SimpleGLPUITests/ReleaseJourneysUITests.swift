@@ -48,12 +48,9 @@ final class ReleaseJourneysUITests: XCTestCase {
         // The screenshot seed hides Settings' Pro row, so upgrade from the
         // Pro preview at the foot of Patterns.
         app.tabBars.buttons["Patterns"].tap()
-        let upgrade = app.buttons["See Plans"].firstMatch
-        var swipes = 0
-        while !(upgrade.exists && upgrade.isHittable) && swipes < 8 {
-            app.swipeUp()
-            swipes += 1
-        }
+        // The whole preview opens the plans; its header is always on screen.
+        let upgrade = app.staticTexts["What Pro watches for you"].firstMatch
+        XCTAssertTrue(upgrade.waitForExistence(timeout: 15))
         upgrade.tap()
         XCTAssertTrue(app.buttons["Restore Purchases"].firstMatch.waitForExistence(timeout: 20))
         QA.checkpoint(app, "upgrade", paywall: true)
