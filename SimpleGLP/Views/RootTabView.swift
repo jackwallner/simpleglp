@@ -126,7 +126,10 @@ struct RootTabView: View {
             if isSplit, selectedTab == 1 { selectedTab = 0 }
         }
         #if DEBUG
-        .task { await runDuoTour() }
+        .task {
+            applyDuoScreen()
+            await runDuoTour()
+        }
         #endif
         .tint(AppTheme.brand)
         .preferredColorScheme(AppAppearance.from(storageValue: appearanceRaw).preferredColorScheme)
@@ -298,6 +301,23 @@ struct RootTabView: View {
     }
 
     #if DEBUG
+    /// `-GLPDuoScreen oneTap|history|patterns|supply|settings`: opens one surface
+    /// at launch, so a capture run relaunches once per surface instead of timing
+    /// shots against the tour.
+    private func applyDuoScreen() {
+        let args = ProcessInfo.processInfo.arguments
+        guard let index = args.firstIndex(of: "-GLPDuoScreen"), index + 1 < args.count else { return }
+        switch args[index + 1] {
+        case "history": selectedTab = 1
+        case "patterns": selectedTab = 2
+        case "supply":
+            selectedTab = 2
+            patternsPath.append(PatternsRoute.supply)
+        case "settings": selectedTab = 3
+        default: selectedTab = 0
+        }
+    }
+
     /// `-GLPDuoTour`: walks the main screens for headless capture runs, which
     /// can't tap and whose `simctl openurl` stops on a confirmation alert. How
     /// late the first shot lands varies by runner, so the tour loops: 13 s each
