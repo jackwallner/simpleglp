@@ -271,12 +271,14 @@ struct RootTabView: View {
         TabView(selection: $selectedTab) {
             NavigationStack { HomeView() }
                 .environment(\.horizontalSizeClass, paneSizeClass)
+                .modifier(PaneBarBand(isOn: split != nil, color: AppTheme.bg))
                 .tabItem { Label("One Tap", systemImage: isPillPlan ? "pills.fill" : "syringe.fill") }
                 .tag(0)
 
             if split == nil {
                 NavigationStack { HistoryView(shownMonth: $historyMonth) }
                     .environment(\.horizontalSizeClass, paneSizeClass)
+                    .modifier(PaneBarBand(isOn: split != nil, color: AppTheme.bg))
                     .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
                     .tag(1)
             }
@@ -290,11 +292,13 @@ struct RootTabView: View {
                     }
             }
             .environment(\.horizontalSizeClass, paneSizeClass)
+            .modifier(PaneBarBand(isOn: split != nil, color: patternsPath.isEmpty ? AppTheme.bg : Color(.systemGroupedBackground)))
             .tabItem { Label("Patterns", systemImage: "chart.bar.xaxis") }
             .tag(2)
 
             NavigationStack { SettingsView() }
                 .environment(\.horizontalSizeClass, paneSizeClass)
+                .modifier(PaneBarBand(isOn: split != nil, color: Color(.systemGroupedBackground)))
                 .tabItem { Label("Settings", systemImage: "slider.horizontal.3") }
                 .tag(3)
         }
@@ -611,4 +615,29 @@ struct RootTabView: View {
 /// Screens the Patterns tab pushes by value.
 enum PatternsRoute: Hashable {
     case supply
+}
+
+/// Unfolded, iOS 27.1 can float the tab bar over the leading pane's last rows.
+/// An opaque band behind the bar, as tall as the bar's inset, keeps them from
+/// showing through it. Drawn under the bar, which the TabView puts above its tabs.
+private struct PaneBarBand: ViewModifier {
+    let isOn: Bool
+    /// The screen's own background, so the band reads as part of it.
+    let color: Color
+
+    func body(content: Content) -> some View {
+        content.overlay(alignment: .bottom) {
+            if isOn {
+                GeometryReader { proxy in
+                    let inset = proxy.safeAreaInsets.bottom
+                    color
+                        .frame(height: inset)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                        .offset(y: inset)
+                }
+                .allowsHitTesting(false)
+                .accessibilityHidden(true)
+            }
+        }
+    }
 }
