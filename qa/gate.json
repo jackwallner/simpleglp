@@ -1,0 +1,17 @@
+{
+  "project": "SimpleGLP.xcodeproj",
+  "scheme": "SimpleGLPUITests",
+  "uitests_dir": "SimpleGLPUITests",
+  "journeys": [
+    "SimpleGLPUITests/ReleaseJourneysUITests"
+  ],
+  "personas": [
+    "newcomer",
+    "accessibility",
+    "reduce-motion",
+    "german"
+  ],
+  "persona_overrides": {},
+  "slot": null,
+  "bundle_id": "com.jackwallner.glp"
+}
