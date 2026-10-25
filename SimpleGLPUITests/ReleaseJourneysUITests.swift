@@ -45,7 +45,14 @@ final class ReleaseJourneysUITests: XCTestCase {
             QA.checkpoint(app, tab.lowercased())
         }
 
-        tap("Upgrade to Pro", in: app)
+        // The Pro row sits below the fold of the Settings list.
+        let upgrade = app.buttons["Upgrade to Pro"].firstMatch
+        var swipes = 0
+        while !(upgrade.exists && upgrade.isHittable) && swipes < 8 {
+            app.swipeUp()
+            swipes += 1
+        }
+        upgrade.tap()
         XCTAssertTrue(app.buttons["Restore"].firstMatch.waitForExistence(timeout: 20))
         QA.checkpoint(app, "upgrade", paywall: true)
         app.swipeDown(velocity: .fast)

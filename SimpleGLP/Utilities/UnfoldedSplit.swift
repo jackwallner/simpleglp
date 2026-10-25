@@ -69,12 +69,14 @@ struct UnfoldedLeadingPane<Trailing: View>: ViewModifier {
             content
                 .environment(\.horizontalSizeClass, split == nil ? horizontalSizeClass : .compact)
                 .frame(maxWidth: split?.primaryWidth ?? .infinity, maxHeight: .infinity)
-            trailing
-                .frame(width: split?.secondaryWidth ?? 0)
-                .frame(maxHeight: .infinity)
-                .padding(.leading, split?.secondaryX ?? 0)
-                .opacity(split == nil ? 0 : 1)
-                .accessibilityHidden(split == nil)
+            // Folded, the pane is not built at all: a zero-width copy still
+            // reached accessibility, centred off the leading edge.
+            if let split {
+                trailing
+                    .frame(width: split.secondaryWidth)
+                    .frame(maxHeight: .infinity)
+                    .padding(.leading, split.secondaryX)
+            }
         }
         .onGeometryChange(for: PaneGeometry.self) { proxy in
             PaneGeometry(width: proxy.size.width, fold: proxy.verticalFold())
