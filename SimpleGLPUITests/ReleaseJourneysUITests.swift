@@ -45,15 +45,17 @@ final class ReleaseJourneysUITests: XCTestCase {
             QA.checkpoint(app, tab.lowercased())
         }
 
-        // The Pro row sits below the fold of the Settings list.
-        let upgrade = app.buttons["Upgrade to Pro"].firstMatch
+        // The screenshot seed hides Settings' Pro row, so upgrade from the
+        // Pro preview at the foot of Patterns.
+        app.tabBars.buttons["Patterns"].tap()
+        let upgrade = app.buttons["See Plans"].firstMatch
         var swipes = 0
         while !(upgrade.exists && upgrade.isHittable) && swipes < 8 {
             app.swipeUp()
             swipes += 1
         }
         upgrade.tap()
-        XCTAssertTrue(app.buttons["Restore"].firstMatch.waitForExistence(timeout: 20))
+        XCTAssertTrue(app.buttons["Restore Purchases"].firstMatch.waitForExistence(timeout: 20))
         QA.checkpoint(app, "upgrade", paywall: true)
         app.swipeDown(velocity: .fast)
 
