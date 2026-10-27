@@ -117,7 +117,9 @@ enum ReviewPromptTracker {
     }
 
     static func canRequestReview(hasCompletedSetup: Bool, now: Date = .now) -> Bool {
+        #if DEBUG
         guard !ProcessInfo.processInfo.arguments.contains("-uitesting") else { return false }
+        #endif
         guard hasCompletedSetup else { return false }
         guard passivePromptAllowed(now: now) else { return false }
         return appLaunchCount >= minimumLaunchCount
