@@ -1,0 +1,20 @@
+# Simple GLP: GLP-1 Dose Tracker
+
+> Simple GLP is a free GLP-1 dose tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill in one tap from a widget, with dose history.
+
+## App
+
+- [GLP-1 Shot Tracker App | Simple GLP: GLP-1 Dose Tracker](https://jackwallner.com/ios/simpleglp/index.html.md): Simple GLP is a free GLP-1 dose tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill in one tap from a widget, with dose history.
+
+## Guides
+
+- [Best GLP-1 Tracker App for iPhone (5 Compared)](https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html.md): Five iPhone GLP-1 tracker apps compared: Shotsy, MeAgain, GlucoPal, Glapp and Simple GLP. Doses, reminders, Apple Watch and accounts, as of October 2026.
+- [GLP-1 Injection Site Rotation: Where to Inject](https://jackwallner.com/ios/simpleglp/glp-1-injection-site-rotation.html.md): Where Ozempic, Wegovy, Mounjaro and Zepbound instructions say to inject, what each maker says about rotating sites, and a simple way to track your last site.
+
+## Optional
+
+- [Simple GLP Android Privacy Policy](https://jackwallner.github.io/simpleglp/android/privacy-policy.html.md)
+- [Simple GLP Android Terms](https://jackwallner.github.io/simpleglp/android/terms.html.md)
+- [Simple GLP Privacy Policy](https://jackwallner.com/ios/simpleglp/privacy-policy.html.md): Simple GLP is a personal medication and shot tracking app for iPhone, Apple Watch, and widgets. It does not require an account or operate a server-side...
+- [Simple GLP - Support](https://jackwallner.com/ios/simpleglp/support.html.md): Simple GLP is a personal GLP-1 shot tracker for iPhone, Apple Watch, and widgets.
+- [Simple GLP Terms of Use](https://jackwallner.com/ios/simpleglp/terms.html.md): By using Simple GLP, you agree to these Terms of Use and Apple's Standard Licensed Application End User License Agreement.
