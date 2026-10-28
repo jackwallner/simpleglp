@@ -33,7 +33,7 @@
   "@graph": [
     {
       "@type": "MobileApplication",
-      "dateModified": "2026-10-27",
+      "dateModified": "2026-10-28",
       "@id": "https://jackwallner.com/ios/simpleglp/#app",
       "name": "Simple GLP: GLP-1 Dose Tracker",
       "description": "Simple GLP: GLP-1 Dose Tracker is a free GLP-1 shot tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill in one tap from the Home Screen widget, review your dose history, and add optional read-only Apple Health context. It is a logging tool and does not give medical advice or dosing instructions.",
@@ -277,7 +277,7 @@
         .privacy .lockup svg { width: 22px; height: 22px; fill: none; stroke: #157a49; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
         .privacy h2, .more-info-header h2, .cta h2 { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; margin-bottom: 12px; }
         .privacy p { font-size: 17px; color: #6e6e73; line-height: 1.6; margin-bottom: 20px; }
-        .privacy a, footer a { color: #157a49; text-decoration: none; font-weight: 500; }
+        .privacy a, footer a { display: inline-block; padding: 6px 0; color: #157a49; text-decoration: none; font-weight: 500; }
         .more-info { padding: 64px 24px; background: #fff; border-top: 1px solid rgba(0,0,0,0.06); }
         .more-info-header { text-align: center; margin-bottom: 48px; }
         .more-info-header p { font-size: 17px; color: #6e6e73; }
@@ -353,8 +353,8 @@
 <body>
     <nav>
         <div class="container">
-            <a class="nav-brand" href="./">
-                <img src="icon_256.png" alt="Simple GLP">
+            <a class="nav-brand" href="./" aria-label="Simple GLP">
+                <img src="icon_64.webp" alt="" width="32" height="32">
                 <span>Simple GLP</span>
             </a>
             <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download</a>
@@ -362,7 +362,7 @@
     </nav>
 
     <section class="hero">
-        <img src="icon_256.png" alt="Simple GLP app icon">
+        <img src="icon_256.webp" alt="Simple GLP app icon">
         <h1>A GLP-1 shot tracker app, <span>one tap away</span></h1>
         <p class="tagline">Simple GLP is a GLP-1 dose tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill, keep your schedule in view, and add optional Health context when it helps.</p>
         <p class="platforms">iPhone &middot; Apple Watch &middot; Widget &middot; HealthKit</p>
@@ -372,19 +372,19 @@
     <section class="showcase">
         <div class="showcase-scroll">
             <div class="showcase-card">
-                <img src="screenshot-1-onetap.webp" alt="One tap to log your shot: the big shot button on the home screen" loading="lazy" decoding="async" width="720" height="1564">
+                <img src="screenshot-1-onetap.webp" srcset="screenshot-1-onetap-360.webp 360w, screenshot-1-onetap-540.webp 540w, screenshot-1-onetap.webp 720w" sizes="(max-width: 480px) 166px, (max-width: 768px) 184px, 249px" alt="One tap to log your shot: the big shot button on the home screen" loading="lazy" decoding="async" width="720" height="1564">
             </div>
             <div class="showcase-card">
-                <img src="screenshot-2-history.webp" alt="History: every shot with dose, time, and schedule status" loading="lazy" decoding="async" width="720" height="1564">
+                <img src="screenshot-2-history.webp" srcset="screenshot-2-history-360.webp 360w, screenshot-2-history-540.webp 540w, screenshot-2-history.webp 720w" sizes="(max-width: 480px) 166px, (max-width: 768px) 184px, 249px" alt="History: every shot with dose, time, and schedule status" loading="lazy" decoding="async" width="720" height="1564">
             </div>
             <div class="showcase-card">
-                <img src="screenshot-3-patterns.webp" alt="Patterns: schedule adherence and timing trends from your history" loading="lazy" decoding="async" width="720" height="1564">
+                <img src="screenshot-3-patterns.webp" srcset="screenshot-3-patterns-360.webp 360w, screenshot-3-patterns-540.webp 540w, screenshot-3-patterns.webp 720w" sizes="(max-width: 480px) 166px, (max-width: 768px) 184px, 249px" alt="Patterns: schedule adherence and timing trends from your history" loading="lazy" decoding="async" width="720" height="1564">
             </div>
             <div class="showcase-card">
-                <img src="screenshot-4-alerts.webp" alt="Proactive Alerts: pattern-based dose-day nudges with quiet hours" loading="lazy" decoding="async" width="720" height="1564">
+                <img src="screenshot-4-alerts.webp" srcset="screenshot-4-alerts-360.webp 360w, screenshot-4-alerts-540.webp 540w, screenshot-4-alerts.webp 720w" sizes="(max-width: 480px) 166px, (max-width: 768px) 184px, 249px" alt="Proactive Alerts: pattern-based dose-day nudges with quiet hours" loading="lazy" decoding="async" width="720" height="1564">
             </div>
             <div class="showcase-card">
-                <img src="screenshot-5-dark.webp" alt="Dark mode: the same one-tap home screen at night" loading="lazy" decoding="async" width="720" height="1564">
+                <img src="screenshot-5-dark.webp" srcset="screenshot-5-dark-360.webp 360w, screenshot-5-dark-540.webp 540w, screenshot-5-dark.webp 720w" sizes="(max-width: 480px) 166px, (max-width: 768px) 184px, 249px" alt="Dark mode: the same one-tap home screen at night" loading="lazy" decoding="async" width="720" height="1564">
             </div>
         </div>
     </section>
@@ -537,7 +537,7 @@
     </section>
 
     <footer>
-        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-10-27" data-updated>October 27, 2026</time></div>
+        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-10-28" data-updated>October 28, 2026</time></div>
         <div>
             <a href="glp-1-injection-site-rotation.html">Injection site rotation guide</a>
             <a href="best-glp-1-tracker-app.html">Best GLP-1 tracker app</a>

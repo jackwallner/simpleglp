@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/glp-1-injection-site-rotation.ht
 
 ## GLP-1 Injection Site Rotation: Where to Inject and How to Rotate
 
-By Jack Wallner. Last updated October 19, 2026.
+By Jack Wallner. Last updated October 28, 2026.
 
 Injection site rotation is a habit of changing where you inject each dose so you do not reuse the same spot. The instructions for Ozempic, Wegovy, Mounjaro and Zepbound list the stomach area, the thigh and the back of the upper arm (the arm only when someone else gives the injection). Novo Nordisk says to change the injection site with each injection and not reuse the same site. Lilly says to change it each week and allows the same area if you pick a different spot within it. Ask your prescriber which site is right for you.
 

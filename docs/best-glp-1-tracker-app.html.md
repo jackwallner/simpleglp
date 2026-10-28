@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html
 
 ## Best GLP-1 Tracker App for iPhone
 
-By Jack Wallner · Last updated October 19, 2026
+By Jack Wallner · Last updated October 28, 2026
 
 **Best for medication-level charts and a large user base: Shotsy. Best for food, protein and photo tracking alongside doses: MeAgain or GlucoPal. Best for check-ins, trial-data comparisons and supply tracking: Glapp. Best for logging a dose in one tap with no account: Simple GLP.** A GLP-1 tracker is an app that records your GLP-1 doses and the reminders you set, and some also track food, weight or supply. The apps differ mostly in how much they track beyond the dose itself.
 
