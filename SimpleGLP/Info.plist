@@ -4,6 +4,20 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleLocalizations</key>
+	<array>
+		<string>en</string>
+		<string>pt-BR</string>
+		<string>tr</string>
+		<string>es</string>
+		<string>pl</string>
+		<string>zh-Hant</string>
+		<string>ru</string>
+		<string>hu</string>
+		<string>it</string>
+		<string>de</string>
+		<string>fr</string>
+	</array>
 	<key>CFBundleDisplayName</key>
 	<string>Simple GLP</string>
 	<key>CFBundleExecutable</key>
@@ -23,9 +37,9 @@
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a shot.</string>
+	<string>Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a dose.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Simple GLP reads Apple Health to add context to your logged shots and does not write any data back to Apple Health.</string>
+	<string>Simple GLP reads Apple Health to add context to your logged doses and does not write any data back to Apple Health.</string>
 	<key>NSSupportsLiveActivities</key>
 	<true/>
 	<key>UILaunchScreen</key>

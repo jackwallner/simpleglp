@@ -1,0 +1,148 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "NSHealthShareUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP reads relevant Apple Health metrics like weight, glucose, activity, sleep, heart rate, hydration, and nutrition to attach helpful context when you log a dose."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Simple GLP lê dados relevantes do Apple Health, como peso, glicose, atividade, sono, frequência cardíaca, hidratação e nutrição, para adicionar contexto ao registro de uma dose."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP, doz kaydına bağlam eklemek için kilo, glukoz, aktivite, uyku, kalp atış hızı, sıvı dengesi ve beslenme gibi ilgili Apple Health verilerini okur."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP lee datos relevantes de Apple Health, como peso, glucosa, actividad, sueño, frecuencia cardiaca, hidratación y nutrición, para añadir contexto al registrar una dosis."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP odczytuje istotne dane z Apple Health, takie jak masa ciała, glukoza, aktywność, sen, tętno, nawodnienie i odżywianie, aby dodać kontekst do zapisu dawki."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP 會讀取 Apple Health 中的相關資料，例如體重、血糖、活動、睡眠、心率、水分和營養資訊，為劑量記錄補充背景。"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP считывает необходимые данные Apple Health, например вес, уровень глюкозы, активность, сон, пульс, водный баланс и питание, чтобы дополнять запись дозы контекстом."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Simple GLP a dózis rögzítésekor releváns Apple Health-adatokat olvas be, például testsúlyt, vércukrot, aktivitást, alvást, pulzust, folyadékbevitelt és táplálkozást."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP legge dati pertinenti di Apple Health, come peso, glicemia, attività, sonno, frequenza cardiaca, idratazione e alimentazione, per aggiungere contesto quando registri una dose."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP liest relevante Apple-Health-Daten, etwa Gewicht, Blutzucker, Aktivität, Schlaf, Herzfrequenz, Flüssigkeitszufuhr und Ernährung, um deinen Dosiseinträgen Kontext hinzuzufügen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP lit des données pertinentes d’Apple Health, comme le poids, la glycémie, l’activité, le sommeil, la fréquence cardiaque, l’hydratation et la nutrition, pour ajouter du contexte à l’enregistrement d’une dose."
+          }
+        }
+      }
+    },
+    "NSHealthUpdateUsageDescription": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP reads Apple Health to add context to your logged doses and does not write any data back to Apple Health."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Simple GLP lê dados do Apple Health para adicionar contexto às doses registradas e não grava nenhum dado no Apple Health."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP, kaydettiğin dozlara bağlam eklemek için Apple Health verilerini okur ve Apple Health'e hiçbir veri yazmaz."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP lee datos de Apple Health para añadir contexto a las dosis registradas y no escribe datos en Apple Health."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP odczytuje dane z Apple Health, aby uzupełniać zapisy dawek o kontekst. Nie zapisuje żadnych danych w Apple Health."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP 會讀取 Apple Health 資料，為已記錄的劑量補充背景，不會將任何資料寫回 Apple Health。"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP считывает данные Apple Health, чтобы дополнять записи о дозах контекстом, и не записывает данные обратно в Apple Health."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Simple GLP az Apple Health adatait olvassa be a rögzített adagok kiegészítéséhez, de nem ír vissza adatot az Apple Healthbe."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP legge i dati di Apple Health per aggiungere contesto alle dosi registrate e non scrive alcun dato su Apple Health."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP liest Apple-Health-Daten, um erfassten Dosen Kontext hinzuzufügen, und schreibt keine Daten zurück in Apple Health."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP lit les données d’Apple Health pour ajouter du contexte aux doses enregistrées et n’écrit aucune donnée dans Apple Health."
+          }
+        }
+      }
+    }
+  },
+  "version": "1.1"
+}
