@@ -1,1 +1,1 @@
-ozempic,mounjaro,zepbound,rybelsus,foundayo,semaglutide,tirzepatide,oral,injection,free,compounded
+ozempic,mounjaro,zepbound,rybelsus,foundayo,semaglutide,tirzepatide,reminder,injection,compounded

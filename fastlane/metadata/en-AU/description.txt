@@ -1,4 +1,6 @@
-Simple GLP is the fastest, most private way to log your GLP-1 medication, whether it's a weekly shot or a daily pill. It's free, needs no account, and takes a minute to set up. Built for people who just want the dose recorded, not another subscription or a spreadsheet.
+Log a weekly GLP-1 jab or daily pill in one tap from iPhone, Apple Watch, or a widget.
+Review doses, the next-dose schedule, and pill wait times in a private log on your device.
+Logging, reminders, history, Insights, and the in-app pill timer are free. Start without an account.
 
 ONE TAP TO LOG
 Open the app, tap the Home Screen widget, or raise your wrist with Apple Watch. Your dose is timestamped instantly. Add dose, injection site, notes, and symptoms later if you want.
@@ -9,14 +11,14 @@ Ozempic, Wegovy, Mounjaro, Zepbound, compounded semaglutide or tirzepatide, or y
 DAILY PILLS
 Wegovy pill, Rybelsus, Foundayo, or your own. One tap logs today's pill and starts a wait timer you set to match your prescriber's instructions, with a notification when it's done. The countdown also shows on the widget and Apple Watch. A daily reminder skips days you've already logged, and a streak and week view show how the routine is going.
 
-FREE, WITH NO ACCOUNT
-Logging, reminders, history, the pill wait timer, and insights are free and stay free. No sign-up, no login, no email.
+FREE CORE FEATURES
+Logging, reminders, history, Insights, and the in-app pill wait timer are free and stay free. Account-free setup lets you open the app and start tracking right away.
 
 PRIVATE BY DESIGN
-No accounts. No ads. No analytics. No data sold. Your history and any captured Health context stay on your device, shared between the app, widget, and watch through a secure App Group.
+Simple GLP is account-free and ad-free, with analytics disabled. Your history and any Health context you choose stay on your device, shared with the app, widget, and watch through a secure App Group. Your personal data stays private and is never sold.
 
 OPTIONAL HEALTHKIT CONTEXT
-With your permission, Simple GLP can attach context from Apple Health (weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein) to each dose. Read-only. Never written back.
+With your permission, Simple GLP can attach context from Apple Health (weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein) to each dose. Read-only access.
 
 SIMPLE GLP PRO (OPTIONAL)
 Everything you need to log is free. Pro adds the wait countdown on your Lock Screen and in the Dynamic Island, supply tracking with a refill heads-up before you run out, and missed-dose and timing alerts. Subscribe in-app. Cancel anytime in Settings.

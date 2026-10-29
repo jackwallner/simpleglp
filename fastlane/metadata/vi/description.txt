@@ -1,6 +1,6 @@
 Miễn phí và riêng tư. Ghi lại mũi tiêm hàng tuần chỉ với một chạm, không cần tài khoản.
 
-Simple GLP là cách nhanh nhất để ghi lại mũi tiêm GLP-1 hàng tuần — dành cho người chỉ muốn lưu khoảnh khắc mà không biến điều trị thành bảng tính.
+Simple GLP giúp bạn ghi lại từng mũi tiêm GLP-1 hàng tuần cùng ngày và giờ.
 
 Một chạm để ghi
 Mở app, chạm widget Màn hình chính, hoặc nhấc cổ tay Apple Watch. Mũi tiêm được đóng dấu thời gian ngay. Thêm liều, vị trí tiêm, ghi chú và triệu chứng sau nếu muốn.
@@ -12,7 +12,7 @@ Lịch hiểu tuần của bạn
 Đặt thuốc, kế hoạch liều, ngày và giờ ưa thích. Simple GLP biết mỗi mũi sớm, đúng giờ hay trễ và nhắc mũi tiếp theo.
 
 Ngữ cảnh HealthKit (tùy chọn)
-Khi bạn cho phép, Simple GLP có thể đính kèm ngữ cảnh từ Apple Health — cân nặng, glucose, hoạt động, giấc ngủ, nhịp tim, tập luyện, nước, caffeine, calo và protein. Chỉ đọc. Không ghi ngược.
+Khi bạn cho phép, Simple GLP có thể đính kèm ngữ cảnh từ Apple Health: cân nặng, glucose, hoạt động, giấc ngủ, nhịp tim, tập luyện, nước, caffeine, calo và protein. Chỉ đọc. Không ghi ngược.
 
 Riêng tư
 Không tài khoản. Không quảng cáo. Không phân tích. Không bán dữ liệu. Lịch sử ở trên thiết bị, chia sẻ giữa app, widget và đồng hồ qua App Group an toàn.

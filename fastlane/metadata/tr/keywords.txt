@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,igne,enjeksiyon,haftalik
+ozempic,wegovy,mounjaro,zepbound,tirzepatide,rybelsus,ilaç,takip,enjeksiyon,haftalik,zayıflama

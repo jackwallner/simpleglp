@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,주사,injection,주1회,알림,용량,펜
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injection,주1회,알림,용량,펜,shot,log

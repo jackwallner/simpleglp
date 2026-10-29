@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injecao,semanal,lembrete,dose
+ozempic,wegovy,mounjaro,zepbound,caneta,emagrecedora,rybelsus,injecao,semanal,lembrete,dose

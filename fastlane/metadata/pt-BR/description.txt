@@ -1,30 +1,33 @@
-Grátis e privado. Registre sua injeção semanal com um toque, sem conta.
-
-Simple GLP é a forma mais rápida de registrar uma injeção semanal de GLP-1 — para quem quer anotar o momento sem transformar o tratamento em planilha.
+Registre uma injeção semanal de GLP-1 ou um comprimido diário com um toque.
+Acompanhe o cronograma que você definiu, as doses e o timer de espera no iPhone, Apple Watch ou widget.
+Registro, lembretes, histórico, Insights e timer do comprimido no app são grátis. Comece sem conta. Interface em português do Brasil.
 
 UM TOQUE PARA REGISTRAR
-Abra o app, toque no widget na Tela de Início ou levante o pulso com o Apple Watch. A injeção é registrada na hora. Adicione dose, local, notas e sintomas depois, se quiser.
+Abra o app, toque no widget da Tela de Início ou levante o pulso com o Apple Watch. A dose recebe o horário automaticamente. Se quiser, adicione dose, local da injeção, notas e sintomas depois.
+
+INJEÇÕES SEMANAIS
+Ozempic, Wegovy, Mounjaro, Zepbound, semaglutida ou tirzepatida manipulada, ou o medicamento que você usa. Defina o plano da dose, o dia da semana e o horário. O Simple GLP registra cada aplicação como antecipada, no horário ou atrasada, e lembra da próxima.
 
 COMPRIMIDOS DIÁRIOS
-Wegovy em comprimido, Rybelsus, Foundayo ou o seu próprio. Um toque registra o comprimido de hoje e inicia um timer de espera que você ajusta conforme as orientações do seu médico, com uma notificação ao terminar. O lembrete diário pula os dias já registrados.
+Wegovy em comprimido, Rybelsus, Foundayo ou o seu medicamento. Um toque registra o comprimido do dia e inicia um timer de espera que você configura conforme a orientação de quem prescreve, com uma notificação quando o tempo termina. A contagem também aparece no widget e no Apple Watch. O lembrete diário pula os dias já registrados; o histórico mostra sua sequência e a semana.
 
-UMA AGENDA QUE CONHECE SUA SEMANA
-Defina medicamento, plano de dose, dia e horário. O Simple GLP mostra se cada injeção foi adiantada, no horário ou atrasada e lembra a próxima.
-
-CONTEXTO HEALTHKIT (OPCIONAL)
-Com sua permissão, o Simple GLP pode anexar contexto do Apple Health — peso, glicose, atividade, sono, frequência cardíaca, treinos, água, cafeína, calorias e proteína. Somente leitura. Nunca grava de volta.
+GRÁTIS, SEM CONTA
+Registro de doses, cronograma, lembretes, histórico, timer de espera do comprimido no app, Insights e sequência são grátis. A configuração é imediata. Abra o app e comece a registrar suas doses.
 
 PRIVACIDADE
-Sem contas. Sem anúncios. Sem analytics. Sem venda de dados. Seu histórico fica no dispositivo, compartilhado entre app, widget e relógio por App Group seguro.
+O app é sem cadastro e sem anúncios, com análise de uso desativada. Seu histórico e qualquer contexto de Saúde que você escolher ficam no dispositivo e são compartilhados entre o app, o widget e o relógio por um App Group seguro. Seus dados pessoais ficam privados e nunca são vendidos.
+
+CONTEXTO DO HEALTHKIT (OPCIONAL)
+Com sua permissão, o Simple GLP pode anexar a cada dose dados do Apple Health, como peso, glicose, atividade, sono, frequência cardíaca, exercícios, água, cafeína, calorias e proteína. Acesso somente para leitura.
 
 SIMPLE GLP PRO (OPCIONAL)
-Pro adiciona alertas proativos se o horário desviar. Assinatura no app. Cancele quando quiser em Ajustes.
+Tudo de que você precisa para registrar doses é grátis. O Pro adiciona a contagem do tempo de espera na Tela Bloqueada e na Dynamic Island, controle de estoque com aviso de reposição e alertas de dose esquecida e de horário. A assinatura é feita no app e pode ser cancelada nos Ajustes.
 
-NÃO É DISPOSITIVO MÉDICO
-O Simple GLP não oferece orientação médica, instruções de dose, diagnóstico ou recomendações de tratamento. Siga sempre seu prescritor.
+AVISO MÉDICO
+O Simple GLP registra doses e não é um dispositivo médico. Registra o que você informa que tomou e quando. Não oferece aconselhamento médico, instruções de dose, diagnóstico ou recomendações de tratamento. Siga sempre as orientações do profissional que prescreve seu medicamento.
 
 Detalhes da assinatura
-O Simple GLP Pro está disponível como assinatura de renovação automática (mensal ou anual, ambas com 7 dias de teste grátis) ou como compra única Lifetime. Os preços aparecem no app antes da compra e variam conforme a região. O pagamento é cobrado no seu Apple ID na confirmação. As assinaturas se renovam automaticamente, a menos que sejam canceladas ao menos 24 horas antes do fim do período atual. Gerencie ou cancele quando quiser em Ajustes → Apple ID → Assinaturas.
+O Simple GLP Pro está disponível em assinaturas com renovação automática mensal ou anual, ambas com teste grátis de 7 dias, ou em uma compra única Lifetime. Os preços aparecem no app antes da compra e variam por região. O pagamento é cobrado na sua conta Apple ID na confirmação. As assinaturas são renovadas automaticamente, a menos que sejam canceladas pelo menos 24 horas antes do fim do período atual. Gerencie ou cancele em Ajustes → Apple ID → Assinaturas.
 
-Privacy Policy: https://jackwallner.github.io/simpleglp/privacy-policy.html
-Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
+Política de Privacidade: https://jackwallner.github.io/simpleglp/privacy-policy.html
+Termos de Uso (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
