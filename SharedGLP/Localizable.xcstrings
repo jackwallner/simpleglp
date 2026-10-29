@@ -2090,7 +2090,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Przypomnienia o uzupełnieniu zapasu: tydzień wcześniej dostaniesz znać, że kończą się tabletki."
+            "value": "Przypomnienia o zapasie: powiadomienie tydzień przed końcem tabletek."
           }
         },
         "zh-Hant": {
@@ -2658,7 +2658,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Przypomnienia o uzupełnieniu zapasu: tydzień wcześniej dostaniesz znać, że kończy się zapas wstrzykiwaczy."
+            "value": "Przypomnienia o zapasie: powiadomienie tydzień przed końcem wstrzykiwaczy."
           }
         },
         "zh-Hant": {
