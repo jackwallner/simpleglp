@@ -23262,7 +23262,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sua pílula está registrada neste momento."
+            "value": "O comprimido será registrado neste horário."
           }
         },
         "tr": {
@@ -23274,7 +23274,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tu píldora está registrada en este momento."
+            "value": "La pastilla se registrará a esta hora."
           }
         },
         "pl": {
@@ -23286,7 +23286,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "你的藥在這個時候被記錄下來了"
+            "value": "藥錠會記錄在此時間。"
           }
         },
         "ru": {
@@ -23304,13 +23304,13 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "La tua pillola è registrata in questo momento."
+            "value": "La compressa sarà registrata a quest’ora."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ihre Pille ist zu diesem Zeitpunkt protokolliert."
+            "value": "Deine Tablette wird zu dieser Uhrzeit erfasst."
           }
         },
         "fr": {
@@ -23333,7 +23333,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sua injeção está registrada neste momento."
+            "value": "A injeção será registrada neste horário."
           }
         },
         "tr": {
@@ -23345,7 +23345,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Su inyección está registrada en este momento."
+            "value": "La inyección se registrará a esta hora."
           }
         },
         "pl": {
@@ -23357,7 +23357,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "你的注射已經記錄下來了"
+            "value": "注射會記錄在此時間。"
           }
         },
         "ru": {
@@ -23375,13 +23375,13 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "La tua iniezione è registrata in questo momento."
+            "value": "L’iniezione sarà registrata a quest’ora."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ihre Injektion ist zu diesem Zeitpunkt protokolliert."
+            "value": "Deine Injektion wird zu dieser Uhrzeit erfasst."
           }
         },
         "fr": {
