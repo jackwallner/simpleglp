@@ -2759,13 +2759,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hinweise auf Zeitverschiebungen"
+            "value": "Hinweise auf Verzögerungen"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alertes de décalage horaire"
+            "value": "Alertes de retard"
           }
         }
       }
