@@ -24,7 +24,6 @@ SEARCH_FIELDS = (
     "promotional_text.txt",
     "description.txt",
 )
-TOKEN_PATTERN = re.compile(r"[^\W_]+", re.UNICODE)
 HAN_PATTERN = re.compile(r"[\u3400-\u4dbf\u4e00-\u9fff]")
 
 
@@ -33,11 +32,31 @@ def normalize(token: str) -> str:
     return "".join(char for char in decomposed if not unicodedata.combining(char))
 
 
+def tokenize(value: str) -> list[str]:
+    tokens: list[str] = []
+    current: list[str] = []
+
+    for char in value:
+        category = unicodedata.category(char)
+        if category[0] in {"L", "N", "M"}:
+            current.append(char)
+            continue
+
+        if current:
+            tokens.append("".join(current))
+            current = []
+
+    if current:
+        tokens.append("".join(current))
+
+    return tokens
+
+
 def read_value(path: Path) -> str:
     return path.read_text(encoding="utf-8").rstrip("\n") if path.exists() else ""
 
 
-def validate_locale(locale_dir: Path, strict: bool) -> tuple[int, int]:
+def validate_locale(locale_dir: Path) -> tuple[int, int]:
     failures = 0
     warnings = 0
     locale = locale_dir.name
@@ -56,11 +75,11 @@ def validate_locale(locale_dir: Path, strict: bool) -> tuple[int, int]:
             print(f"OVER   {locale}/{filename}: {len(value)} > {LIMITS[filename]}")
             failures += 1
 
-        if strict and value != value.strip():
+        if value != value.strip():
             print(f"SPACE  {locale}/{filename}: leading or trailing whitespace")
             failures += 1
 
-        if strict and filename in SEARCH_FIELDS and "\u2014" in value:
+        if filename in SEARCH_FIELDS and "\u2014" in value:
             print(f"DASH   {locale}/{filename}: em dash")
             failures += 1
 
@@ -69,7 +88,7 @@ def validate_locale(locale_dir: Path, strict: bool) -> tuple[int, int]:
         return failures, warnings
 
     title = f"{values.get('name.txt', '')} {values.get('subtitle.txt', '')}"
-    title_tokens = {normalize(token) for token in TOKEN_PATTERN.findall(title)}
+    title_tokens = {normalize(token) for token in tokenize(title)}
     normalized_title = normalize(title)
     seen: set[str] = set()
 
@@ -80,35 +99,27 @@ def validate_locale(locale_dir: Path, strict: bool) -> tuple[int, int]:
             failures += 1
             continue
 
-        if strict and (entry != token or any(char.isspace() for char in token)):
+        if entry != token or any(char.isspace() for char in token):
             print(f"SPACE  {locale}/keywords.txt: keyword entries must have no spaces")
             failures += 1
 
-        tokens = TOKEN_PATTERN.findall(token)
-        if not tokens:
+        keyword_token = normalize(token)
+        if not keyword_token:
             print(f"EMPTY  {locale}/keywords.txt: invalid keyword {token!r}")
             failures += 1
             continue
 
-        for raw_token in tokens:
-            keyword_token = normalize(raw_token)
-            if keyword_token in seen:
-                print(f"DUP    {locale}/keywords.txt: repeated token {raw_token!r}")
-                if strict:
-                    failures += 1
-                else:
-                    warnings += 1
-            seen.add(keyword_token)
+        if keyword_token in seen:
+            print(f"DUP    {locale}/keywords.txt: repeated token {token!r}")
+            failures += 1
+        seen.add(keyword_token)
 
-            if keyword_token in title_tokens and len(keyword_token) > 2:
-                print(f"DUP    {locale}/keywords.txt: {raw_token!r} already in name/subtitle")
-                if strict:
-                    failures += 1
-                else:
-                    warnings += 1
-            elif strict and HAN_PATTERN.search(raw_token) and keyword_token in normalized_title:
-                print(f"DUP    {locale}/keywords.txt: {raw_token!r} overlaps name/subtitle")
-                failures += 1
+        if keyword_token in title_tokens:
+            print(f"DUP    {locale}/keywords.txt: {token!r} already in name/subtitle")
+            failures += 1
+        elif HAN_PATTERN.search(token) and keyword_token in normalized_title:
+            print(f"DUP    {locale}/keywords.txt: {token!r} overlaps name/subtitle")
+            failures += 1
 
     return failures, warnings
 
@@ -119,7 +130,7 @@ def main() -> int:
         "--locales",
         nargs="+",
         metavar="LOCALE",
-        help="validate these locales strictly instead of checking every locale",
+        help="validate these locales instead of checking every locale",
     )
     args = parser.parse_args()
 
@@ -134,15 +145,13 @@ def main() -> int:
             print(f"Unknown locale(s): {', '.join(missing)}")
             return 2
         locale_dirs = [known[locale] for locale in sorted(requested)]
-        strict = True
     else:
         locale_dirs = all_locale_dirs
-        strict = False
 
     failures = 0
     warnings = 0
     for locale_dir in locale_dirs:
-        locale_failures, locale_warnings = validate_locale(locale_dir, strict)
+        locale_failures, locale_warnings = validate_locale(locale_dir)
         failures += locale_failures
         warnings += locale_warnings
 

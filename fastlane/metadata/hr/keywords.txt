@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injekcija,tjedno,podsjetnik,doza
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,tjedno,podsjetnik,doza,raspored

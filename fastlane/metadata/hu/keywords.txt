@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injekcio,heti,emlekezteto,adag
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,heti,emlekezteto,adag,gyogyszer

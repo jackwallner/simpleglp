@@ -1,6 +1,6 @@
 Kostenlos und privat. Protokolliere deine wöchentliche Spritze mit einem Tipp, ohne Konto.
 
-Simple GLP ist der schnellste Weg, eine wöchentliche GLP-1-Spritze zu protokollieren — für alle, die den Moment festhalten wollen, ohne ihre Therapie in eine Tabelle zu verwandeln.
+Simple GLP ist der schnellste Weg, eine wöchentliche GLP-1-Spritze zu protokollieren, für alle, die den Moment festhalten wollen, ohne ihre Therapie in eine Tabelle zu verwandeln.
 
 EIN TIPPEN ZUM EINTRAGEN
 App öffnen, Widget auf dem Home Screen tippen oder die Apple Watch heben. Die Spritze wird sofort mit Zeitstempel gespeichert. Dosis, Injektionsstelle, Notizen und Symptome können Sie später ergänzen.
@@ -12,7 +12,7 @@ EIN PLAN, DER IHRE WOCHE KENNT
 Medikament, Dosisplan, Wochentag und Uhrzeit festlegen. Simple GLP erkennt, ob jede Spritze früh, pünktlich oder spät war, und erinnert Sie vor der nächsten.
 
 OPTIONALER HEALTHKIT-KONTEXT
-Mit Ihrer Erlaubnis kann Simple GLP Kontext aus Apple Health anfügen — Gewicht, Glukose, Aktivität, Schlaf, Herzfrequenz, Workouts, Wasser, Koffein, Kalorien und Protein. Nur Lesen. Nichts wird zurückgeschrieben.
+Mit Ihrer Erlaubnis kann Simple GLP Kontext aus Apple Health anfügen, Gewicht, Glukose, Aktivität, Schlaf, Herzfrequenz, Workouts, Wasser, Koffein, Kalorien und Protein. Nur Lesen. Nichts wird zurückgeschrieben.
 
 PRIVAT BY DESIGN
 Keine Konten. Keine Werbung. Keine Analyse. Keine Datenverkäufe. Ihr Verlauf bleibt auf dem Gerät und wird per App Group zwischen App, Widget und Watch geteilt.

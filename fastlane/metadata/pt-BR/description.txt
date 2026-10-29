@@ -3,10 +3,10 @@ Acompanhe o cronograma que você definiu, as doses e o timer de espera no iPhone
 Registro, lembretes, histórico, Insights e timer do comprimido no app são grátis. Comece sem conta. Interface em português do Brasil.
 
 UM TOQUE PARA REGISTRAR
-Abra o app, toque no widget da Tela de Início ou levante o pulso com o Apple Watch. A dose recebe o horário automaticamente. Se quiser, adicione dose, local da injeção, notas e sintomas depois.
+Abra o app, toque no widget da Tela de Início ou levante o pulso com o Apple Watch. O app registra o horário automaticamente. Depois, se quiser, adicione a dose, o local da injeção, notas e sintomas.
 
 INJEÇÕES SEMANAIS
-Ozempic, Wegovy, Mounjaro, Zepbound, semaglutida ou tirzepatida manipulada, ou o medicamento que você usa. Defina o plano da dose, o dia da semana e o horário. O Simple GLP registra cada aplicação como antecipada, no horário ou atrasada, e lembra da próxima.
+Ozempic, Wegovy, Mounjaro, Zepbound, semaglutida manipulada, tirzepatida manipulada ou o medicamento que você usa. Defina o plano da dose, o dia da semana e o horário. O Simple GLP registra cada aplicação como antecipada, no horário ou atrasada, e lembra você da próxima dose.
 
 COMPRIMIDOS DIÁRIOS
 Wegovy em comprimido, Rybelsus, Foundayo ou o seu medicamento. Um toque registra o comprimido do dia e inicia um timer de espera que você configura conforme a orientação de quem prescreve, com uma notificação quando o tempo termina. A contagem também aparece no widget e no Apple Watch. O lembrete diário pula os dias já registrados; o histórico mostra sua sequência e a semana.

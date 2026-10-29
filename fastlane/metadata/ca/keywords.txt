@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,injeccio,setmanal,recordatori,dosi
+ozempic,wegovy,mounjaro,zepbound,semaglutide,tirzepatide,rybelsus,setmanal,recordatori,dosi
