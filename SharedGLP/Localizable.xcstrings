@@ -38027,13 +38027,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ kaydedildi. Sıradaki tablet dozu %2$@ tarihinde, %3$@ saatinde."
+            "value": "%1$@ kaydedildi. Sıradaki tablet: %2$@, saat %3$@."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Registraste %1$@. La próxima pastilla está prevista para el %2$@ a las %3$@."
+            "value": "Registraste %1$@. Próxima pastilla: %2$@, a las %3$@."
           }
         },
         "pl": {
@@ -38063,19 +38063,19 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dose di %1$@ registrata. La prossima compressa è prevista per il %2$@ alle %3$@."
+            "value": "Dose di %1$@ registrata. Prossima compressa: %2$@, alle %3$@."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ erfasst. Die nächste Tablette ist für den %2$@ um %3$@ geplant."
+            "value": "%1$@ erfasst. Nächste Tablette: %2$@, um %3$@."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dose de %1$@ enregistrée. Prochain comprimé prévu le %2$@ à %3$@."
+            "value": "Dose de %1$@ enregistrée. Prochain comprimé : %2$@, à %3$@."
           }
         }
       }
@@ -38098,13 +38098,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ kaydedildi. Sıradaki enjeksiyon %2$@ tarihinde, %3$@ saatinde."
+            "value": "%1$@ kaydedildi. Sıradaki enjeksiyon: %2$@, saat %3$@."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Registraste %1$@. La próxima inyección está prevista para el %2$@ a las %3$@."
+            "value": "Registraste %1$@. Próxima inyección: %2$@, a las %3$@."
           }
         },
         "pl": {
@@ -38134,19 +38134,19 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dose di %1$@ registrata. La prossima iniezione è prevista per il %2$@ alle %3$@."
+            "value": "Dose di %1$@ registrata. Prossima iniezione: %2$@, alle %3$@."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ erfasst. Die nächste Injektion ist für den %2$@ um %3$@ geplant."
+            "value": "%1$@ erfasst. Nächste Injektion: %2$@, um %3$@."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dose de %1$@ enregistrée. Prochaine injection prévue le %2$@ à %3$@."
+            "value": "Dose de %1$@ enregistrée. Prochaine injection : %2$@, à %3$@."
           }
         }
       }
@@ -38382,13 +38382,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ için tablet dozu %2$@ tarihinde, %3$@ saatinde planlanmıştı ama henüz kaydedilmedi."
+            "value": "%1$@ tableti için planlanan zaman: %2$@, saat %3$@. Henüz kaydedilmedi."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La pastilla de %1$@ estaba programada para el %2$@ a las %3$@ y aún no está registrada."
+            "value": "Pastilla de %1$@ prevista: %2$@, a las %3$@. Aún no está registrada."
           }
         },
         "pl": {
@@ -38418,19 +38418,19 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "La compressa di %1$@ era prevista per il %2$@ alle %3$@, ma non è ancora stata registrata."
+            "value": "Compressa di %1$@ prevista: %2$@, alle %3$@. Non è ancora registrata."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die Tablette von %1$@ war für den %2$@ um %3$@ geplant und ist noch nicht erfasst."
+            "value": "Tablette von %1$@ geplant: %2$@, um %3$@. Sie ist noch nicht erfasst."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le comprimé de %1$@ était prévu le %2$@ à %3$@, mais n’a pas encore été enregistré."
+            "value": "Comprimé de %1$@ prévu : %2$@, à %3$@. Il n’est pas encore enregistré."
           }
         }
       }
@@ -38453,13 +38453,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ için enjeksiyon %2$@ tarihinde, %3$@ saatinde planlanmıştı ama henüz kaydedilmedi."
+            "value": "%1$@ enjeksiyonu için planlanan zaman: %2$@, saat %3$@. Henüz kaydedilmedi."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La inyección de %1$@ estaba programada para el %2$@ a las %3$@ y aún no está registrada."
+            "value": "Inyección de %1$@ prevista: %2$@, a las %3$@. Aún no está registrada."
           }
         },
         "pl": {
@@ -38489,19 +38489,19 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "L’iniezione di %1$@ era prevista per il %2$@ alle %3$@, ma non è ancora stata registrata."
+            "value": "Iniezione di %1$@ prevista: %2$@, alle %3$@. Non è ancora registrata."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die Injektion von %1$@ war für den %2$@ um %3$@ geplant und ist noch nicht erfasst."
+            "value": "Injektion von %1$@ geplant: %2$@, um %3$@. Sie ist noch nicht erfasst."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "L’injection de %1$@ était prévue le %2$@ à %3$@, mais n’a pas encore été enregistrée."
+            "value": "Injection de %1$@ prévue : %2$@, à %3$@. Elle n’est pas encore enregistrée."
           }
         }
       }
@@ -38524,13 +38524,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ için sıradaki tablet dozu %2$@ tarihinde, %3$@ saatinde."
+            "value": "Sıradaki %1$@ tableti: %2$@, saat %3$@."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La próxima pastilla de %1$@ está programada para el %2$@ a las %3$@."
+            "value": "Próxima pastilla de %1$@: %2$@, a las %3$@."
           }
         },
         "pl": {
@@ -38560,19 +38560,19 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "La prossima compressa di %1$@ è prevista per il %2$@ alle %3$@."
+            "value": "Prossima compressa di %1$@: %2$@, alle %3$@."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die nächste Tablette von %1$@ ist für den %2$@ um %3$@ geplant."
+            "value": "Nächste Tablette von %1$@: %2$@, um %3$@."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le prochain comprimé de %1$@ est prévu le %2$@ à %3$@."
+            "value": "Prochain comprimé de %1$@ : %2$@, à %3$@."
           }
         }
       }
@@ -38595,13 +38595,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ için sıradaki enjeksiyon %2$@ tarihinde, %3$@ saatinde."
+            "value": "Sıradaki %1$@ enjeksiyonu: %2$@, saat %3$@."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "La próxima inyección de %1$@ está programada para el %2$@ a las %3$@."
+            "value": "Próxima inyección de %1$@: %2$@, a las %3$@."
           }
         },
         "pl": {
@@ -38631,19 +38631,19 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "La prossima iniezione di %1$@ è prevista per il %2$@ alle %3$@."
+            "value": "Prossima iniezione di %1$@: %2$@, alle %3$@."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Die nächste Injektion von %1$@ ist für den %2$@ um %3$@ geplant."
+            "value": "Nächste Injektion von %1$@: %2$@, um %3$@."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "La prochaine injection de %1$@ est prévue le %2$@ à %3$@."
+            "value": "Prochaine injection de %1$@ : %2$@, à %3$@."
           }
         }
       }
