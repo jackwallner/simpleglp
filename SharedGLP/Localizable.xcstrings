@@ -16682,61 +16682,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Alertas reais disparam quando padrões são detectados."
+            "value": "As notificações estão funcionando. Alertas serão enviados quando padrões forem detectados."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bildirimler çalışıyor. Desenler tespit edildiğinde gerçek uyarılar yangın."
+            "value": "Bildirimler çalışıyor. Eğilimler algılandığında uyarılar gönderilir."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las notificaciones están funcionando. Alertas reales fuego cuando se detectan patrones."
+            "value": "Las notificaciones funcionan. Se enviarán alertas cuando se detecten patrones."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zawiadomienia działają. Prawdziwe alarmy strzelać, gdy wykryto wzory."
+            "value": "Powiadomienia działają. Alerty będą wysyłane po wykryciu wzorców."
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "通知有效,發現模式時會發出真正的警報"
+            "value": "通知運作正常。偵測到模式時會發送提醒。"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Уведомления работают. Реальные оповещения загораются при обнаружении шаблонов."
+            "value": "Уведомления работают. При обнаружении закономерностей будут отправляться оповещения."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A bejelentések működnek, valódi riasztás, ha mintákat észlelnek."
+            "value": "Az értesítések működnek. Minták észlelésekor figyelmeztetést kapsz."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Le notifiche funzionano, avvisa il fuoco quando vengono rilevati i modelli."
+            "value": "Le notifiche funzionano. Gli avvisi vengono inviati quando vengono rilevate tendenze."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Benachrichtigungen funktionieren. Echte Alarme feuern, wenn Muster erkannt werden."
+            "value": "Benachrichtigungen funktionieren. Bei erkannten Mustern erhältst du Hinweise."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Les notifications fonctionnent."
+            "value": "Les notifications fonctionnent. Des alertes seront envoyées lorsque des tendances seront détectées."
           }
         }
       }
@@ -23828,7 +23828,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continue registrando para ver Insights. A função é liberada após %#@n@. Você já registrou %2$lld."
+            "value": "Continue registrando para ver padrões. Eles são liberados após %#@n@. Você já registrou %2$lld."
           },
           "substitutions": {
             "n": {
@@ -23856,7 +23856,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Insights’ı görmek için kayıt tut. %#@n@ sonra açılır. Kaydettiğin doz: %2$lld."
+            "value": "Eğilimleri görmek için kayıt tut. %#@n@ sonra açılır. Kaydettiğin doz: %2$lld."
           },
           "substitutions": {
             "n": {
@@ -23884,7 +23884,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sigue registrando para ver Insights. Se desbloquean después de %#@n@. Ya registraste %2$lld."
+            "value": "Sigue registrando para ver patrones. Se desbloquean después de %#@n@. Ya registraste %2$lld."
           },
           "substitutions": {
             "n": {
@@ -23912,7 +23912,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zapisuj dawki, aby zobaczyć Insights. Funkcja odblokuje się po %#@n@. Zapisano: %2$lld."
+            "value": "Zapisuj dawki, aby zobaczyć tendencje. Funkcja odblokuje się po %#@n@. Zapisano: %2$lld."
           },
           "substitutions": {
             "n": {
@@ -23952,7 +23952,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "繼續記錄即可查看 Insights。記錄 %#@n@ 後解鎖，目前已記錄 %2$lld 劑。"
+            "value": "繼續記錄即可查看模式。記錄 %#@n@ 後解鎖，目前已記錄 %2$lld 劑。"
           },
           "substitutions": {
             "n": {
@@ -23974,7 +23974,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Продолжайте записи, чтобы открыть Insights. Функция станет доступна после %#@n@. Записано: %2$lld."
+            "value": "Продолжайте записи, чтобы увидеть закономерности. Они станут доступны после %#@n@. Записано: %2$lld."
           },
           "substitutions": {
             "n": {
@@ -24014,7 +24014,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Folytasd a naplózást az Insights megtekintéséhez. %#@n@ után nyílik meg. Rögzítve: %2$lld."
+            "value": "Folytasd a naplózást a tendenciák megtekintéséhez. %#@n@ után nyílnak meg. Rögzítve: %2$lld."
           },
           "substitutions": {
             "n": {
@@ -24042,7 +24042,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continua a registrare per vedere Insights. Si sblocca dopo %#@n@. Ne hai registrate %2$lld."
+            "value": "Continua a registrare per vedere gli andamenti. Si sbloccano dopo %#@n@. Ne hai registrate %2$lld."
           },
           "substitutions": {
             "n": {
@@ -24070,7 +24070,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Erfasse weiter Dosen, um Insights zu sehen. Insights wird nach %#@n@ freigeschaltet. Erfasst: %2$lld."
+            "value": "Erfasse weiter Dosen, um Muster zu sehen. Sie werden nach %#@n@ freigeschaltet. Erfasst: %2$lld."
           },
           "substitutions": {
             "n": {
@@ -24098,7 +24098,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Continuez le suivi pour voir Insights. La fonction se débloque après %#@n@. Vous en avez enregistré %2$lld."
+            "value": "Continuez le suivi pour voir les tendances. Elles se débloquent après %#@n@. Vous en avez enregistré %2$lld."
           },
           "substitutions": {
             "n": {
