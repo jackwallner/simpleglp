@@ -25883,7 +25883,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Un secondo promemoria qualche ora dopo il tuo orario abituale. Rispetta le ore di silenzio."
+            "value": "Un secondo promemoria qualche ora dopo il tuo orario abituale. Le ore di silenzio sono rispettate."
           }
         },
         "de": {
@@ -26025,7 +26025,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rispetta le ore di silenzio. Il tuo intervallo abituale del martedì è dalle 8:00 alle 10:00."
+            "value": "Le ore di silenzio sono rispettate. Il tuo intervallo abituale del martedì è dalle 8:00 alle 10:00."
           }
         },
         "de": {
