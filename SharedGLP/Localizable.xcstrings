@@ -3575,7 +3575,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Gratis durante %1$@. Se renueva automáticamente. Puedes cancelarla en Configuración hasta 24 horas antes de que termine."
+            "value": "Gratis durante %1$@. Se renueva automáticamente. Puedes cancelarla en Configuración al menos 24 horas antes de que termine."
           }
         },
         "pl": {
@@ -3646,7 +3646,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Se renueva automáticamente. Puedes cancelarla en Configuración hasta 24 horas antes de que termine."
+            "value": "Se renueva automáticamente. Puedes cancelarla en Configuración al menos 24 horas antes de que termine."
           }
         },
         "pl": {
@@ -9468,7 +9468,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exporte cada dosis registrada como un archivo CSV que puede compartir o respaldar."
+            "value": "Exporta todas las dosis registradas a un archivo CSV que puedes compartir o guardar."
           }
         },
         "pl": {
