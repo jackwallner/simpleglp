@@ -9456,7 +9456,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportar cada dose registrada como um arquivo CSV que você pode compartilhar ou fazer backup."
+            "value": "Exporte todas as doses registradas em um arquivo CSV para compartilhar ou salvar."
           }
         },
         "tr": {
