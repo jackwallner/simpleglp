@@ -1084,7 +1084,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ After %2$@"
+            "value": "%2$@ sonrasında %1$@"
           }
         },
         "es": {
@@ -1102,7 +1102,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ 後 %2$@"
+            "value": "%2$@後 %1$@"
           }
         },
         "ru": {
@@ -7048,7 +7048,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld min"
+            "value": "%1$lld dk"
           }
         },
         "es": {
@@ -9462,7 +9462,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Paylaşabileceğiniz veya geri alabileceğiniz bir CSV dosyası olarak her giriş dozu doldurun."
+            "value": "Kaydedilen tüm dozları paylaşabileceğin veya yedekleyebileceğin bir CSV dosyası olarak dışa aktar."
           }
         },
         "es": {
@@ -9492,13 +9492,13 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportáljon minden naplózott adagot CSV fájlként, amit meg tud osztani vagy vissza tud adni."
+            "value": "Exportáld az összes naplózott adagot CSV-fájlba, amelyet megoszthatsz vagy menthetsz."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Esportare ogni dose registrata come file CSV è possibile condividere o eseguire il backup."
+            "value": "Esporta tutte le dosi registrate in un file CSV da condividere o salvare."
           }
         },
         "de": {
@@ -11458,7 +11458,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bu girişi mi?"
+            "value": "Bu kaydı silmek istiyor musun?"
           }
         },
         "es": {
@@ -11500,13 +11500,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Löschen Sie diesen Eintrag?"
+            "value": "Diesen Eintrag löschen?"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Supprimer cette rubrique ?"
+            "value": "Supprimer cette entrée ?"
           }
         }
       }
@@ -11973,7 +11973,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "健康狀況不詳。"
+            "value": "無法取得健康資料。"
           }
         },
         "ru": {
@@ -12115,13 +12115,13 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "重量"
+            "value": "體重"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "вес"
+            "value": "Вес"
           }
         },
         "hu": {
@@ -16327,31 +16327,31 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fora nas configurações"
+            "value": "Desativado nos Ajustes"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Settings in Settings in Settings"
+            "value": "Ayarlarda kapalı"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "En Ajustes"
+            "value": "Desactivado en Ajustes"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wyłącz w ustawieniach"
+            "value": "Wyłączone w ustawieniach"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "在設定中關閉"
+            "value": "已在設定中關閉"
           }
         },
         "ru": {
@@ -16363,13 +16363,13 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A beállítások kikapcsolása"
+            "value": "Kikapcsolva a beállításokban"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Off in Impostazioni"
+            "value": "Disattivato nelle impostazioni"
           }
         },
         "de": {
@@ -16381,7 +16381,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arrêt dans les paramètres"
+            "value": "Désactivé dans les réglages"
           }
         }
       }
@@ -16404,7 +16404,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "İzinler"
+            "value": "İzin gerekli"
           }
         },
         "es": {
@@ -19410,25 +19410,25 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@, giriş yapmadı"
+            "value": "%1$@, kaydedilmedi"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@, not logged"
+            "value": "%1$@, sin registrar"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@, nie zalogowany"
+            "value": "%1$@, niezapisane"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@,未登入"
+            "value": "%1$@，未記錄"
           }
         },
         "ru": {
@@ -19440,7 +19440,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@, nincs bejelentkezve"
+            "value": "%1$@, nincs naplózva"
           }
         },
         "it": {
@@ -19552,19 +19552,19 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bu gün için bir doz girin"
+            "value": "Bu gün için bir doz kaydeder"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inicia una dosis para este día"
+            "value": "Registra una dosis para este día"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zaloguje dawkę na ten dzień"
+            "value": "Zapisuje dawkę na ten dzień"
           }
         },
         "zh-Hant": {
@@ -19576,13 +19576,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Логирует дозу на этот день"
+            "value": "Записывает дозу за этот день"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A mai napra beállított adag"
+            "value": "Adagot naplóz erre a napra"
           }
         },
         "it": {
@@ -19594,13 +19594,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loggt eine Dosis für diesen Tag"
+            "value": "Erfasst eine Dosis für diesen Tag"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loge une dose pour ce jour"
+            "value": "Enregistre une dose pour ce jour"
           }
         }
       }
@@ -19907,7 +19907,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "İlk hapınız giriş"
+            "value": "İlk tabletin kaydedildi"
           }
         },
         "es": {
@@ -19919,7 +19919,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Twoja pierwsza pigułka jest zalogowana"
+            "value": "Pierwsza tabletka zapisana"
           }
         },
         "zh-Hant": {
@@ -19949,7 +19949,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ihre erste Pille ist protokolliert"
+            "value": "Deine erste Tablette ist erfasst"
           }
         },
         "fr": {
@@ -19978,7 +19978,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "İlk enjeksiyonunuz giriş"
+            "value": "İlk enjeksiyonun kaydedildi"
           }
         },
         "es": {
@@ -19990,7 +19990,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pierwsze wstrzyknięcie jest zalogowane"
+            "value": "Pierwszy zastrzyk zapisany"
           }
         },
         "zh-Hant": {
@@ -20020,7 +20020,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ihre erste Injektion ist protokolliert"
+            "value": "Deine erste Injektion ist erfasst"
           }
         },
         "fr": {
@@ -22505,7 +22505,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "· %1$@ · %2$@"
+            "value": "%1$@ · %2$@"
           }
         },
         "ru": {
@@ -23120,61 +23120,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Você já registrou uma pílula naquele dia."
+            "value": "Você já registrou um comprimido nesse dia. Isto adiciona um segundo."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "O gün zaten bir hap girdin. Bu ikinci bir tane ekliyor."
+            "value": "O gün zaten bir tablet kaydettin. Bu, ikinci bir tablet ekler."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ya has registrado una pastilla ese día."
+            "value": "Ya registraste una pastilla ese día. Esto añade una segunda."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zalogowałeś wtedy tabletkę."
+            "value": "Tego dnia zapisano już tabletkę. To doda drugą."
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "那天你已經填了藥,這又加了第二個"
+            "value": "當天已記錄一顆藥錠。這會新增第二顆。"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ты уже записала таблетку в тот день."
+            "value": "За этот день уже записана таблетка. Будет добавлена вторая."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Már naplóztál egy pirulát aznap, és ez még egy."
+            "value": "Aznap már naplóztál egy tablettát. Ezzel hozzáadsz egy másodikat."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hai gia' registrato una pillola quel giorno."
+            "value": "Hai già registrato una compressa quel giorno. Questa ne aggiunge una seconda."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sie haben an diesem Tag bereits eine Pille angemeldet."
+            "value": "Du hast für diesen Tag bereits eine Tablette erfasst. Hiermit fügst du eine zweite hinzu."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vous avez déjà enregistré une pilule ce jour-là."
+            "value": "Vous avez déjà enregistré un comprimé ce jour-là. Cette action en ajoute un second."
           }
         }
       }
@@ -23191,31 +23191,31 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Registrado para %1$@."
+            "value": "Registrado para %1$@. Nada mais muda."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ için yalvardı. Başka bir değişiklik yok."
+            "value": "%1$@ için kaydedildi. Başka bir şey değişmez."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Logged for %1$@. Nada más cambia."
+            "value": "Registrado para %1$@. Nada más cambia."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zalogowane dla %1$@. Nic innego się nie zmienia."
+            "value": "Zapisano dla %1$@. Nic innego się nie zmienia."
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "已登入到 %1$@。 沒有其它變化 。"
+            "value": "已記錄於 %1$@，其他內容不變。"
           }
         },
         "ru": {
@@ -23227,7 +23227,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A %1$@-re jelentkeztem."
+            "value": "Naplózva erre a napra: %1$@. Más nem változik."
           }
         },
         "it": {
@@ -23239,13 +23239,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Loggt für %1$@. Nichts anderes ändert sich."
+            "value": "Für %1$@ erfasst. Sonst ändert sich nichts."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Logué pour %1$@. Rien d'autre ne change."
+            "value": "Enregistré pour le %1$@. Rien d’autre ne change."
           }
         }
       }
@@ -23268,7 +23268,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hapınız bu anda girişilir."
+            "value": "Tabletin bu saatte kaydedilir."
           }
         },
         "es": {
@@ -23280,7 +23280,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Twoja pigułka jest zalogowana."
+            "value": "Tabletka zostanie zapisana o tej godzinie."
           }
         },
         "zh-Hant": {
@@ -23292,13 +23292,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Таблетки в это время записываются."
+            "value": "Таблетка будет записана на это время."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A tablettád be van jegyezve."
+            "value": "A tabletta erre az időpontra lesz naplózva."
           }
         },
         "it": {
@@ -23316,7 +23316,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Votre pilule est enregistrée en ce moment."
+            "value": "Votre comprimé sera enregistré à cette heure."
           }
         }
       }
@@ -23339,7 +23339,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enjeksiyonunuz bu anda girişilir."
+            "value": "Enjeksiyonun bu saatte kaydedilir."
           }
         },
         "es": {
@@ -23351,7 +23351,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zastrzyk jest zalogowany."
+            "value": "Zastrzyk zostanie zapisany o tej godzinie."
           }
         },
         "zh-Hant": {
@@ -23363,13 +23363,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ваша инъекция регистрируется в это время."
+            "value": "Инъекция будет записана на это время."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Az injekciója ekkor naplózva van."
+            "value": "Az injekció erre az időpontra lesz naplózva."
           }
         },
         "it": {
@@ -23387,7 +23387,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Votre injection est enregistrée."
+            "value": "Votre injection sera enregistrée à cette heure."
           }
         }
       }
@@ -24137,61 +24137,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cotovelo de dose perdida."
+            "value": "Lembretes de dose não registrada."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bayan-dose nudges."
+            "value": "Kaydedilmeyen doz hatırlatmaları."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Malditos perdidos."
+            "value": "Recordatorios de dosis no registrada."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Porażona dawka."
+            "value": "Przypomnienia o niezapisanej dawce."
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "誤入藥道."
+            "value": "未記錄劑量提醒。"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пропущенные дозы."
+            "value": "Напоминания о незаписанной дозе."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Elvétette az adagot."
+            "value": "Emlékeztetők a nem naplózott adagra."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nudges mancati."
+            "value": "Promemoria per la dose non registrata."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Verpasste Dosis Nudges."
+            "value": "Erinnerungen an nicht erfasste Dosen."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Des nudges à dose manquée."
+            "value": "Rappels de dose non enregistrée."
           }
         }
       }
@@ -28440,7 +28440,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dotknięcie opcji „Przyjęto tabletkę” uruchamia odliczanie przez %#@n@. Otrzymasz powiadomienie po jego zakończeniu. Ustaw czas zgodnie z zaleceniami lekarza."
+            "value": "Dotknięcie opcji „Tabletka przyjęta” uruchamia odliczanie przez %#@n@. Otrzymasz powiadomienie po jego zakończeniu. Ustaw czas zgodnie z zaleceniami lekarza."
           },
           "substitutions": {
             "n": {
@@ -28480,7 +28480,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "點選「已服用藥錠」會開始 %#@n@ 倒數，結束時會提醒你。請依處方醫療人員的指示設定時間。"
+            "value": "點選「我已服用藥錠」會開始 %#@n@ 倒數，結束時會提醒你。請依處方醫療人員的指示設定時間。"
           },
           "substitutions": {
             "n": {
@@ -28570,7 +28570,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Toccando “Ho preso la compressa” parte un conto alla rovescia di %#@n@ e riceverai un avviso alla fine. Imposta il tempo secondo le indicazioni di chi ti segue."
+            "value": "Toccando “Ho preso la pillola” parte un conto alla rovescia di %#@n@ e riceverai un avviso alla fine. Imposta il tempo secondo le indicazioni di chi ti segue."
           },
           "substitutions": {
             "n": {
@@ -28598,7 +28598,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tippe auf „Tablette eingenommen“, um einen Countdown von %#@n@ zu starten. Am Ende erhältst du einen Hinweis. Stelle die Dauer nach den Vorgaben deiner Arztpraxis ein."
+            "value": "Tippe auf „Ich habe meine Tablette genommen“, um einen Countdown von %#@n@ zu starten. Am Ende erhältst du einen Hinweis. Stelle die Dauer nach den Vorgaben deiner Arztpraxis ein."
           },
           "substitutions": {
             "n": {
@@ -29168,13 +29168,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld min daha önce"
+            "value": "%1$lld dk önce"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld min before"
+            "value": "%1$lld min antes"
           }
         },
         "pl": {
@@ -30795,7 +30795,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Semana"
+            "value": "semana"
           }
         },
         "tr": {
@@ -34092,61 +34092,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Semanalmente em %1$@"
+            "value": "Toda semana: %1$@"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@"
+            "value": "Her hafta: %1$@"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Semanal en %1$@"
+            "value": "Cada semana: %1$@"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tygodniowe podawanie produktu %1$@"
+            "value": "Co tydzień: %1$@"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@週刊"
+            "value": "每週：%1$@"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Еженедельно в %1$@"
+            "value": "Еженедельно: %1$@"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hetente %1$@"
+            "value": "Hetente: %1$@"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Settimanale su %1$@"
+            "value": "Ogni settimana: %1$@"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wöchentlich auf %1$@"
+            "value": "Wöchentlich: %1$@"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Par semaine sur %1$@"
+            "value": "Chaque semaine : %1$@"
           }
         }
       }
@@ -41705,6 +41705,519 @@
           "stringUnit": {
             "state": "translated",
             "value": "Médicament et calendrier"
+          }
+        }
+      }
+    },
+    "Every day": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Every day"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos os dias"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Her gün"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cada día"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Codziennie"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每天"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Каждый день"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Naponta"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ogni giorno"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeden Tag"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Chaque jour"
+          }
+        }
+      }
+    },
+    "Every %lld days": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Every %1$lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Every %1$lld days"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "A cada %1$lld dia"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "A cada %1$lld dias"
+                }
+              }
+            }
+          }
+        },
+        "tr": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld günde bir"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld günde bir"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Cada %1$lld día"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Cada %1$lld días"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld dzień"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld dni"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld dni"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld dnia"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hant": {
+          "variations": {
+            "plural": {
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "每 %1$lld 天"
+                }
+              }
+            }
+          }
+        },
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждый %1$lld день"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждые %1$lld дня"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждые %1$lld дней"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждые %1$lld дня"
+                }
+              }
+            }
+          }
+        },
+        "hu": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld naponta"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld naponta"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ogni %1$lld giorno"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ogni %1$lld giorni"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Alle %1$lld Tage"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Alle %1$lld Tage"
+                }
+              }
+            }
+          }
+        },
+        "fr": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Tous les %1$lld jours"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Tous les %1$lld jours"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "Every %lld weeks": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Every %1$lld week"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Every %1$lld weeks"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "A cada %1$lld semana"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "A cada %1$lld semanas"
+                }
+              }
+            }
+          }
+        },
+        "tr": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld haftada bir"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld haftada bir"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Cada %1$lld semana"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Cada %1$lld semanas"
+                }
+              }
+            }
+          }
+        },
+        "pl": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld tydzień"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld tygodnie"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld tygodni"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Co %1$lld tygodnia"
+                }
+              }
+            }
+          }
+        },
+        "zh-Hant": {
+          "variations": {
+            "plural": {
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "每 %1$lld 週"
+                }
+              }
+            }
+          }
+        },
+        "ru": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждую %1$lld неделю"
+                }
+              },
+              "few": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждые %1$lld недели"
+                }
+              },
+              "many": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждые %1$lld недель"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Каждые %1$lld недели"
+                }
+              }
+            }
+          }
+        },
+        "hu": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld hetente"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%1$lld hetente"
+                }
+              }
+            }
+          }
+        },
+        "it": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ogni %1$lld settimana"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Ogni %1$lld settimane"
+                }
+              }
+            }
+          }
+        },
+        "de": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Alle %1$lld Wochen"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Alle %1$lld Wochen"
+                }
+              }
+            }
+          }
+        },
+        "fr": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Toutes les %1$lld semaines"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "Toutes les %1$lld semaines"
+                }
+              }
+            }
           }
         }
       }

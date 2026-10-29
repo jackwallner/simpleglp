@@ -47,6 +47,14 @@ struct SimpleGLPApp: App {
             #if DEBUG
             if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotWidget") {
                 SimpleGLPWidgetScreenshotHarness()
+            } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotOnboarding") {
+                OnboardingView()
+                    .environmentObject(shotCoordinator)
+                    .environmentObject(storeService)
+            } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotSettings") {
+                NavigationStack { SettingsView() }
+                    .environmentObject(shotCoordinator)
+                    .environmentObject(storeService)
             } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotAlerts") {
                 NavigationStack {
                     ProAlertsConfigView()

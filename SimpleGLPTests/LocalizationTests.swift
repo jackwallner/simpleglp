@@ -45,4 +45,14 @@ struct LocalizationTests {
         #expect(String(localized: "Today", bundle: de, locale: locale) == "Heute")
         #expect(String(localized: "Shot", bundle: de, locale: locale) == "Spritze")
     }
+
+    @Test func scheduleCadenceUsesLocalizedPluralForms() throws {
+        let ru = try #require(bundle("ru"))
+        let pl = try #require(bundle("pl"))
+        let de = try #require(bundle("de"))
+        #expect(String(localized: "Every \(21) days", bundle: ru, locale: Locale(identifier: "ru")) == "Каждый 21 день")
+        #expect(String(localized: "Every \(5) days", bundle: ru, locale: Locale(identifier: "ru")) == "Каждые 5 дней")
+        #expect(String(localized: "Every \(5) weeks", bundle: pl, locale: Locale(identifier: "pl")) == "Co 5 tygodni")
+        #expect(String(localized: "Every \(2) days", bundle: de, locale: Locale(identifier: "de")) == "Alle 2 Tage")
+    }
 }

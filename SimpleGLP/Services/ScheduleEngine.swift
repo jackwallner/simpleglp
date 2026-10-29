@@ -21,8 +21,12 @@ enum GLPScheduleFormat {
         let cadence: String
         if n == 7 {
             cadence = String(localized: "Weekly on \(firstDose.formatted(.dateTime.weekday(.wide)))")
+        } else if n == 1 {
+            cadence = String(localized: "Every day")
+        } else if n % 7 == 0 {
+            cadence = String(localized: "Every \(n / 7) weeks")
         } else {
-            cadence = String(localized: "Every \(intervalLabel(n))")
+            cadence = String(localized: "Every \(n) days")
         }
         return String(localized: "\(cadence) · \(time)")
     }
