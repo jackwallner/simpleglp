@@ -9480,7 +9480,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "匯出每個記錄的劑量為 CSV 檔案, 您可以共享或備份 。"
+            "value": "將所有劑量記錄匯出為 CSV 檔案，以便分享或備份。"
           }
         },
         "ru": {
