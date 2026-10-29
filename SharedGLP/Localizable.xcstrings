@@ -1575,13 +1575,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Luz"
+            "value": "Claro"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Işık Işığı"
+            "value": "Açık"
           }
         },
         "es": {
@@ -1599,7 +1599,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "光線"
+            "value": "淺色"
           }
         },
         "ru": {
@@ -1611,7 +1611,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fény"
+            "value": "Világos"
           }
         },
         "it": {
@@ -1670,7 +1670,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "陰暗"
+            "value": "深色"
           }
         },
         "ru": {
@@ -4066,7 +4066,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Restoring..."
+            "value": "Geri yükleniyor…"
           }
         },
         "es": {
@@ -4084,7 +4084,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "恢復時..."
+            "value": "回復中…"
           }
         },
         "ru": {
@@ -4137,7 +4137,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Geri yüklemeleri"
+            "value": "Satın alımları geri yükle"
           }
         },
         "es": {
@@ -4155,7 +4155,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "恢復購買"
+            "value": "回復購買項目"
           }
         },
         "ru": {
@@ -4167,7 +4167,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visszaállítás"
+            "value": "Vásárlások visszaállítása"
           }
         },
         "it": {
@@ -4226,7 +4226,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "術語"
+            "value": "使用條款"
           }
         },
         "ru": {
@@ -5060,7 +5060,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Görünüm görünümü"
+            "value": "Görünüm"
           }
         },
         "es": {
@@ -5084,7 +5084,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "внешний вид"
+            "value": "Оформление"
           }
         },
         "hu": {
@@ -5344,7 +5344,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sağlık Sağlığı"
+            "value": "Sağlık"
           }
         },
         "es": {
@@ -5362,7 +5362,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "衛生"
+            "value": "健康"
           }
         },
         "ru": {
@@ -5374,7 +5374,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Egészségügy"
+            "value": "Egészség"
           }
         },
         "it": {
@@ -5569,7 +5569,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wpisy proaktywne"
+            "value": "Alerty proaktywne"
           }
         },
         "zh-Hant": {
@@ -5699,7 +5699,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Geri yükleme satın alımları geri yükleme"
+            "value": "Satın alımları geri yükle"
           }
         },
         "es": {
@@ -5717,7 +5717,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "恢復購買"
+            "value": "回復購買項目"
           }
         },
         "ru": {
@@ -5729,7 +5729,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Visszavásárlások"
+            "value": "Vásárlások visszaállítása"
           }
         },
         "it": {
@@ -5835,7 +5835,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Socorro!"
+            "value": "Ajuda"
           }
         },
         "tr": {
@@ -6054,7 +6054,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Destek Desteği Destek Desteği"
+            "value": "Destek"
           }
         },
         "es": {
@@ -6072,7 +6072,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "支助"
+            "value": "支援"
           }
         },
         "ru": {
@@ -6102,7 +6102,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Appui"
+            "value": "Assistance"
           }
         }
       }
@@ -6220,13 +6220,13 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "О нас"
+            "value": "О приложении"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Körülbelül"
+            "value": "Névjegy"
           }
         },
         "it": {
@@ -6445,7 +6445,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Farmacia"
+            "value": "Farmaco"
           }
         },
         "de": {
@@ -6545,13 +6545,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tempo"
+            "value": "Horário"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zaman Zamanı"
+            "value": "Saat"
           }
         },
         "es": {
@@ -6587,7 +6587,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tempo"
+            "value": "Orario"
           }
         },
         "de": {
@@ -6770,7 +6770,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuadro"
+            "value": "Horario"
           }
         },
         "pl": {
@@ -6794,7 +6794,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Menetrend"
+            "value": "Ütemezés"
           }
         },
         "it": {
@@ -6812,7 +6812,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tableau"
+            "value": "Calendrier"
           }
         }
       }
@@ -6871,7 +6871,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Promemoria giornaliera"
+            "value": "Promemoria giornaliero"
           }
         },
         "de": {
@@ -7113,7 +7113,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lembranças"
+            "value": "Lembretes"
           }
         },
         "tr": {
@@ -7125,7 +7125,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Recordadores"
+            "value": "Recordatorios"
           }
         },
         "pl": {
@@ -7149,13 +7149,13 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Emlékeztető"
+            "value": "Emlékeztetők"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Remines"
+            "value": "Promemoria"
           }
         },
         "de": {
@@ -10606,7 +10606,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enjeksiyon sitesi"
+            "value": "Enjeksiyon bölgesi"
           }
         },
         "es": {
@@ -10624,7 +10624,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "注射地點"
+            "value": "注射部位"
           }
         },
         "ru": {
@@ -10671,13 +10671,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não gravado."
+            "value": "Não registrado"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kayıt Değil"
+            "value": "Kaydedilmedi"
           }
         },
         "es": {
@@ -10955,61 +10955,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ruído de comida."
+            "value": "Pensamentos sobre comida"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Yemek isteği"
+            "value": "Yemek düşünceleri"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ruido alimentario"
+            "value": "Pensamientos sobre comida"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hałas spożywczy"
+            "value": "Myśli o jedzeniu"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "食品噪音"
+            "value": "對食物的反覆念頭"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Пищевой шум"
+            "value": "Навязчивые мысли о еде"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Élelmiszer-zaj"
+            "value": "Étellel kapcsolatos gondolatok"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Rumore alimentare"
+            "value": "Pensieri sul cibo"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lebensmittellärm"
+            "value": "Gedanken ans Essen"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bruit alimentaire"
+            "value": "Pensées autour de la nourriture"
           }
         }
       }
@@ -12186,7 +12186,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "步驟"
+            "value": "步數"
           }
         },
         "ru": {
@@ -12210,13 +12210,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Stufen"
+            "value": "Schritte"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Étapes"
+            "value": "Nombre de pas"
           }
         }
       }
@@ -12233,7 +12233,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Durma."
+            "value": "Sono"
           }
         },
         "tr": {
@@ -12245,37 +12245,37 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Duerme"
+            "value": "Sueño"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Śpij"
+            "value": "Sen"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "睡覺"
+            "value": "睡眠"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "спать"
+            "value": "Сон"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aludj."
+            "value": "Alvás"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dormire"
+            "value": "Sonno"
           }
         },
         "de": {
@@ -12517,61 +12517,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "HR descansando"
+            "value": "Frequência cardíaca em repouso"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Geri Dönüş İKİ"
+            "value": "Dinlenme kalp hızı"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Restablecimiento de RRHH"
+            "value": "Frecuencia cardíaca en reposo"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Odpoczywający HR"
+            "value": "Tętno spoczynkowe"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "暫停人力資源"
+            "value": "靜止心率"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Отдыхающий HR"
+            "value": "Пульс в покое"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "HR pihentetése"
+            "value": "Nyugalmi pulzus"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Riposo HR"
+            "value": "Frequenza cardiaca a riposo"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ruhezeit HR"
+            "value": "Ruhepuls"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ressources humaines"
+            "value": "Fréquence cardiaque au repos"
           }
         }
       }
@@ -17755,7 +17755,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Amanhã."
+            "value": "Amanhã"
           }
         },
         "tr": {
@@ -17791,7 +17791,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Holnap."
+            "value": "Holnap"
           }
         },
         "it": {
@@ -24356,7 +24356,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Desenler"
+            "value": "Eğilimler"
           }
         },
         "es": {
@@ -24368,7 +24368,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wzory"
+            "value": "Tendencje"
           }
         },
         "zh-Hant": {
@@ -24380,19 +24380,19 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Узоры"
+            "value": "Закономерности"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Minták"
+            "value": "Tendenciák"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modelli"
+            "value": "Andamenti"
           }
         },
         "de": {
@@ -24404,7 +24404,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Modèles"
+            "value": "Tendances"
           }
         }
       }
@@ -25640,7 +25640,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "7 pastillas izquierda"
+            "value": "Quedan 7 pastillas"
           }
         },
         "pl": {
@@ -25652,7 +25652,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "還剩7丸"
+            "value": "剩下 7 顆藥錠"
           }
         },
         "ru": {
@@ -25670,7 +25670,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "7 pillole sinistra"
+            "value": "Restano 7 pillole"
           }
         },
         "de": {
@@ -26699,7 +26699,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Opens yükseltme seçenekleri"
+            "value": "Yükseltme seçeneklerini açar"
           }
         },
         "es": {
@@ -27417,13 +27417,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kurulumdan tasarruf edemez"
+            "value": "Kurulum kaydedilemedi"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "No podía salvar la configuración."
+            "value": "No se pudo guardar la configuración"
           }
         },
         "pl": {
@@ -27441,19 +27441,19 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не смог спасти настройку"
+            "value": "Не удалось сохранить настройки"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "A beállítás mentése"
+            "value": "Nem sikerült menteni a beállításokat"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Non poteva salvare la configurazione"
+            "value": "Impossibile salvare la configurazione"
           }
         },
         "de": {
@@ -27914,7 +27914,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bir gün"
+            "value": "Günde bir kez"
           }
         },
         "es": {
@@ -27932,7 +27932,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "每天來一次"
+            "value": "每天一次"
           }
         },
         "ru": {
@@ -30091,7 +30091,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "geri yükleme geri yükleme"
+            "value": "Geri yükle"
           }
         },
         "es": {
@@ -30511,19 +30511,19 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Repita tudo."
+            "value": "Repetir a cada"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Her şeyi tekrar tekrarlayın"
+            "value": "Tekrar aralığı"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Repita cada uno"
+            "value": "Repetir cada"
           }
         },
         "pl": {
@@ -30535,37 +30535,37 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "重複次數"
+            "value": "重複間隔"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Повторить каждый"
+            "value": "Повторять каждые"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ismételje meg"
+            "value": "Ismétlés ennyi időnként"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ripetere ogni volta"
+            "value": "Ripeti ogni"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Wiederholen Sie alle"
+            "value": "Wiederholen alle"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Répéter chaque fois"
+            "value": "Répéter tous les"
           }
         }
       }
@@ -30588,13 +30588,13 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kont"
+            "value": "Sayı"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conde"
+            "value": "Cantidad"
           }
         },
         "pl": {
@@ -30612,7 +30612,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "граф"
+            "value": "Количество"
           }
         },
         "hu": {
@@ -30624,7 +30624,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Conte"
+            "value": "Numero"
           }
         },
         "de": {
@@ -30665,7 +30665,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dependencia"
+            "value": "Unidad"
           }
         },
         "pl": {
@@ -30683,7 +30683,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Подразделение"
+            "value": "Единица"
           }
         },
         "hu": {
@@ -30943,7 +30943,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hiçbir şey yok"
+            "value": "Yok"
           }
         },
         "es": {
@@ -30967,7 +30967,7 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Никто"
+            "value": "Нет"
           }
         },
         "hu": {
@@ -31434,25 +31434,25 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Não pude salvar isso."
+            "value": "Não foi possível salvar. Tente novamente."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Bunu kurtaramaz. Tekrar deneyin."
+            "value": "Kaydedilemedi. Yeniden dene."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "No pude salvar eso."
+            "value": "No se pudo guardar. Inténtalo de nuevo."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nie mogłem tego zapisać."
+            "value": "Nie udało się zapisać. Spróbuj ponownie."
           }
         },
         "zh-Hant": {
@@ -31464,31 +31464,31 @@
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Не смог спасти это. Попробуй еще раз."
+            "value": "Не удалось сохранить. Попробуйте ещё раз."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Nem sikerült elmenteni."
+            "value": "Nem sikerült menteni. Próbáld újra."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Non posso salvarlo."
+            "value": "Impossibile salvare. Riprova."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Konnte das nicht retten."
+            "value": "Speichern fehlgeschlagen. Versuche es erneut."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "J'ai pas pu sauver ça."
+            "value": "Impossible d’enregistrer. Réessayez."
           }
         }
       }
@@ -31505,13 +31505,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Adicionando contexto de saúde..."
+            "value": "Salvo. Adicionando dados de Saúde…"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saved. add Health context..."
+            "value": "Kaydedildi. Sağlık verileri ekleniyor…"
           }
         },
         "es": {
@@ -31523,25 +31523,25 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dodawanie kontekstu zdrowia..."
+            "value": "Zapisano. Dodawanie danych Zdrowia…"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "儲存 新增健康環境..."
+            "value": "已儲存。正在加入健康資料…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавление контекста здоровья..."
+            "value": "Сохранено. Добавляются данные о здоровье…"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Mentett."
+            "value": "Mentve. Egészségadatok hozzáadása…"
           }
         },
         "it": {
@@ -31559,7 +31559,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajouter le contexte de santé..."
+            "value": "Enregistré. Ajout des données Santé…"
           }
         }
       }
@@ -34412,7 +34412,7 @@
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Élettartam"
+            "value": "Örökös hozzáférés"
           }
         },
         "it": {
@@ -35464,13 +35464,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%1$lld hétos ingyenes próba"
+                  "value": "%1$lld hetes ingyenes próba"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%1$lld hétos ingyenes próba"
+                  "value": "%1$lld hetes ingyenes próba"
                 }
               }
             }
@@ -35906,13 +35906,13 @@
               "one": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%1$lld évos ingyenes próba"
+                  "value": "%1$lld éves ingyenes próba"
                 }
               },
               "other": {
                 "stringUnit": {
                   "state": "translated",
-                  "value": "%1$lld évos ingyenes próba"
+                  "value": "%1$lld éves ingyenes próba"
                 }
               }
             }
@@ -38814,7 +38814,7 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "ayer."
+            "value": "ayer"
           }
         },
         "pl": {
@@ -38897,7 +38897,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "複方司美格魯肽"
+            "value": "藥局調配的司美格魯肽"
           }
         },
         "ru": {
@@ -38968,7 +38968,7 @@
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "複方替爾泊肽"
+            "value": "藥局調配的替爾泊肽"
           }
         },
         "ru": {
@@ -40603,13 +40603,13 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Późne"
+            "value": "Opóźniona"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "遲到"
+            "value": "延遲"
           }
         },
         "ru": {
@@ -40627,7 +40627,7 @@
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fine"
+            "value": "In ritardo"
           }
         },
         "de": {
@@ -40639,7 +40639,7 @@
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dernière"
+            "value": "En retard"
           }
         }
       }
@@ -41295,61 +41295,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abra o iPhone para sincronizar."
+            "value": "Salvo no Apple Watch. Abra o iPhone para sincronizar."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Watch'ta Kaydet. Open iPhone'u senkronize etmek için."
+            "value": "Apple Watch’a kaydedildi. Eşzamanlamak için iPhone’u aç."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Guardado en Watch. Abrir iPhone para sincronizar."
+            "value": "Guardado en el Apple Watch. Abre el iPhone para sincronizar."
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Otwórz iPhone do synchronizacji."
+            "value": "Zapisano na Apple Watch. Otwórz iPhone’a, aby zsynchronizować."
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "在監視中儲存。 開啟iPhone以同步 。"
+            "value": "已儲存於 Apple Watch。請開啟 iPhone 以同步。"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Откройте iPhone для синхронизации."
+            "value": "Сохранено на Apple Watch. Откройте iPhone для синхронизации."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saved on Watch. Nyissa meg az iPhone szinkronizálásához."
+            "value": "Mentve az Apple Watchon. A szinkronizáláshoz nyisd meg az iPhone-t."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Salvato su Watch. Apri iPhone per sincronizzare."
+            "value": "Salvato su Apple Watch. Apri iPhone per sincronizzare."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Auf Watch gespeichert. iPhone zum Synchronisieren öffnen."
+            "value": "Auf der Apple Watch gespeichert. Öffne das iPhone zum Synchronisieren."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enregistrer sur Watch. Ouvrez iPhone pour synchroniser."
+            "value": "Enregistré sur l’Apple Watch. Ouvrez l’iPhone pour synchroniser."
           }
         }
       }
@@ -41437,13 +41437,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Vai sincronizar com o iPhone."
+            "value": "Salvo. Será sincronizado com o iPhone."
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Kurtarın. iPhone'a senkronize edilecek."
+            "value": "Kaydedildi. iPhone ile eşzamanlanacak."
           }
         },
         "es": {
@@ -41455,25 +41455,25 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zsynchronizuje się z iPhone 'em."
+            "value": "Zapisano. Zostanie zsynchronizowane z iPhone’em."
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "已儲存。 它會同步到 iPhone 。"
+            "value": "已儲存，將同步至 iPhone。"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Он будет синхронизироваться с iPhone."
+            "value": "Сохранено. Запись синхронизируется с iPhone."
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Az iPhone-ra szinkronizálódik."
+            "value": "Mentve. Szinkronizálódik az iPhone-nal."
           }
         },
         "it": {
@@ -41485,13 +41485,13 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Es wird mit dem iPhone synchronisiert."
+            "value": "Gespeichert. Der Eintrag wird mit dem iPhone synchronisiert."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sauvé. Il sera synchronisé avec l'iPhone."
+            "value": "Enregistré. La synchronisation avec l’iPhone suivra."
           }
         }
       }
@@ -41634,6 +41634,77 @@
           "stringUnit": {
             "state": "translated",
             "value": "Prise à %1$@"
+          }
+        }
+      }
+    },
+    "Medication & schedule": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medication & schedule"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medicamento e horários"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "İlaç ve program"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medicamento y horario"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Lek i harmonogram"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "藥物與時程"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Препарат и расписание"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gyógyszer és ütemezés"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Farmaco e programma"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Medikament und Zeitplan"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Médicament et calendrier"
           }
         }
       }

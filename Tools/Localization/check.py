@@ -31,7 +31,7 @@ PLURAL_CATEGORIES = {
 }
 INFO_PLISTS = ['SimpleGLP/Info.plist', 'SimpleGLPWidget/Info.plist', 'SimpleGLPWatch/Info.plist']
 INFO_COPY_KEYS = ['NSHealthShareUsageDescription', 'NSHealthUpdateUsageDescription']
-UI_FUNCS = {'Text', 'Button', 'Label', 'Section', 'Toggle', 'TextField', 'navigationTitle', 'accessibilityLabel',
+UI_FUNCS = {'Text', 'Button', 'Label', 'Section', 'Toggle', 'TextField', 'NavigationLink', 'navigationTitle', 'accessibilityLabel',
             'alert', 'DatePicker', 'Stepper', 'Link', 'configurationDisplayName', 'description', 'eyebrow',
             'confirmationDialog', 'Picker', 'LocalizedStringKey', 'accessibilityHint', 'SecureField'}
 NAMED_COPY_ARGS = {'title', 'subtitle', 'detail', 'headline', 'text', 'shortTitle', 'description', 'message', 'label'}
