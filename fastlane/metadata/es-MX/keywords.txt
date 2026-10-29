@@ -1,1 +1,1 @@
-ozempic,wegovy,mounjaro,rybelsus,foundayo,orforglipron,semanal,recordatorio,dose,shot,log,tracker
+ozempic,wegovy,mounjaro,rybelsus,foundayo,orforglipron,semanal,recordatorio,shot,log,reminder
