@@ -9504,7 +9504,7 @@
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportieren Sie jede protokollierte Dosis als CSV-Datei, die Sie teilen oder sichern können."
+            "value": "Exportiere alle erfassten Dosen als CSV-Datei, die du teilen oder sichern kannst."
           }
         },
         "fr": {
