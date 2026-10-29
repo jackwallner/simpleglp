@@ -23,12 +23,11 @@ enum DoseForm: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var id: String { rawValue }
 
-    /// Lowercase noun for copy: "shot" / "pill".
-    var noun: String { self == .pill ? "pill" : "shot" }
-    var pluralNoun: String { self == .pill ? "pills" : "shots" }
-    var pickerLabel: String { self == .pill ? "Daily pill" : "Shot" }
+    var pickerLabel: String { String(localized: self == .pill ? "Daily pill" : "Shot") }
     var symbolName: String { self == .pill ? "pills.fill" : "syringe.fill" }
-    var logButtonTitle: String { "I took my \(noun)" }
+    var logButtonTitle: String {
+        String(localized: self == .pill ? "I took my pill" : "I took my shot")
+    }
     var defaultIntervalDays: Int { self == .pill ? 1 : 7 }
     var defaultHour: Int { self == .pill ? 7 : 9 }
 }
@@ -56,6 +55,14 @@ enum GLPMedication: String, Codable, CaseIterable, Identifiable, Sendable {
     }
 
     var isCustom: Bool { self == .other || self == .otherPill }
+
+    /// Stored medication names stay stable. Translate built-in labels when they are shown.
+    var localizedName: String { GLPGlance.localizedMedicationName(forStoredValue: rawValue) }
+
+    static func localizedName(forStoredValue value: String) -> String {
+        guard let medication = GLPMedication(rawValue: value) else { return value }
+        return medication.localizedName
+    }
 
     static func options(for form: DoseForm) -> [GLPMedication] {
         allCases.filter { $0.form == form }
@@ -94,6 +101,22 @@ enum InjectionSite: String, Codable, CaseIterable, Identifiable, Sendable {
     case other = "Other"
 
     var id: String { rawValue }
+
+    var localizedName: String {
+        switch self {
+        case .abdomen: String(localized: "Abdomen")
+        case .leftThigh: String(localized: "Left thigh")
+        case .rightThigh: String(localized: "Right thigh")
+        case .leftArm: String(localized: "Left arm")
+        case .rightArm: String(localized: "Right arm")
+        case .other: String(localized: "Other")
+        }
+    }
+
+    static func localizedName(forStoredValue value: String) -> String {
+        guard let site = InjectionSite(rawValue: value) else { return value }
+        return site.localizedName
+    }
 }
 
 enum ScheduleMatchStatus: String, Codable, CaseIterable, Sendable {
@@ -105,11 +128,11 @@ enum ScheduleMatchStatus: String, Codable, CaseIterable, Sendable {
 
     var label: String {
         switch self {
-        case .onSchedule: "On schedule"
-        case .early: "A little early"
-        case .late: "A little late"
-        case .extra: "Manual"
-        case .unknown: "Not mapped"
+        case .onSchedule: String(localized: "On schedule")
+        case .early: String(localized: "A little early")
+        case .late: String(localized: "A little late")
+        case .extra: String(localized: "Manual")
+        case .unknown: String(localized: "Not mapped")
         }
     }
 }
@@ -269,6 +292,13 @@ final class MedicationPlan {
         if medication.isCustom, let customMedicationName, !customMedicationName.isEmpty {
             return customMedicationName
         }
+        return medication.localizedName
+    }
+
+    var storedMedicationName: String {
+        if medication.isCustom, let customMedicationName, !customMedicationName.isEmpty {
+            return customMedicationName
+        }
         return medication.rawValue
     }
 
@@ -357,6 +387,10 @@ final class ShotEvent {
         set { scheduleStatusRaw = newValue.rawValue }
     }
 
+    var localizedMedicationName: String {
+        GLPGlance.localizedMedicationName(forStoredValue: medicationName)
+    }
+
     var injectionSite: InjectionSite? {
         get { injectionSiteRaw.flatMap { InjectionSite(rawValue: $0) } }
         set { injectionSiteRaw = newValue?.rawValue }
@@ -371,17 +405,16 @@ final class ShotEvent {
         let absMin = abs(minutes)
         let amount: String
         if absMin >= 1440 {
-            let days = absMin / 1440
-            amount = days == 1 ? "1 day" : "\(days) days"
+            amount = GLPDurationText.format(seconds: TimeInterval(absMin * 60), units: [.day])
         } else if absMin >= 60 {
-            let hours = absMin / 60
-            amount = hours == 1 ? "1 hr" : "\(hours) hrs"
+            amount = GLPDurationText.format(seconds: TimeInterval(absMin * 60), units: [.hour])
         } else {
-            amount = "\(absMin) min"
+            amount = GLPDurationText.format(seconds: TimeInterval(absMin * 60), units: [.minute])
         }
-        let direction = scheduleStatus == .late ? "after" : "before"
         let slot = scheduled.formatted(.dateTime.weekday(.abbreviated).hour().minute())
-        return "\(amount) \(direction) \(slot)"
+        return scheduleStatus == .late
+            ? String(localized: "\(amount) after \(slot)")
+            : String(localized: "\(amount) before \(slot)")
     }
 
     var weekdayIndex: Int { Calendar.current.component(.weekday, from: timestamp) }
@@ -422,6 +455,42 @@ final class ShotEvent {
             captureStatus = .failed
         case .pending:
             captureStatus = .partial
+        }
+    }
+}
+
+enum GLPDurationText {
+    static func format(seconds: TimeInterval, units: NSCalendar.Unit, style: DateComponentsFormatter.UnitsStyle = .full) -> String {
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = units
+        formatter.unitsStyle = style
+        formatter.maximumUnitCount = 1
+        formatter.calendar = Calendar.current
+        return formatter.string(from: seconds) ?? ""
+    }
+}
+
+enum GLPMassFormatter {
+    static func milligrams(_ value: Double) -> String {
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
+        formatter.unitStyle = .short
+        formatter.numberFormatter.minimumFractionDigits = 0
+        formatter.numberFormatter.maximumFractionDigits = 2
+        return formatter.string(from: Measurement(value: value, unit: UnitMass.milligrams))
+    }
+}
+
+enum GLPHealthCopy {
+    static func localizedMessage(_ message: String?) -> String? {
+        guard let message else { return nil }
+        switch message {
+        case "Open the app to capture Health context.": return String(localized: "Open the app to capture Health context.")
+        case "Health context is turned off. You can enable it in Settings.": return String(localized: "Health context is turned off. You can enable it in Settings.")
+        case "Health data is not available on this device.": return String(localized: "Health data is not available on this device.")
+        case "No Health context was available for this dose.": return String(localized: "No Health context was available for this dose.")
+        default:
+            return message
         }
     }
 }

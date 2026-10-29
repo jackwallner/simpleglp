@@ -9,14 +9,12 @@ struct InsightsView: View {
     @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
     @State private var showPaywall = false
 
-    private var noun: String { isPillPlan ? "pill" : "shot" }
-
     var body: some View {
         ScrollView {
             VStack(spacing: 20) {
                 if events.count < ProactiveAlertsEngine.minimumSampleSize {
                     Card {
-                        Text("Keep logging your \(noun)s. Insights appear once you've logged \(ProactiveAlertsEngine.minimumSampleSize). You have \(events.count) so far.")
+                        Text("Keep logging to see Insights. Insights unlock after \(ProactiveAlertsEngine.minimumSampleSize) doses. You have \(events.count) logged.")
                             .font(.subheadline)
                             .foregroundStyle(.secondary)
                     }
@@ -41,7 +39,9 @@ struct InsightsView: View {
                                     Text("Proactive Alerts")
                                         .font(.headline)
                                         .foregroundStyle(AppTheme.text)
-                                    Text(isPillPlan ? "Missed-dose nudges." : "Pattern detection and dose-day nudges.")
+                                    Text(isPillPlan
+                                         ? String(localized: "Missed-dose nudges.")
+                                         : String(localized: "Pattern detection and dose-day nudges."))
                                         .font(.caption)
                                         .foregroundStyle(AppTheme.muted)
                                 }
@@ -106,7 +106,9 @@ struct InsightsView: View {
                 Text("\(Int(percentage * 100))% on schedule")
                     .font(.title2.weight(.bold))
                     .foregroundStyle(AppTheme.brand)
-                Text("\(onTime) of \(total) \(noun)s logged within the expected window.")
+                Text(isPillPlan
+                     ? String(localized: "\(onTime) of \(total) pills logged within the expected window.")
+                     : String(localized: "\(onTime) of \(total) shots logged within the expected window."))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
@@ -123,15 +125,15 @@ struct InsightsView: View {
         let best = DailyAdherence.longestStreak(doseDates: dates)
         return Card {
             VStack(alignment: .leading, spacing: 8) {
-                Text(recent.planned >= 30 ? "Last 30 days" : "Since you started")
+                Text(recent.planned >= 30 ? String(localized: "Last 30 days") : String(localized: "Since you started"))
                     .font(.headline)
                 Text("\(recent.taken) of \(recent.planned) days logged")
                     .font(.title2.weight(.bold))
                     .foregroundStyle(AppTheme.brand)
                     .monospacedDigit()
                 HStack(spacing: 24) {
-                    stat("Current streak", days: current)
-                    stat("Best streak", days: best)
+                    stat(String(localized: "Current streak"), days: current)
+                    stat(String(localized: "Best streak"), days: best)
                 }
                 .padding(.top, 4)
             }
@@ -144,7 +146,7 @@ struct InsightsView: View {
             Text(title)
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            Text(days == 1 ? "1 day" : "\(days) days")
+            Text("\(days) days")
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
         }
@@ -235,40 +237,40 @@ struct InsightsView: View {
             if isPillPlan {
                 ProLockedPreviewCard(
                     icon: "lock.iphone",
-                    title: "Lock Screen countdown",
-                    headline: "18:42 left in your wait",
-                    detail: "On your Lock Screen and in the Dynamic Island, no app to open."
+                    title: String(localized: "Lock Screen countdown"),
+                    headline: String(localized: "18:42 left in your wait"),
+                    detail: String(localized: "On your Lock Screen and in the Dynamic Island, no app to open.")
                 )
                 ProLockedPreviewCard(
                     icon: "shippingbox.fill",
-                    title: "Refill reminders",
-                    headline: "7 pills left",
-                    detail: "A heads-up a week before you run out, based on what you log."
+                    title: String(localized: "Refill reminders"),
+                    headline: String(localized: "7 pills left"),
+                    detail: String(localized: "A heads-up a week before you run out, based on what you log.")
                 )
                 ProLockedPreviewCard(
                     icon: "bell.badge.fill",
-                    title: "Missed-dose nudges",
-                    headline: "Pill not logged yet today",
-                    detail: "A second reminder a few hours after your usual time. Quiet hours respected."
+                    title: String(localized: "Missed-dose nudges"),
+                    headline: String(localized: "Pill not logged yet today"),
+                    detail: String(localized: "A second reminder a few hours after your usual time. Quiet hours respected.")
                 )
             } else {
                 ProLockedPreviewCard(
                     icon: "bell.badge.fill",
-                    title: "Proactive Alerts",
-                    headline: "Dose day in 2 days",
-                    detail: "Quiet hours respected. Your usual Tuesday window is 8:00-10:00 AM."
+                    title: String(localized: "Proactive Alerts"),
+                    headline: String(localized: "Dose day in 2 days"),
+                    detail: String(localized: "Quiet hours respected. Your usual Tuesday window is 8:00-10:00 AM.")
                 )
                 ProLockedPreviewCard(
                     icon: "waveform.path.ecg",
-                    title: "Pattern detection",
-                    headline: "Drift detected: +6 hrs over 3 weeks",
-                    detail: "Shots are creeping later in the day. A reset nudge can pull your window back in line."
+                    title: String(localized: "Pattern detection"),
+                    headline: String(localized: "Drift detected: +6 hrs over 3 weeks"),
+                    detail: String(localized: "Your logged shot times are trending later. Review your reminder schedule.")
                 )
                 ProLockedPreviewCard(
                     icon: "shippingbox.fill",
-                    title: "Refill reminders",
-                    headline: "1 dose left in your pen",
-                    detail: "A heads-up a week before you run out, based on what you log."
+                    title: String(localized: "Refill reminders"),
+                    headline: String(localized: "1 dose left in your pen"),
+                    detail: String(localized: "A heads-up a week before you run out, based on what you log.")
                 )
             }
         }
@@ -304,7 +306,9 @@ struct InsightsView: View {
                     Text("Unlock with Pro")
                         .font(.headline.weight(.bold))
                         .foregroundStyle(AppTheme.text)
-                    Text(isPillPlan ? "Lock Screen countdown and refill reminders, on autopilot." : "Dose-day nudges and refill reminders, on autopilot.")
+                    Text(isPillPlan
+                         ? String(localized: "Lock Screen countdown and refill reminders, on autopilot.")
+                         : String(localized: "Dose-day nudges and refill reminders, on autopilot."))
                         .font(.caption)
                         .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)

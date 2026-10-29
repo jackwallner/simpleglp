@@ -45,7 +45,9 @@ struct SimpleGLPApp: App {
     var body: some Scene {
         WindowGroup {
             #if DEBUG
-            if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotAlerts") {
+            if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotWidget") {
+                SimpleGLPWidgetScreenshotHarness()
+            } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotAlerts") {
                 NavigationStack {
                     ProAlertsConfigView()
                 }
@@ -214,7 +216,7 @@ private enum SimpleGLPScreenshotData {
             guard let timestamp = calendar.date(byAdding: .day, value: -(index * 7 + 1), to: now) else { continue }
             let event = ShotEvent(
                 timestamp: timestamp,
-                medicationName: plan.displayMedicationName,
+                medicationName: plan.storedMedicationName,
                 doseMg: plan.doseMg,
                 scheduledDate: timestamp,
                 scheduleStatus: .onSchedule,
@@ -265,7 +267,7 @@ private enum SimpleGLPScreenshotData {
             let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: logged)
             let event = ShotEvent(
                 timestamp: timestamp,
-                medicationName: plan.displayMedicationName,
+                medicationName: plan.storedMedicationName,
                 doseMg: match.doseMg,
                 scheduledDate: match.scheduledDate,
                 scheduleStatus: match.status,

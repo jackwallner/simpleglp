@@ -51,10 +51,10 @@ struct SupplyView: View {
     /// shows that and the stepper holds the next refill.
     private var stepperLabel: String {
         switch (form, isTracking) {
-        case (.pill, false): "Pills on hand"
-        case (.pill, true): "Pills after refill"
-        case (_, false): "Doses on hand"
-        case (_, true): "Doses after refill"
+        case (.pill, false): String(localized: "Pills on hand")
+        case (.pill, true): String(localized: "Pills after refill")
+        case (_, false): String(localized: "Doses on hand")
+        case (_, true): String(localized: "Doses after refill")
         }
     }
 
@@ -80,11 +80,15 @@ struct SupplyView: View {
                             .foregroundStyle(.secondary)
                     }
                 }
-                Button(plan?.supplyUpdatedAt == nil ? "Start tracking" : "I refilled: set to \(count)") { save() }
+                Button(plan?.supplyUpdatedAt == nil
+                       ? String(localized: "Start tracking")
+                       : String(localized: "I refilled: set to \(count)")) { save() }
             } header: {
                 Text("Refill")
             } footer: {
-                Text("Every \(form.noun) you log counts down from this number. You’ll get a heads-up about \(SupplyMath.reminderLeadDays) days before you run out.")
+                Text(form == .pill
+                     ? "Every pill you log counts down from this number. You’ll get a heads-up about \(SupplyMath.reminderLeadDays) days before you run out."
+                     : "Every dose you log counts down from this number. You’ll get a heads-up about \(SupplyMath.reminderLeadDays) days before you run out.")
             }
             if plan?.supplyUpdatedAt != nil {
                 Section {
@@ -101,22 +105,23 @@ struct SupplyView: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(saveError ?? "Try again.")
+            Text(saveError ?? String(localized: "Try again."))
         }
     }
 
     /// "Lasts until about Mon, Oct 5", plus a nudge once it's inside the refill window.
     static func coverage(days: Int, low: Bool, now: Date = .now) -> String {
         guard days > 0, let last = Calendar.current.date(byAdding: .day, value: days, to: now) else {
-            return "Time to line up a refill."
+            return String(localized: "Time to line up a refill.")
         }
-        let through = "Lasts until about \(last.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))"
-        return low ? "\(through). Time to line up a refill." : through
+        let through = String(localized: "Lasts until about \(last.formatted(.dateTime.weekday(.abbreviated).month(.abbreviated).day()))")
+        return low ? String(localized: "\(through). Time to line up a refill.") : through
     }
 
     static func countLabel(_ remaining: Int, form: DoseForm) -> String {
-        let noun = form == .pill ? (remaining == 1 ? "pill" : "pills") : (remaining == 1 ? "dose" : "doses")
-        return "\(remaining) \(noun) left"
+        form == .pill
+            ? String(localized: "\(remaining) pills left")
+            : String(localized: "\(remaining) doses left")
     }
 
     private func load() {
@@ -149,7 +154,7 @@ struct SupplyView: View {
             try modelContext.save()
         } catch {
             modelContext.rollback()
-            saveError = "Your supply could not be saved. Please try again."
+            saveError = String(localized: "Your supply could not be saved. Please try again.")
             return
         }
         Task { await DoseRoutineService.rescheduleReminders(in: modelContext) }

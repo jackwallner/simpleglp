@@ -1,18 +1,6 @@
 import SwiftUI
 import WidgetKit
 
-struct SimpleGLPWidgetEntry: TimelineEntry {
-    let date: Date
-    let lastShotDate: Date?
-    let recentShots: [RecentShot]
-    let showConfirmation: Bool
-    var glance = GLPGlance()
-
-    var waitEndsAt: Date? { glance.waitEndsAt(now: date) }
-    /// A daily pill already logged today: the button would only create a duplicate.
-    var pillDoneToday: Bool { glance.isPill && glance.takenToday(now: date) }
-}
-
 struct SimpleGLPWidgetProvider: TimelineProvider {
     func placeholder(in context: Context) -> SimpleGLPWidgetEntry {
         SimpleGLPWidgetEntry(date: .now, lastShotDate: nil, recentShots: [], showConfirmation: false)
@@ -133,7 +121,7 @@ struct SimpleGLPWidgetEntryView: View {
                 Image(systemName: entry.showConfirmation ? "checkmark.circle.fill" : entry.glance.symbolName)
                     .font(.system(size: 30, weight: .bold))
                     .foregroundStyle(.white)
-                Text(entry.showConfirmation ? "Logged" : entry.glance.logButtonTitle)
+                Text(entry.showConfirmation ? String(localized: "Logged") : entry.glance.logButtonTitle)
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.center)
@@ -167,7 +155,7 @@ struct SimpleGLPWidgetEntryView: View {
                 VStack(spacing: 6) {
                     Image(systemName: entry.showConfirmation ? "checkmark.circle.fill" : entry.glance.symbolName)
                         .font(.system(size: 28, weight: .bold))
-                    Text(entry.showConfirmation ? "Logged" : entry.glance.logButtonTitle)
+                    Text(entry.showConfirmation ? String(localized: "Logged") : entry.glance.logButtonTitle)
                         .font(.subheadline.weight(.semibold))
                         .multilineTextAlignment(.center)
                 }
@@ -189,7 +177,7 @@ struct SimpleGLPWidgetEntryView: View {
                 .frame(maxWidth: .infinity)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(entry.glance.isPill ? "Recent pills" : "Last few shots")
+                Text(entry.glance.isPill ? String(localized: "Recent pills") : String(localized: "Last few shots"))
                     .font(.caption2.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
                 if entry.recentShots.isEmpty {

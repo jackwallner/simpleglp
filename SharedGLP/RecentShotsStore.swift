@@ -7,6 +7,10 @@ struct RecentShot: Codable, Identifiable, Equatable, Sendable {
     var medicationName: String?
     var doseMg: Double?
 
+    var localizedMedicationName: String? {
+        medicationName.map { GLPGlance.localizedMedicationName(forStoredValue: $0) }
+    }
+
     init(
         id: UUID = UUID(),
         timestamp: Date,

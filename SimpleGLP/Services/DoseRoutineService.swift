@@ -16,7 +16,7 @@ enum DoseRoutineService {
         guard let plan, plan.effectiveWaitMinutes > 0 else { return }
         let endsAt = timestamp.addingTimeInterval(TimeInterval(plan.effectiveWaitMinutes * 60))
         guard endsAt > .now else { return }
-        let name = plan.displayMedicationName
+        let name = plan.storedMedicationName
         let minutes = plan.effectiveWaitMinutes
         Task { await ReminderService.scheduleWaitEnd(medicationName: name, waitMinutes: minutes, endsAt: endsAt, takenAt: timestamp) }
         if StoreService.shared.isProUnlocked {
@@ -124,7 +124,7 @@ enum DoseRoutineService {
         let now = Date()
         let glance = GLPGlance(
             isPill: plan?.form == .pill,
-            medicationName: plan?.displayMedicationName ?? "GLP-1",
+            medicationName: plan?.storedMedicationName ?? "GLP-1",
             waitMinutes: plan?.effectiveWaitMinutes ?? 0,
             lastDoseAt: events.first { $0.timestamp <= now }?.timestamp ?? events.first?.timestamp,
             nextDoseAt: plan.flatMap { ScheduleEngine.nextDue(plan: $0, events: events, now: now) }

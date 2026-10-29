@@ -39,8 +39,6 @@ struct SimplePaywallView: View {
         ProFeatures.bullets(isPill: isPillPlan).map { ($0.icon, $0.line) }
             + [("lock.shield.fill", "On-device private: no accounts, everything stays local")]
     }
-    private var noun: String { isPillPlan ? "pill" : "shot" }
-
     var body: some View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
@@ -110,27 +108,31 @@ struct SimplePaywallView: View {
                 Text("\(pct)% on schedule")
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
-                Text("Across \(shots) \(noun)s. Pro keeps your timing locked in.")
+                Text(isPillPlan
+                     ? "Across \(shots) logged pills. Pro adds a Lock Screen countdown."
+                     : "Across \(shots) logged shots. Pro adds dose-day reminders.")
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .minimumScaleFactor(0.9)
             } else if shots >= 1 {
-                Text(shots == 1 ? "Your first \(noun) is logged" : "\(shots) \(noun)s logged")
+                Text(shots == 1
+                     ? String(localized: isPillPlan ? "Your first pill is logged" : "Your first shot is logged")
+                     : String(localized: isPillPlan ? "\(shots) pills logged" : "\(shots) shots logged"))
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
-                Text("You're building a rhythm. Pro keeps the next dose on time.")
+                Text("You're building a rhythm. Pro adds dose-day and refill reminders.")
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
                     .lineLimit(2)
                     .minimumScaleFactor(0.9)
             } else {
-                Text("Make every dose count")
+                Text("Keep every dose in view.")
                     .font(.system(size: 24, weight: .bold, design: .rounded))
                     .foregroundStyle(AppTheme.text)
-                Text("Your medication is a serious investment. Pro keeps it on schedule.")
+                Text("Pro adds supply tracking and refill reminders.")
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
@@ -201,22 +203,22 @@ struct SimplePaywallView: View {
             timelineRow(
                 icon: "lock.open.fill",
                 tint: AppTheme.brand,
-                title: "Today",
-                detail: "Unlock everything. No payment due now.",
+                title: String(localized: "Today"),
+                detail: String(localized: "Unlock everything. No payment due now."),
                 showsConnector: true
             )
             timelineRow(
                 icon: "bell.badge.fill",
                 tint: AppTheme.warm,
-                title: "Day \(reminderDay)",
-                detail: "Apple reminds you before your trial ends.",
+                title: String(localized: "Day \(reminderDay)"),
+                detail: String(localized: "Apple reminds you before your trial ends."),
                 showsConnector: true
             )
             timelineRow(
                 icon: "star.circle.fill",
                 tint: AppTheme.calm,
-                title: "Day \(days)",
-                detail: "Trial ends. Keep Pro, or cancel. Your call.",
+                title: String(localized: "Day \(days)"),
+                detail: String(localized: "Trial ends. Keep Pro, or cancel. Your call."),
                 showsConnector: false
             )
         }
@@ -281,7 +283,7 @@ struct SimplePaywallView: View {
                     }
             }
             if !store.isLoadingProducts {
-                Text(store.lastError ?? "Hang tight, plans are loading.")
+            Text(store.lastError ?? String(localized: "Hang tight, plans are loading."))
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
@@ -394,7 +396,7 @@ struct SimplePaywallView: View {
     private var footerLinks: some View {
         VStack(spacing: 6) {
             Button(action: startRestore) {
-                Text(isRestoring ? "Restoring…" : "Restore Purchases")
+                            Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
             }
@@ -429,22 +431,22 @@ struct SimplePaywallView: View {
     }
 
     private var primaryButtonTitle: String {
-        if store.isPurchasePending { return "Refresh status" }
+        if store.isPurchasePending { return String(localized: "Refresh status") }
         if store.products.isEmpty {
-            return store.isLoadingProducts ? "Loading…" : "Try Again"
+            return store.isLoadingProducts ? String(localized: "Loading…") : String(localized: "Try Again")
         }
-        guard let package = selectedPackage else { return "Continue" }
-        if store.isIntroEligibilityUnknown(package) { return store.isLoadingProducts ? "Checking offer…" : "Try Again" }
-        if package.glpProPackageKind == .lifetime { return "Unlock Lifetime Access" }
+        guard let package = selectedPackage else { return String(localized: "Continue") }
+        if store.isIntroEligibilityUnknown(package) { return store.isLoadingProducts ? String(localized: "Checking offer…") : String(localized: "Try Again") }
+        if package.glpProPackageKind == .lifetime { return String(localized: "Unlock Lifetime Access") }
         if store.isEligibleForIntroOffer(package) {
             // Naming the trial length in the CTA outperforms a generic "Start My Free
             // Trial" — it answers "what am I agreeing to?" inside the button itself.
             if let days = trialDays {
-                return "Start My \(days)-Day Free Trial"
+                return String(localized: "Start my \(days)-day free trial")
             }
-            return "Start My Free Trial"
+            return String(localized: "Start my free trial")
         }
-        return "Subscribe & Continue"
+        return String(localized: "Subscribe & Continue")
     }
 
     private func primaryButtonAction() {
@@ -467,13 +469,13 @@ struct SimplePaywallView: View {
         guard let package = selectedPackage, !store.isIntroEligibilityUnknown(package) else { return nil }
         let price = package.glpProPriceLabel
         if package.glpProPackageKind == .lifetime {
-            return "\(price). One-time purchase. Lifetime access."
+            return String(localized: "\(price). One-time purchase. Lifetime access.")
         }
-        let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings → Subscriptions."
+        let renew = String(localized: "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings > Subscriptions.")
         if store.isEligibleForIntroOffer(package), let trial = package.glpProIntroOfferLabel {
-            return "\(trial.capitalized), then \(price). \(renew)"
+            return String(localized: "\(trial), then \(price). \(renew)")
         }
-        return "\(price). \(renew)"
+        return String(localized: "\(price). \(renew)")
     }
 
     /// Compact trial transparency (replaces the tall timeline on the single-screen layout).
@@ -482,7 +484,7 @@ struct SimplePaywallView: View {
               store.isEligibleForIntroOffer(package),
               let days = trialDays else { return nil }
         let reminderDay = max(1, days - 2)
-        return "No payment today · Reminder day \(reminderDay) · Billing day \(days)"
+        return String(localized: "No payment today · Reminder day \(reminderDay) · Billing day \(days)")
     }
 
     private var monthlyReferencePrice: Decimal? {
@@ -499,7 +501,7 @@ struct SimplePaywallView: View {
         let perMonth = NSDecimalNumber(decimal: package.storeProduct.price / months)
         guard let formatted = currencyFormatter(for: package).string(from: perMonth) else { return nil }
         // "/ mo" keeps the trial + per-month subtitle on one line on Pro widths.
-        return "\(formatted) / mo"
+        return String(localized: "\(formatted) / month")
     }
 
     private func savingsLabel(for package: Package, monthlyReference: Decimal?) -> String? {
@@ -514,7 +516,7 @@ struct SimplePaywallView: View {
         let saved = (yearlyEquivalent - package.storeProduct.price) / yearlyEquivalent
         let percent = NSDecimalNumber(decimal: saved * 100).intValue
         guard percent > 0 else { return nil }
-        return "SAVE \(percent)%"
+        return String(localized: "SAVE \(percent)%")
     }
 
     /// Strikethrough "what 12 months of monthly costs" anchor next to the yearly
@@ -574,10 +576,10 @@ struct SimplePaywallView: View {
                 case .pending:
                     break
                 case .cancelled:
-                    errorMessage = "Purchase cancelled. Tap again to continue."
+                    errorMessage = String(localized: "Purchase cancelled. Tap again to continue.")
                 }
             } catch {
-                errorMessage = "Couldn't complete the purchase. Please try again."
+                errorMessage = String(localized: "Couldn't complete the purchase. Please try again.")
             }
         }
     }
@@ -590,7 +592,7 @@ struct SimplePaywallView: View {
             defer { isRestoring = false }
             await store.restorePurchases()
             if !store.isProUnlocked {
-                restoreMessage = store.lastError ?? "No previous Simple GLP Pro purchase was found on this Apple ID."
+                restoreMessage = store.lastError ?? String(localized: "No previous Simple GLP Pro purchase was found on this Apple ID.")
             }
         }
     }
@@ -645,13 +647,13 @@ private struct GLPProPlanCard: View {
                         // Reinforce the trial on the card itself, with the per-month
                         // anchor beside it — not just in the CTA.
                         if let perMonthLabel {
-                            Text("\(trial.capitalized) · \(perMonthLabel)")
+                            Text("\(trial) · \(perMonthLabel)")
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(AppTheme.calm)
                                 .lineLimit(1)
                                 .minimumScaleFactor(0.8)
                         } else {
-                            Text(trial.capitalized)
+                            Text(trial)
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(AppTheme.calm)
                                 .lineLimit(1)

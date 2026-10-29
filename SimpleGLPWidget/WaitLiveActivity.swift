@@ -13,7 +13,7 @@ struct WaitLiveActivity: Widget {
             let state = context.state
             return DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    Label(context.attributes.medicationName, systemImage: "pills.fill")
+                    Label(GLPGlance.localizedMedicationName(forStoredValue: context.attributes.medicationName), systemImage: "pills.fill")
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(AppTheme.brand)
                         .lineLimit(1)
@@ -33,7 +33,9 @@ struct WaitLiveActivity: Widget {
                             EmptyView()
                         }
                         .tint(AppTheme.brand)
-                        Text(context.isStale ? "Wait's over" : "Wait before food & drink, until \(state.endsAt.formatted(date: .omitted, time: .shortened))")
+                        Text(context.isStale
+                             ? String(localized: "Wait's over")
+                             : String(localized: "Wait before food & drink, until \(state.endsAt.formatted(date: .omitted, time: .shortened))"))
                             .font(.caption)
                             .foregroundStyle(.secondary)
                     }
@@ -80,10 +82,10 @@ private struct WaitLockScreenView: View {
                         .foregroundStyle(AppTheme.brand)
                 }
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(done ? "Wait's over" : "Wait before food & drink")
+                    Text(done ? String(localized: "Wait's over") : String(localized: "Wait before food & drink"))
                         .font(.subheadline.weight(.semibold))
                         .foregroundStyle(AppTheme.text)
-                    Text("\(context.attributes.medicationName) · taken \(state.takenAt.formatted(date: .omitted, time: .shortened))")
+                    Text("\(GLPGlance.localizedMedicationName(forStoredValue: context.attributes.medicationName)) · taken \(state.takenAt.formatted(date: .omitted, time: .shortened))")
                         .font(.caption)
                         .foregroundStyle(AppTheme.muted)
                         .lineLimit(1)

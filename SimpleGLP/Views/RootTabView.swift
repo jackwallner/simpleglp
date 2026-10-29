@@ -152,6 +152,8 @@ struct RootTabView: View {
                 // impression is spent on a dropped present.
                 TrialOfferSheet(
                     offerLabel: trialOfferLabel,
+                    trialPeriodLabel: directTrialPackage?.glpProIntroOfferPeriodLabel,
+                    trialDays: directTrialPackage?.glpProIntroOfferDays,
                     priceLabel: directTrialPackage?.glpProPriceLabel,
                     directPurchase: directTrialPackage != nil,
                     isPurchasing: trialPurchaseInFlight,
@@ -183,6 +185,8 @@ struct RootTabView: View {
             case .trialOffer:
                 TrialOfferSheet(
                     offerLabel: trialOfferLabel,
+                    trialPeriodLabel: directTrialPackage?.glpProIntroOfferPeriodLabel,
+                    trialDays: directTrialPackage?.glpProIntroOfferDays,
                     priceLabel: directTrialPackage?.glpProPriceLabel,
                     directPurchase: directTrialPackage != nil,
                     isPurchasing: trialPurchaseInFlight,
@@ -533,10 +537,10 @@ struct RootTabView: View {
                 case .pending:
                     break
                 case .cancelled:
-                    trialPurchaseError = "Trial wasn't started. Tap again, or pick a different plan."
+                    trialPurchaseError = String(localized: "Trial wasn't started. Tap again, or pick a different plan.")
                 }
             } catch {
-                trialPurchaseError = "Couldn't start your trial. Please try again."
+                trialPurchaseError = String(localized: "Couldn't start your trial. Please try again.")
             }
         }
     }

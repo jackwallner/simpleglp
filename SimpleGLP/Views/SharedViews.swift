@@ -121,7 +121,7 @@ struct WaitField: View {
             HStack {
                 Text("Wait before food & drink")
                 Spacer()
-                Text(minutes == 0 ? "None" : "\(minutes) min")
+                Text(minutes == 0 ? String(localized: "None") : GLPDurationText.format(seconds: TimeInterval(minutes * 60), units: [.minute], style: .abbreviated))
                     .monospacedDigit()
                     .foregroundStyle(.secondary)
             }
@@ -137,9 +137,9 @@ struct MedicationPicker: View {
     var body: some View {
         Picker("Medication", selection: $medication) {
             ForEach(forms) { form in
-                Section(form == .pill ? "Daily pills" : "Shots") {
+                Section(form == .pill ? String(localized: "Daily pills") : String(localized: "Shots")) {
                     ForEach(GLPMedication.options(for: form)) { med in
-                        Text(med.rawValue).tag(med)
+                        Text(med.localizedName).tag(med)
                     }
                 }
             }

@@ -49,8 +49,8 @@ enum StoreServiceError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .unavailableInSimulator: "Purchases are unavailable in the iOS Simulator."
-        case .unresolvedIntroEligibility: "Couldn't confirm this offer. Please try again."
+        case .unavailableInSimulator: String(localized: "Purchases are unavailable in the iOS Simulator.")
+        case .unresolvedIntroEligibility: String(localized: "Couldn't confirm this offer. Please try again.")
         }
     }
 }
@@ -111,27 +111,24 @@ extension Package {
 
     var glpProDisplayName: String {
         switch glpProPackageKind {
-        case .lifetime: "Lifetime"
-        case .yearly: "Yearly"
-        case .monthly: "Monthly"
+        case .lifetime: String(localized: "Lifetime")
+        case .yearly: String(localized: "Yearly")
+        case .monthly: String(localized: "Monthly")
         case .other: storeProduct.localizedTitle
         }
     }
 
     var glpProPriceLabel: String {
         guard let period = storeProduct.subscriptionPeriod else { return storeProduct.localizedPriceString }
-        let unit: String
+        let duration: String
         switch period.unit {
-        case .day: unit = period.value == 1 ? "day" : "days"
-        case .week: unit = period.value == 1 ? "week" : "weeks"
-        case .month: unit = period.value == 1 ? "month" : "months"
-        case .year: unit = period.value == 1 ? "year" : "years"
-        @unknown default: unit = ""
+        case .day: duration = String(localized: "\(period.value) days")
+        case .week: duration = String(localized: "\(period.value) weeks")
+        case .month: duration = String(localized: "\(period.value) months")
+        case .year: duration = String(localized: "\(period.value) years")
+        @unknown default: return storeProduct.localizedPriceString
         }
-        if period.value == 1 {
-            return "\(storeProduct.localizedPriceString) / \(unit)"
-        }
-        return "\(storeProduct.localizedPriceString) / \(period.value) \(unit)"
+        return String(localized: "\(storeProduct.localizedPriceString) / \(duration)")
     }
 
     var glpProIntroOfferLabel: String? {
@@ -139,18 +136,37 @@ extension Package {
             return nil
         }
         let period = intro.subscriptionPeriod
-        let unit: String
         switch period.unit {
-        case .day: unit = period.value == 1 ? "day" : "days"
-        case .week: unit = period.value == 1 ? "week" : "weeks"
-        case .month: unit = period.value == 1 ? "month" : "months"
-        case .year: unit = period.value == 1 ? "year" : "years"
-        @unknown default: unit = ""
+        case .day: return String(localized: "\(period.value)-day free trial")
+        case .week: return String(localized: "\(period.value)-week free trial")
+        case .month: return String(localized: "\(period.value)-month free trial")
+        case .year: return String(localized: "\(period.value)-year free trial")
+        @unknown default: return nil
         }
-        if period.unit == .week {
-            return "\(period.value * 7)-day free trial"
+    }
+
+    var glpProIntroOfferDays: Int? {
+        guard let intro = storeProduct.introductoryDiscount, intro.paymentMode == .freeTrial else { return nil }
+        let period = intro.subscriptionPeriod
+        return switch period.unit {
+        case .day: period.value
+        case .week: period.value * 7
+        case .month: period.value * 30
+        case .year: nil
+        @unknown default: nil
         }
-        return "\(period.value)-\(unit.dropLast(period.value == 1 ? 0 : 1)) free trial"
+    }
+
+    var glpProIntroOfferPeriodLabel: String? {
+        guard let intro = storeProduct.introductoryDiscount, intro.paymentMode == .freeTrial else { return nil }
+        let period = intro.subscriptionPeriod
+        return switch period.unit {
+        case .day: String(localized: "\(period.value) days")
+        case .week: String(localized: "\(period.value) weeks")
+        case .month: String(localized: "\(period.value) months")
+        case .year: String(localized: "\(period.value) years")
+        @unknown default: nil
+        }
     }
 }
 
@@ -210,7 +226,7 @@ final class StoreService: NSObject, ObservableObject {
     @Published private(set) var isRefreshingPurchase = false
 
     var isPurchasePending: Bool { pendingPurchase != nil }
-    static let pendingPurchaseMessage = "Purchase pending. Pro isn't active yet. Refresh status or continue free while activation finishes."
+    static let pendingPurchaseMessage = String(localized: "Purchase pending. Pro isn't active yet. Refresh status or continue free while activation finishes.")
     @Published private(set) var isLoadingProducts: Bool = false
     /// True when `products` were loaded directly by ID instead of from a RevenueCat offering
     /// (offering missing/empty on the dashboard). Purchases must then go through the product, not the package.
@@ -337,9 +353,9 @@ final class StoreService: NSObject, ObservableObject {
             usingFallbackProducts = false
             products = []
             #if DEBUG
-            lastError = "No products returned for \(GLPProProduct.all.joined(separator: ", ")). Check App Store Connect / StoreKit config."
+            lastError = String(localized: "No products returned for \(GLPProProduct.all.joined(separator: ", ")). Check App Store Connect / StoreKit config.")
             #else
-            lastError = "Purchase options aren't available right now. Please try again shortly."
+            lastError = String(localized: "Purchase options aren't available right now. Please try again shortly.")
             #endif
             return
         }
@@ -401,12 +417,12 @@ final class StoreService: NSObject, ObservableObject {
     /// when eligible, price-forward otherwise so the price is never hidden
     /// (Apple 3.1.2 — nothing implies Pro is free forever).
     var onboardingTrialCTALabel: String {
-        guard let pkg = directTrialPackage else { return "Unlock Simple GLP Pro" }
-        if isIntroEligibilityUnknown(pkg) { return isLoadingProducts ? "Checking offer…" : "Try Again" }
+        guard let pkg = directTrialPackage else { return String(localized: "Unlock Simple GLP Pro") }
+        if isIntroEligibilityUnknown(pkg) { return isLoadingProducts ? String(localized: "Checking offer…") : String(localized: "Try Again") }
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
-            return "Start \(trial)"
+            return String(localized: "Start \(trial)")
         }
-        return "Unlock Simple GLP Pro for \(pkg.glpProPriceLabel)"
+        return String(localized: "Unlock Simple GLP Pro for \(pkg.glpProPriceLabel)")
     }
 
     /// Full Apple-3.1.2 auto-renew disclosure for the onboarding trial CTA. States
@@ -416,11 +432,11 @@ final class StoreService: NSObject, ObservableObject {
     /// Returns nil until a package loads so no placeholder price is ever rendered.
     var onboardingTrialDisclosureText: String? {
         guard let pkg = directTrialPackage, !isIntroEligibilityUnknown(pkg) else { return nil }
-        let renew = "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings › Apple ID › Subscriptions."
+        let renew = String(localized: "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings > Apple ID > Subscriptions.")
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
-            return "\(trial.capitalized), then \(pkg.glpProPriceLabel). \(renew)"
+            return String(localized: "\(trial), then \(pkg.glpProPriceLabel). \(renew)")
         }
-        return "\(pkg.glpProPriceLabel). \(renew)"
+        return String(localized: "\(pkg.glpProPriceLabel). \(renew)")
     }
 
     func trackPaywallImpression(id: String, oncePerSession: Bool = false) {
@@ -562,7 +578,7 @@ final class StoreService: NSObject, ObservableObject {
             lastError = nil
         } catch {
             logger.error("Customer info refresh failed: \(String(describing: error), privacy: .public)")
-            lastError = "Couldn't refresh your subscription status. Check your connection and try again."
+            lastError = String(localized: "Couldn't refresh your subscription status. Check your connection and try again.")
         }
     }
 
@@ -577,10 +593,10 @@ final class StoreService: NSObject, ObservableObject {
         do {
             let info = try await Purchases.shared.restorePurchases()
             apply(customerInfo: info)
-            lastError = isProUnlocked ? nil : "No previous Simple GLP Pro purchase was found on this Apple ID."
+            lastError = isProUnlocked ? nil : String(localized: "No previous Simple GLP Pro purchase was found on this Apple ID.")
         } catch {
             logger.error("Restore failed: \(String(describing: error), privacy: .public)")
-            lastError = "Couldn't restore purchases. Try again."
+            lastError = String(localized: "Couldn't restore purchases. Try again.")
         }
         #endif
     }

@@ -21,14 +21,16 @@ struct ProAlertsConfigView: View {
                         }
                     }
             } footer: {
-                Text(GLPAppGroup.userDefaults.bool(forKey: GLPStorageKey.isPillPlan.rawValue) ? "When enabled, you get a second nudge if today’s pill isn’t logged a few hours after its time." : "When enabled, the app analyzes your shot history and notifies you about upcoming dose days.")
+                Text(GLPAppGroup.userDefaults.bool(forKey: GLPStorageKey.isPillPlan.rawValue)
+                     ? String(localized: "When enabled, you get a second nudge if today’s pill isn’t logged a few hours after its time.")
+                     : String(localized: "When enabled, the app analyzes your shot history and notifies you about upcoming dose days."))
             }
 
             Section("Status") {
                 ProAlertStatusRow(
                     icon: isScreenshotMode ? "bell.badge.fill" : notificationIcon,
-                    title: "Notifications",
-                    value: isScreenshotMode ? "Available when enabled" : notificationLabel
+                    title: String(localized: "Notifications"),
+                    value: isScreenshotMode ? String(localized: "Available when enabled") : notificationLabel
                 )
                 if !isScreenshotMode {
                     Button {
@@ -101,10 +103,10 @@ struct ProAlertsConfigView: View {
 
     private var notificationLabel: String {
         switch notificationStatus {
-        case .authorized, .provisional, .ephemeral: return "Ready"
-        case .denied: return "Off in Settings"
-        case .notDetermined: return "Needs permission"
-        @unknown default: return "Unknown"
+        case .authorized, .provisional, .ephemeral: return String(localized: "Ready")
+        case .denied: return String(localized: "Off in Settings")
+        case .notDetermined: return String(localized: "Needs permission")
+        @unknown default: return String(localized: "Unknown")
         }
     }
 
@@ -139,27 +141,25 @@ struct ProAlertsConfigView: View {
             settings = await center.notificationSettings()
         }
         guard settings.authorizationStatus == .authorized || settings.authorizationStatus == .provisional || settings.authorizationStatus == .ephemeral else {
-            testAlertMessage = "Notifications are not enabled. Open iPhone Settings to allow them."
+            testAlertMessage = String(localized: "Notifications are not enabled. Open iPhone Settings to allow them.")
             return
         }
         let content = UNMutableNotificationContent()
-        content.title = "Test Simple GLP Alert"
-        content.body = "Notifications are working. Real alerts fire when patterns are detected."
+        content.title = String(localized: "Test Simple GLP Alert")
+        content.body = String(localized: "Notifications are working. Real alerts fire when patterns are detected.")
         content.sound = .default
         let request = UNNotificationRequest(identifier: "glp-test-\(UUID().uuidString)", content: content, trigger: nil)
         do {
             try await center.add(request)
-            testAlertMessage = "Test alert sent."
+            testAlertMessage = String(localized: "Test alert sent.")
         } catch {
-            testAlertMessage = "Could not send test alert."
+            testAlertMessage = String(localized: "Could not send test alert.")
         }
     }
 
     private func formatHour(_ hour: Int) -> String {
         let date = Calendar.current.date(from: DateComponents(hour: hour)) ?? Date()
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h a"
-        return formatter.string(from: date)
+        return date.formatted(.dateTime.hour(.defaultDigits(amPM: .abbreviated)))
     }
 }
 

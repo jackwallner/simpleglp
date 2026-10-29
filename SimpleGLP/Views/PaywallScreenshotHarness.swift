@@ -11,7 +11,9 @@ struct PaywallScreenshotHarness: View {
             if mode == .trial {
                 trialBackdrop {
                     TrialOfferSheet(
-                        offerLabel: trialPackage?.glpProIntroOfferLabel ?? "7-day free trial",
+                        offerLabel: trialPackage?.glpProIntroOfferLabel ?? String(localized: "7-day free trial"),
+                        trialPeriodLabel: trialPackage?.glpProIntroOfferPeriodLabel ?? GLPDurationText.format(seconds: TimeInterval(7 * 86_400), units: [.day]),
+                        trialDays: trialPackage?.glpProIntroOfferDays ?? 7,
                         // No hardcoded fallback amount. This harness renders the
                         // App Store screenshots, and a stale literal here would put
                         // a price we don't charge on the product page. Nil drops the

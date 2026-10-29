@@ -76,7 +76,7 @@ struct OnboardingView: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(saveError ?? "Try again.")
+            Text(saveError ?? String(localized: "Try again."))
         }
     }
 
@@ -137,8 +137,8 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "hand.tap.fill",
                 iconColor: AppTheme.brand,
-                title: "One big button.",
-                subtitle: "Weekly shot or daily pill: tap it when you take your dose. That's it."
+                title: String(localized: "One big button."),
+                subtitle: String(localized: "When you take your weekly shot or daily pill, tap once to log it.")
             )
             Text("On a pill, the same tap starts your wait-before-eating countdown. Reminders, history, and a streak are there if you want them.")
                 .font(.body)
@@ -153,12 +153,12 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "pills.fill",
                 iconColor: AppTheme.brand,
-                title: "What are you taking?",
-                subtitle: "Pick how you take it, then your medication and current dose."
+                title: String(localized: "What are you taking?"),
+                subtitle: String(localized: "Pick how you take it, then your medication and current dose.")
             )
             HStack(spacing: 12) {
-                formCard(.injection, title: "Shot", detail: "Weekly or custom")
-                formCard(.pill, title: "Pill", detail: "Once a day")
+                formCard(.injection, title: String(localized: "Shot"), detail: String(localized: "Weekly or custom"))
+                formCard(.pill, title: String(localized: "Pill"), detail: String(localized: "Once a day"))
             }
             VStack(spacing: 14) {
                 HStack {
@@ -253,7 +253,7 @@ struct OnboardingView: View {
                 Text("Current dose (mg)")
                     .font(.body)
                 Spacer()
-                TextField("0.25", value: $doseMg, format: .number)
+                TextField("", value: $doseMg, format: .number, prompt: Text(0.25, format: .number))
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                     .frame(width: 80)
@@ -271,10 +271,7 @@ struct OnboardingView: View {
     }
 
     private static func format(_ value: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        return (formatter.string(from: value as NSNumber) ?? "\(value)") + " mg"
+        GLPMassFormatter.milligrams(value)
     }
 
     @ViewBuilder
@@ -291,16 +288,16 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "sunrise.fill",
                 iconColor: AppTheme.calm,
-                title: "Your daily routine",
-                subtitle: "When you usually take it, and how long you wait before eating or drinking."
+                title: String(localized: "Your daily routine"),
+                subtitle: String(localized: "When you usually take it, and how long you wait before eating or drinking.")
             )
             VStack(alignment: .leading, spacing: 16) {
                 DatePicker("Usual time", selection: $firstDose, displayedComponents: .hourAndMinute)
                 Divider()
                 WaitField(minutes: $waitMinutes)
                 Text(waitMinutes > 0
-                     ? "Tapping “I took my pill” starts a \(waitMinutes)-minute countdown and pings you when it’s done. Match it to your prescriber’s instructions."
-                     : "No countdown. Set one if your instructions include a wait before food or drink.")
+                     ? String(localized: "Tapping “I took my pill” starts a \(waitMinutes)-minute countdown and pings you when it’s done. Match it to your prescriber’s instructions.")
+                     : String(localized: "No countdown. Set one if your instructions include a wait before food or drink."))
                     .font(.footnote)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
@@ -316,8 +313,8 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "calendar",
                 iconColor: AppTheme.calm,
-                title: "How often do you dose?",
-                subtitle: "Set your first dose and we'll keep the rhythm from there."
+                title: String(localized: "How often do you dose?"),
+                subtitle: String(localized: "Set your first dose and we'll keep the rhythm from there.")
             )
             VStack(alignment: .leading, spacing: 16) {
                 ScheduleFields(firstDose: $firstDose, intervalDays: $intervalDays)
@@ -333,13 +330,13 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "bell.fill",
                 iconColor: AppTheme.warm,
-                title: "Reminders",
+                title: String(localized: "Reminders"),
                 subtitle: form == .pill
-                    ? "A nudge each day, skipped once you've logged your pill."
-                    : "A gentle nudge so a busy week doesn't push your shot."
+                    ? String(localized: "A nudge each day, skipped once you've logged your pill.")
+                    : String(localized: "A gentle nudge so a busy week doesn't push your shot.")
             )
             VStack(alignment: .leading, spacing: 14) {
-                Toggle(form == .pill ? "Remind me daily" : "Remind me on shot day", isOn: $reminderEnabled)
+                Toggle(form == .pill ? String(localized: "Remind me daily") : String(localized: "Remind me on shot day"), isOn: $reminderEnabled)
                     .font(.body)
                 if reminderEnabled {
                     Divider()
@@ -368,8 +365,8 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "heart.text.square.fill",
                 iconColor: .pink,
-                title: "Health context",
-                subtitle: "See how your doses line up with your real data."
+                title: String(localized: "Health context"),
+                subtitle: String(localized: "See how your doses line up with your real data.")
             )
             VStack(alignment: .leading, spacing: 14) {
                 Toggle("Auto-capture Health context", isOn: $enableHealth)
@@ -399,14 +396,14 @@ struct OnboardingView: View {
             stepHeader(
                 icon: "sparkles",
                 iconColor: AppTheme.brand,
-                title: form == .pill ? "Make the daily routine effortless" : "Get more from every shot",
-                subtitle: "Simple GLP Pro takes care of the parts that are easy to forget."
+                title: form == .pill ? String(localized: "Make the daily routine effortless") : String(localized: "Keep your shot schedule in view"),
+                subtitle: String(localized: "Simple GLP Pro takes care of the parts that are easy to forget.")
             )
             VStack(alignment: .leading, spacing: 14) {
                 ForEach(ProFeatures.bullets(isPill: form == .pill), id: \.title) { bullet in
                     trialBullet(icon: bullet.icon, text: bullet.line)
                 }
-                trialBullet(icon: "lock.shield", text: "Your data stays private, on your device")
+                trialBullet(icon: "lock.shield", text: String(localized: "Your data stays private, on your device"))
             }
             .padding(18)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
@@ -446,7 +443,9 @@ struct OnboardingView: View {
                     if isPurchasing {
                         ProgressView().tint(.white)
                     } else {
-                        Text(isTrialStep ? (store.isPurchasePending ? "Refresh status" : store.onboardingTrialCTALabel) : "Continue")
+                        Text(isTrialStep
+                             ? (store.isPurchasePending ? String(localized: "Refresh status") : store.onboardingTrialCTALabel)
+                             : String(localized: "Continue"))
                     }
                 }
                 .font(.headline.weight(.bold))
@@ -511,7 +510,7 @@ struct OnboardingView: View {
 
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
-            Button(store.isPurchasePending ? "Continue free" : "Get Started") {
+            Button(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started")) {
                 ConversionDiagnostics.record(.freeVersionChosen)
                 store.syncConversionAttributes()
                 finishOnboarding()
@@ -596,11 +595,11 @@ struct OnboardingView: View {
                     break
                 case .cancelled:
                     ConversionDiagnostics.record(.purchaseCancelled)
-                    trialError = "Trial wasn't started. Tap again, or choose Get Started."
+                    trialError = String(localized: "Trial wasn't started. Tap again, or choose Get Started.")
                 }
             } catch {
                 ConversionDiagnostics.record(.purchaseFailed)
-                trialError = store.lastError ?? "Couldn't start your trial. Please try again."
+                trialError = store.lastError ?? String(localized: "Couldn't start your trial. Please try again.")
             }
         }
     }
@@ -609,11 +608,11 @@ struct OnboardingView: View {
         guard !hasCompletedOnboarding else { return }
         let trimmedCustomName = customMedicationName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard doseMg > 0 else {
-            saveError = "Enter a dose greater than 0 mg."
+            saveError = String(localized: "Enter a dose greater than 0 mg.")
             return
         }
         guard !medication.isCustom || !trimmedCustomName.isEmpty else {
-            saveError = "Enter the medication name."
+            saveError = String(localized: "Enter the medication name.")
             return
         }
 
@@ -635,7 +634,7 @@ struct OnboardingView: View {
             try modelContext.save()
         } catch {
             modelContext.delete(plan)
-            saveError = "Your medication plan could not be saved. Please try again."
+            saveError = String(localized: "Your medication plan could not be saved. Please try again.")
             return
         }
         GLPOnboardingStore.healthContextEnabled = enableHealth

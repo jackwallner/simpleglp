@@ -103,12 +103,12 @@ struct HistoryView: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(deleteError ?? "Please try again.")
+            Text(deleteError ?? String(localized: "Please try again."))
         }
     }
 
     private var confirmDeleteTitle: String {
-        pendingDeletion.count == 1 ? "Delete this entry?" : "Delete \(pendingDeletion.count) entries?"
+        String(localized: "Delete \(pendingDeletion.count) entries?")
     }
 
     /// Keyed by the first instant of each month so sections sort by date, not by month name.
@@ -175,7 +175,7 @@ struct HistoryView: View {
             // Put the rows back rather than showing a delete that will undo
             // itself on the next launch.
             modelContext.rollback()
-            deleteError = "The entry could not be deleted. Please try again."
+            deleteError = String(localized: "The entry could not be deleted. Please try again.")
         }
         pendingDeletion = []
         DoseRoutineService.historyDidChange(in: modelContext)

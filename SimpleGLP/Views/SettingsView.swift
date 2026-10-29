@@ -181,7 +181,7 @@ struct PlanEditorView: View {
                 }
             }
             Section {
-                Toggle(medication.form == .pill ? "Daily reminder" : "Enabled", isOn: $reminderEnabled)
+                Toggle(medication.form == .pill ? String(localized: "Daily reminder") : String(localized: "Enabled"), isOn: $reminderEnabled)
                 if reminderEnabled {
                     Stepper(value: $reminderLeadMinutes, in: 0...180, step: 15) {
                         HStack {
@@ -236,7 +236,7 @@ struct PlanEditorView: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(saveError ?? "Try again.")
+            Text(saveError ?? String(localized: "Try again."))
         }
     }
 
@@ -296,7 +296,7 @@ struct PlanEditorView: View {
             HStack {
                 Text("Dose (mg)")
                 Spacer()
-                TextField("0.25", value: $doseMg, format: .number)
+                TextField("", value: $doseMg, format: .number, prompt: Text(0.25, format: .number))
                     .keyboardType(.decimalPad)
                     .multilineTextAlignment(.trailing)
                     .frame(width: 80)
@@ -317,11 +317,11 @@ struct PlanEditorView: View {
         guard let plan else { return }
         let trimmedCustomName = customName.trimmingCharacters(in: .whitespacesAndNewlines)
         guard doseMg > 0 else {
-            saveError = "Enter a dose greater than 0 mg."
+            saveError = String(localized: "Enter a dose greater than 0 mg.")
             return
         }
         guard !medication.isCustom || !trimmedCustomName.isEmpty else {
-            saveError = "Enter the medication name."
+            saveError = String(localized: "Enter the medication name.")
             return
         }
         plan.medication = medication
@@ -344,7 +344,7 @@ struct PlanEditorView: View {
         do {
             try modelContext.save()
         } catch {
-            saveError = "Your medication plan could not be saved. Please try again."
+            saveError = String(localized: "Your medication plan could not be saved. Please try again.")
             return
         }
         DoseRoutineService.refresh(in: modelContext)
@@ -369,7 +369,7 @@ struct DoseScheduleView: View {
     var body: some View {
         List {
             Section {
-                Text("Schedule your titration in advance. On each step's start date, new doses you log automatically use that dose, so you don't have to remember to change it.")
+                Text("Add dose changes from your prescriber in advance. On each step's start date, new logs use that step's dose by default.")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -420,7 +420,7 @@ struct DoseScheduleView: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(deleteError ?? "Please try again.")
+            Text(deleteError ?? String(localized: "Please try again."))
         }
         .sheet(isPresented: $showAddStep) {
             if let plan {
@@ -449,16 +449,13 @@ struct DoseScheduleView: View {
             try modelContext.save()
         } catch {
             modelContext.rollback()
-            deleteError = "The dose step could not be deleted. Please try again."
+            deleteError = String(localized: "The dose step could not be deleted. Please try again.")
         }
         reload()
     }
 
     static func format(_ value: Double) -> String {
-        let formatter = NumberFormatter()
-        formatter.minimumFractionDigits = 0
-        formatter.maximumFractionDigits = 2
-        return (formatter.string(from: value as NSNumber) ?? "\(value)") + " mg"
+        GLPMassFormatter.milligrams(value)
     }
 }
 
@@ -493,7 +490,7 @@ struct AddDoseStepSheet: View {
                         HStack {
                             Text("Dose (mg)")
                             Spacer()
-                            TextField("0.25", value: $doseMg, format: .number)
+                            TextField("", value: $doseMg, format: .number, prompt: Text(0.25, format: .number))
                                 .keyboardType(.decimalPad)
                                 .multilineTextAlignment(.trailing)
                                 .frame(width: 80)
@@ -535,14 +532,14 @@ struct AddDoseStepSheet: View {
             ) {
                 Button("OK", role: .cancel) {}
             } message: {
-                Text(saveError ?? "Try again.")
+            Text(saveError ?? String(localized: "Try again."))
             }
         }
     }
 
     private func save() {
         guard doseMg > 0 else {
-            saveError = "Enter a dose greater than 0 mg."
+            saveError = String(localized: "Enter a dose greater than 0 mg.")
             return
         }
         let step = DoseStep(startDate: startDate, doseMg: doseMg)
@@ -554,7 +551,7 @@ struct AddDoseStepSheet: View {
         } catch {
             modelContext.delete(step)
             plan.doseSteps.removeAll { $0.id == step.id }
-            saveError = "The dose step could not be saved. Please try again."
+            saveError = String(localized: "The dose step could not be saved. Please try again.")
             return
         }
         onSave()
@@ -606,7 +603,7 @@ struct ExportView: View {
             ReviewPromptTracker.recordPositiveMoment()
             NotificationCenter.default.post(name: .glpPositiveMomentForReview, object: nil)
         } catch {
-            errorMessage = "Could not generate export: \(error.localizedDescription)"
+            errorMessage = String(localized: "Could not generate export: \(error.localizedDescription)")
         }
     }
 }
@@ -656,14 +653,14 @@ struct ImportView: View {
             do {
                 let count = try ImportService.importEvents(from: url, into: modelContext)
                 isError = false
-                statusMessage = count == 1 ? "Imported 1 dose." : "Imported \(count) doses."
+                statusMessage = String(localized: "Imported \(count) doses.")
             } catch {
                 isError = true
-                statusMessage = "Could not import: \(error.localizedDescription)"
+                statusMessage = String(localized: "Could not import: \(error.localizedDescription)")
             }
         case .failure(let error):
             isError = true
-            statusMessage = "Could not open file: \(error.localizedDescription)"
+            statusMessage = String(localized: "Could not open file: \(error.localizedDescription)")
         }
     }
 }

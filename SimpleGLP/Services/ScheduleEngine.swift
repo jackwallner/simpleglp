@@ -7,10 +7,10 @@ enum GLPScheduleFormat {
     /// Reads naturally after "Repeat every".
     static func intervalLabel(_ days: Int) -> String {
         let n = max(1, days)
-        if n == 1 { return "day" }
-        if n == 7 { return "week" }
-        if n % 7 == 0 { return "\(n / 7) weeks" }
-        return "\(n) days"
+        if n == 1 { return String(localized: "day") }
+        if n == 7 { return String(localized: "week") }
+        if n % 7 == 0 { return String(localized: "\(n / 7) weeks") }
+        return String(localized: "\(n) days")
     }
 
     /// One-line plain-language schedule, e.g. "Weekly on Thursdays · 9:00 AM" or
@@ -20,11 +20,11 @@ enum GLPScheduleFormat {
         let time = firstDose.formatted(.dateTime.hour().minute())
         let cadence: String
         if n == 7 {
-            cadence = "Weekly on \(firstDose.formatted(.dateTime.weekday(.wide)))s"
+            cadence = String(localized: "Weekly on \(firstDose.formatted(.dateTime.weekday(.wide)))")
         } else {
-            cadence = "Every \(intervalLabel(n))"
+            cadence = String(localized: "Every \(intervalLabel(n))")
         }
-        return "\(cadence) · \(time)"
+        return String(localized: "\(cadence) · \(time)")
     }
 }
 

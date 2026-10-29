@@ -7,6 +7,8 @@ import SwiftUI
 /// surface in the sibling headache app.
 struct TrialOfferSheet: View {
     let offerLabel: String?
+    let trialPeriodLabel: String?
+    let trialDays: Int?
     /// Recurring price after the trial, already localized and period-suffixed by
     /// `glpProPriceLabel`. Only required in `directPurchase` mode (Apple 3.1.2 needs
     /// price + terms before purchase). Never carries a hardcoded amount: nil drops
@@ -33,60 +35,38 @@ struct TrialOfferSheet: View {
         LinearGradient(colors: [AppTheme.brand, AppTheme.calm], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 
-    /// Parsed (value, singular-unit) from an intro label like `"7-day free trial"` → `(7, "day")`.
-    /// Falls back to nil when the label doesn't match the expected shape.
-    private var trialLength: (value: Int, unit: String)? {
-        guard let offerLabel else { return nil }
-        let scanner = Scanner(string: offerLabel)
-        var value: Int = 0
-        guard scanner.scanInt(&value) else { return nil }
-        _ = scanner.scanString("-")
-        guard let unit = scanner.scanCharacters(from: .letters) else { return nil }
-        return (value, unit.lowercased())
-    }
-
-    /// Clean period phrase for prose, e.g. `"7 days"`.
     private var trialPeriodPhrase: String? {
-        guard let (value, unit) = trialLength else { return nil }
-        let plural = value == 1 ? unit : "\(unit)s"
-        return "\(value) \(plural)"
+        trialPeriodLabel
     }
 
     /// Trial length in days, for the day-numbered timeline. Weeks/months expand to days.
     private var trialDayCount: Int? {
-        guard let (value, unit) = trialLength else { return nil }
-        switch unit {
-        case "day", "days": return value
-        case "week", "weeks": return value * 7
-        case "month", "months": return value * 30
-        default: return nil
-        }
+        trialDays
     }
 
     /// CTA names the trial length so the button answers "what am I agreeing to?":
     /// `"Start My 7-Day Free Trial"`. Falls back to plan comparison without a confirmed offer.
     private var startButtonTitle: String {
-        if store.isPurchasePending { return "Refresh status" }
-        guard let (value, unit) = trialLength else { return "See all plans" }
-        let singular = unit.hasSuffix("s") ? String(unit.dropLast()) : unit
-        return "Start My \(value)-\(singular.capitalized) Free Trial"
+        if store.isPurchasePending { return String(localized: "Refresh status") }
+        guard let offerLabel else { return String(localized: "See all plans") }
+        return String(localized: "Start \(offerLabel)")
     }
 
     private var headline: String {
         if let period = trialPeriodPhrase {
-            return "\(period) of Pro, free."
+            return String(localized: "\(period) of Pro, free.")
         }
-        return "Simple GLP Pro"
+        return String(localized: "Simple GLP Pro")
     }
 
     private var subheadline: String {
         let pitch = isPillPlan
-            ? "A Lock Screen countdown and refill reminders"
-            : "Dose-day nudges and refill reminders"
+            ? String(localized: "A Lock Screen countdown and refill reminders")
+            : String(localized: "Dose-day nudges and refill reminders")
         if trialPeriodPhrase != nil {
-            return "\(pitch), on autopilot. Free until your trial ends."
+            return String(localized: "\(pitch), on autopilot. Free until your trial ends.")
         }
-        return pitch + "."
+        return String(localized: "\(pitch).")
     }
 
     /// Leads with the alerts payoff. "On-device" is intentionally demoted to a
@@ -94,7 +74,7 @@ struct TrialOfferSheet: View {
     private var trialBullets: [TrialBullet] {
         let tints = [AppTheme.brand, AppTheme.warm, AppTheme.calm]
         return ProFeatures.bullets(isPill: isPillPlan).prefix(2).enumerated().map { index, bullet in
-            TrialBullet(icon: bullet.icon, tint: tints[index % tints.count], title: bullet.title, detail: bullet.detail + ".")
+            TrialBullet(icon: bullet.icon, tint: tints[index % tints.count], title: bullet.title, detail: bullet.detail, line: bullet.line)
         }
     }
 
@@ -104,11 +84,11 @@ struct TrialOfferSheet: View {
     private var billingDisclosure: String {
         if directPurchase, priceLabel != nil {
             if let period = trialPeriodPhrase {
-                return "Free for \(period). Auto-renews; cancel anytime in Settings at least 24h before it ends."
+            return String(localized: "Free for \(period). Auto-renews; cancel anytime in Settings at least 24h before it ends.")
             }
-            return "Auto-renews; cancel anytime in Settings at least 24h before it ends."
+            return String(localized: "Auto-renews; cancel anytime in Settings at least 24h before it ends.")
         }
-        return "Billed through Apple."
+        return String(localized: "Billed through Apple.")
     }
 
     private var glowAnimation: Animation {
@@ -259,7 +239,7 @@ struct TrialOfferSheet: View {
                         }
 
                         Button(action: onDismiss) {
-                            Text(store.isPurchasePending ? "Continue free" : "Not now")
+                            Text(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Not now"))
                                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                                 .foregroundStyle(AppTheme.muted)
                                 .frame(maxWidth: .infinity)
@@ -269,7 +249,7 @@ struct TrialOfferSheet: View {
                         .disabled(isPurchasing)
 
                         Button(action: startRestore) {
-                            Text(isRestoring ? "Restoring…" : "Restore Purchases")
+                            Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
                                 .font(.system(.subheadline, design: .rounded, weight: .semibold))
                                 .foregroundStyle(AppTheme.muted)
                         }
@@ -314,11 +294,11 @@ struct TrialOfferSheet: View {
             let reminderDay = max(1, days - 2)
             VStack(alignment: .leading, spacing: 0) {
                 timelineStep(icon: "lock.open.fill", tint: AppTheme.brand,
-                             title: "Today", detail: "Full access unlocks. No payment now.", connector: true)
+                             title: String(localized: "Today"), detail: String(localized: "Full access unlocks. No payment now."), connector: true)
                 timelineStep(icon: "bell.badge.fill", tint: AppTheme.warm,
-                             title: "Day \(reminderDay)", detail: "Apple reminds you before the trial ends.", connector: true)
+                             title: String(localized: "Day \(reminderDay)"), detail: String(localized: "Apple reminds you before the trial ends."), connector: true)
                 timelineStep(icon: "star.circle.fill", tint: AppTheme.calm,
-                             title: "Day \(days)", detail: "Trial ends. Keep Pro, or cancel. Your call.", connector: false)
+                             title: String(localized: "Day \(days)"), detail: String(localized: "Trial ends. Keep Pro, or cancel. Your call."), connector: false)
             }
             .padding(.horizontal, 14)
             .padding(.vertical, 12)
@@ -367,7 +347,7 @@ struct TrialOfferSheet: View {
             defer { isRestoring = false }
             await store.restorePurchases()
             if !store.isProUnlocked {
-                restoreMessage = store.lastError ?? "No previous Simple GLP Pro purchase was found on this Apple ID."
+                restoreMessage = store.lastError ?? String(localized: "No previous Simple GLP Pro purchase was found on this Apple ID.")
             }
         }
     }
@@ -399,6 +379,7 @@ private struct TrialBullet: Identifiable {
     let tint: Color
     let title: String
     let detail: String
+    let line: String
 }
 
 private struct TrialBulletRow: View {
@@ -437,6 +418,6 @@ private struct TrialBulletRow: View {
                 .stroke(bullet.tint.opacity(0.18), lineWidth: 1)
         }
         .accessibilityElement(children: .combine)
-        .accessibilityLabel("\(bullet.title). \(bullet.detail)")
+        .accessibilityLabel(bullet.line)
     }
 }

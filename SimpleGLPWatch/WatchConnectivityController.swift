@@ -45,13 +45,15 @@ final class WatchConnectivityController: NSObject, ObservableObject {
             "id": optimistic.id.uuidString
         ]
         guard session.activationState == .activated else {
-            statusMessage = "Saved on Watch. Open iPhone to sync."
+            statusMessage = String(localized: "Saved on Watch. Open iPhone to sync.")
             return
         }
         // transferUserInfo queues and delivers in the background even when the phone
         // isn't reachable right now, so a shot logged offline still reaches the iPhone.
         session.transferUserInfo(payload)
-        statusMessage = session.isReachable ? "Sent to iPhone." : "Saved — will sync to iPhone."
+        statusMessage = session.isReachable
+            ? String(localized: "Sent to iPhone.")
+            : String(localized: "Saved. It will sync to iPhone.")
     }
 
     private func triggerConfirmation() {

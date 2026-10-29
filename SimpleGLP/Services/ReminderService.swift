@@ -25,8 +25,10 @@ enum ReminderService {
     }
 
     static func registerCategories() {
-        let tookIt = UNNotificationAction(identifier: tookItAction, title: "Took it", options: [], icon: UNNotificationActionIcon(systemImageName: "checkmark.circle"))
-        let snooze = UNNotificationAction(identifier: snoozeAction, title: "Remind me in \(snoozeMinutes) min", options: [], icon: UNNotificationActionIcon(systemImageName: "clock"))
+        let tookIt = UNNotificationAction(identifier: tookItAction, title: String(localized: "Took it"), options: [], icon: UNNotificationActionIcon(systemImageName: "checkmark.circle"))
+        let snoozeDuration = GLPDurationText.format(seconds: TimeInterval(snoozeMinutes * 60), units: [.minute], style: .abbreviated)
+        let snoozeTitle = String(localized: "Remind me in \(snoozeDuration)")
+        let snooze = UNNotificationAction(identifier: snoozeAction, title: snoozeTitle, options: [], icon: UNNotificationActionIcon(systemImageName: "clock"))
         let category = UNNotificationCategory(identifier: doseCategory, actions: [tookIt, snooze], intentIdentifiers: [])
         UNUserNotificationCenter.current().setNotificationCategories([category])
     }
@@ -74,11 +76,11 @@ enum ReminderService {
             let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
             let content = UNMutableNotificationContent()
             if plan.form == .pill {
-                content.title = "Pill time"
-                content.body = "Time for your \(plan.displayMedicationName). One tap when it’s done."
+                content.title = String(localized: "Pill time")
+                content.body = String(localized: "Your dose is planned for today. Log it after you take it.")
             } else {
-                content.title = "Shot day"
-                content.body = "Your \(plan.displayMedicationName) dose is planned for today. One tap when it’s done."
+                content.title = String(localized: "Shot day")
+                content.body = String(localized: "Your dose is planned for today. Log it after you take it.")
             }
             content.sound = .default
             content.threadIdentifier = "shot-reminders"
@@ -113,8 +115,8 @@ enum ReminderService {
         let granted = await ensureAuthorization(mayPrompt: mayPrompt)
         guard granted else { return }
         let content = UNMutableNotificationContent()
-        content.title = "Your \(waitMinutes)-minute wait is over"
-        content.body = "\(medicationName) taken at \(takenAt.formatted(date: .omitted, time: .shortened))."
+        content.title = String(localized: "Your \(waitMinutes)-minute wait is over")
+        content.body = String(localized: "\(GLPGlance.localizedMedicationName(forStoredValue: medicationName)) taken at \(takenAt.formatted(date: .omitted, time: .shortened)).")
         content.sound = .default
         content.threadIdentifier = "wait-timer"
         let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, endsAt.timeIntervalSinceNow), repeats: false)
@@ -137,8 +139,8 @@ enum ReminderService {
         let granted = await ensureAuthorization(mayPrompt: mayPrompt)
         guard granted else { return }
         let content = UNMutableNotificationContent()
-        content.title = "Refill soon"
-        content.body = "About \(SupplyMath.reminderLeadDays) days of \(plan.displayMedicationName) left, based on what you’ve logged."
+        content.title = String(localized: "Refill soon")
+        content.body = String(localized: "About \(SupplyMath.reminderLeadDays) days of \(plan.displayMedicationName) left, based on what you’ve logged.")
         content.sound = .default
         content.threadIdentifier = "refill"
         let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)

@@ -98,7 +98,14 @@ struct MonthAdherenceView: View {
         }
         .buttonStyle(.plain)
         .disabled(isFuture)
-        .accessibilityLabel("\(day.formatted(.dateTime.weekday(.wide).month(.wide).day())), \(taken ? "taken" : (isPlanned ? "not logged" : "before your plan"))")
+        .accessibilityLabel(accessibilityLabel(for: day, taken: taken, isPlanned: isPlanned))
+    }
+
+    private func accessibilityLabel(for day: Date, taken: Bool, isPlanned: Bool) -> String {
+        let date = day.formatted(.dateTime.weekday(.wide).month(.wide).day())
+        if taken { return String(localized: "\(date), taken") }
+        if isPlanned { return String(localized: "\(date), not logged") }
+        return String(localized: "\(date), before your plan")
     }
 
     /// The month's days padded with leading blanks so the first lands under its weekday.

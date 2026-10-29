@@ -106,7 +106,7 @@ struct PillRoutineView: View {
                     Text("Streak")
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(AppTheme.muted)
-                    Text(streak == 1 ? "1 day" : "\(streak) days")
+                    Text("\(streak) days")
                         .font(.headline)
                         .monospacedDigit()
                         .foregroundStyle(streak > 0 ? AppTheme.brand : AppTheme.muted)
@@ -206,11 +206,7 @@ struct PillRoutineView: View {
                         UIApplication.shared.open(url)
                     }
                 } label: {
-                    Text("Notifications are off, so there’s no ping when it’s over. ")
-                        .foregroundStyle(AppTheme.muted)
-                    + Text("Turn on")
-                        .foregroundStyle(AppTheme.brand)
-                        .fontWeight(.semibold)
+                    Text(notificationPermissionCopy)
                 }
                 .font(.footnote)
                 .multilineTextAlignment(.center)
@@ -222,6 +218,16 @@ struct PillRoutineView: View {
             }
         }
         .padding(.vertical, 8)
+    }
+
+    private var notificationPermissionCopy: AttributedString {
+        var copy = AttributedString(localized: "Notifications are off, so there’s no ping when it’s over. Turn on notifications.")
+        copy.foregroundColor = AppTheme.muted
+        if let range = copy.range(of: String(localized: "Turn on notifications")) {
+            copy[range].foregroundColor = AppTheme.brand
+            copy[range].font = .footnote.weight(.semibold)
+        }
+        return copy
     }
 
     private var doneCircle: some View {
@@ -294,8 +300,10 @@ struct WeekStrip: View {
                 .buttonStyle(.plain)
                 .disabled(onSelect == nil)
                 .accessibilityElement(children: .ignore)
-                .accessibilityLabel("\(day.date.formatted(.dateTime.weekday(.wide))), \(day.taken ? "taken" : "not logged")")
-                .accessibilityHint(day.taken ? "Opens this dose" : "Logs a dose for this day")
+                .accessibilityLabel(day.taken
+                                    ? String(localized: "\(day.date.formatted(.dateTime.weekday(.wide))), taken")
+                                    : String(localized: "\(day.date.formatted(.dateTime.weekday(.wide))), not logged"))
+                .accessibilityHint(day.taken ? String(localized: "Opens this dose") : String(localized: "Logs a dose for this day"))
             }
         }
     }

@@ -65,7 +65,7 @@ struct LogEarlierSheet: View {
                 Button {
                     when = date
                 } label: {
-                    Text(minutes < 60 ? "\(minutes)m ago" : "1h ago")
+                    Text(quickPickLabel(minutes))
                         .font(.subheadline.weight(.semibold))
                         .monospacedDigit()
                         .frame(maxWidth: .infinity)
@@ -74,29 +74,43 @@ struct LogEarlierSheet: View {
                         .background(selected ? AppTheme.brand : AppTheme.brandSoft, in: Capsule())
                 }
                 .buttonStyle(.plain)
-                .accessibilityLabel("\(minutes) minutes ago")
+                .accessibilityLabel(String(localized: "\(quickPickDuration(minutes)) ago"))
             }
         }
         .listRowSeparator(.hidden)
+    }
+
+    private func quickPickLabel(_ minutes: Int) -> String {
+        String(localized: "\(quickPickDuration(minutes)) ago")
+    }
+
+    private func quickPickDuration(_ minutes: Int) -> String {
+        var formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .abbreviated
+        return formatter.string(from: TimeInterval(minutes * 60)) ?? String(localized: "\(minutes) min")
     }
 
     /// What logging at `when` will do, in plain terms.
     private var footnote: String {
         let calendar = Calendar.current
         if form == .pill, doseDates.contains(where: { calendar.isDate($0, inSameDayAs: when) }) {
-            return "You already logged a pill that day. This adds a second one."
+            return String(localized: "You already logged a pill that day. This adds a second one.")
         }
         guard calendar.isDate(when, inSameDayAs: openedAt) else {
-            return "Logged for \(when.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())). Nothing else changes."
+            return String(localized: "Logged for \(when.formatted(.dateTime.weekday(.wide).month(.abbreviated).day())). Nothing else changes.")
         }
         guard form == .pill, waitMinutes > 0 else {
-            return "Your \(form.noun) is logged at this time."
+            return form == .pill
+                ? String(localized: "Your pill is logged at this time.")
+                : String(localized: "Your shot is logged at this time.")
         }
         let end = when.addingTimeInterval(TimeInterval(waitMinutes * 60))
         if end > openedAt {
             let left = Int((end.timeIntervalSince(openedAt) / 60).rounded(.up))
-            return "Your wait counts from then, so it ends at \(end.formatted(date: .omitted, time: .shortened)), \(left) min from now."
+            let remainingText = GLPDurationText.format(seconds: TimeInterval(left * 60), units: [.minute], style: .abbreviated)
+            return String(localized: "Your wait counts from then, so it ends at \(end.formatted(date: .omitted, time: .shortened)), \(remainingText) from now.")
         }
-        return "Counting from then, your \(waitMinutes)-minute wait is already over."
+        return String(localized: "Counting from then, your \(waitMinutes)-minute wait is already over.")
     }
 }

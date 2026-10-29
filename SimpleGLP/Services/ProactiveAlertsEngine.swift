@@ -48,7 +48,7 @@ enum ProactiveAlertsEngine {
         let events = allShotEvents(in: context)
         if prefs.patternAlertsEnabled {
             let clusters = analyzeTimingPatterns(events: events, sensitivity: prefs.patternAlertSensitivity)
-            await reschedulePatternNotifications(clusters: clusters, prefs: prefs)
+            await reschedulePatternNotifications(clusters: clusters, prefs: prefs, isPill: PlanStore.currentPlan(in: context)?.form == .pill)
         } else {
             await cancelPatternNotifications()
         }
@@ -84,9 +84,13 @@ enum ProactiveAlertsEngine {
         let fireDate = max(requestedFireDate, now.addingTimeInterval(60))
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
         let content = UNMutableNotificationContent()
-        content.title = "Dose slipping?"
-        let day = calendar.isDate(next, inSameDayAs: fireDate) ? " today" : ""
-        content.body = "Your \(plan.displayMedicationName) dose was planned for \(next.formatted(.dateTime.hour().minute()))\(day). One tap to log it and stay on track."
+        content.title = String(localized: "Dose slipping?")
+        let time = next.formatted(.dateTime.hour().minute())
+        if calendar.isDate(next, inSameDayAs: fireDate) {
+            content.body = String(localized: "Your \(plan.displayMedicationName) dose was planned for today at \(time). Log it after you take it.")
+        } else {
+            content.body = String(localized: "Your \(plan.displayMedicationName) dose was planned for \(next.formatted(.dateTime.weekday(.wide).hour().minute())). Log it after you take it.")
+        }
         content.sound = .default
         content.threadIdentifier = "pro-alerts"
         content.categoryIdentifier = ReminderService.doseCategory
@@ -120,7 +124,7 @@ enum ProactiveAlertsEngine {
         return fire
     }
 
-    static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues) async {
+    static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues, isPill: Bool = false) async {
         let center = UNUserNotificationCenter.current()
         await cancelPatternNotifications()
         let granted = await ReminderService.ensureAuthorization(mayPrompt: false)
@@ -135,8 +139,10 @@ enum ProactiveAlertsEngine {
             if prefs.isQuietHour(at: nextDate) { continue }
             let fireComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: nextDate)
             let content = UNMutableNotificationContent()
-            content.title = "Simple GLP pattern"
-            content.body = "Most of your logged shots happen on \(cluster.weekdayName). Want to log today’s dose?"
+            content.title = String(localized: "Simple GLP pattern")
+            content.body = isPill
+                ? String(localized: "Most of your logged pills happen on \(cluster.weekdayName). Want to log today’s dose?")
+                : String(localized: "Most of your logged shots happen on \(cluster.weekdayName). Want to log today’s dose?")
             content.sound = .default
             content.threadIdentifier = "pro-alerts"
             let trigger = UNCalendarNotificationTrigger(dateMatching: fireComponents, repeats: false)

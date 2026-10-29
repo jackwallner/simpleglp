@@ -130,7 +130,7 @@ struct HomeView: View {
                 VStack(spacing: 8) {
                     Image(systemName: showConfirmation ? "checkmark.circle.fill" : "syringe.fill")
                         .font(.system(size: 44, weight: .bold))
-                    Text(showConfirmation ? "Logged" : "I took my shot")
+                    Text(showConfirmation ? String(localized: "Logged") : String(localized: "I took my shot"))
                         .font(.title3.weight(.semibold))
                         .multilineTextAlignment(.center)
                 }
@@ -149,7 +149,7 @@ struct HomeView: View {
     private var recentShotsSection: some View {
         if !recentEvents.isEmpty {
             VStack(alignment: .leading, spacing: 12) {
-                Text(form == .pill ? "Recent pills" : "Last few shots")
+                Text(form == .pill ? String(localized: "Recent pills") : String(localized: "Last few shots"))
                     .font(.headline)
                     .foregroundStyle(AppTheme.text)
                 ForEach(recentEvents) { event in
@@ -195,7 +195,7 @@ struct HomeView: View {
                         Text(DoseScheduleView.format(ScheduleEngine.dose(on: next, plan: plan)))
                             .font(.headline)
                         if let site = lastSite {
-                            Text("Last site: \(site.rawValue.lowercased())")
+                            Text("Last site: \(site.localizedName)")
                                 .font(.caption)
                                 .foregroundStyle(AppTheme.muted)
                         }
@@ -229,11 +229,10 @@ struct HomeView: View {
     static func headline(for next: Date, now: Date = .now, calendar: Calendar = .current) -> String {
         let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: next)).day ?? 0
         switch days {
-        case ..<(-1): return "Overdue by \(-days) days"
-        case -1: return "Overdue by 1 day"
-        case 0: return "Due today"
-        case 1: return "Tomorrow"
-        default: return "In \(days) days"
+        case ..<0: return String(localized: "Overdue by \(-days) days")
+        case 0: return String(localized: "Due today")
+        case 1: return String(localized: "Tomorrow")
+        default: return String(localized: "In \(days) days")
         }
     }
 

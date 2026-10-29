@@ -7,22 +7,21 @@ enum ProFeatures {
         let icon: String
         let title: String
         let detail: String
-        /// One-line form for compact rows: "Title: detail".
-        var line: String { "\(title): \(detail.prefix(1).lowercased())\(detail.dropFirst())" }
+        let line: String
     }
 
     static func bullets(isPill: Bool) -> [Bullet] {
         if isPill {
             return [
-                Bullet(icon: "lock.iphone", title: "Lock Screen countdown", detail: "Your wait ticks down on the Lock Screen and in the Dynamic Island"),
-                Bullet(icon: "shippingbox.fill", title: "Refill reminders", detail: "A heads-up a week before your pills run out"),
-                Bullet(icon: "bell.badge.fill", title: "Missed-dose nudges", detail: "A second reminder if the day slips by unlogged")
+                Bullet(icon: "lock.iphone", title: String(localized: "Lock Screen countdown"), detail: String(localized: "Your wait ticks down on the Lock Screen and in the Dynamic Island."), line: String(localized: "Lock Screen countdown: Your wait ticks down on the Lock Screen and in the Dynamic Island.")),
+                Bullet(icon: "shippingbox.fill", title: String(localized: "Refill reminders"), detail: String(localized: "A heads-up a week before your pills run out."), line: String(localized: "Refill reminders: A heads-up a week before your pills run out.")),
+                Bullet(icon: "bell.badge.fill", title: String(localized: "Missed-dose nudges"), detail: String(localized: "A second reminder if the day slips by unlogged."), line: String(localized: "Missed-dose nudges: A second reminder if the day slips by unlogged."))
             ]
         }
         return [
-            Bullet(icon: "bell.badge.fill", title: "Dose-day nudges", detail: "A second reminder before a shot slips your schedule"),
-            Bullet(icon: "shippingbox.fill", title: "Refill reminders", detail: "A heads-up a week before your pens run out"),
-            Bullet(icon: "waveform.path.ecg", title: "Drift alerts", detail: "Know when shots creep later week over week")
+            Bullet(icon: "bell.badge.fill", title: String(localized: "Dose-day nudges"), detail: String(localized: "A second reminder before a shot slips your schedule."), line: String(localized: "Dose-day nudges: A second reminder before a shot slips your schedule.")),
+            Bullet(icon: "shippingbox.fill", title: String(localized: "Refill reminders"), detail: String(localized: "A heads-up a week before your pens run out."), line: String(localized: "Refill reminders: A heads-up a week before your pens run out.")),
+            Bullet(icon: "waveform.path.ecg", title: String(localized: "Drift alerts"), detail: String(localized: "Know when shots creep later week over week."), line: String(localized: "Drift alerts: Know when shots creep later week over week."))
         ]
     }
 }

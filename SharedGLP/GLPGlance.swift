@@ -21,9 +21,24 @@ struct GLPGlance: Codable, Equatable, Sendable {
         self.nextDoseAt = nextDoseAt
     }
 
-    var noun: String { isPill ? "pill" : "shot" }
     var symbolName: String { isPill ? "pills.fill" : "syringe.fill" }
-    var logButtonTitle: String { "I took my \(noun)" }
+    var logButtonTitle: String {
+        String(localized: isPill ? "I took my pill" : "I took my shot")
+    }
+
+    var localizedMedicationName: String { Self.localizedMedicationName(forStoredValue: medicationName) }
+
+    static func localizedMedicationName(forStoredValue value: String) -> String {
+        switch value {
+        case "Compounded semaglutide": String(localized: "Compounded semaglutide")
+        case "Compounded tirzepatide": String(localized: "Compounded tirzepatide")
+        case "Other": String(localized: "Other")
+        case "Other pill": String(localized: "Other pill")
+        case "Wegovy pill": String(localized: "Wegovy pill")
+        default:
+            value
+        }
+    }
 
     /// End of the countdown started by the last dose, while it is still running.
     func waitEndsAt(now: Date = .now) -> Date? {
@@ -51,11 +66,10 @@ struct GLPGlance: Codable, Equatable, Sendable {
     static func dayDistance(to date: Date, now: Date = .now, calendar: Calendar = .current) -> String {
         let days = calendar.dateComponents([.day], from: calendar.startOfDay(for: now), to: calendar.startOfDay(for: date)).day ?? 0
         switch days {
-        case ..<(-1): return "\(-days) days late"
-        case -1: return "1 day late"
-        case 0: return "Today"
-        case 1: return "Tomorrow"
-        default: return "In \(days) days"
+        case ..<0: return String(localized: "\(-days) days late")
+        case 0: return String(localized: "Today")
+        case 1: return String(localized: "Tomorrow")
+        default: return String(localized: "In \(days) days")
         }
     }
 }

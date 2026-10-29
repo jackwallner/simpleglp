@@ -32,12 +32,12 @@ struct EditEventSheet: View {
     private var editor: some View {
         NavigationStack {
             Form {
-                Section(isPillPlan ? "Pill" : "Shot") {
+                Section(isPillPlan ? String(localized: "Pill") : String(localized: "Shot")) {
                     DatePicker("When", selection: $timestamp)
                     HStack {
                         Text("Dose (mg)")
                         Spacer()
-                        TextField("0.25", value: $doseMg, format: .number)
+                        TextField("", value: $doseMg, format: .number, prompt: Text(0.25, format: .number))
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                             .frame(width: 80)
@@ -47,17 +47,17 @@ struct EditEventSheet: View {
                     if !isPillPlan {
                         Picker("Injection site", selection: $site) {
                             Text("Not recorded").tag(InjectionSite?.none)
-                            ForEach(InjectionSite.allCases) { Text($0.rawValue).tag(InjectionSite?.some($0)) }
+                            ForEach(InjectionSite.allCases) { Text($0.localizedName).tag(InjectionSite?.some($0)) }
                         }
                     }
                     TextField("Notes", text: $notes, axis: .vertical)
                         .lineLimit(3...6)
                 }
                 Section {
-                    FeelingRow(title: "Nausea", value: $nausea)
-                    FeelingRow(title: "Appetite", value: $appetite)
-                    FeelingRow(title: "Food noise", value: $foodNoise)
-                    FeelingRow(title: "Wellbeing", value: $wellbeing)
+                    FeelingRow(title: String(localized: "Nausea"), value: $nausea)
+                    FeelingRow(title: String(localized: "Appetite"), value: $appetite)
+                    FeelingRow(title: String(localized: "Food noise"), value: $foodNoise)
+                    FeelingRow(title: String(localized: "Wellbeing"), value: $wellbeing)
                 } header: {
                     Text("How do you feel?")
                 } footer: {
@@ -65,7 +65,7 @@ struct EditEventSheet: View {
                 }
                 healthContextSection
                 Section {
-                    Button("Delete this \(isPillPlan ? "pill" : "shot")", role: .destructive) { confirmDelete = true }
+                    Button(isPillPlan ? String(localized: "Delete this pill") : String(localized: "Delete this shot"), role: .destructive) { confirmDelete = true }
                 }
             }
             .navigationTitle("Details")
@@ -104,7 +104,7 @@ struct EditEventSheet: View {
         ) {
             Button("OK", role: .cancel) {}
         } message: {
-            Text(saveError ?? "Try again.")
+            Text(saveError ?? String(localized: "Try again."))
         }
     }
 
@@ -126,7 +126,7 @@ struct EditEventSheet: View {
                     Text(healthStatusCopy)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
-                } else if event.healthStatus != .captured, let msg = event.healthStatusMessage, !msg.isEmpty {
+                } else if event.healthStatus != .captured, let msg = GLPHealthCopy.localizedMessage(event.healthStatusMessage), !msg.isEmpty {
                     Text(msg)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -142,9 +142,9 @@ struct EditEventSheet: View {
     private var healthStatusCopy: String {
         switch event.healthStatus {
         case .captured: return ""
-        case .pending: return "Adding Health context…"
-        case .unavailable: return event.healthStatusMessage ?? "Health context unavailable."
-        case .failed: return event.healthStatusMessage ?? "Could not read Health context."
+        case .pending: return String(localized: "Adding Health context…")
+        case .unavailable: return GLPHealthCopy.localizedMessage(event.healthStatusMessage) ?? String(localized: "Health context unavailable.")
+        case .failed: return GLPHealthCopy.localizedMessage(event.healthStatusMessage) ?? String(localized: "Could not read Health context.")
         }
     }
 
@@ -152,32 +152,32 @@ struct EditEventSheet: View {
         var rows: [(label: String, value: String)] = []
         if let kg = event.bodyMassKg {
             let lbs = kg * 2.2046226218
-            rows.append(("Weight", String(format: "%.1f kg · %.1f lb", kg, lbs)))
+            rows.append((String(localized: "Weight"), "\(kg.formatted(.number.precision(.fractionLength(1)))) kg · \(lbs.formatted(.number.precision(.fractionLength(1)))) lb"))
         }
         if let steps = event.stepsToday {
-            rows.append(("Steps", steps.formatted()))
+            rows.append((String(localized: "Steps"), steps.formatted()))
         }
         if let sleep = event.sleepHoursLastNight {
-            rows.append(("Sleep", String(format: "%.1f h", sleep)))
+            rows.append((String(localized: "Sleep"), Measurement(value: sleep, unit: UnitDuration.hours).formatted(.measurement(width: .abbreviated))))
         }
         if let protein = event.proteinGramsToday {
-            rows.append(("Protein", String(format: "%.0f g", protein)))
+            rows.append((String(localized: "Protein"), Measurement(value: protein, unit: UnitMass.grams).formatted(.measurement(width: .abbreviated))))
         }
         if let glucose = event.bloodGlucoseMgPerDL {
-            rows.append(("Glucose", String(format: "%.0f mg/dL", glucose)))
+            rows.append((String(localized: "Glucose"), "\(glucose.formatted(.number.precision(.fractionLength(0)))) mg/dL"))
         }
         if let energy = event.activeEnergyKcalToday {
-            rows.append(("Active kcal", String(format: "%.0f", energy)))
+            rows.append((String(localized: "Active kcal"), energy.formatted(.number.precision(.fractionLength(0)))))
         }
         if let hr = event.restingHeartRateBpm {
-            rows.append(("Resting HR", String(format: "%.0f bpm", hr)))
+            rows.append((String(localized: "Resting HR"), "\(hr.formatted(.number.precision(.fractionLength(0)))) bpm"))
         }
         return rows
     }
 
     private func save() {
         guard doseMg > 0 else {
-            saveError = "Enter a dose greater than 0 mg."
+            saveError = String(localized: "Enter a dose greater than 0 mg.")
             return
         }
         let timestampChanged = timestamp != event.timestamp
@@ -205,7 +205,7 @@ struct EditEventSheet: View {
         do {
             try modelContext.save()
         } catch {
-            saveError = "The entry could not be saved. Please try again."
+            saveError = String(localized: "The entry could not be saved. Please try again.")
             return
         }
         DoseRoutineService.historyDidChange(in: modelContext)
@@ -220,7 +220,7 @@ struct EditEventSheet: View {
         } catch {
             modelContext.rollback()
             isDeleted = false
-            saveError = "The entry could not be deleted. Please try again."
+            saveError = String(localized: "The entry could not be deleted. Please try again.")
             return
         }
         DoseRoutineService.historyDidChange(in: modelContext)

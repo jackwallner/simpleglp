@@ -53,7 +53,7 @@ final class ShotCaptureCoordinator: ObservableObject {
                     try context.save()
                     updated += 1
                 } catch {
-                    bannerMessage = "Saved, but Health context could not be updated."
+                    bannerMessage = String(localized: "Saved, but Health context could not be updated.")
                 }
             }
             if updated > 0 {
@@ -81,7 +81,7 @@ final class ShotCaptureCoordinator: ObservableObject {
     @discardableResult
     func captureShot(in context: ModelContext, tapDate: Date? = nil, eventID: UUID? = nil, deferHealthContext: Bool = false) -> Bool {
         guard !isCapturing || eventID != nil else {
-            bannerMessage = "Finishing the last log. Try again in a moment."
+            bannerMessage = String(localized: "Finishing the last log. Try again in a moment.")
             return false
         }
 
@@ -96,7 +96,7 @@ final class ShotCaptureCoordinator: ObservableObject {
         let event = ShotEvent(
             id: eventID ?? UUID(),
             timestamp: timestamp,
-            medicationName: plan?.displayMedicationName ?? "GLP-1",
+            medicationName: plan?.storedMedicationName ?? "GLP-1",
             doseMg: match.doseMg,
             scheduledDate: match.scheduledDate,
             scheduleStatus: match.status,
@@ -112,7 +112,7 @@ final class ShotCaptureCoordinator: ObservableObject {
             // the next successful save writes both.
             context.rollback()
             lastCapturedEventID = nil
-            bannerMessage = "Could not save that. Try again."
+            bannerMessage = String(localized: "Could not save that. Try again.")
             return false
         }
 
@@ -137,7 +137,7 @@ final class ShotCaptureCoordinator: ObservableObject {
         if deferHealthContext { return true }
 
         isCapturing = true
-        bannerMessage = GLPOnboardingStore.healthContextEnabled ? "Saved. Adding Health context…" : nil
+        bannerMessage = GLPOnboardingStore.healthContextEnabled ? String(localized: "Saved. Adding Health context…") : nil
         let eventID = event.id
 
         Task { @MainActor in
@@ -147,7 +147,7 @@ final class ShotCaptureCoordinator: ObservableObject {
             guard let found = try? context.fetch(descriptor).first else {
                 isCapturing = false
                 if lastCapturedEventID == eventID {
-                    bannerMessage = "Saved, but could not update context."
+                    bannerMessage = String(localized: "Saved, but could not update context.")
                 }
                 return
             }
@@ -158,7 +158,7 @@ final class ShotCaptureCoordinator: ObservableObject {
                 try context.save()
             } catch {
                 isCapturing = false
-                bannerMessage = "Context captured but save failed. Reopen to retry."
+                bannerMessage = String(localized: "Context captured but save failed. Reopen to retry.")
                 return
             }
 
@@ -187,31 +187,36 @@ final class ShotCaptureCoordinator: ObservableObject {
                 try context.save()
             } catch {
                 context.rollback()
-                bannerMessage = "Could not undo that. Delete it from History instead."
+                bannerMessage = String(localized: "Could not undo that. Delete it from History instead.")
                 return
             }
         }
         RecentShotsStore.remove(id: eventID)
         lastCapturedEventID = nil
         showUndoOption = false
-        bannerMessage = "Undone."
+        bannerMessage = String(localized: "Undone.")
         DoseRoutineService.historyDidChange(in: context)
     }
 
     /// Banner after Health context settles. Pills get no "see you" line: the countdown on
     /// Home already says what happens next.
     private static func loggedBanner(status: CaptureStatus, plan: MedicationPlan?) -> String? {
-        let noun = plan?.form.noun ?? "shot"
         // With Health off, "unavailable" is the expected outcome, not news.
         let status = GLPOnboardingStore.healthContextEnabled ? status : .complete
         switch status {
         case .complete:
             if plan?.form == .pill { return nil }
-            return plan?.isWeekly == false ? "You took your shot. Nice." : "You took your shot. Nice. See you next week."
+            return plan?.isWeekly == false
+                ? String(localized: "You logged your shot. Nice.")
+                : String(localized: "You logged your shot. Nice. See you next week.")
         case .partial:
-            return "\(noun.capitalized) logged. Some Health context was unavailable."
+            return plan?.form == .pill
+                ? String(localized: "Pill logged. Some Health context was unavailable.")
+                : String(localized: "Shot logged. Some Health context was unavailable.")
         case .failed:
-            return "\(noun.capitalized) logged. Health context was unavailable."
+            return plan?.form == .pill
+                ? String(localized: "Pill logged. Health context was unavailable.")
+                : String(localized: "Shot logged. Health context was unavailable.")
         case .pending:
             return nil
         }

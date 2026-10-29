@@ -176,7 +176,7 @@ final class TrialEligibilityTests: XCTestCase {
             let store = StoreService(products: [package], introEligibility: [GLPProProduct.yearly: status], defaults: testDefaults())
             XCTAssertEqual(store.isEligibleForIntroOffer(package), status == .eligible)
             XCTAssertEqual(store.onboardingTrialCTALabel.contains("free trial"), status == .eligible)
-            XCTAssertEqual(store.onboardingTrialDisclosureText?.contains("Free Trial"), status == .eligible)
+            XCTAssertEqual(store.onboardingTrialDisclosureText?.localizedCaseInsensitiveContains("free trial"), status == .eligible)
             XCTAssertFalse(store.isIntroEligibilityUnknown(package))
         }
     }

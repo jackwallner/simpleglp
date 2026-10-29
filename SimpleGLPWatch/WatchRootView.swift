@@ -16,7 +16,7 @@ struct WatchRootView: View {
                     } else {
                         logButton
                         if !controller.glance.isPill, !controller.showConfirmation, let next = controller.glance.upcomingDose(now: context.date) {
-                            Text("Next shot: \(GLPGlance.dayDistance(to: next, now: context.date)) · \(next.formatted(.dateTime.weekday(.abbreviated).hour().minute()))")
+                            Text("Next dose: \(GLPGlance.dayDistance(to: next, now: context.date)) · \(next.formatted(.dateTime.weekday(.abbreviated).hour().minute()))")
                                 .font(.caption2)
                                 .foregroundStyle(.secondary)
                                 .multilineTextAlignment(.center)
@@ -32,7 +32,7 @@ struct WatchRootView: View {
 
                     if !controller.recentShots.isEmpty {
                         VStack(alignment: .leading, spacing: 6) {
-                            Text(controller.glance.isPill ? "Recent pills" : "Last few shots")
+                            Text(controller.glance.isPill ? String(localized: "Recent pills") : String(localized: "Last few shots"))
                                 .font(.caption.weight(.semibold))
                                 .foregroundStyle(.secondary)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -56,7 +56,7 @@ struct WatchRootView: View {
             VStack(spacing: 8) {
                 Image(systemName: controller.showConfirmation ? "checkmark.circle.fill" : controller.glance.symbolName)
                     .font(.system(size: 30, weight: .bold))
-                Text(controller.showConfirmation ? "Logged" : controller.glance.logButtonTitle)
+                Text(controller.showConfirmation ? String(localized: "Logged") : controller.glance.logButtonTitle)
                     .font(.headline)
                     .multilineTextAlignment(.center)
             }
