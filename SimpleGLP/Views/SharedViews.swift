@@ -57,7 +57,7 @@ struct CadenceField: View {
 
     var body: some View {
         HStack {
-            Text("Repeat every")
+            Text("Repeat interval")
             Spacer()
             Picker("Count", selection: countBinding) {
                 ForEach(1...unit.maxCount, id: \.self) { Text("\($0)").tag($0) }
