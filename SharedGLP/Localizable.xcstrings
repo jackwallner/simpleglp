@@ -3155,7 +3155,7 @@
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$@ Pro ücretsiz."
+            "value": "Pro bezpłatnie przez %1$@."
           }
         },
         "zh-Hant": {

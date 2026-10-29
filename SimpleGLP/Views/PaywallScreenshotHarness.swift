@@ -48,7 +48,7 @@ struct PaywallScreenshotHarness: View {
             VStack {
                 Spacer()
                 content()
-                    .frame(maxHeight: UIScreen.main.bounds.height * 0.68)
+                    .frame(maxHeight: UIScreen.main.bounds.height * 0.85)
                     .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                     .padding(.horizontal, 8)
                     .padding(.bottom, 6)
