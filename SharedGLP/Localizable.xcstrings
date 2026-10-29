@@ -13164,61 +13164,61 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Doses na mão."
+            "value": "Doses disponíveis"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ellere"
+            "value": "Eldeki doz"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dosis a mano"
+            "value": "Dosis disponibles"
           }
         },
         "pl": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dawki w ręku"
+            "value": "Dostępne dawki"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "手頭的劑量"
+            "value": "剩餘劑量"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Дозы под рукой"
+            "value": "Доз в запасе"
           }
         },
         "hu": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dózisok kéznél"
+            "value": "Készleten lévő adagok"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dosi a portata di mano"
+            "value": "Dosi disponibili"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Handdosen"
+            "value": "Dosen vorrätig"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Doses en main"
+            "value": "Doses disponibles"
           }
         }
       }
@@ -42289,6 +42289,290 @@
           "stringUnit": {
             "state": "translated",
             "value": "Intervalle de répétition"
+          }
+        }
+      }
+    },
+    "Pills after refill": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pills after refill"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprimidos após a reposição"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yenilemeden sonra tablet"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pastillas tras reponer"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabletki po uzupełnieniu"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "補充後藥錠"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Таблеток после пополнения"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabletták pótlás után"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Compresse dopo il rifornimento"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tabletten nach dem Nachfüllen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Comprimés après renouvellement"
+          }
+        }
+      }
+    },
+    "Doses after refill": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doses after refill"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doses após a reposição"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Yenilemeden sonra doz"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dosis tras reponer"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dawki po uzupełnieniu"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "補充後劑量"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Доз после пополнения"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adagok pótlás után"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dosi dopo il rifornimento"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dosen nach dem Nachfüllen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doses après renouvellement"
+          }
+        }
+      }
+    },
+    "One tap. Logged.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One tap. Logged."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um toque. Registrado."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tek dokunuş. Kaydedildi."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un toque. Registrado."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jedno dotknięcie. Zapisano."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "點一下，就記錄好了。"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Одно нажатие. Записано."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Egy érintés. Rögzítve."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un tocco. Registrato."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Tipp. Erfasst."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un geste. Enregistré."
+          }
+        }
+      }
+    },
+    "Your next dose and your history, side by side.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your next dose and your history, side by side."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sua próxima dose e seu histórico, lado a lado."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sonraki dozun ve geçmişin yan yana."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu próxima dosis y tu historial, uno al lado del otro."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Następna dawka i historia obok siebie."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "下一劑與紀錄並排顯示。"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Следующая доза и история рядом."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A következő adag és az előzmények egymás mellett."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La tua prossima dose e la cronologia, fianco a fianco."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine nächste Dosis und dein Verlauf, nebeneinander."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre prochaine dose et votre historique, côte à côte."
           }
         }
       }
