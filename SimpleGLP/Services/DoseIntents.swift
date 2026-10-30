@@ -13,7 +13,7 @@ struct LogDoseIntent: AppIntent, LiveActivityIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let context = GLPModelStore.sharedModelContainer.mainContext
-        guard GLPOnboardingStore.hasCompletedOnboarding, let plan = PlanStore.currentPlan(in: context) else {
+        guard GLPOnboardingStore.hasCompletedOnboarding, PlanStore.currentPlan(in: context) != nil else {
             return .result(dialog: "Open Simple GLP to set up your medication first.")
         }
         if let existing = DoseRoutineService.alreadyLogged(in: context) {
@@ -41,7 +41,7 @@ struct DoseStatusIntent: AppIntent {
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
         let context = GLPModelStore.sharedModelContainer.mainContext
-        guard let plan = PlanStore.currentPlan(in: context), GLPOnboardingStore.hasCompletedOnboarding else {
+        guard PlanStore.currentPlan(in: context) != nil, GLPOnboardingStore.hasCompletedOnboarding else {
             return .result(dialog: "Open Simple GLP to set up your medication first.")
         }
         let glance = DoseRoutineService.publishGlance(in: context)

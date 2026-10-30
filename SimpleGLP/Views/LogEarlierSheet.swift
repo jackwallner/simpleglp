@@ -85,7 +85,7 @@ struct LogEarlierSheet: View {
     }
 
     private func quickPickDuration(_ minutes: Int) -> String {
-        var formatter = DateComponentsFormatter()
+        let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute]
         formatter.unitsStyle = .abbreviated
         return formatter.string(from: TimeInterval(minutes * 60)) ?? String(localized: "\(minutes) min")
