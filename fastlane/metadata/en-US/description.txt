@@ -1,34 +1,48 @@
-Simple GLP is a GLP-1 tracker for iPhone and Apple Watch. Log your weekly shot or daily pill in one tap from the app, a Home Screen widget, or your wrist. Free, private, and no account needed.
+Simple GLP logs your GLP-1 doses in one tap: your weekly shot or daily pill, the injection site, how you feel, and notes. Free core features, no account required. Works on iPhone, Apple Watch, and widgets.
 
-ONE-TAP GLP-1 DOSE LOG
-Tap the Home Screen widget, the Apple Watch app, or ask Siri, and your dose is saved with the time. Add the injection site, notes, and how you felt later if you want.
+LOG A DOSE (FREE)
+• Logs a dose with the time in one tap from the app, Siri, a widget, or Apple Watch
+• Records the dose, injection site, and notes for each shot
+• Rates nausea, appetite, food noise, and wellbeing from 0 to 5
 
-WEEKLY SHOT REMINDER
-Set your shot day and time once for Ozempic, Wegovy, Mounjaro, Zepbound, compounded semaglutide or tirzepatide, or your own medication. The shot day reminder arrives when you choose, up to 3 hours early. Tap Took it on the notification to log your shot, or snooze it. Already logged? That reminder is skipped. Every shot is marked early, on time, or late.
+INJECTION SITE ROTATION (FREE)
+• Records each shot in the abdomen, a thigh, or an arm, left or right
+• Shows your last injection site next to your next dose
 
-DAILY PILL WAIT TIMER
-For the Wegovy pill, Rybelsus, Foundayo, or your own. One tap logs today's pill and starts a wait timer you set to match your label or your prescriber's instructions, with a notification when the wait is over. The countdown also shows on the widget and Apple Watch. A daily pill reminder skips days you've already logged, and a streak and month view show how the routine is going.
+REMINDERS (FREE)
+• Reminds you on shot day at the time you choose, up to 3 hours early
+• Repeats every 1 to 12 weeks or every 1 to 90 days
+• Logs the dose from the notification with Took it, or snoozes it
+• Skips the reminder when you already logged that dose
 
-APPLE WATCH AND WIDGETS
-Log from your wrist with the Apple Watch app, even when your iPhone isn't nearby. It syncs when they reconnect. The Home Screen widget logs in one tap and shows your next dose and pill countdown. Lock Screen widgets show your next dose or when your wait ends.
+DAILY PILL WAIT TIMER (FREE)
+• Starts a countdown when you log your pill, set to match your label or prescriber
+• Notifies you when the wait is over
 
-FREE, WITH NO ACCOUNT
-Logging, the weekly shot reminder, the daily pill wait timer, history, Insights, the widget, and Apple Watch logging are free. No sign-up, no login, no email. Open the app and start tracking.
+APPLE WATCH AND WIDGETS (FREE)
+• Logs doses from the Apple Watch app, even away from your iPhone
+• Logs a dose from the Home Screen widget in one tap, then opens the app to save it
+• Shows your next dose or pill countdown on Home Screen and Lock Screen widgets
 
-PRIVATE BY DESIGN
-Your GLP-1 log stays on your device, shared only with the app's own widget and Apple Watch app. No ads, no third-party analytics, and your data is never sold. Export your history to CSV any time.
+NO ACCOUNT, ON YOUR DEVICE (FREE)
+• Opens straight to logging with no sign-up, login, or email
+• Keeps your log on your device
+• Shows no ads and uses no third-party analytics
+• Exports and imports your history as CSV
 
-OPTIONAL APPLE HEALTH CONTEXT
-With your permission, Simple GLP reads weight, glucose, activity, sleep, heart rate, workouts, water, caffeine, calories, and protein to show next to each dose. Read-only. It never writes to Apple Health.
+MEDICATIONS
+• Works with weekly semaglutide or tirzepatide shots, brand-name or compounded, daily GLP-1 pills, and any medication you add yourself
 
-SIMPLE GLP PRO (OPTIONAL)
-Pro adds the wait countdown on your Lock Screen and in the Dynamic Island, supply tracking with a refill heads-up before you run out, a second reminder for a missed dose, and alerts when your shot timing drifts. Subscribe in-app. Cancel anytime in Settings.
+APPLE HEALTH (OPTIONAL)
+• Reads weight, glucose, sleep, and more to show beside each dose, with your permission (read-only)
 
-NOT A MEDICAL DEVICE
-Simple GLP records what you tell it you took and when. It does not provide medical advice, dosing instructions, diagnosis, or treatment recommendations. Always follow your prescriber's guidance.
+FREE / PRO
+• Free: everything above
+• Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, refill reminders, a missed-dose reminder, and alerts when shot timing drifts
+• Pro is a monthly or yearly subscription with a 7-day free trial, or a one-time Lifetime purchase. Subscriptions renew unless canceled 24 hours before the period ends.
 
-Subscription Details
-Simple GLP Pro is available as an auto-renewing subscription (Monthly or Yearly, both with a 7-day free trial) or as a one-time Lifetime purchase. Prices are shown in the app before you buy and vary by region. Payment is charged to your Apple ID at confirmation. Subscriptions renew automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel anytime in Settings → Apple ID → Subscriptions.
+NOT MEDICAL ADVICE
+Simple GLP records what you tell it you took and when. It gives no medical advice, dosing instructions, or diagnosis. Follow your prescriber's guidance.
 
 Privacy Policy: https://jackwallner.com/ios/simpleglp/privacy-policy.html
 Terms of Use (EULA): https://www.apple.com/legal/internet-services/itunes/dev/stdeula/
