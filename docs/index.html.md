@@ -96,7 +96,7 @@ Dose logging, schedule, history, insights, HealthKit context, the widget, and Ap
 
 ### What Mattered
 
-**One tap, no app launch.** The Home Screen widget records a dose directly through an interactive App Intent.
+**One tap from the Home Screen.** The widget stamps the dose at the time of your tap through an interactive App Intent, and the app opens to save it.
 
 **What's free.** Logging, schedule, history, insights, and HealthKit context are free.
 
