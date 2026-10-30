@@ -9,7 +9,11 @@
 ## Guides
 
 - [Best GLP-1 Tracker App for iPhone (5 Compared)](https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html.md): Five iPhone GLP-1 tracker apps compared: Shotsy, MeAgain, GlucoPal, Glapp and Simple GLP. Doses, reminders, Apple Watch and accounts, as of October 2026.
+- [Free GLP-1 Tracker With No Account, Private on iPhone](https://jackwallner.com/ios/simpleglp/free-glp-1-tracker-no-account.html.md): Simple GLP is a free GLP-1 tracker for iPhone and Apple Watch with no account, no ads and no third-party analytics. What is free, what Pro adds, and where your log is stored.
 - [GLP-1 Injection Site Rotation: Where to Inject](https://jackwallner.com/ios/simpleglp/glp-1-injection-site-rotation.html.md): Where Ozempic, Wegovy, Mounjaro and Zepbound instructions say to inject, what each maker says about rotating sites, and a simple way to track your last site.
+- [GLP-1 Pill Wait Timer App: Time the Wait After Your Daily Pill](https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html.md): Simple GLP starts a wait timer when you log your daily GLP-1 pill and notifies you when it ends. You set the length to match your label or prescriber. Free on iPhone and Apple Watch.
+- [Log a GLP-1 Dose From Apple Watch or a Home Screen Widget](https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widget.html.md): Simple GLP logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or Home Screen widget, without opening the iPhone app. Free, no account.
+- [Weekly GLP-1 Shot Reminder App for iPhone and Apple Watch](https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.html.md): Simple GLP reminds you on your GLP-1 shot day and lets you log the shot from the notification, a widget or Apple Watch. Free, no account, iPhone and Apple Watch.
 
 ## Optional
 

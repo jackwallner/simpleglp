@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html
 
 ## Best GLP-1 Tracker App for iPhone
 
-By Jack Wallner · Last updated October 28, 2026
+By Jack Wallner · Last updated October 29, 2026
 
 **Best for medication-level charts and a large user base: Shotsy. Best for food, protein and photo tracking alongside doses: MeAgain or GlucoPal. Best for check-ins, trial-data comparisons and supply tracking: Glapp. Best for logging a dose in one tap with no account: Simple GLP.** A GLP-1 tracker is an app that records your GLP-1 doses and the reminders you set, and some also track food, weight or supply. The apps differ mostly in how much they track beyond the dose itself.
 
@@ -62,6 +62,10 @@ For estimated medication-level charts, pick Shotsy. For a fast dose log with no 
 
 ## Frequently asked questions
 
+### What app should I use for GLP-1 tracking?
+
+It depends on how much you want to track. For estimated medication-level charts and the largest user base, Shotsy. For food, protein and photos next to your doses, MeAgain or GlucoPal. For daily check-ins and supply tracking, Glapp. For a one-tap log of a weekly shot or daily pill with reminders, a pill wait timer, and Apple Watch and widget logging, free with no account, Simple GLP.
+
 ### What is the best GLP-1 tracker app for iPhone?
 
 Shotsy is the most established dose tracker, MeAgain and GlucoPal add food and photos, Glapp adds check-ins and supply tracking, and Simple GLP is a minimal one-tap dose log with Apple Watch and widget logging.
@@ -86,7 +90,13 @@ Not entirely. Jack Wallner makes Simple GLP. Competitor entries use their public
 
 Simple GLP keeps one-tap dose logging, reminders, history, the widget and Apple Watch logging free, with no account. GlucoPal says no account is required and puts medication-level forecasts and PDF reports in Pro. All five apps here are free to download with an optional paid tier, so the best free pick depends on what stays free. For Shotsy, MeAgain and Glapp, check what the free tier includes before you rely on it.
 
-Related: [GLP-1 Injection Site Rotation: Where to Inject and How to Rotate](https://jackwallner.com/ios/simpleglp/glp-1-injection-site-rotation.html).
+## Related answers
+
+- [Is there a free GLP-1 tracker that needs no account and keeps my data private?](https://jackwallner.com/ios/simpleglp/free-glp-1-tracker-no-account.html)
+- [What app can remind me to take my weekly GLP-1 shot?](https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.html)
+- [Is there an app that times the wait after my daily GLP-1 pill?](https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html)
+- [Can I log my GLP-1 dose from my Apple Watch or a Home Screen widget?](https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widget.html)
+- [GLP-1 Injection Site Rotation: Where to Inject and How to Rotate](https://jackwallner.com/ios/simpleglp/glp-1-injection-site-rotation.html)
 
 ## Sources
 
