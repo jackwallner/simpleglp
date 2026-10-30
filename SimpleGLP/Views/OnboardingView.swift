@@ -26,6 +26,22 @@ struct OnboardingView: View {
 
     private static let totalSteps = 6
     private var isTrialStep: Bool { step == Self.totalSteps - 1 }
+    private static let medicationStepIndex = 1
+
+    /// Why the medication step can't be saved yet, or nil when it can.
+    static func medicationProblem(medication: GLPMedication, customName: String, doseMg: Double) -> String? {
+        if medication.isCustom && customName.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return String(localized: "Enter the medication name.")
+        }
+        if !(doseMg > 0) {
+            return String(localized: "Enter a dose greater than 0 mg.")
+        }
+        return nil
+    }
+
+    private var medicationProblem: String? {
+        Self.medicationProblem(medication: medication, customName: customMedicationName, doseMg: doseMg)
+    }
 
     var body: some View {
         NavigationStack {
@@ -456,7 +472,9 @@ struct OnboardingView: View {
                 .shadow(color: AppTheme.brand.opacity(0.3), radius: 12, x: 0, y: 6)
             }
             .buttonStyle(.plain)
-            .disabled(isPurchasing || (isTrialStep && (store.isLoadingProducts || store.isRefreshingPurchase)))
+            .disabled(isPurchasing
+                      || (isTrialStep && (store.isLoadingProducts || store.isRefreshingPurchase))
+                      || (step == Self.medicationStepIndex && medicationProblem != nil))
 
             // Fixed-height footer slot on EVERY step so the button never moves.
             footerSlot
@@ -567,6 +585,10 @@ struct OnboardingView: View {
     /// failing to load presents the full paywall rather than a dead button; a
     /// successful purchase or the emergency paywall both finish onboarding.
     private func startTrialPurchase() {
+        if store.isProUnlocked {
+            finishOnboarding()
+            return
+        }
         if store.isPurchasePending {
             Task { await store.refreshPendingPurchaseStatus() }
             return
@@ -607,12 +629,10 @@ struct OnboardingView: View {
     private func finishOnboarding() {
         guard !hasCompletedOnboarding else { return }
         let trimmedCustomName = customMedicationName.trimmingCharacters(in: .whitespacesAndNewlines)
-        guard doseMg > 0 else {
-            saveError = String(localized: "Enter a dose greater than 0 mg.")
-            return
-        }
-        guard !medication.isCustom || !trimmedCustomName.isEmpty else {
-            saveError = String(localized: "Enter the medication name.")
+        if let medicationProblem {
+            // The last step has no Back, so return to the field that needs fixing.
+            saveError = medicationProblem
+            step = Self.medicationStepIndex
             return
         }
 
