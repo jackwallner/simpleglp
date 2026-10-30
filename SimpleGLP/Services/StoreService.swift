@@ -239,9 +239,7 @@ final class StoreService: NSObject, ObservableObject {
     /// launch for returning Pro users. Promo gating waits on this instead.
     @Published private(set) var hasResolvedEntitlements: Bool = false
 
-    var monthlyPackage: Package? { products.first { $0.glpProPackageKind == .monthly } }
     var yearlyPackage: Package? { products.first { $0.glpProPackageKind == .yearly } }
-    var lifetimePackage: Package? { products.first { $0.glpProPackageKind == .lifetime } }
 
     /// True when this account shows any Pro signal — active entitlement, a lifetime
     /// purchase, or a subscription that expired within the last 48h. An expired-but-renewing
