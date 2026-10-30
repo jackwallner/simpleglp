@@ -20,6 +20,7 @@
 		2114D69BA3942C095AE857A1 /* SimpleGLPWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */; };
 		22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E965069DAB46F2FADF4DE9 /* ReminderService.swift */; };
 		240B886F4C8448DA5C3B7868 /* GLPWidgetEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6B87D4CDBD34D4F2B7DDF19 /* GLPWidgetEntry.swift */; };
+		2C2322F85F15C06535FC5E14 /* OnboardingValidationUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */; };
 		3065304258014FD16DFF9E06 /* WidgetScreenshotHarness.swift in Sources */ = {isa = PBXBuildFile; fileRef = D44613F9CBB9492522D11E44 /* WidgetScreenshotHarness.swift */; };
 		3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
@@ -86,6 +87,7 @@
 		BE81029BC2092B504AF10457 /* UnfoldedSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E6B14247FA67AAF69E40CB /* UnfoldedSplit.swift */; };
 		C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */; };
 		C73AA3A0A5250AD094BF55EA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39AACFDD06D2297830B382BD /* Localizable.xcstrings */; };
+		C7D7B9E869D5595FDAC17DC5 /* OvernightAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */; };
 		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
 		C8CE0077B5FA78FD0CE7D16D /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39AACFDD06D2297830B382BD /* Localizable.xcstrings */; };
 		CD8BE9F6E5480663E75A742B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
@@ -200,6 +202,7 @@
 		62176DB93A31794EA0A099CB /* DoseIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseIntents.swift; sourceTree = "<group>"; };
 		66C73FE3C2F5DE3B0CAFE7EB /* SimpleGLP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLP.entitlements; sourceTree = "<group>"; };
 		6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPTests.swift; sourceTree = "<group>"; };
+		70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingValidationUITests.swift; sourceTree = "<group>"; };
 		72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreQuarantineTests.swift; sourceTree = "<group>"; };
 		73816B599BD283C27ECB1460 /* FleetQA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FleetQA.swift; sourceTree = "<group>"; };
 		74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimplePaywallView.swift; sourceTree = "<group>"; };
@@ -244,6 +247,7 @@
 		D44613F9CBB9492522D11E44 /* WidgetScreenshotHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetScreenshotHarness.swift; sourceTree = "<group>"; };
 		D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModels.swift; sourceTree = "<group>"; };
 		D7E3863B993311209064780D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvernightAuditTests.swift; sourceTree = "<group>"; };
 		DFAF25058269A15633726D47 /* SupplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyView.swift; sourceTree = "<group>"; };
 		E125328ACA62290EB451989A /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
 		E72BB2053E8DC8186F41B380 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -361,6 +365,7 @@
 			children = (
 				3C3BB1F84829233327AB37D1 /* DoseRoutinePolishTests.swift */,
 				BA1054409230A4D0B55105B7 /* LocalizationTests.swift */,
+				DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */,
 				8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */,
 				92258E2A91B4142D81240641 /* PillRoutineTests.swift */,
 				0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */,
@@ -374,6 +379,7 @@
 		92B4807179E1C5967C11AAD0 /* SimpleGLPUITests */ = {
 			isa = PBXGroup;
 			children = (
+				70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */,
 				1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */,
 				CD745BE9E731DDC409E61557 /* ReleaseJourneysUITests.swift */,
 				C197C4C662394DB138EE8D3B /* FleetQA */,
@@ -700,6 +706,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5131388A7F721F33A0D8B4DA /* FleetQA.swift in Sources */,
+				2C2322F85F15C06535FC5E14 /* OnboardingValidationUITests.swift in Sources */,
 				1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */,
 				E14DB60D98B28C9E7C2A7468 /* ReleaseJourneysUITests.swift in Sources */,
 			);
@@ -787,6 +794,7 @@
 			files = (
 				68D0F38366A10ECB715E9A08 /* DoseRoutinePolishTests.swift in Sources */,
 				DD5429D1792279CDCED54620 /* LocalizationTests.swift in Sources */,
+				C7D7B9E869D5595FDAC17DC5 /* OvernightAuditTests.swift in Sources */,
 				6F693C5F54297E4117D4F6E1 /* PaywallFunnelTests.swift in Sources */,
 				76499CE2D0D7797D2ADFBCF0 /* PillRoutineTests.swift in Sources */,
 				3B765B5194C6C324E8EEBC3F /* ReviewPromptTrackerTests.swift in Sources */,
