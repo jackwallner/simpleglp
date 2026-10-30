@@ -542,7 +542,7 @@ struct AddDoseStepSheet: View {
             saveError = String(localized: "Enter a dose greater than 0 mg.")
             return
         }
-        let step = DoseStep(startDate: startDate, doseMg: doseMg)
+        let step = DoseStep(startDate: Calendar.current.startOfDay(for: startDate), doseMg: doseMg)
         step.plan = plan
         plan.doseSteps.append(step)
         modelContext.insert(step)
@@ -652,6 +652,7 @@ struct ImportView: View {
             defer { if didAccess { url.stopAccessingSecurityScopedResource() } }
             do {
                 let count = try ImportService.importEvents(from: url, into: modelContext)
+                DoseRoutineService.historyDidChange(in: modelContext)
                 isError = false
                 statusMessage = String(localized: "Imported \(count) doses.")
             } catch {

@@ -8,7 +8,7 @@ enum ImportService {
 
     /// Imports shots from a Simple GLP CSV export. Restores dose, injection site, and notes,
     /// and recomputes each shot's schedule status against the current plan so adherence stats
-    /// stay correct after a restore. Imported shots are added, never replacing existing entries.
+    /// stay correct after a restore. Imported shots are added, never replacing existing entries; rows already stored are skipped.
     @MainActor
     static func importEvents(from url: URL, into context: ModelContext) throws -> Int {
         let data = try Data(contentsOf: url)
@@ -31,6 +31,10 @@ enum ImportService {
             guard cols.count >= 3, !cols[0].isEmpty, let timestamp = formatter.date(from: cols[0]) else { continue }
             let medication = cols[1].isEmpty ? "GLP-1" : cols[1]
             let dose = Double(cols[2]) ?? 0
+            // The export has second precision: a row matching a stored dose is already here.
+            if known.contains(where: { $0.medicationName == medication && abs($0.timestamp.timeIntervalSince(timestamp)) < 1 }) {
+                continue
+            }
 
             let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: known)
             let event = ShotEvent(
@@ -73,7 +77,12 @@ enum ImportService {
             count += 1
         }
 
-        try context.save()
+        do {
+            try context.save()
+        } catch {
+            context.rollback()
+            throw error
+        }
         return count
     }
 
