@@ -173,15 +173,7 @@ struct SimplePaywallView: View {
         }
     }
 
-    // MARK: - Trial timeline
-
-    /// Blinkist-pattern transparency: showing exactly when the reminder arrives and
-    /// when billing starts lifted Blinkist's trial conversion 23% and cut complaints
-    /// 55%. Only rendered when the selected plan actually carries an eligible trial.
-    private var showsTrialTimeline: Bool {
-        guard let package = selectedPackage else { return false }
-        return store.isEligibleForIntroOffer(package) && trialDays != nil
-    }
+    // MARK: - Trial
 
     private var trialDays: Int? {
         guard let intro = selectedPackage?.storeProduct.introductoryDiscount,
@@ -193,73 +185,6 @@ struct SimplePaywallView: View {
         case .month: return period.value * 30
         case .year: return period.value * 365
         @unknown default: return nil
-        }
-    }
-
-    private var trialTimeline: some View {
-        let days = trialDays ?? 7
-        let reminderDay = max(1, days - 2)
-        return VStack(alignment: .leading, spacing: 0) {
-            timelineRow(
-                icon: "lock.open.fill",
-                tint: AppTheme.brand,
-                title: String(localized: "Today"),
-                detail: String(localized: "Unlock everything. No payment due now."),
-                showsConnector: true
-            )
-            timelineRow(
-                icon: "bell.badge.fill",
-                tint: AppTheme.warm,
-                title: String(localized: "Day \(reminderDay)"),
-                detail: String(localized: "Apple reminds you before your trial ends."),
-                showsConnector: true
-            )
-            timelineRow(
-                icon: "star.circle.fill",
-                tint: AppTheme.calm,
-                title: String(localized: "Day \(days)"),
-                detail: String(localized: "Trial ends. Keep Pro, or cancel. Your call."),
-                showsConnector: false
-            )
-        }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 12)
-        .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-        .overlay {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .stroke(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
-        }
-        .accessibilityElement(children: .combine)
-    }
-
-    private func timelineRow(icon: String, tint: Color, title: String, detail: String, showsConnector: Bool) -> some View {
-        HStack(alignment: .top, spacing: 10) {
-            VStack(spacing: 0) {
-                ZStack {
-                    Circle()
-                        .fill(tint.opacity(0.16))
-                        .frame(width: 26, height: 26)
-                    Image(systemName: icon)
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundStyle(tint)
-                }
-                if showsConnector {
-                    Rectangle()
-                        .fill(AppTheme.surfaceStroke.opacity(0.7))
-                        .frame(width: 2, height: 14)
-                }
-            }
-            VStack(alignment: .leading, spacing: 1) {
-                Text(title)
-                    .font(.caption.weight(.bold))
-                    .foregroundStyle(AppTheme.text)
-                Text(detail)
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.muted)
-                    .fixedSize(horizontal: false, vertical: true)
-            }
-            .padding(.bottom, showsConnector ? 6 : 0)
-            Spacer(minLength: 0)
         }
     }
 
