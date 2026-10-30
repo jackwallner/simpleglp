@@ -1,6 +1,6 @@
 # Log a GLP-1 Dose From Apple Watch or a Home Screen Widget
 
-> Simple GLP logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or Home Screen widget, without opening the iPhone app. Free, no account.
+> Simple GLP logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or Home Screen widget. Free, no account.
 
 Web page: https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widget.html
 
@@ -8,12 +8,12 @@ Web page: https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widge
 
 By Jack Wallner · Last updated October 29, 2026
 
-**Yes. [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-log-glp-1-dose-apple-watch-&mt=8) logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or its Home Screen widget, without opening the iPhone app.** Both are free and need no account. The widget and the Watch also show your next dose, and for a daily pill, the wait countdown.
+**Yes. [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-log-glp-1-dose-apple-watch-&mt=8) logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or its Home Screen widget.** Both are free and need no account. The widget and the Watch also show your next dose, and for a daily pill, the wait countdown.
 
 ## How do I log from the Home Screen widget?
 
 1. Add the Simple GLP widget to your Home Screen in the small or medium size.
-2. Tap the log button on the widget. The dose is saved with the current time, and the app does not open.
+2. Tap the log button on the widget. The dose is stamped with the time of your tap, and the app opens to finish saving it.
 3. The widget then shows your next dose. For a daily pill it shows the wait countdown that the log started.
 
 ## How do I log from Apple Watch?

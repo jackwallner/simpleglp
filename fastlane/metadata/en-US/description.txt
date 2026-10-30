@@ -1,7 +1,7 @@
 Simple GLP is a GLP-1 tracker for iPhone and Apple Watch. Log your weekly shot or daily pill in one tap from the app, a Home Screen widget, or your wrist. Free, private, and no account needed.
 
 ONE-TAP GLP-1 DOSE LOG
-Tap the Home Screen widget, the Apple Watch app, or ask Siri, and your dose is saved with the time, without opening the app. Add the injection site, notes, and how you felt later if you want.
+Tap the Home Screen widget, the Apple Watch app, or ask Siri, and your dose is saved with the time. Add the injection site, notes, and how you felt later if you want.
 
 WEEKLY SHOT REMINDER
 Set your shot day and time once for Ozempic, Wegovy, Mounjaro, Zepbound, compounded semaglutide or tirzepatide, or your own medication. The shot day reminder arrives when you choose, up to 3 hours early. Tap Took it on the notification to log your shot, or snooze it. Already logged? That reminder is skipped. Every shot is marked early, on time, or late.

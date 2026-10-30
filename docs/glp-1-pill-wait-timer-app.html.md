@@ -13,7 +13,7 @@ By Jack Wallner · Last updated October 29, 2026
 ## How does the pill wait timer work?
 
 1. Choose your pill when you set up: the Wegovy pill, Rybelsus, Foundayo, or your own.
-2. Set Wait before food & drink to match your label or prescriber, from none up to 120 minutes in 5-minute steps. Simple GLP starts at 30 minutes for Rybelsus and the Wegovy pill and at none for Foundayo or a custom pill, and you can change it any time.
+2. Set Wait before food & drink to match your label or prescriber, from none up to 120 minutes in 5-minute steps. The field starts at 30 minutes for Rybelsus and the Wegovy pill and at none for Foundayo or a custom pill. Those are starting values only, so change it to match your instructions.
 3. Take your pill, then log it in one tap from the app, the Home Screen widget, Apple Watch, or Siri ("I took my pill in Simple GLP").
 4. The countdown runs from the time you logged. When it ends, a notification says your wait is over and shows when you took the pill.
 5. Logged it late? Log the pill at the time you actually took it and the countdown counts from then, or tells you the wait is already over.

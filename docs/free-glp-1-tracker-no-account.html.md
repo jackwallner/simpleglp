@@ -46,7 +46,7 @@ Weekly shots (Ozempic, Wegovy, Mounjaro, Zepbound, compounded semaglutide or tir
 
 - No sync between devices. Your log stays on one iPhone and its paired Apple Watch, so export a CSV now and then if you want your own copy.
 - No food log, weight goals, progress photos or medication-level charts.
-- It keeps a log. It does not tell you what dose to take or when.
+- It keeps a log of what you took and when. Your prescriber sets the dose and schedule.
 
 ## Start logging without an account
 
