@@ -94,7 +94,7 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         PhoneWatchSession.shared.start()
         PhoneWatchSession.shared.onWatchRequestedCapture = { date, eventID in
             let context = ModelContext(GLPModelStore.sharedModelContainer)
-            fallbackCoordinator.captureShot(in: context, tapDate: date, eventID: eventID)
+            DoseRoutineService.captureWatchLog(at: date, eventID: eventID, coordinator: fallbackCoordinator, in: context)
         }
         return true
     }
@@ -166,7 +166,7 @@ private struct SimpleGLPRootContent: View {
             PlanStore.migrateLegacySchedules(in: modelContext)
             PhoneWatchSession.shared.start()
             PhoneWatchSession.shared.onWatchRequestedCapture = { date, eventID in
-                shotCoordinator.captureShot(in: modelContext, tapDate: date, eventID: eventID)
+                DoseRoutineService.captureWatchLog(at: date, eventID: eventID, coordinator: shotCoordinator, in: modelContext)
             }
             shotCoordinator.ingestPendingWidgetShot(in: modelContext)
             shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
@@ -183,11 +183,17 @@ private struct SimpleGLPRootContent: View {
             }
         }
         .onChange(of: store.hasResolvedEntitlements) { _, _ in
-            Task { await DoseRoutineService.rescheduleReminders(in: modelContext, mayPrompt: false) }
+            Task {
+                await DoseRoutineService.rescheduleReminders(in: modelContext, mayPrompt: false)
+                await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: modelContext)
+            }
         }
         .onChange(of: store.isProUnlocked) { _, _ in
             DoseRoutineService.startLiveActivityIfWaiting(in: modelContext)
-            Task { await DoseRoutineService.rescheduleReminders(in: modelContext, mayPrompt: false) }
+            Task {
+                await DoseRoutineService.rescheduleReminders(in: modelContext, mayPrompt: false)
+                await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: modelContext)
+            }
         }
     }
 }

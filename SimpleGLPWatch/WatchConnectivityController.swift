@@ -30,6 +30,7 @@ final class WatchConnectivityController: NSObject, ObservableObject {
     }
 
     func requestShotLog() {
+        guard !showConfirmation else { return }
         let now = Date()
         triggerConfirmation()
         // Optimistically insert into the local recent shots so the list updates immediately.

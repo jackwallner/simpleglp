@@ -69,6 +69,7 @@ struct WatchRootView: View {
             )
         }
         .buttonStyle(.plain)
+        .disabled(controller.showConfirmation)
         .animation(reduceMotion ? nil : .easeInOut(duration: 0.2), value: controller.showConfirmation)
     }
 

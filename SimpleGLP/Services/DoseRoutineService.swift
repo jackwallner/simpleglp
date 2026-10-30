@@ -84,6 +84,25 @@ enum DoseRoutineService {
         }
     }
 
+    /// A Watch tap that lands within this long of a stored dose is a double tap, not a
+    /// second dose: each tap carries its own ID, so ID dedupe alone lets it through.
+    static let watchDuplicateWindow: TimeInterval = 120
+
+    static func hasDose(near date: Date, within window: TimeInterval = watchDuplicateWindow, in context: ModelContext) -> Bool {
+        let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        return events.contains { abs($0.timestamp.timeIntervalSince(date)) < window }
+    }
+
+    /// Logs a dose the Watch sent, unless it repeats one already stored.
+    static func captureWatchLog(at date: Date, eventID: UUID?, coordinator: ShotCaptureCoordinator, in context: ModelContext) {
+        guard !hasDose(near: date, in: context) else {
+            // Drop the Watch's optimistic copy.
+            rebuildRecentShots(in: context)
+            return
+        }
+        coordinator.captureShot(in: context, tapDate: date, eventID: eventID)
+    }
+
     /// The tail of a log made with no UI in front (a notification action, Siri): the app may
     /// be suspended as soon as this returns, so the wait ping and reminders are awaited
     /// here instead of left to fire-and-forget tasks.

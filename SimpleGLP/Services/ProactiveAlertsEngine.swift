@@ -37,10 +37,17 @@ enum ProactiveAlertsEngine {
         .sorted { $0.share > $1.share }
     }
 
+    /// Alerts are Pro. Before entitlements resolve a Pro user reads as free, so only a
+    /// resolved non-Pro state turns them off; the user's setting is kept for a return.
+    static func isActive(alertsEnabled: Bool, entitlementsResolved: Bool, isPro: Bool) -> Bool {
+        alertsEnabled && (isPro || !entitlementsResolved)
+    }
+
     @MainActor
     static func schedulePatternAlertsIfEnabled(in context: ModelContext) async {
         let prefs = ProAlertPreferenceValues.current()
-        guard prefs.alertsEnabled else {
+        let store = StoreService.shared
+        guard isActive(alertsEnabled: prefs.alertsEnabled, entitlementsResolved: store.hasResolvedEntitlements, isPro: store.isProUnlocked) else {
             await cancelPatternNotifications()
             cancelLateDoseNudge()
             return
@@ -48,7 +55,7 @@ enum ProactiveAlertsEngine {
         let events = allShotEvents(in: context)
         if prefs.patternAlertsEnabled {
             let clusters = analyzeTimingPatterns(events: events, sensitivity: prefs.patternAlertSensitivity)
-            await reschedulePatternNotifications(clusters: clusters, prefs: prefs, isPill: PlanStore.currentPlan(in: context)?.form == .pill)
+            await reschedulePatternNotifications(clusters: clusters, prefs: prefs, isPill: PlanStore.currentPlan(in: context)?.form == .pill, doseDates: events.map(\.timestamp))
         } else {
             await cancelPatternNotifications()
         }
@@ -124,18 +131,26 @@ enum ProactiveAlertsEngine {
         return fire
     }
 
-    static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues, isPill: Bool = false) async {
+    /// The next 9:00 on the cluster's weekday, skipping a day that already has a logged
+    /// dose so the alert never asks for one the user just logged.
+    static func patternFireDate(weekday: Int, doseDates: [Date], now: Date = .now, calendar: Calendar = .current) -> Date? {
+        let components = DateComponents(hour: 9, minute: 0, weekday: weekday)
+        guard var fire = calendar.nextDate(after: now, matching: components, matchingPolicy: .nextTime) else { return nil }
+        while doseDates.contains(where: { calendar.isDate($0, inSameDayAs: fire) }) {
+            guard let nextWeek = calendar.date(byAdding: .day, value: 7, to: fire) else { return nil }
+            fire = nextWeek
+        }
+        return fire
+    }
+
+    static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues, isPill: Bool = false, doseDates: [Date] = []) async {
         let center = UNUserNotificationCenter.current()
         await cancelPatternNotifications()
         let granted = await ReminderService.ensureAuthorization(mayPrompt: false)
         guard granted else { return }
 
         for cluster in clusters.prefix(3) {
-            var components = DateComponents()
-            components.weekday = cluster.weekdayIndex
-            components.hour = 9
-            components.minute = 0
-            guard let nextDate = Calendar.current.nextDate(after: .now, matching: components, matchingPolicy: .nextTime) else { continue }
+            guard let nextDate = patternFireDate(weekday: cluster.weekdayIndex, doseDates: doseDates) else { continue }
             if prefs.isQuietHour(at: nextDate) { continue }
             let fireComponents = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: nextDate)
             let content = UNMutableNotificationContent()
