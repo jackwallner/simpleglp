@@ -3,11 +3,6 @@ import SwiftData
 import UserNotifications
 
 enum ProactiveAlertsEngine {
-    enum AlertKind: String, Sendable {
-        case pattern
-        case lateDose
-    }
-
     struct PatternCluster: Sendable {
         let weekdayIndex: Int
         let weekdayName: String
