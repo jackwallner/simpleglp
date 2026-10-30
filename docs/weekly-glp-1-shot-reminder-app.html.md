@@ -1,6 +1,6 @@
 # Weekly GLP-1 Shot Reminder App for iPhone and Apple Watch
 
-> Simple GLP reminds you on your GLP-1 shot day and lets you log the shot from the notification, a widget or Apple Watch. Free, no account, iPhone and Apple Watch.
+> Simple GLP reminds you on GLP-1 shot day and lets you log the shot from the notification, a widget or Apple Watch. Free, with no account needed.
 
 Web page: https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.html
 

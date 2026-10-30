@@ -1,6 +1,6 @@
 # Free GLP-1 Tracker With No Account, Private on iPhone
 
-> Simple GLP is a free GLP-1 tracker for iPhone and Apple Watch with no account, no ads and no third-party analytics. What is free, what Pro adds, and where your log is stored.
+> Simple GLP is a free GLP-1 tracker for iPhone and Apple Watch: no account, no ads, no third-party analytics. What is free, what Pro adds, where data lives.
 
 Web page: https://jackwallner.com/ios/simpleglp/free-glp-1-tracker-no-account.html
 

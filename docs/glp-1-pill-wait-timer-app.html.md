@@ -1,6 +1,6 @@
 # GLP-1 Pill Wait Timer App: Time the Wait After Your Daily Pill
 
-> Simple GLP starts a wait timer when you log your daily GLP-1 pill and notifies you when it ends. You set the length to match your label or prescriber. Free on iPhone and Apple Watch.
+> Simple GLP starts a wait timer when you log your daily GLP-1 pill and alerts you when it ends. Set the length from your label or prescriber. Free on iPhone.
 
 Web page: https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html
 
