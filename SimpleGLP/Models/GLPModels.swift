@@ -23,7 +23,6 @@ enum DoseForm: String, Codable, CaseIterable, Identifiable, Sendable {
 
     var id: String { rawValue }
 
-    var pickerLabel: String { String(localized: self == .pill ? "Daily pill" : "Shot") }
     var symbolName: String { self == .pill ? "pills.fill" : "syringe.fill" }
     var logButtonTitle: String {
         String(localized: self == .pill ? "I took my pill" : "I took my shot")
@@ -301,10 +300,6 @@ final class MedicationPlan {
         }
         return medication.rawValue
     }
-
-    var preferredTimeComponents: DateComponents {
-        DateComponents(hour: preferredHour, minute: preferredMinute)
-    }
 }
 
 @Model
@@ -418,7 +413,6 @@ final class ShotEvent {
     }
 
     var weekdayIndex: Int { Calendar.current.component(.weekday, from: timestamp) }
-    var hourOfDay: Int { Calendar.current.component(.hour, from: timestamp) }
 
     var weekdayName: String {
         let index = max(0, min(Calendar.current.weekdaySymbols.count - 1, weekdayIndex - 1))
