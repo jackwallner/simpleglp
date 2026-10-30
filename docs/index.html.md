@@ -80,8 +80,6 @@ An optional upgrade for people who want to stay ahead of their schedule. Monthly
 
 **Dose-day nudges.** If a planned dose hasn't been logged a few hours after it was due, Pro reminds you before the day fully slips.
 
-**Drift alerts.** Pro watches your logged timing and flags when your usual dose day starts to shift, so you can course-correct early.
-
 Dose logging, schedule, history, insights, HealthKit context, the widget, and Apple Watch capture stay free.
 
 ### Specs
@@ -98,7 +96,7 @@ Dose logging, schedule, history, insights, HealthKit context, the widget, and Ap
 
 **One tap from the Home Screen.** The widget stamps the dose at the time of your tap through an interactive App Intent, and the app opens to save it.
 
-**What's free.** Logging, reminders, the pill wait timer, injection sites, symptoms, history, Insights, Health context, the widgets and the Apple Watch app are free from the first launch. Simple GLP Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, supply tracking with refill reminders, and alerts for a missed dose or shot timing that drifts.
+**What's free.** Logging, reminders, the pill wait timer, injection sites, symptoms, history, Insights, Health context, the widgets and the Apple Watch app are free from the first launch. Simple GLP Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, supply tracking with refill reminders, and a second reminder for a missed dose.
 
 **Health is optional.** HealthKit access is read-only and can be skipped entirely; the core logging flow never depends on it.
 

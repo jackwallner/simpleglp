@@ -20,8 +20,7 @@ enum ProFeatures {
         }
         return [
             Bullet(icon: "bell.badge.fill", title: String(localized: "Dose-day nudges"), detail: String(localized: "A second reminder before a shot slips your schedule."), line: String(localized: "Dose-day nudges: A second reminder before a shot slips your schedule.")),
-            Bullet(icon: "shippingbox.fill", title: String(localized: "Refill reminders"), detail: String(localized: "A heads-up a week before your pens run out."), line: String(localized: "Refill reminders: A heads-up a week before your pens run out.")),
-            Bullet(icon: "waveform.path.ecg", title: String(localized: "Drift alerts"), detail: String(localized: "Know when shots creep later week over week."), line: String(localized: "Drift alerts: Know when shots creep later week over week."))
+            Bullet(icon: "shippingbox.fill", title: String(localized: "Refill reminders"), detail: String(localized: "A heads-up a week before your pens run out."), line: String(localized: "Refill reminders: A heads-up a week before your pens run out."))
         ]
     }
 }

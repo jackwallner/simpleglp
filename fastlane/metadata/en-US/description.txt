@@ -38,7 +38,7 @@ APPLE HEALTH (OPTIONAL)
 • With your permission, Simple GLP reads weight, glucose, activity, sleep, heart rate, and more to show beside each dose. It never writes to Apple Health.
 
 FREE AND PRO
-Everything above is free from the first launch. Simple GLP Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, supply tracking with refill reminders, and alerts for a missed dose or shot timing that drifts.
+Everything above is free from the first launch. Simple GLP Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, supply tracking with refill reminders, and a second reminder for a missed dose.
 
 Pro is an auto-renewing subscription (monthly or yearly, each with a 7-day free trial) or a one-time Lifetime purchase. Payment is charged to your Apple ID at confirmation. Subscriptions renew automatically unless canceled at least 24 hours before the end of the current period. Manage or cancel in Settings → Apple ID → Subscriptions.
 

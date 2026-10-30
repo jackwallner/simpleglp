@@ -6,7 +6,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.outlined.ShowChart
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -36,7 +35,6 @@ fun proBullets(isPill: Boolean): List<ProBullet> = if (isPill) listOf(
 ) else listOf(
     ProBullet(Icons.Outlined.NotificationsActive, "Dose-day nudges", "A second reminder before a shot slips your schedule"),
     ProBullet(Icons.Outlined.Inventory2, "Refill reminders", "A heads-up a week before your pens run out"),
-    ProBullet(Icons.AutoMirrored.Outlined.ShowChart, "Drift alerts", "Know when shots creep later week over week"),
 )
 
 object TrialCopy {

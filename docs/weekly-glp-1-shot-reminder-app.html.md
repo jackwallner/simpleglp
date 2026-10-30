@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.h
 
 ## What app can remind me to take my weekly GLP-1 shot?
 
-By Jack Wallner · Last updated October 29, 2026
+By Jack Wallner · Last updated October 30, 2026
 
 **[Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-weekly-glp-1-shot-reminder-&mt=8) reminds you on your weekly shot day and lets you log the shot right from the reminder.** Set your shot day and time once, choose how early the reminder comes, and tap Took it when you are done. The reminder is free, needs no account, and is skipped when you already logged that shot.
 
@@ -32,7 +32,6 @@ By Jack Wallner · Last updated October 29, 2026
 | Shot day reminder with Took it and snooze | Free |
 | Reminder lead time up to 3 hours | Free |
 | Dose-day nudge: a second reminder if the shot is still unlogged a few hours after it was due | Pro |
-| Drift alerts: a heads-up when your shots creep later week over week | Pro |
 | Refill heads-up about a week before your pens run out | Pro |
 
 Simple GLP Pro is optional: a monthly or yearly subscription with a 7-day free trial, or a one-time lifetime purchase. Prices are shown in the app before you buy and vary by region.
@@ -65,7 +64,7 @@ No. It reminds you of the day and time you set and records what you log. Your do
 
 ### Is the weekly shot reminder free?
 
-Yes. The shot day reminder, Took it and snooze are free with no account. Pro adds a second nudge, drift alerts and refill reminders.
+Yes. The shot day reminder, Took it and snooze are free with no account. Pro adds a second nudge and refill reminders.
 
 ## Related answers
 

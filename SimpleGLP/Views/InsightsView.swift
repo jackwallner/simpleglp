@@ -256,15 +256,9 @@ struct InsightsView: View {
             } else {
                 ProLockedPreviewCard(
                     icon: "bell.badge.fill",
-                    title: String(localized: "Proactive Alerts"),
-                    headline: String(localized: "Dose day in 2 days"),
-                    detail: String(localized: "Quiet hours respected. Your usual Tuesday window is 8:00-10:00 AM.")
-                )
-                ProLockedPreviewCard(
-                    icon: "waveform.path.ecg",
-                    title: String(localized: "Pattern detection"),
-                    headline: String(localized: "Drift detected: +6 hrs over 3 weeks"),
-                    detail: String(localized: "Your logged shot times are trending later. Review your reminder schedule.")
+                    title: String(localized: "Dose-day nudges"),
+                    headline: String(localized: "Dose slipping?"),
+                    detail: String(localized: "A second reminder before a shot slips your schedule.")
                 )
                 ProLockedPreviewCard(
                     icon: "shippingbox.fill",
