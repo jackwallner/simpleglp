@@ -173,3 +173,11 @@ in code on 2026-10-21 with versionCode 2. Left: choose the real review code,
 put its SHA in the Air's `local.properties`, rebuild and upload vc2, enter the
 code in the Play app access instructions, then Send for review in its pacing
 slot.
+
+## Play review, 2026-10-30
+
+Production vc2 (1.2.2) sent for review on 2026-10-30 with all 50 locales
+(`docs/android/tools/play_submit.py simpleglp --apply --include-all-pending
+--track production --version-code 2`). Publishing overview showed it under
+"Changes in review" (quick checks running, Start full rollout), managed
+publishing off, so it goes live on approval. Public page was 404 at send.
