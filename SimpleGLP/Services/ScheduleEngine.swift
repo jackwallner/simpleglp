@@ -57,14 +57,24 @@ enum ScheduleEngine {
             .map { ($0, abs($0.timeIntervalSince(timestamp))) }
             .sorted { $0.1 < $1.1 }
 
-        guard let closest = nearby.first, closest.1 <= matchWindow else {
+        guard var closest = nearby.first, closest.1 <= matchWindow else {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }
 
-        let alreadyClaimed = existingEvents.contains { event in
-            guard let scheduled = event.scheduledDate else { return false }
-            return abs(scheduled.timeIntervalSince(closest.0)) < 60
+        let isClaimed = { (slot: Date) in
+            existingEvents.contains { event in
+                guard let scheduled = event.scheduledDate else { return false }
+                return abs(scheduled.timeIntervalSince(slot)) < 60
+            }
         }
+        // A weekly shot 3.5 to 4 days late sits nearer next week's slot, but it is the
+        // missed dose: give it to the earlier slot while that one is still unclaimed.
+        if plan.cadenceDays >= 7, closest.0 > timestamp,
+           let missed = nearby.first(where: { $0.0 < timestamp && $0.1 <= matchWindow }),
+           !isClaimed(missed.0) {
+            closest = missed
+        }
+        let alreadyClaimed = isClaimed(closest.0)
         if alreadyClaimed {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }
@@ -192,9 +202,10 @@ enum ScheduleEngine {
         return next
     }
 
-    static func dose(on date: Date, plan: MedicationPlan) -> Double {
+    /// A step applies from the start of its day, whatever time of day it was saved at.
+    static func dose(on date: Date, plan: MedicationPlan, calendar: Calendar = .current) -> Double {
         let steps = plan.doseSteps.sorted { $0.startDate < $1.startDate }
-        return steps.last(where: { $0.startDate <= date })?.doseMg ?? plan.doseMg
+        return steps.last(where: { calendar.startOfDay(for: $0.startDate) <= date })?.doseMg ?? plan.doseMg
     }
 
     static func expectedDates(around date: Date, plan: MedicationPlan, calendar: Calendar = .current) -> [Date] {
@@ -239,7 +250,8 @@ enum DailyAdherence {
         let takenDays = Set(doseDates.map { calendar.startOfDay(for: $0) })
         let today = calendar.startOfDay(for: now)
         return (0..<count).reversed().compactMap { offset in
-            guard let day = calendar.date(byAdding: .day, value: -offset, to: today) else { return nil }
+            guard let shifted = calendar.date(byAdding: .day, value: -offset, to: today) else { return nil }
+            let day = calendar.startOfDay(for: shifted)
             return Day(date: day, taken: takenDays.contains(day))
         }
     }
@@ -251,13 +263,14 @@ enum DailyAdherence {
         var day = calendar.startOfDay(for: now)
         if !takenDays.contains(day) {
             guard let yesterday = calendar.date(byAdding: .day, value: -1, to: day) else { return 0 }
-            day = yesterday
+            day = calendar.startOfDay(for: yesterday)
         }
         var count = 0
         while takenDays.contains(day) {
             count += 1
             guard let previous = calendar.date(byAdding: .day, value: -1, to: day) else { break }
-            day = previous
+            // Re-normalize: where a DST change skips midnight, that day starts at 1:00.
+            day = calendar.startOfDay(for: previous)
         }
         return count
     }
@@ -275,7 +288,7 @@ enum DailyAdherence {
             planned += 1
             if takenDays.contains(day) { taken += 1 }
             guard let next = calendar.date(byAdding: .day, value: 1, to: day) else { break }
-            day = next
+            day = calendar.startOfDay(for: next)
         }
         return (taken, planned)
     }
@@ -289,7 +302,9 @@ enum DailyAdherence {
         var taken = 0
         var planned = 0
         for offset in 0..<max(0, days) {
-            guard let day = calendar.date(byAdding: .day, value: -offset, to: today), day >= floor else { break }
+            guard let shifted = calendar.date(byAdding: .day, value: -offset, to: today) else { break }
+            let day = calendar.startOfDay(for: shifted)
+            guard day >= floor else { break }
             planned += 1
             if takenDays.contains(day) { taken += 1 }
         }
@@ -339,15 +354,36 @@ enum SupplyMath {
         daysLeft(remaining: remaining, plan: plan) <= reminderLeadDays
     }
 
-    /// When to send the refill heads-up: `reminderLeadDays` before the supply runs out, at
-    /// the plan's dose time. Nil when that moment has already passed.
-    static func reminderDate(remaining: Int, plan: MedicationPlan, now: Date = .now, calendar: Calendar = .current) -> Date? {
-        let offset = daysLeft(remaining: remaining, plan: plan) - reminderLeadDays
-        guard offset > 0,
-              let day = calendar.date(byAdding: .day, value: offset, to: calendar.startOfDay(for: now)),
-              let fire = calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: day),
-              fire > now
-        else { return nil }
-        return fire
+    /// When to send the refill heads-up: at the planned dose that leaves `reminderLeadDays`
+    /// of supply, so opening the app or logging early never slides it. Once the lead is
+    /// reached it keeps the date already queued (`previousFire`), and once that date has
+    /// passed the heads-up counts as sent for this refill.
+    @MainActor
+    static func reminderDate(remaining: Int, plan: MedicationPlan, events: [ShotEvent] = [], previousFire: Date? = nil, now: Date = .now, calendar: Calendar = .current) -> Date? {
+        if let previousFire, previousFire <= now { return nil }
+        guard remaining > 0 else { return nil }
+        let cadence = plan.cadenceDays
+        let leadDoses = reminderLeadDays / cadence
+        let slots = upcomingSlots(count: remaining + 1, plan: plan, events: events, now: now, calendar: calendar)
+        if leadDoses > 0, remaining > leadDoses, slots.count >= remaining - leadDoses {
+            return slots[remaining - leadDoses - 1]
+        }
+        if leadDoses == 0, slots.count > remaining,
+           let fire = calendar.date(byAdding: .day, value: -reminderLeadDays, to: slots[remaining]), fire > now {
+            return fire
+        }
+        return previousFire ?? slots.first
+    }
+
+    /// The next `count` planned doses after `now` that no logged dose has claimed.
+    @MainActor
+    private static func upcomingSlots(count: Int, plan: MedicationPlan, events: [ShotEvent], now: Date, calendar: Calendar) -> [Date] {
+        var slots: [Date] = []
+        var cursor = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar)
+        while let slot = cursor, slots.count < count {
+            if !ScheduleEngine.isOccurrenceClaimed(slot, by: events) { slots.append(slot) }
+            cursor = calendar.date(byAdding: .day, value: plan.cadenceDays, to: slot)
+        }
+        return slots
     }
 }

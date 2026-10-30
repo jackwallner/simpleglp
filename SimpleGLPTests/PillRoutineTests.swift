@@ -143,7 +143,9 @@ final class PillRoutineTests: XCTestCase {
         let plan = dailyPlan(hour: 7)
         let fire = SupplyMath.reminderDate(remaining: 10, plan: plan, now: date(10, 12))
         XCTAssertEqual(fire, date(13, 7))
-        XCTAssertNil(SupplyMath.reminderDate(remaining: 7, plan: plan, now: date(10, 12)))
+        // Already at a week: the next planned dose, unless it has gone out this refill.
+        XCTAssertEqual(SupplyMath.reminderDate(remaining: 7, plan: plan, now: date(10, 12)), date(11, 7))
+        XCTAssertNil(SupplyMath.reminderDate(remaining: 7, plan: plan, previousFire: date(10, 7), now: date(10, 12)))
         XCTAssertTrue(SupplyMath.isLow(remaining: 7, plan: plan))
         XCTAssertFalse(SupplyMath.isLow(remaining: 8, plan: plan))
     }

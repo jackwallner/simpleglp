@@ -12,8 +12,10 @@ the specification. Do not change iOS source while fixing Android.
 
 - `ScheduleEngine.nextDue` is the sole next-dose calculation. Daily plans match
   by calendar day (3-hour on-schedule window); other cadences match the nearest
-  slot (18-hour on-schedule window, 4-day match radius). Advance calendar days,
-  preserving local wall time through DST.
+  slot (18-hour on-schedule window, 4-day match radius), except that a weekly or
+  longer dose within 4 days after an unclaimed slot belongs to that missed slot
+  (iOS since 2026-10-30; Android still needs the port). Dose steps apply from the
+  start of their day. Advance calendar days, preserving local wall time through DST.
 - Logging, reminders, in-app pill countdown plus wait-complete notification,
   streak, History, and Patterns are free. Patterns need 5 logs. Supply/refill
   tracking, the ongoing Lock Screen pill countdown notification, and Proactive Alerts

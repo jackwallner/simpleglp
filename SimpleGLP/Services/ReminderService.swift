@@ -15,6 +15,9 @@ enum ReminderService {
     static let snoozeMinutes = 15
     /// Daily plans queue two weeks of reminders so they keep firing if the app isn't opened.
     static let dailyReminderSlots = 14
+    /// Longer cadences queue this many, so a weekly user who stops opening the app still
+    /// gets two months of reminders.
+    static let longReminderSlots = 8
 
     static var doseReminderIdentifiers: [String] {
         [shotReminderIdentifier] + (1..<dailyReminderSlots).map { "\(shotReminderIdentifier)-\($0)" }
@@ -95,7 +98,7 @@ enum ReminderService {
     /// time claims that day's slot, so the reminder for it is skipped.
     @MainActor
     static func upcomingReminderSlots(plan: MedicationPlan, events: [ShotEvent], now: Date = .now, calendar: Calendar = .current) -> [Date] {
-        let limit = plan.cadenceDays == 1 ? dailyReminderSlots : 2
+        let limit = plan.cadenceDays == 1 ? dailyReminderSlots : longReminderSlots
         var slots: [Date] = []
         var cursor = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar)
         while let slot = cursor, slots.count < limit {
@@ -132,12 +135,19 @@ enum ReminderService {
     static func scheduleRefillReminder(for plan: MedicationPlan, events: [ShotEvent], isPro: Bool, mayPrompt: Bool = true) async {
         let center = UNUserNotificationCenter.current()
         center.removePendingNotificationRequests(withIdentifiers: [refillIdentifier])
+        let defaults = GLPAppGroup.userDefaults
+        let cycle = plan.supplyUpdatedAt.map { "\($0.timeIntervalSince1970)-\(plan.supplyCount)" }
+        let sameCycle = cycle != nil && defaults.string(forKey: GLPStorageKey.refillHeadsUpCycle.rawValue) == cycle
+        let storedFire = defaults.object(forKey: GLPStorageKey.refillHeadsUpFireAt.rawValue) as? Double
+        let previousFire = sameCycle ? storedFire.map { Date(timeIntervalSince1970: $0) } : nil
         guard isPro,
               let remaining = SupplyMath.remaining(plan: plan, doseDates: events.map(\.timestamp)),
-              let fireDate = SupplyMath.reminderDate(remaining: remaining, plan: plan)
+              let fireDate = SupplyMath.reminderDate(remaining: remaining, plan: plan, events: events, previousFire: previousFire)
         else { return }
         let granted = await ensureAuthorization(mayPrompt: mayPrompt)
         guard granted else { return }
+        defaults.set(cycle, forKey: GLPStorageKey.refillHeadsUpCycle.rawValue)
+        defaults.set(fireDate.timeIntervalSince1970, forKey: GLPStorageKey.refillHeadsUpFireAt.rawValue)
         let content = UNMutableNotificationContent()
         content.title = String(localized: "Refill soon")
         content.body = String(localized: "About \(SupplyMath.reminderLeadDays) days of \(plan.displayMedicationName) left, based on what you’ve logged.")

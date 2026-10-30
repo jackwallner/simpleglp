@@ -78,6 +78,9 @@ enum GLPStorageKey: String {
     case proAlertLastFiredKind = "glpProAlertLastFiredKind"
     /// Mirrors `GLPGlance.isPill` so views can switch vocabulary through `@AppStorage`.
     case isPillPlan = "glpIsPillPlan"
+    /// The refill heads-up queued for the current supply count, so it fires once per refill.
+    case refillHeadsUpCycle = "glpRefillHeadsUpCycle"
+    case refillHeadsUpFireAt = "glpRefillHeadsUpFireAt"
 }
 
 enum GLPOnboardingStore {
