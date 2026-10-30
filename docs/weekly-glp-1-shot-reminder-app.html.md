@@ -71,6 +71,9 @@ Yes. The shot day reminder, Took it and snooze are free with no account. Pro add
 - [Is there a free GLP-1 tracker that needs no account and keeps my data private?](https://jackwallner.com/ios/simpleglp/free-glp-1-tracker-no-account.html)
 - [Is there an app that times the wait after my daily GLP-1 pill?](https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html)
 - [Can I log my GLP-1 dose from my Apple Watch or a Home Screen widget?](https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widget.html)
+- [Is there a dose tracker app for Zepbound and Mounjaro?](https://jackwallner.com/ios/simpleglp/zepbound-mounjaro-dose-tracker-app.html)
+- [Is there a shot tracker app for Ozempic and Wegovy?](https://jackwallner.com/ios/simpleglp/ozempic-wegovy-shot-tracker-app.html)
+- [Is there a daily dose log app for the Wegovy pill and Rybelsus?](https://jackwallner.com/ios/simpleglp/wegovy-pill-rybelsus-dose-log-app.html)
 - [Best GLP-1 tracker app for iPhone (5 compared)](https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html)
 
 Simple GLP records what you tell it you took and when. It does not give medical advice, dosing instructions, diagnosis or treatment recommendations, and neither does this page. Follow your prescriber and the instructions that came with your medicine. Simple GLP is an independent app and is not affiliated with Novo Nordisk or Eli Lilly. Disclosure: Jack Wallner makes Simple GLP.

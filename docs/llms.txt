@@ -13,7 +13,10 @@
 - [GLP-1 Injection Site Rotation: Where to Inject](https://jackwallner.com/ios/simpleglp/glp-1-injection-site-rotation.html.md): Where Ozempic, Wegovy, Mounjaro and Zepbound instructions say to inject, what each maker says about rotating sites, and a simple way to track your last site.
 - [GLP-1 Pill Wait Timer App: Time the Wait After Your Daily Pill](https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html.md): Simple GLP starts a wait timer when you log your daily GLP-1 pill and alerts you when it ends. Set the length from your label or prescriber. Free on iPhone.
 - [Log a GLP-1 Dose From Apple Watch or a Home Screen Widget](https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widget.html.md): Simple GLP logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or Home Screen widget. Free, no account.
+- [Ozempic and Wegovy Shot Tracker App for iPhone](https://jackwallner.com/ios/simpleglp/ozempic-wegovy-shot-tracker-app.html.md): Ozempic and Wegovy shot tracker app: Simple GLP logs each weekly shot in one tap, with reminders, Apple Watch and a widget. Free, with no account.
 - [Weekly GLP-1 Shot Reminder App for iPhone and Apple Watch](https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.html.md): Simple GLP reminds you on GLP-1 shot day and lets you log the shot from the notification, a widget or Apple Watch. Free, with no account needed.
+- [Wegovy Pill and Rybelsus Daily Dose Log App](https://jackwallner.com/ios/simpleglp/wegovy-pill-rybelsus-dose-log-app.html.md): Wegovy pill and Rybelsus daily dose log app: Simple GLP logs each pill in one tap, keeps a streak and runs a wait timer you set. Free, with no account.
+- [Zepbound and Mounjaro Dose Tracker App for iPhone](https://jackwallner.com/ios/simpleglp/zepbound-mounjaro-dose-tracker-app.html.md): Zepbound and Mounjaro dose tracker app: Simple GLP logs each weekly shot in one tap, with reminders, Apple Watch and a widget. Free, with no account.
 
 ## Optional
 
