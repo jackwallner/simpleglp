@@ -78,13 +78,7 @@ enum ReminderService {
         for (index, fireDate) in fireDates.enumerated() {
             let components = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
             let content = UNMutableNotificationContent()
-            if plan.form == .pill {
-                content.title = String(localized: "Pill time")
-                content.body = String(localized: "Your dose is planned for today. Log it after you take it.")
-            } else {
-                content.title = String(localized: "Shot day")
-                content.body = String(localized: "Your dose is planned for today. Log it after you take it.")
-            }
+            (content.title, content.body) = doseReminderText(for: plan)
             content.sound = .default
             content.threadIdentifier = "shot-reminders"
             content.categoryIdentifier = doseCategory
@@ -92,6 +86,13 @@ enum ReminderService {
             let request = UNNotificationRequest(identifier: doseReminderIdentifiers[index], content: content, trigger: trigger)
             try? await center.add(request)
         }
+    }
+
+    static func doseReminderText(for plan: MedicationPlan) -> (title: String, body: String) {
+        if plan.form == .pill {
+            return (String(localized: "Pill time"), String(localized: "Time for your \(plan.displayMedicationName). Log it after you take it."))
+        }
+        return (String(localized: "Shot day"), String(localized: "Your dose is planned for today. Log it after you take it."))
     }
 
     /// Upcoming scheduled doses nobody has logged yet. A pill taken before its reminder

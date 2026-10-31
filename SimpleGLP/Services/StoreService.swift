@@ -104,6 +104,36 @@ extension GLPProPackageKind {
     }
 }
 
+enum GLPProPriceText {
+    /// "$29.99 / year" for a one-unit period, "$59.99 / 2 years" otherwise.
+    static func label(price: String, unit: SubscriptionPeriod.Unit, value: Int) -> String? {
+        if value == 1 {
+            switch unit {
+            case .day: return String(localized: "\(price) / day")
+            case .week: return String(localized: "\(price) / week")
+            case .month: return String(localized: "\(price) / month")
+            case .year: return String(localized: "\(price) / year")
+            @unknown default: return nil
+            }
+        }
+        let duration: String
+        switch unit {
+        case .day: duration = String(localized: "\(value) days")
+        case .week: duration = String(localized: "\(value) weeks")
+        case .month: duration = String(localized: "\(value) months")
+        case .year: duration = String(localized: "\(value) years")
+        @unknown default: return nil
+        }
+        return String(localized: "\(price) / \(duration)")
+    }
+
+    /// The trial label leads the disclosure sentence, so English gets title case
+    /// ("7-Day Free Trial, then ..."). Translations already start capitalized.
+    static func sentenceLead(_ trial: String, language: String? = Bundle.main.preferredLocalizations.first) -> String {
+        language?.hasPrefix("en") == true ? trial.localizedCapitalized : trial
+    }
+}
+
 extension Package {
     var glpProPackageKind: GLPProPackageKind {
         GLPProPackageKind(package: self)
@@ -120,15 +150,8 @@ extension Package {
 
     var glpProPriceLabel: String {
         guard let period = storeProduct.subscriptionPeriod else { return storeProduct.localizedPriceString }
-        let duration: String
-        switch period.unit {
-        case .day: duration = String(localized: "\(period.value) days")
-        case .week: duration = String(localized: "\(period.value) weeks")
-        case .month: duration = String(localized: "\(period.value) months")
-        case .year: duration = String(localized: "\(period.value) years")
-        @unknown default: return storeProduct.localizedPriceString
-        }
-        return String(localized: "\(storeProduct.localizedPriceString) / \(duration)")
+        return GLPProPriceText.label(price: storeProduct.localizedPriceString, unit: period.unit, value: period.value)
+            ?? storeProduct.localizedPriceString
     }
 
     var glpProIntroOfferLabel: String? {
@@ -434,7 +457,7 @@ final class StoreService: NSObject, ObservableObject {
         guard let pkg = directTrialPackage, !isIntroEligibilityUnknown(pkg) else { return nil }
         let renew = String(localized: "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings > Apple ID > Subscriptions.")
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
-            return String(localized: "\(trial), then \(pkg.glpProPriceLabel). \(renew)")
+            return String(localized: "\(GLPProPriceText.sentenceLead(trial)), then \(pkg.glpProPriceLabel). \(renew)")
         }
         return String(localized: "\(pkg.glpProPriceLabel). \(renew)")
     }

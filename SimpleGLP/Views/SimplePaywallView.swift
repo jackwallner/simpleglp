@@ -37,7 +37,7 @@ struct SimplePaywallView: View {
 
     private var benefits: [(icon: String, title: String)] {
         ProFeatures.bullets(isPill: isPillPlan).map { ($0.icon, $0.line) }
-            + [("lock.shield.fill", "On-device private: no accounts, everything stays local")]
+            + [("lock.shield.fill", String(localized: "On-device private: no accounts, everything stays local"))]
     }
     var body: some View {
         ZStack {
@@ -473,7 +473,7 @@ struct SimplePaywallView: View {
         }
         let renew = String(localized: "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings > Subscriptions.")
         if store.isEligibleForIntroOffer(package), let trial = package.glpProIntroOfferLabel {
-            return String(localized: "\(trial), then \(price). \(renew)")
+            return String(localized: "\(GLPProPriceText.sentenceLead(trial)), then \(price). \(renew)")
         }
         return String(localized: "\(price). \(renew)")
     }

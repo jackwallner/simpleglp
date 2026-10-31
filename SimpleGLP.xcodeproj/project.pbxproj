@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		00E023AAC5A9DD5913BEF449 /* GLPWaitActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDCE2957177D2AB2471F910D /* GLPWaitActivity.swift */; };
 		0533A1E80A506B9FBD3D4F0A /* DoseIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62176DB93A31794EA0A099CB /* DoseIntents.swift */; };
+		08F126EF042A435FC4ECECA1 /* RegressionCheckTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E57C8AE40BD9AF75BBAA64B9 /* RegressionCheckTests.swift */; };
 		0AAF01DFEED9B922085DF7D0 /* EditEventSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35EFA633DF7EE0F692370926 /* EditEventSheet.swift */; };
 		0CF8FA005169A004CA71B577 /* ImportService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423148D3B21BF730934FCC05 /* ImportService.swift */; };
 		0FA2535F49C60C15448E30FD /* PillRoutineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39CCBCCCD0813C481A351EA5 /* PillRoutineView.swift */; };
@@ -250,6 +251,7 @@
 		DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvernightAuditTests.swift; sourceTree = "<group>"; };
 		DFAF25058269A15633726D47 /* SupplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyView.swift; sourceTree = "<group>"; };
 		E125328ACA62290EB451989A /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
+		E57C8AE40BD9AF75BBAA64B9 /* RegressionCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegressionCheckTests.swift; sourceTree = "<group>"; };
 		E72BB2053E8DC8186F41B380 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		EDCE2957177D2AB2471F910D /* GLPWaitActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPWaitActivity.swift; sourceTree = "<group>"; };
@@ -368,6 +370,7 @@
 				DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */,
 				8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */,
 				92258E2A91B4142D81240641 /* PillRoutineTests.swift */,
+				E57C8AE40BD9AF75BBAA64B9 /* RegressionCheckTests.swift */,
 				0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */,
 				6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */,
 				72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */,
@@ -797,6 +800,7 @@
 				C7D7B9E869D5595FDAC17DC5 /* OvernightAuditTests.swift in Sources */,
 				6F693C5F54297E4117D4F6E1 /* PaywallFunnelTests.swift in Sources */,
 				76499CE2D0D7797D2ADFBCF0 /* PillRoutineTests.swift in Sources */,
+				08F126EF042A435FC4ECECA1 /* RegressionCheckTests.swift in Sources */,
 				3B765B5194C6C324E8EEBC3F /* ReviewPromptTrackerTests.swift in Sources */,
 				AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */,
 				B3F413CB28D74B364C7B6F5B /* StoreQuarantineTests.swift in Sources */,
@@ -899,7 +903,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 65;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -960,7 +964,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 63;
+				CURRENT_PROJECT_VERSION = 65;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

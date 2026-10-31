@@ -161,7 +161,7 @@ struct EditEventSheet: View {
             rows.append((String(localized: "Sleep"), Measurement(value: sleep, unit: UnitDuration.hours).formatted(.measurement(width: .abbreviated))))
         }
         if let protein = event.proteinGramsToday {
-            rows.append((String(localized: "Protein"), Measurement(value: protein, unit: UnitMass.grams).formatted(.measurement(width: .abbreviated))))
+            rows.append((String(localized: "Protein"), Self.proteinText(protein)))
         }
         if let glucose = event.bloodGlucoseMgPerDL {
             rows.append((String(localized: "Glucose"), "\(glucose.formatted(.number.precision(.fractionLength(0)))) mg/dL"))
@@ -225,6 +225,13 @@ struct EditEventSheet: View {
         }
         DoseRoutineService.historyDidChange(in: modelContext)
         dismiss()
+    }
+
+    /// Grams as recorded, whole numbers. The default `.general` usage converts to
+    /// ounces in the US.
+    static func proteinText(_ grams: Double, locale: Locale = .current) -> String {
+        Measurement(value: grams.rounded(), unit: UnitMass.grams)
+            .formatted(.measurement(width: .abbreviated, usage: .asProvided, numberFormatStyle: .number.precision(.fractionLength(0))).locale(locale))
     }
 }
 

@@ -221,12 +221,17 @@ struct PillRoutineView: View {
     }
 
     private var notificationPermissionCopy: AttributedString {
-        var copy = AttributedString(localized: "Notifications are off, so there’s no ping when it’s over. Turn on notifications.")
+        Self.notificationPermissionCopy()
+    }
+
+    /// Two catalog strings joined, so the accent lands on the action in every language.
+    static func notificationPermissionCopy(bundle: Bundle = .main, locale: Locale = .current) -> AttributedString {
+        var copy = AttributedString(String(localized: "Notifications are off, so there’s no ping when it’s over.", bundle: bundle, locale: locale) + " ")
         copy.foregroundColor = AppTheme.muted
-        if let range = copy.range(of: String(localized: "Turn on notifications")) {
-            copy[range].foregroundColor = AppTheme.brand
-            copy[range].font = .footnote.weight(.semibold)
-        }
+        var action = AttributedString(String(localized: "Turn on notifications", bundle: bundle, locale: locale))
+        action.foregroundColor = AppTheme.brand
+        action.font = .footnote.weight(.semibold)
+        copy.append(action)
         return copy
     }
 
