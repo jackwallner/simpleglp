@@ -25,9 +25,11 @@ final class OnboardingValidationUITests: XCTestCase {
         let name = app.textFields["Medication name"]
         XCTAssertTrue(name.waitForExistence(timeout: 10))
         XCTAssertFalse(continueButton.isEnabled)
+        XCTAssertTrue(app.staticTexts["medicationProblem"].exists)
 
         name.tap()
         name.typeText("Trulicity")
         XCTAssertTrue(continueButton.isEnabled)
+        XCTAssertFalse(app.staticTexts["medicationProblem"].exists)
     }
 }

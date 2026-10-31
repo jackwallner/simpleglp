@@ -452,6 +452,12 @@ struct OnboardingView: View {
             // Variable, trial-only content ABOVE the primary — never shifts the button.
             if isTrialStep {
                 trialAboveButton
+            } else if step == Self.medicationStepIndex, let medicationProblem {
+                Text(medicationProblem)
+                    .font(.footnote)
+                    .foregroundStyle(AppTheme.muted)
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("medicationProblem")
             }
 
             Button(action: handlePrimary) {
