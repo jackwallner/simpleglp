@@ -1,1 +1,1 @@
-Améliorations en coulisses et corrections de bugs pour que Simple GLP reste fluide. Merci d'être là.
+A first dose dated before setup no longer shows as overdue. Late weekly shots, dose steps and refill heads-ups are more accurate, streaks hold across daylight saving, and translated prices and units read correctly.

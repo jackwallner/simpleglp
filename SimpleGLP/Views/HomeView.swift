@@ -46,17 +46,25 @@ struct HomeView: View {
                 } else {
                     nextShotSection
                     shotButton
-                    Button("Took it earlier?") { logEarlierStart = LogEarlierStart(date: .now) }
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(AppTheme.brand)
+                    Button { logEarlierStart = LogEarlierStart(date: .now) } label: {
+                        Text("Took it earlier?")
+                            .frame(minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(AppTheme.brand)
                         .disabled(coordinator.isCapturing || showConfirmation)
                 }
 
                 if coordinator.showUndoOption, coordinator.lastCapturedEventID != nil {
-                    Button("Undo") {
+                    Button {
                         coordinator.undoLastCapture(in: modelContext)
                         showConfirmation = false
                         confirmationTask?.cancel()
+                    } label: {
+                        Text("Undo")
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     }
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
@@ -124,7 +132,7 @@ struct HomeView: View {
         Button(action: logDose) {
             ZStack {
                 Circle()
-                    .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brand)
+                    .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill)
                     .frame(width: 220, height: 220)
                     .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
                 VStack(spacing: 8) {

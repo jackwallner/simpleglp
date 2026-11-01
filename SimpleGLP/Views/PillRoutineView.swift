@@ -136,7 +136,7 @@ struct PillRoutineView: View {
             Button(action: onLog) {
                 ZStack {
                     Circle()
-                        .fill(AppTheme.brand)
+                        .fill(AppTheme.brandFill)
                         .frame(width: 220, height: 220)
                         .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
                     VStack(spacing: 8) {
@@ -321,7 +321,7 @@ struct WeekStrip: View {
                         .foregroundStyle(isToday ? AppTheme.text : AppTheme.muted)
                     ZStack {
                         Circle()
-                            .fill(day.taken ? AppTheme.brand : Color.clear)
+                            .fill(day.taken ? AppTheme.brandFill : Color.clear)
                         Circle()
                             .strokeBorder(day.taken ? AppTheme.brand : AppTheme.surfaceStroke, lineWidth: isToday ? 2 : 1.5)
                         if day.taken {

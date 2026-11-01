@@ -28,26 +28,29 @@ final class ReleaseJourneysUITests: XCTestCase {
         QA.checkpoint(app, "onboarding-trial", paywall: true)
         tap(L("Get Started"), in: app)
         allowSystemAlert()
-        XCTAssertTrue(app.tabBars.buttons[L("One Tap")].waitForExistence(timeout: 20))
+        XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 20))
         QA.checkpoint(app, "first-one-tap")
     }
 
     func test2LogTabsUpgradeAndReturn() {
         let app = XCUIApplication(bundleIdentifier: Self.bundleID)
         QA.launch(app, environment: Self.customer, arguments: ["-uitesting", "-GLPScreenshotSeed", "-rcfunnelprobe"])
-        XCTAssertTrue(app.tabBars.buttons[L("One Tap")].waitForExistence(timeout: 20))
+        XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 20))
         QA.checkpoint(app, "one-tap")
 
         for tab in ["History", "Patterns", "Settings"] {
-            let button = app.tabBars.buttons[L(tab)]
-            XCTAssertTrue(button.waitForExistence(timeout: 10))
-            button.tap()
+            // Unfolded, History is its own pane beside One Tap and has no tab.
+            if tab == "History" && !tabButton(L(tab), in: app).waitForExistence(timeout: 3) {
+                QA.checkpoint(app, tab.lowercased())
+                continue
+            }
+            tapTab(L(tab), in: app)
             QA.checkpoint(app, tab.lowercased())
         }
 
         // The screenshot seed hides Settings' Pro row, so upgrade from the
         // Pro preview at the foot of Patterns.
-        app.tabBars.buttons[L("Patterns")].tap()
+        tapTab(L("Patterns"), in: app)
         // The whole preview opens the plans; its header is always on screen.
         let upgrade = app.staticTexts[L("What Pro watches for you")].firstMatch
         XCTAssertTrue(upgrade.waitForExistence(timeout: 15))
@@ -56,13 +59,13 @@ final class ReleaseJourneysUITests: XCTestCase {
         QA.checkpoint(app, "upgrade", paywall: true)
         app.swipeDown(velocity: .fast)
 
-        app.tabBars.buttons[L("One Tap")].tap()
+        tapTab(L("One Tap"), in: app)
         QA.checkpoint(app, "one-tap-return")
         QA.interrupt(app)
-        XCTAssertTrue(app.tabBars.buttons[L("One Tap")].waitForExistence(timeout: 15))
+        XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 15))
         QA.checkpoint(app, "one-tap-after-background")
         QA.relaunch(app)
-        XCTAssertTrue(app.tabBars.buttons[L("One Tap")].waitForExistence(timeout: 20))
+        XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 20))
         QA.checkpoint(app, "one-tap-after-relaunch")
     }
 
@@ -71,7 +74,7 @@ final class ReleaseJourneysUITests: XCTestCase {
     func testCoreLoopOneTapLogsTodaysShotAndKeepsIt() {
         let app = XCUIApplication(bundleIdentifier: Self.bundleID)
         QA.launch(app, environment: Self.customer, arguments: ["-uitesting", "-GLPScreenshotSeed", "-rcfunnelprobe"])
-        XCTAssertTrue(app.tabBars.buttons[L("One Tap")].waitForExistence(timeout: 20))
+        XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 20))
         QA.checkpoint(app, "one-tap-before-log")
         let locale = Locale(identifier: QA.persona == "german" ? "de_DE" : "en_US")
         let today = Date.now.formatted(Date.FormatStyle(date: .long, time: .omitted).locale(locale))
@@ -80,13 +83,16 @@ final class ReleaseJourneysUITests: XCTestCase {
         let shot = app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", L("I took my shot"))).firstMatch
         XCTAssertTrue(shot.waitForExistence(timeout: 15))
         shot.tap()
-        assertCount(todays, before + 1, "the shot is logged for today")
+        // Unfolded, History's pane lists the shot beside One Tap's recent list.
+        let grew = XCTNSPredicateExpectation(predicate: NSPredicate(format: "count > %d", before), object: todays)
+        XCTAssertEqual(XCTWaiter().wait(for: [grew], timeout: 15), .completed, "the shot is logged for today")
+        let logged = todays.count
         QA.checkpoint(app, "one-tap-logged")
         // Reopen without the seed, which would replace the logged shot.
         app.launchArguments.removeAll { $0 == "-GLPScreenshotSeed" }
         QA.relaunch(app)
-        XCTAssertTrue(app.tabBars.buttons[L("One Tap")].waitForExistence(timeout: 20))
-        assertCount(todays, before + 1, "today's shot survives a relaunch")
+        XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 20))
+        assertCount(todays, logged, "today's shot survives a relaunch")
         QA.checkpoint(app, "one-tap-after-relaunch")
     }
 
@@ -106,6 +112,24 @@ final class ReleaseJourneysUITests: XCTestCase {
 
     private func L(_ english: String) -> String {
         QA.persona == "german" ? Self.german[english] ?? english : english
+    }
+
+    /// A tab bar on a phone; unfolded, the Duo's bar is not a `tabBars`
+    /// element, so match the tab's button by label wherever it sits.
+    private func tabButton(_ label: String, in app: XCUIApplication) -> XCUIElement {
+        app.buttons.matching(NSPredicate(format: "label == %@", label)).firstMatch
+    }
+
+    /// A tap can miss on the unfolded Duo; a short press on the button's own
+    /// coordinate selects it there too.
+    private func tapTab(_ label: String, in app: XCUIApplication) {
+        let button = tabButton(label, in: app)
+        XCTAssertTrue(button.waitForExistence(timeout: 15), "\(label) tab")
+        button.tap()
+        let selected = NSPredicate(format: "isSelected == true")
+        if XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: selected, object: button)], timeout: 3) != .completed {
+            button.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).press(forDuration: 0.05)
+        }
     }
 
     private func tap(_ label: String, in app: XCUIApplication) {

@@ -84,7 +84,7 @@ struct MonthAdherenceView: View {
         } label: {
             ZStack {
                 Circle()
-                    .fill(taken ? AppTheme.brand : Color.clear)
+                    .fill(taken ? AppTheme.brandFill : Color.clear)
                 if !taken && isPlanned {
                     Circle()
                         .strokeBorder(isToday ? AppTheme.brand : AppTheme.surfaceStroke, lineWidth: isToday ? 2 : 1.5)
