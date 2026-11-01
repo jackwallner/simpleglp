@@ -364,15 +364,17 @@ struct SimplePaywallView: View {
             .buttonStyle(.plain)
             .disabled(isPurchasing || store.isRefreshingPurchase || store.isLoadingProducts || (store.products.isEmpty == false && selectedPackage == nil))
 
-            Text(trialReassuranceLine ?? " ")
+            // One reserved line: a failed purchase or restore replaces the trial reminder
+            // here instead of pushing the buy button down.
+            Text(statusLine ?? " ")
                 .font(.caption.weight(.semibold))
-                .foregroundStyle(AppTheme.brand)
+                .foregroundStyle(errorMessage != nil ? Color.red : restoreMessage != nil ? AppTheme.muted : AppTheme.brandText)
                 .multilineTextAlignment(.center)
                 .lineLimit(isLargeText ? nil : 2)
                 .minimumScaleFactor(0.85)
                 .frame(minHeight: 18)
-                .opacity(trialReassuranceLine == nil ? 0 : 1)
-                .accessibilityHidden(trialReassuranceLine == nil)
+                .opacity(statusLine == nil ? 0 : 1)
+                .accessibilityHidden(statusLine == nil)
 
             Text(disclosureText ?? " ")
                 .font(.caption2)
@@ -393,19 +395,11 @@ struct SimplePaywallView: View {
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
             }
-            if let errorMessage {
-                Text(errorMessage)
-                    .font(.caption)
-                    .foregroundStyle(.red)
-                    .multilineTextAlignment(.center)
-            }
-            if let restoreMessage {
-                Text(restoreMessage)
-                    .font(.caption)
-                    .foregroundStyle(AppTheme.muted)
-                    .multilineTextAlignment(.center)
-            }
         }
+    }
+
+    private var statusLine: String? {
+        errorMessage ?? restoreMessage ?? trialReassuranceLine
     }
 
     private var footerLinks: some View {
