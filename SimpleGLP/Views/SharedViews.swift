@@ -30,7 +30,7 @@ struct ScheduleFields: View {
         CadenceField(intervalDays: $intervalDays)
         Text(GLPScheduleFormat.summary(firstDose: firstDose, intervalDays: intervalDays))
             .font(.footnote)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(AppTheme.muted)
     }
 }
 
@@ -57,7 +57,10 @@ struct CadenceField: View {
 
     var body: some View {
         HStack {
+            // German's one-word label has to share the row with two menus.
             Text("Repeat interval")
+                .lineLimit(1)
+                .minimumScaleFactor(0.75)
             Spacer()
             Picker("Count", selection: countBinding) {
                 ForEach(1...unit.maxCount, id: \.self) { Text("\($0)").tag($0) }

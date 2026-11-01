@@ -22,8 +22,15 @@ enum AppTheme {
         light: Color(red: 0.847, green: 0.847, blue: 0.820),
         dark: Color(red: 0.282, green: 0.282, blue: 0.267)
     )
-    static let brand = Color(red: 0.184, green: 0.749, blue: 0.443)
-    static let brandPressed = Color(red: 0.141, green: 0.620, blue: 0.361)
+    // Green that reads as text: deeper on light backgrounds, bright on dark.
+    static let brand = adaptive(
+        light: Color(red: 0.102, green: 0.498, blue: 0.271),
+        dark: Color(red: 0.184, green: 0.749, blue: 0.443)
+    )
+    // Behind white text and icons in both modes; the bright green under white
+    // measured 2.5:1.
+    static let brandFill = Color(red: 0.102, green: 0.498, blue: 0.271)
+    static let brandPressed = Color(red: 0.075, green: 0.408, blue: 0.220)
     static let brandSoft = adaptive(
         light: Color(red: 0.847, green: 0.937, blue: 0.871),
         dark: Color(red: 0.110, green: 0.227, blue: 0.157)

@@ -1,1 +1,1 @@
-Simple GLP ସୁଗମ ଭାବେ ଚାଲିବା ପାଇଁ ପୃଷ୍ଠଭୂମି ଉନ୍ନତି ଓ ତ୍ରୁଟି ସମାଧାନ। ସାଥିରେ ରହିଥିବାରୁ ଧନ୍ୟବାଦ।
+A first dose dated before setup no longer shows as overdue. Late weekly shots, dose steps and refill heads-ups are more accurate, streaks hold across daylight saving, and translated prices and units read correctly.

@@ -224,7 +224,7 @@ struct OnboardingView: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
-            .background(selected ? AppTheme.brand : AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .background(selected ? AppTheme.brandFill : AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .strokeBorder(selected ? Color.clear : AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
@@ -474,7 +474,7 @@ struct OnboardingView: View {
                 .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(AppTheme.brand, in: Capsule())
+                .background(AppTheme.brandFill, in: Capsule())
                 .shadow(color: AppTheme.brand.opacity(0.3), radius: 12, x: 0, y: 6)
             }
             .buttonStyle(.plain)
@@ -685,7 +685,7 @@ struct OnboardingFoldPanel: View {
     var body: some View {
         VStack(spacing: 28) {
             Circle()
-                .fill(AppTheme.brand)
+                .fill(AppTheme.brandFill)
                 .frame(width: 200, height: 200)
                 .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
                 .overlay {

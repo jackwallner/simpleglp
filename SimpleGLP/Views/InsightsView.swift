@@ -110,7 +110,7 @@ struct InsightsView: View {
                      ? String(localized: "\(onTime) of \(total) pills logged within the expected window.")
                      : String(localized: "\(onTime) of \(total) shots logged within the expected window."))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .padding(.horizontal)
@@ -289,7 +289,7 @@ struct InsightsView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(AppTheme.brand)
+                        .fill(AppTheme.brandFill)
                         .frame(width: 40, height: 40)
                         .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
                     Image(systemName: "lock.fill")
@@ -317,7 +317,7 @@ struct InsightsView: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 13)
-                    .background(AppTheme.brand, in: Capsule())
+                    .background(AppTheme.brandFill, in: Capsule())
                     .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
             }
             .buttonStyle(.plain)
