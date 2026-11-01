@@ -56,7 +56,7 @@ struct OnboardingView: View {
                     VStack(spacing: 24) {
                         contentView
                         if isTrialStep && dynamicTypeSize.isAccessibilitySize {
-                            trialOffer
+                            trialAboveButton
                         }
                     }
                     .padding(.horizontal, 24)
@@ -268,10 +268,13 @@ struct OnboardingView: View {
                 .pickerStyle(.menu)
                 .labelsHidden()
             }
-            Button("Use custom dose") { useCustomDose = true }
-                .font(.footnote)
-                .foregroundStyle(AppTheme.brandText)
-                .frame(minHeight: 44, alignment: .leading)
+            Button { useCustomDose = true } label: {
+                Text("Use custom dose")
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .font(.footnote)
+            .foregroundStyle(AppTheme.brandText)
         } else {
             HStack {
                 Text("Current dose (mg)")
@@ -459,7 +462,7 @@ struct OnboardingView: View {
         VStack(spacing: 12) {
             // Variable, trial-only content ABOVE the primary — never shifts the button.
             if isTrialStep {
-                trialAboveButton
+                if !dynamicTypeSize.isAccessibilitySize { trialAboveButton }
             } else if step == Self.medicationStepIndex, let medicationProblem {
                 Text(medicationProblem)
                     .font(.footnote)
@@ -520,14 +523,17 @@ struct OnboardingView: View {
 
     private var legalFooter: some View {
         HStack(spacing: 0) {
-            Link("Terms", destination: PaywallLinks.standardEULA)
-                .frame(minWidth: 44, minHeight: 44)
+            LegalLink(title: "Terms", url: PaywallLinks.standardEULA)
             Text("·").foregroundStyle(AppTheme.muted)
-            Link("Privacy", destination: PaywallLinks.privacyPolicy)
-                .frame(minWidth: 44, minHeight: 44)
+            LegalLink(title: "Privacy", url: PaywallLinks.privacyPolicy)
             Text("·").foregroundStyle(AppTheme.muted)
-            Button("Restore") { Task { await store.restorePurchases() } }
-                .frame(minWidth: 44, minHeight: 44)
+            Button { Task { await store.restorePurchases() } } label: {
+                Text("Restore")
+                    .padding(.horizontal, 6)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
         }
         .font(.caption2)
         .foregroundStyle(AppTheme.muted)
@@ -546,29 +552,31 @@ struct OnboardingView: View {
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("onboardingMedicalDisclaimer")
-            if !dynamicTypeSize.isAccessibilitySize {
-                trialOffer
-            }
+            trialOffer
         }
     }
 
-    /// Free exit, billing disclosure and errors. Above the primary at normal sizes;
-    /// at accessibility sizes it scrolls with the content so the CTA keeps the screen.
+    /// Free exit, billing disclosure and errors. The disclaimer and these sit above the
+    /// primary at normal sizes; at accessibility sizes they scroll with the content so
+    /// the CTA keeps the screen.
     @ViewBuilder
     private var trialOffer: some View {
         VStack(spacing: 10) {
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
-            Button(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started")) {
+            Button {
                 ConversionDiagnostics.record(.freeVersionChosen)
                 store.syncConversionAttributes()
                 finishOnboarding()
+            } label: {
+                Text(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started"))
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(AppTheme.muted)
-                .buttonStyle(.plain)
-                .frame(minHeight: 44)
-                .disabled(isPurchasing)
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(AppTheme.muted)
+            .buttonStyle(.plain)
+            .disabled(isPurchasing)
 
             // No disclosure until the package (real price) loads — never a placeholder.
             if let disclosure = store.onboardingTrialDisclosureText {

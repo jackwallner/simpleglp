@@ -294,6 +294,7 @@ struct PlanEditorView: View {
                 .font(.footnote)
                 .foregroundStyle(AppTheme.brandText)
                 .frame(minHeight: 44, alignment: .leading)
+                .contentShape(Rectangle())
         } else {
             HStack {
                 Text("Dose (mg)")
@@ -490,6 +491,7 @@ struct AddDoseStepSheet: View {
                             .font(.footnote)
                             .foregroundStyle(AppTheme.brandText)
                             .frame(minHeight: 44, alignment: .leading)
+                            .contentShape(Rectangle())
                     } else {
                         HStack {
                             Text("Dose (mg)")

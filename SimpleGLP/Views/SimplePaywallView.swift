@@ -74,7 +74,9 @@ struct SimplePaywallView: View {
     private var paywallContent: some View {
         VStack(spacing: 12) {
             header
-            benefitList
+            // At accessibility sizes the plans and prices come before the benefit list,
+            // so the first screen already shows what the purchase costs.
+            if !isLargeText { benefitList }
             if store.products.isEmpty {
                 planPlaceholder
             } else {
@@ -82,6 +84,7 @@ struct SimplePaywallView: View {
             }
             Spacer(minLength: 0)
             purchaseSection
+            if isLargeText { benefitList }
             footerLinks
         }
         .padding(.horizontal, 22)
@@ -377,7 +380,7 @@ struct SimplePaywallView: View {
                 .multilineTextAlignment(.center)
                 .lineLimit(isLargeText ? nil : 4)
                 .minimumScaleFactor(0.9)
-                .frame(minHeight: 56, alignment: .top)
+                .frame(minHeight: 44, alignment: .top)
                 .opacity(disclosureText == nil ? 0 : 1)
                 .accessibilityHidden(disclosureText == nil)
 
@@ -406,28 +409,38 @@ struct SimplePaywallView: View {
     }
 
     private var footerLinks: some View {
-        VStack(spacing: 0) {
-            Button(action: startRestore) {
-                Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
-                    .font(.caption.weight(.semibold))
-                    .foregroundStyle(AppTheme.muted)
-                    .padding(.horizontal, 12)
-                    .frame(minHeight: 44)
-                    .contentShape(Rectangle())
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 0) { restoreButton; footerDot; termsLink; footerDot; privacyLink }
+            VStack(spacing: 0) {
+                restoreButton
+                HStack(spacing: 0) { termsLink; footerDot; privacyLink }
             }
-            .buttonStyle(.plain)
-            .disabled(isRestoring || isPurchasing)
-
-            HStack(spacing: 0) {
-                Link("Terms", destination: PaywallLinks.standardEULA)
-                    .frame(minWidth: 44, minHeight: 44)
-                Text("·").foregroundStyle(AppTheme.muted)
-                Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
-                    .frame(minWidth: 44, minHeight: 44)
-            }
-            .font(.caption2)
-            .foregroundStyle(AppTheme.muted)
         }
+        .font(.caption2)
+        .foregroundStyle(AppTheme.muted)
+    }
+
+    private var footerDot: some View { Text("·").foregroundStyle(AppTheme.muted) }
+
+    private var restoreButton: some View {
+        Button(action: startRestore) {
+            Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(AppTheme.muted)
+                .padding(.horizontal, 12)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .disabled(isRestoring || isPurchasing)
+    }
+
+    private var termsLink: some View {
+        LegalLink(title: "Terms", url: PaywallLinks.standardEULA)
+    }
+
+    private var privacyLink: some View {
+        LegalLink(title: "Privacy Policy", url: PaywallLinks.privacyPolicy)
     }
 
     private var closeButton: some View {
@@ -630,90 +643,26 @@ private struct GLPProPlanCard: View {
 
     var body: some View {
         Button(action: onTap) {
-            let layout = isLargeText ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8)) : AnyLayout(HStackLayout(spacing: 14))
-            layout {
-                ZStack {
-                    Circle()
-                        .stroke(isSelected ? AppTheme.brand : AppTheme.surfaceStroke, lineWidth: 2)
-                        .frame(width: 22, height: 22)
-                    if isSelected {
-                        Circle()
-                            .fill(AppTheme.brandFill)
-                            .frame(width: 12, height: 12)
+            Group {
+                if isLargeText {
+                    VStack(alignment: .leading, spacing: 8) {
+                        radio
+                        details
+                        priceColumn
+                    }
+                } else {
+                    HStack(spacing: 14) {
+                        radio
+                        details
+                        Spacer(minLength: 8)
+                        // Never let the trailing price column compress or clip.
+                        priceColumn.fixedSize(horizontal: true, vertical: false)
                     }
                 }
-
-                VStack(alignment: .leading, spacing: 4) {
-                    let nameLayout = isLargeText ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4)) : AnyLayout(HStackLayout(spacing: 6))
-                    nameLayout {
-                        Text(package.glpProDisplayName)
-                            .font(.subheadline.weight(.bold))
-                            .foregroundStyle(AppTheme.text)
-                            .lineLimit(isLargeText ? nil : 1)
-                            .minimumScaleFactor(0.8)
-                        if let savingsLabel {
-                            Text(savingsLabel)
-                                .font(.system(size: 9, weight: .heavy))
-                                .lineLimit(1)
-                                .fixedSize()
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(AppTheme.brandFill, in: Capsule())
-                        } else if isBestValue {
-                            Text("BEST VALUE")
-                                .font(.system(size: 9, weight: .heavy))
-                                .lineLimit(1)
-                                .fixedSize()
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(AppTheme.brandFill, in: Capsule())
-                        }
-                    }
-                    if showsTrialBadge, let trial = package.glpProIntroOfferLabel {
-                        // Reinforce the trial on the card itself, with the per-month
-                        // anchor beside it — not just in the CTA.
-                        if let perMonthLabel {
-                            Text("\(trial) · \(perMonthLabel)")
-                                .font(.caption2.weight(.semibold))
-                                .foregroundStyle(AppTheme.calm)
-                                .lineLimit(isLargeText ? nil : 1)
-                                .minimumScaleFactor(0.8)
-                        } else {
-                            Text(trial)
-                                .font(.caption2.weight(.semibold))
-                                .foregroundStyle(AppTheme.calm)
-                                .lineLimit(isLargeText ? nil : 1)
-                        }
-                    } else if let perMonthLabel {
-                        Text(perMonthLabel)
-                            .font(.caption2.weight(.medium))
-                            .foregroundStyle(AppTheme.muted)
-                            .lineLimit(isLargeText ? nil : 1)
-                    }
-                }
-
-                if !isLargeText { Spacer(minLength: 8) }
-
-                VStack(alignment: isLargeText ? .leading : .trailing, spacing: 2) {
-                    Text(package.glpProPriceLabel)
-                        .font(.subheadline.weight(.semibold).monospacedDigit())
-                        .foregroundStyle(AppTheme.text)
-                        .lineLimit(isLargeText ? nil : 1)
-                    if let anchorPriceLabel {
-                        Text(anchorPriceLabel)
-                            .font(.caption2.monospacedDigit())
-                            .strikethrough()
-                            .foregroundStyle(AppTheme.muted)
-                            .lineLimit(isLargeText ? nil : 1)
-                    }
-                }
-                // Never let the trailing price column compress or clip.
-                .fixedSize(horizontal: !isLargeText, vertical: false)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)
+            .frame(maxWidth: .infinity, alignment: .leading)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
             .overlay {
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
@@ -724,5 +673,93 @@ private struct GLPProPlanCard: View {
         .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(isSelected ? [.isSelected, .isButton] : .isButton)
+    }
+
+    private var radio: some View {
+        ZStack {
+            Circle()
+                .stroke(isSelected ? AppTheme.brand : AppTheme.surfaceStroke, lineWidth: 2)
+                .frame(width: 22, height: 22)
+            if isSelected {
+                Circle()
+                    .fill(AppTheme.brandFill)
+                    .frame(width: 12, height: 12)
+            }
+        }
+    }
+
+    private var nameText: some View {
+        Text(package.glpProDisplayName)
+            .font(.subheadline.weight(.bold))
+            .foregroundStyle(AppTheme.text)
+            .lineLimit(isLargeText ? nil : 1)
+            .minimumScaleFactor(0.8)
+    }
+
+    @ViewBuilder
+    private var badge: some View {
+        if let savingsLabel {
+            badgeText(savingsLabel)
+        } else if isBestValue {
+            badgeText(String(localized: "BEST VALUE"))
+        }
+    }
+
+    private func badgeText(_ text: String) -> some View {
+        Text(text)
+            .font(.system(size: 9, weight: .heavy))
+            .lineLimit(1)
+            .fixedSize()
+            .foregroundStyle(.white)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 2)
+            .background(AppTheme.brandFill, in: Capsule())
+    }
+
+    private var details: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            // A long badge ("BESTES ANGEBOT") drops under the name instead of squeezing it.
+            ViewThatFits(in: .horizontal) {
+                HStack(spacing: 6) { nameText; badge }
+                VStack(alignment: .leading, spacing: 4) { nameText; badge }
+            }
+            if showsTrialBadge, let trial = package.glpProIntroOfferLabel {
+                // Reinforce the trial on the card itself, with the per-month
+                // anchor beside it, not just in the CTA.
+                if let perMonthLabel {
+                    Text("\(trial) · \(perMonthLabel)")
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(AppTheme.calm)
+                        .lineLimit(isLargeText ? nil : 1)
+                        .minimumScaleFactor(0.8)
+                } else {
+                    Text(trial)
+                        .font(.caption2.weight(.semibold))
+                        .foregroundStyle(AppTheme.calm)
+                        .lineLimit(isLargeText ? nil : 1)
+                }
+            } else if let perMonthLabel {
+                Text(perMonthLabel)
+                    .font(.caption2.weight(.medium))
+                    .foregroundStyle(AppTheme.muted)
+                    .lineLimit(isLargeText ? nil : 1)
+            }
+        }
+    }
+
+    private var priceColumn: some View {
+        VStack(alignment: isLargeText ? .leading : .trailing, spacing: 2) {
+            Text(package.glpProPriceLabel)
+                .font(.subheadline.weight(.semibold).monospacedDigit())
+                .foregroundStyle(AppTheme.text)
+                .lineLimit(isLargeText ? nil : 1)
+            if let anchorPriceLabel {
+                Text(anchorPriceLabel)
+                    .font(.caption2.monospacedDigit())
+                    .strikethrough()
+                    .foregroundStyle(AppTheme.muted)
+                    .lineLimit(isLargeText ? nil : 1)
+            }
+        }
     }
 }

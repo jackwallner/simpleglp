@@ -16,7 +16,7 @@ struct HomeView: View {
     /// Non-nil while the "when did you take it?" sheet is up, holding its starting time.
     @State private var logEarlierStart: LogEarlierStart?
 
-    private var recentEvents: [ShotEvent] { Array(events.prefix(5)) }
+    private var recentEvents: [ShotEvent] { Array(events.prefix(3)) }
     private var plan: MedicationPlan? { plans.first }
     private var form: DoseForm { plan?.form ?? .injection }
 

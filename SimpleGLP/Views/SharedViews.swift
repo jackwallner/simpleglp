@@ -150,3 +150,22 @@ struct MedicationPicker: View {
         }
     }
 }
+
+/// A legal link with a 44pt target. The frame sits inside the label, where the
+/// accessibility hit area is measured, which a frame around a `Link` does not reach.
+struct LegalLink: View {
+    @Environment(\.openURL) private var openURL
+    let title: LocalizedStringKey
+    let url: URL
+
+    var body: some View {
+        Button { openURL(url) } label: {
+            Text(title)
+                .padding(.horizontal, 6)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(.isLink)
+    }
+}
