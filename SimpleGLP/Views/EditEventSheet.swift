@@ -118,18 +118,18 @@ struct EditEventSheet: View {
                         Text(row.label)
                         Spacer()
                         Text(row.value)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppTheme.muted)
                             .monospacedDigit()
                     }
                 }
                 if rows.isEmpty {
                     Text(healthStatusCopy)
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                 } else if event.healthStatus != .captured, let msg = GLPHealthCopy.localizedMessage(event.healthStatusMessage), !msg.isEmpty {
                     Text(msg)
                         .font(.footnote)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                 }
             } header: {
                 Text("That day")
@@ -250,7 +250,7 @@ struct FeelingRow: View {
                 Spacer()
                 Text(value == Self.unrated ? "–" : "\(value)")
                     .monospacedDigit()
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
     }

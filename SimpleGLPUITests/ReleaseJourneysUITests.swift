@@ -27,7 +27,7 @@ final class ReleaseJourneysUITests: XCTestCase {
         XCTAssertTrue(app.buttons[L("Get Started")].waitForExistence(timeout: 20))
         QA.checkpoint(app, "onboarding-trial", paywall: true)
         tap(L("Get Started"), in: app)
-        allowSystemAlert()
+        allowSystemAlert(followUps: true)
         XCTAssertTrue(tabButton(L("One Tap"), in: app).waitForExistence(timeout: 20))
         QA.checkpoint(app, "first-one-tap")
     }
@@ -143,11 +143,26 @@ final class ReleaseJourneysUITests: XCTestCase {
         QA.checkpoint(app, name)
     }
 
-    private func allowSystemAlert() {
+    /// The notification prompt and then the Health sheet arrive one after the other
+    /// after the last onboarding step; with `followUps` every one is answered so the
+    /// next checkpoint is not taken while a system sheet is still on its way.
+    private func allowSystemAlert(followUps: Bool = false) {
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
-        for label in [L("Allow"), L("Don't Allow")] where springboard.buttons[label].waitForExistence(timeout: 2) {
-            springboard.buttons[label].tap()
-            return
+        let labels = [L("Allow"), L("Don't Allow")]
+        var wait: TimeInterval = 2
+        while true {
+            let deadline = Date().addingTimeInterval(wait)
+            var answered = false
+            while Date() < deadline, !answered {
+                if let button = labels.map({ springboard.buttons[$0] }).first(where: { $0.exists && $0.isEnabled }) {
+                    button.tap()
+                    answered = true
+                } else {
+                    usleep(250_000)
+                }
+            }
+            guard answered, followUps else { return }
+            wait = 3
         }
     }
 }

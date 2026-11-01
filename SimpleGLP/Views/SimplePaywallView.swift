@@ -23,6 +23,7 @@ enum PaywallLinks {
 struct SimplePaywallView: View {
     @EnvironmentObject private var store: StoreService
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @Query private var events: [ShotEvent]
     @AppStorage(GLPStorageKey.isPillPlan.rawValue, store: GLPAppGroup.userDefaults) private var isPillPlan = false
 
@@ -43,7 +44,11 @@ struct SimplePaywallView: View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            paywallContent
+            if isLargeText {
+                ScrollView(showsIndicators: false) { paywallContent }
+            } else {
+                paywallContent
+            }
 
             if displayCloseButton {
                 closeButton
@@ -62,6 +67,9 @@ struct SimplePaywallView: View {
         .onChange(of: store.products.count) { _, _ in selectDefaultPackageIfNeeded() }
     }
 
+    /// At accessibility sizes nothing fits one screen: scroll, wrap, never truncate.
+    private var isLargeText: Bool { dynamicTypeSize.isAccessibilitySize }
+
     /// Single viewport — personalized hero, benefits, plans, and CTA together.
     private var paywallContent: some View {
         VStack(spacing: 12) {
@@ -79,7 +87,7 @@ struct SimplePaywallView: View {
         .padding(.horizontal, 22)
         .padding(.top, displayCloseButton ? 44 : 16)
         .padding(.bottom, 14)
-        .frame(maxHeight: .infinity)
+        .frame(maxHeight: isLargeText ? nil : .infinity)
     }
 
     // MARK: - Personalized hero
@@ -114,7 +122,7 @@ struct SimplePaywallView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(isLargeText ? nil : 2)
                     .minimumScaleFactor(0.9)
             } else if shots >= 1 {
                 Text(shots == 1
@@ -126,7 +134,7 @@ struct SimplePaywallView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(isLargeText ? nil : 2)
                     .minimumScaleFactor(0.9)
             } else {
                 Text("Keep every dose in view.")
@@ -136,13 +144,14 @@ struct SimplePaywallView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
-                    .lineLimit(2)
+                    .lineLimit(isLargeText ? nil : 2)
                     .minimumScaleFactor(0.9)
             }
 
             Label("Private · On-device · No accounts", systemImage: "lock.fill")
                 .font(.caption2.weight(.medium))
                 .foregroundStyle(AppTheme.muted)
+                .multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
     }
@@ -158,7 +167,7 @@ struct SimplePaywallView: View {
                     Text(benefit.title)
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(AppTheme.text)
-                        .lineLimit(2)
+                        .lineLimit(isLargeText ? nil : 2)
                         .minimumScaleFactor(0.85)
                     Spacer(minLength: 0)
                 }
@@ -334,15 +343,18 @@ struct SimplePaywallView: View {
                     Text(primaryButtonTitle)
                         .font(.headline.weight(.bold))
                         .foregroundStyle(.white)
-                        .lineLimit(1)
+                        .lineLimit(isLargeText ? nil : 1)
                         .minimumScaleFactor(0.72)
+                        .multilineTextAlignment(.center)
                         .opacity(isPurchasing ? 0 : 1)
                     if isPurchasing {
                         ProgressView().tint(.white)
                     }
                 }
                 .frame(maxWidth: .infinity)
-                .frame(height: 52)
+                .padding(.horizontal, 16)
+                .padding(.vertical, isLargeText ? 12 : 0)
+                .frame(minHeight: 52)
                 .background(AppTheme.brandFill, in: Capsule())
                 .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
             }
@@ -353,7 +365,7 @@ struct SimplePaywallView: View {
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(AppTheme.brand)
                 .multilineTextAlignment(.center)
-                .lineLimit(2)
+                .lineLimit(isLargeText ? nil : 2)
                 .minimumScaleFactor(0.85)
                 .frame(minHeight: 18)
                 .opacity(trialReassuranceLine == nil ? 0 : 1)
@@ -363,7 +375,7 @@ struct SimplePaywallView: View {
                 .font(.caption2)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
-                .lineLimit(4)
+                .lineLimit(isLargeText ? nil : 4)
                 .minimumScaleFactor(0.9)
                 .frame(minHeight: 56, alignment: .top)
                 .opacity(disclosureText == nil ? 0 : 1)
@@ -394,19 +406,24 @@ struct SimplePaywallView: View {
     }
 
     private var footerLinks: some View {
-        VStack(spacing: 6) {
+        VStack(spacing: 0) {
             Button(action: startRestore) {
-                            Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
+                Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
+                    .padding(.horizontal, 12)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .disabled(isRestoring || isPurchasing)
 
-            HStack(spacing: 6) {
+            HStack(spacing: 0) {
                 Link("Terms", destination: PaywallLinks.standardEULA)
+                    .frame(minWidth: 44, minHeight: 44)
                 Text("·").foregroundStyle(AppTheme.muted)
                 Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
+                    .frame(minWidth: 44, minHeight: 44)
             }
             .font(.caption2)
             .foregroundStyle(AppTheme.muted)
@@ -607,10 +624,14 @@ private struct GLPProPlanCard: View {
     let savingsLabel: String?
     let anchorPriceLabel: String?
     let onTap: () -> Void
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
+
+    private var isLargeText: Bool { dynamicTypeSize.isAccessibilitySize }
 
     var body: some View {
         Button(action: onTap) {
-            HStack(spacing: 14) {
+            let layout = isLargeText ? AnyLayout(VStackLayout(alignment: .leading, spacing: 8)) : AnyLayout(HStackLayout(spacing: 14))
+            layout {
                 ZStack {
                     Circle()
                         .stroke(isSelected ? AppTheme.brand : AppTheme.surfaceStroke, lineWidth: 2)
@@ -623,11 +644,12 @@ private struct GLPProPlanCard: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 6) {
+                    let nameLayout = isLargeText ? AnyLayout(VStackLayout(alignment: .leading, spacing: 4)) : AnyLayout(HStackLayout(spacing: 6))
+                    nameLayout {
                         Text(package.glpProDisplayName)
                             .font(.subheadline.weight(.bold))
                             .foregroundStyle(AppTheme.text)
-                            .lineLimit(1)
+                            .lineLimit(isLargeText ? nil : 1)
                             .minimumScaleFactor(0.8)
                         if let savingsLabel {
                             Text(savingsLabel)
@@ -656,39 +678,39 @@ private struct GLPProPlanCard: View {
                             Text("\(trial) · \(perMonthLabel)")
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(AppTheme.calm)
-                                .lineLimit(1)
+                                .lineLimit(isLargeText ? nil : 1)
                                 .minimumScaleFactor(0.8)
                         } else {
                             Text(trial)
                                 .font(.caption2.weight(.semibold))
                                 .foregroundStyle(AppTheme.calm)
-                                .lineLimit(1)
+                                .lineLimit(isLargeText ? nil : 1)
                         }
                     } else if let perMonthLabel {
                         Text(perMonthLabel)
                             .font(.caption2.weight(.medium))
                             .foregroundStyle(AppTheme.muted)
-                            .lineLimit(1)
+                            .lineLimit(isLargeText ? nil : 1)
                     }
                 }
 
-                Spacer(minLength: 8)
+                if !isLargeText { Spacer(minLength: 8) }
 
-                VStack(alignment: .trailing, spacing: 2) {
+                VStack(alignment: isLargeText ? .leading : .trailing, spacing: 2) {
                     Text(package.glpProPriceLabel)
                         .font(.subheadline.weight(.semibold).monospacedDigit())
                         .foregroundStyle(AppTheme.text)
-                        .lineLimit(1)
+                        .lineLimit(isLargeText ? nil : 1)
                     if let anchorPriceLabel {
                         Text(anchorPriceLabel)
                             .font(.caption2.monospacedDigit())
                             .strikethrough()
                             .foregroundStyle(AppTheme.muted)
-                            .lineLimit(1)
+                            .lineLimit(isLargeText ? nil : 1)
                     }
                 }
                 // Never let the trailing price column compress or clip.
-                .fixedSize(horizontal: true, vertical: false)
+                .fixedSize(horizontal: !isLargeText, vertical: false)
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 14)

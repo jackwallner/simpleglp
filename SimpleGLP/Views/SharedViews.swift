@@ -103,11 +103,12 @@ struct CadenceField: View {
 struct StatusPill: View {
     let label: String
     let tint: Color
+    var textTint: Color? = nil
 
     var body: some View {
         Text(label)
             .font(.caption.weight(.semibold))
-            .foregroundStyle(tint)
+            .foregroundStyle(textTint ?? tint)
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(tint.opacity(0.12), in: Capsule())
@@ -126,7 +127,7 @@ struct WaitField: View {
                 Spacer()
                 Text(minutes == 0 ? String(localized: "None") : GLPDurationText.format(seconds: TimeInterval(minutes * 60), units: [.minute], style: .abbreviated))
                     .monospacedDigit()
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
     }

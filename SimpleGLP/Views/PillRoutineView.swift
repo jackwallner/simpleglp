@@ -276,7 +276,7 @@ struct PillRoutineView: View {
                 Spacer(minLength: 0)
                 Image(systemName: "chevron.right")
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(AppTheme.muted)
             }
             .padding(14)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))

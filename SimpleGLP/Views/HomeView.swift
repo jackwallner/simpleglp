@@ -279,7 +279,7 @@ struct RecentShotRow: View {
             VStack(alignment: .trailing, spacing: 4) {
                 Text(event.scheduleStatus.label)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(tint)
+                    .foregroundStyle(textTint)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(tint.opacity(0.14), in: Capsule())
@@ -298,6 +298,14 @@ struct RecentShotRow: View {
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .strokeBorder(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
         )
+    }
+
+    private var textTint: Color {
+        switch event.scheduleStatus {
+        case .onSchedule: AppTheme.brandText
+        case .early, .late: AppTheme.warmText
+        case .extra, .unknown: AppTheme.muted
+        }
     }
 
     private var tint: Color {

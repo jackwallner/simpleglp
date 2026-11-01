@@ -35,6 +35,15 @@ enum AppTheme {
         light: Color(red: 0.847, green: 0.937, blue: 0.871),
         dark: Color(red: 0.110, green: 0.227, blue: 0.157)
     )
+    // Text on a tinted capsule: the plain brand and warm colors measured 4.2:1 on their own 14% fill.
+    static let brandText = adaptive(
+        light: Color(red: 0.063, green: 0.341, blue: 0.180),
+        dark: Color(red: 0.184, green: 0.749, blue: 0.443)
+    )
+    static let warmText = adaptive(
+        light: Color(red: 0.500, green: 0.255, blue: 0.027),
+        dark: Color(red: 0.957, green: 0.635, blue: 0.349)
+    )
     static let calm = Color(red: 0.357, green: 0.753, blue: 0.745)
     static let warm = Color(red: 0.957, green: 0.635, blue: 0.349)
     static let text = adaptive(

@@ -16,7 +16,7 @@ struct InsightsView: View {
                     Card {
                         Text("Keep logging to see Insights. Insights unlock after \(ProactiveAlertsEngine.minimumSampleSize) doses. You have \(events.count) logged.")
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppTheme.muted)
                     }
                     .padding(.horizontal)
                 } else {
@@ -47,7 +47,7 @@ struct InsightsView: View {
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(AppTheme.muted)
                             }
                         }
                         .padding(.horizontal)
@@ -69,7 +69,7 @@ struct InsightsView: View {
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(AppTheme.muted)
                             }
                         }
                         .padding(.horizontal)
@@ -145,7 +145,7 @@ struct InsightsView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.muted)
             Text("\(days) days")
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
@@ -174,7 +174,7 @@ struct InsightsView: View {
                     .font(.title3.weight(.semibold))
                 Text("Median time of day across your logged pills.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .padding(.horizontal)
@@ -194,7 +194,7 @@ struct InsightsView: View {
                     .font(.title3.weight(.semibold))
                 Text("Weekday preference from your history.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .padding(.horizontal)
@@ -221,7 +221,7 @@ struct InsightsView: View {
             Spacer(minLength: 0)
             Text("PREVIEW")
                 .font(.system(size: 10, weight: .heavy))
-                .foregroundStyle(AppTheme.brand)
+                .foregroundStyle(AppTheme.brandText)
                 .padding(.horizontal, 8)
                 .padding(.vertical, 4)
                 .background(AppTheme.brandSoft, in: Capsule())
@@ -362,7 +362,7 @@ private struct ProLockedPreviewCard: View {
                         .foregroundStyle(AppTheme.text)
                     Text(detail)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 0)

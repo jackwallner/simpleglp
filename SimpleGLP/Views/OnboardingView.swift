@@ -23,6 +23,7 @@ struct OnboardingView: View {
     @State private var trialError: String?
     @State private var showPaywallFallback = false
     @State private var saveError: String?
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
 
     private static let totalSteps = 6
     private var isTrialStep: Bool { step == Self.totalSteps - 1 }
@@ -52,9 +53,14 @@ struct OnboardingView: View {
                     .padding(.bottom, 20)
 
                 ScrollView(showsIndicators: false) {
-                    contentView
-                        .padding(.horizontal, 24)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                    VStack(spacing: 24) {
+                        contentView
+                        if isTrialStep && dynamicTypeSize.isAccessibilitySize {
+                            trialOffer
+                        }
+                    }
+                    .padding(.horizontal, 24)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
 
                 bottomBar
@@ -264,6 +270,8 @@ struct OnboardingView: View {
             }
             Button("Use custom dose") { useCustomDose = true }
                 .font(.footnote)
+                .foregroundStyle(AppTheme.brandText)
+                .frame(minHeight: 44, alignment: .leading)
         } else {
             HStack {
                 Text("Current dose (mg)")
@@ -315,7 +323,7 @@ struct OnboardingView: View {
                      ? String(localized: "Tapping “I took my pill” starts a \(waitMinutes)-minute countdown and pings you when it’s done. Match it to your prescriber’s instructions.")
                      : String(localized: "No countdown. Set one if your instructions include a wait before food or drink."))
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .font(.body)
@@ -362,12 +370,12 @@ struct OnboardingView: View {
                                 .font(.body)
                             Spacer()
                             Text("\(reminderLeadMinutes) min before")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(AppTheme.muted)
                         }
                     }
                     Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -389,11 +397,11 @@ struct OnboardingView: View {
                     .font(.body)
                 Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a dose. If you skip this or deny permission, you can turn it on later in Settings.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
                 Text("This adds context to your log. It isn't medical advice.")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(18)
@@ -468,6 +476,8 @@ struct OnboardingView: View {
                         Text(isTrialStep
                              ? (store.isPurchasePending ? String(localized: "Refresh status") : store.onboardingTrialCTALabel)
                              : String(localized: "Continue"))
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 .font(.headline.weight(.bold))
@@ -497,6 +507,8 @@ struct OnboardingView: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
                 .buttonStyle(.plain)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         } else {
             // Reserve the slot on step 0 so the primary button sits at the same y.
             legalFooter
@@ -507,15 +519,18 @@ struct OnboardingView: View {
     }
 
     private var legalFooter: some View {
-        HStack(spacing: 10) {
+        HStack(spacing: 0) {
             Link("Terms", destination: PaywallLinks.standardEULA)
-            Text("·").foregroundStyle(.tertiary)
+                .frame(minWidth: 44, minHeight: 44)
+            Text("·").foregroundStyle(AppTheme.muted)
             Link("Privacy", destination: PaywallLinks.privacyPolicy)
-            Text("·").foregroundStyle(.tertiary)
+                .frame(minWidth: 44, minHeight: 44)
+            Text("·").foregroundStyle(AppTheme.muted)
             Button("Restore") { Task { await store.restorePurchases() } }
+                .frame(minWidth: 44, minHeight: 44)
         }
         .font(.caption2)
-        .foregroundStyle(.tertiary)
+        .foregroundStyle(AppTheme.muted)
     }
 
     /// Trial-only content that sits ABOVE the primary CTA (absorbed by the ScrollView
@@ -527,11 +542,21 @@ struct OnboardingView: View {
         VStack(spacing: 10) {
             Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.")
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("onboardingMedicalDisclaimer")
+            if !dynamicTypeSize.isAccessibilitySize {
+                trialOffer
+            }
+        }
+    }
 
+    /// Free exit, billing disclosure and errors. Above the primary at normal sizes;
+    /// at accessibility sizes it scrolls with the content so the CTA keeps the screen.
+    @ViewBuilder
+    private var trialOffer: some View {
+        VStack(spacing: 10) {
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
             Button(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started")) {
@@ -542,13 +567,14 @@ struct OnboardingView: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
                 .buttonStyle(.plain)
+                .frame(minHeight: 44)
                 .disabled(isPurchasing)
 
             // No disclosure until the package (real price) loads — never a placeholder.
             if let disclosure = store.onboardingTrialDisclosureText {
                 Text(disclosure)
                     .font(.caption2)
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
             }

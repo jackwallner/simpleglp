@@ -183,7 +183,7 @@ struct TrialOfferSheet: View {
                                 .transition(.opacity)
                         }
                     }
-                    .animation(.easeInOut(duration: 0.18), value: errorMessage)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.18), value: errorMessage)
 
                     VStack(spacing: 10) {
                         Button(action: {
@@ -222,7 +222,7 @@ struct TrialOfferSheet: View {
 
                         Text(billingDisclosure)
                             .font(.system(.caption2, design: .rounded))
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(AppTheme.muted)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
 
@@ -270,7 +270,7 @@ struct TrialOfferSheet: View {
                         Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
                     }
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(AppTheme.muted)
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 8)
