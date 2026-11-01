@@ -529,7 +529,7 @@ struct OnboardingView: View {
             Text("·").foregroundStyle(AppTheme.muted)
             Button { Task { await store.restorePurchases() } } label: {
                 Text("Restore")
-                    .padding(.horizontal, 6)
+                    .padding(.horizontal, 2)
                     .frame(minWidth: 44, minHeight: 44)
                     .contentShape(Rectangle())
             }
@@ -545,7 +545,7 @@ struct OnboardingView: View {
     /// so it can never fall below the fold behind the CTA zone (App Review 1.4.1).
     @ViewBuilder
     private var trialAboveButton: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.")
                 .font(.caption2)
                 .foregroundStyle(AppTheme.muted)
@@ -561,7 +561,8 @@ struct OnboardingView: View {
     /// the CTA keeps the screen.
     @ViewBuilder
     private var trialOffer: some View {
-        VStack(spacing: 10) {
+        // The 44pt "Get Started" target supplies the spacing around itself.
+        VStack(spacing: 0) {
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
             Button {
@@ -592,6 +593,7 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
+                    .padding(.top, 8)
             }
 
             if let trialError {
@@ -599,6 +601,7 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(.red)
                     .multilineTextAlignment(.center)
+                    .padding(.top, 8)
             }
         }
     }

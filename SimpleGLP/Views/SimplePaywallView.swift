@@ -72,7 +72,7 @@ struct SimplePaywallView: View {
 
     /// Single viewport — personalized hero, benefits, plans, and CTA together.
     private var paywallContent: some View {
-        VStack(spacing: 12) {
+        VStack(spacing: 8) {
             header
             // At accessibility sizes the plans and prices come before the benefit list,
             // so the first screen already shows what the purchase costs.
@@ -88,7 +88,7 @@ struct SimplePaywallView: View {
             footerLinks
         }
         .padding(.horizontal, 22)
-        .padding(.top, displayCloseButton ? 44 : 16)
+        .padding(.top, displayCloseButton ? 36 : 16)
         .padding(.bottom, 14)
         .frame(maxHeight: isLargeText ? nil : .infinity)
     }
@@ -427,7 +427,7 @@ struct SimplePaywallView: View {
             Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
                 .font(.caption.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
-                .padding(.horizontal, 12)
+                .padding(.horizontal, 4)
                 .frame(minHeight: 44)
                 .contentShape(Rectangle())
         }

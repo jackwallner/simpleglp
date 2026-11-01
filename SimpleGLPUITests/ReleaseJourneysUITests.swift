@@ -87,6 +87,10 @@ final class ReleaseJourneysUITests: XCTestCase {
         let grew = XCTNSPredicateExpectation(predicate: NSPredicate(format: "count > %d", before), object: todays)
         XCTAssertEqual(XCTWaiter().wait(for: [grew], timeout: 15), .completed, "the shot is logged for today")
         let logged = todays.count
+        // The confirmation lasts about two seconds; capture after the button settles back.
+        let settled = NSPredicate(format: "label BEGINSWITH %@", L("I took my shot"))
+        _ = XCTWaiter().wait(for: [XCTNSPredicateExpectation(predicate: settled, object: shot)], timeout: 10)
+        sleep(1)
         QA.checkpoint(app, "one-tap-logged")
         // Reopen without the seed, which would replace the logged shot.
         app.launchArguments.removeAll { $0 == "-GLPScreenshotSeed" }

@@ -161,7 +161,7 @@ struct LegalLink: View {
     var body: some View {
         Button { openURL(url) } label: {
             Text(title)
-                .padding(.horizontal, 6)
+                .padding(.horizontal, 2)
                 .frame(minWidth: 44, minHeight: 44)
                 .contentShape(Rectangle())
         }
