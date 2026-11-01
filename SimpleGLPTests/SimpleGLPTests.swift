@@ -316,6 +316,20 @@ final class SimpleGLPTests: XCTestCase {
     }
 
     @MainActor
+    func testADoseDueBeforeSetupIsNotOverdue() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 6, day: 6, hour: 9))!
+        let setup = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 8))!
+        let now = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 8, minute: 1))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0)
+        plan.createdAt = setup
+
+        let occurrence = ProactiveAlertsEngine.nextUnclaimedOccurrence(now: now, plan: plan, events: [], calendar: cal)
+
+        XCTAssertEqual(occurrence, cal.date(from: DateComponents(year: 2026, month: 6, day: 13, hour: 9))!)
+    }
+
+    @MainActor
     func testNextUnclaimedOccurrenceMovesForwardWhenCurrentDoseIsClaimed() {
         let cal = Calendar.current
         let start = cal.date(from: DateComponents(year: 2026, month: 6, day: 2, hour: 9))!
