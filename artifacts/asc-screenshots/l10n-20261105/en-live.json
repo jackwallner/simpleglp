@@ -1,0 +1,56 @@
+{
+ "phone": {
+  "display_type": "APP_IPHONE_67",
+  "frames": [
+   {
+    "file": "01-know-when-your-next-shot-is-due.png",
+    "md5": "7c4816fab15424b8a51558d5937f1b80",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/vAbNLzzKRpHgDnQtppZr_w/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   },
+   {
+    "file": "02-log-a-shot-in-one-tap.png",
+    "md5": "8c0e3b9321c6547225b563efa4105f6d",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/vxLPHXCUS_org6JgDxcSsw/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   },
+   {
+    "file": "03-review-a-recorded-shot.png",
+    "md5": "772328d3611fce302b302a08d5ae497a",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/qP2fq0SpVJxyDTFSiaHvcw/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   },
+   {
+    "file": "04-see-how-your-timing-holds.png",
+    "md5": "db88ac0bba2cae1e48ba3d60f8f7ac09",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/OEJeiy3WVm2bbffPO2b67Q/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   },
+   {
+    "file": "05-set-a-schedule-that-fits.png",
+    "md5": "b863d82e98fa279b0b6c41f5e41f334d",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/uR4TojxUMws3djCaskm1pQ/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   },
+   {
+    "file": "06-confirm-a-completed-shot.png",
+    "md5": "1e4885fea914b49c41aa7ad4302b1ec8",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/zpQQ-JHJuNHh-oAX7AMBfg/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   },
+   {
+    "file": "07-tune-proactive-alerts.png",
+    "md5": "8aa97cc92e6c2df7c377f8530ecde83a",
+    "url": "https://is1-ssl.mzstatic.com/image/thumb/v8Tr9DSHhh7CZRryozgY5A/1320x2868bb.png",
+    "w": 1320,
+    "h": 2868
+   }
+  ]
+ }
+}

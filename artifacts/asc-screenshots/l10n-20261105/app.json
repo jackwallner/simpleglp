@@ -1,0 +1,34 @@
+{
+ "repo": "simpleglp",
+ "github": "jackwallner/simpleglp",
+ "bundle": "com.jackwallner.glp",
+ "family": "scene",
+ "asc_id": "6770137909",
+ "live_version": "1.2.4",
+ "targets": [
+  {
+   "rank": 64,
+   "store_locale": "pt-BR",
+   "lang": "pt-BR",
+   "apple_languages": "(pt-BR)",
+   "apple_locale": "pt_BR",
+   "regions": [
+    "Brazil"
+   ],
+   "customers": 10.0
+  },
+  {
+   "rank": 89,
+   "store_locale": "tr",
+   "lang": "tr",
+   "apple_languages": "(tr)",
+   "apple_locale": "tr_TR",
+   "regions": [
+    "Türkiye"
+   ],
+   "customers": 7.0
+  }
+ ],
+ "store_locales_missing": [],
+ "dest": "artifacts/asc-screenshots/l10n-20261105"
+}
