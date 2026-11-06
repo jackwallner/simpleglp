@@ -7,6 +7,12 @@
       "file": "frame 3 (Confira os detalhes de cada injeção)",
       "what": "This frame shows the History list, identical to frame 2. It must show the injection detail sheet, as the Turkish frame 3 does. The gate cannot see this: compare pt-BR against tr. Recapture pt-BR frame 3 only, then view it.",
       "severity": "blocker"
+    },
+    {
+      "locale": "pt-BR",
+      "file": "frame 7 (Ajuste os alertas proativos)",
+      "what": "The toggle read 'Activar Alertas Proativos', a Portugal spelling. The catalog now says 'Ativar Alertas Proativos'. Recapture pt-BR frame 7 too.",
+      "severity": "blocker"
     }
   ],
   "unsure": [
