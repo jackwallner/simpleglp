@@ -14913,7 +14913,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enable Proaktif Uyarılar"
+            "value": "Proaktif Uyarıları Etkinleştir"
           }
         },
         "es": {
@@ -24427,7 +24427,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Schedule bağlılık"
+            "value": "Programa uyum"
           }
         },
         "es": {
