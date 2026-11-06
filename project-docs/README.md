@@ -7,6 +7,7 @@ Developer notes and historical audits for this repository. The published site re
 - [audit823.md](audits/audit823.md): Simple GLP audit823
 - [ios27SimpleGLP.md](audits/ios27SimpleGLP.md): iOS 27 compatibility audit: Simple GLP
 - [state-machines-2026-11-06.md](audits/state-machines-2026-11-06.md): state machine audit: 10 bugs (7 proved by test), 9 product calls, repro suite alongside.
+- [state-machines-2026-11-06-review.md](audits/state-machines-2026-11-06-review.md): independent review of that audit: 1 confirmed, 8 confirmed-minor, 0 rejected, 1 unverified; re-ranked.
 
 ## Marketing
 
