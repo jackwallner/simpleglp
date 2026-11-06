@@ -9,15 +9,13 @@ paths:
 
 ## Localized store sets
 
-- Capture English and all target locales in one GitHub simulator test job with
+- Capture English and all target locales in one GitHub simulator launch job with
   `artifacts/asc-screenshots/l10n-20261105/tools/capture.sh`. No arguments capture
   English plus all targets; locale arguments select exactly those locales.
   `GH_SIM_SCENES` can limit a repair run to space-separated scene basenames.
-  The UI test reads `capture-locales.json`, relaunches once per scene, waits 14
-  seconds for first-render settling, and writes raw
-  scenes under `KIT/raw/`. `gh-sim launch` timed out during setup for this app;
-  the test adapter took 10m39s for the 14-scene validation pass. Exported PNGs
-  use UUID filenames, so resolve them through `attachments/manifest.json`.
+  The script reuses existing raws unless `GH_SIM_FORCE=1`, then launches missing
+  scenes with `--wait 14` and a one-second recording to allow the longer run.
+  Raw scenes are written under `KIT/raw/`.
 - Run `artifacts/asc-screenshots/l10n-20261105/tools/compose.sh` after capture.
   It replaces the phone screens, renders translated headers and extra frame copy,
   runs the OCR gate, writes comparison sheets to `KIT/sheets/`, and copies only

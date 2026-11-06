@@ -232,13 +232,14 @@ private enum SimpleGLPScreenshotData {
             let recentDose = index == 0 && ProcessInfo.processInfo.arguments.contains("-GLPScreenshotConfirmation")
             let daysAgo = recentDose ? 0 : index * 7 + 1
             guard let timestamp = calendar.date(byAdding: .day, value: -daysAgo, to: now) else { continue }
+            let match = recentDose ? ScheduleEngine.match(timestamp: timestamp, plan: plan) : nil
             let event = ShotEvent(
                 timestamp: timestamp,
                 medicationName: plan.storedMedicationName,
                 doseMg: plan.doseMg,
-                scheduledDate: timestamp,
-                scheduleStatus: .onSchedule,
-                minutesFromSchedule: 0
+                scheduledDate: match?.scheduledDate ?? timestamp,
+                scheduleStatus: match?.status ?? .onSchedule,
+                minutesFromSchedule: match?.minutesFromSchedule ?? 0
             )
             event.captureStatus = .complete
             event.captureCompletedAt = timestamp.addingTimeInterval(60)

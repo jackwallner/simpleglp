@@ -15126,7 +15126,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Durum durumu"
+            "value": "Durum"
           }
         },
         "es": {
@@ -15404,7 +15404,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Horas calmas."
+            "value": "Horário de silêncio"
           }
         },
         "tr": {
@@ -15623,7 +15623,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "olana kadar"
+            "value": "Bitiş"
           }
         },
         "es": {
@@ -15688,13 +15688,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Previsão de seus padrões"
+            "value": "Prever com base no histórico"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "kalıplarınızdan önceden tahmin edin"
+            "value": "Geçmişe göre tahmin et"
           }
         },
         "es": {
@@ -15830,13 +15830,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apenas uma grande chance."
+            "value": "Só alta probabilidade"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Yüksek şans sadece"
+            "value": "Yalnızca yüksek olasılık"
           }
         },
         "es": {
@@ -15907,7 +15907,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Herhangi bir şans"
+            "value": "Tüm olasılıklar"
           }
         },
         "es": {
@@ -17684,13 +17684,13 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Deve ser hoje."
+            "value": "Prevista para hoje"
           }
         },
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Çünkü bugün"
+            "value": "Bugün planlandı"
           }
         },
         "es": {
@@ -19694,7 +19694,7 @@
         "tr": {
           "stringUnit": {
             "state": "translated",
-            "value": "%1$lld%% programda"
+            "value": "%%%1$lld zamanında"
           }
         },
         "es": {
@@ -24421,7 +24421,7 @@
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Esquema de adesão"
+            "value": "Adesão ao cronograma"
           }
         },
         "tr": {

@@ -58,8 +58,14 @@ struct ProAlertsConfigView: View {
                 Toggle("Predict from your patterns", isOn: $prefs.patternAlertsEnabled)
                 if prefs.patternAlertsEnabled {
                     Picker("Sensitivity", selection: $prefs.patternAlertSensitivity) {
-                        Text("High chance only").tag(0.0)
-                        Text("Any chance").tag(1.0)
+                        Text("High chance only")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.65)
+                            .tag(0.0)
+                        Text("Any chance")
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.65)
+                            .tag(1.0)
                     }
                     .pickerStyle(.segmented)
                 }
