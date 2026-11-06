@@ -1,0 +1,106 @@
+{
+  "verdict": "FIX",
+  "header_fixes": [
+    {
+      "locale": "pt-BR",
+      "file": "04-see-how-your-timing-holds.png",
+      "before": "Acompanhe seus\nhorários habituais",
+      "after": "Mantenha o controle\ndos alertas",
+      "why": "The live English headline is Keep alerts in your control. The existing translation changes the promise to monitoring habitual dose times."
+    },
+    {
+      "locale": "tr",
+      "file": "04-see-how-your-timing-holds.png",
+      "before": "İğne saatlerindeki\ndüzeni takip et",
+      "after": "Uyarılarını\nkendin yönet",
+      "why": "The live English headline is Keep alerts in your control. The existing translation changes the promise to tracking regular injection times."
+    },
+    {
+      "locale": "tr",
+      "file": "06-confirm-a-completed-shot.png",
+      "before": "İğneni tek dokunuşla\nkaydet",
+      "after": "Tek dokunuşla\niğneni kaydet",
+      "why": "Rebalance the two lines. The existing first line is much longer than the isolated six-letter verb on the second line; the revised wording is natural Turkish with the same meaning."
+    }
+  ],
+  "ui_defects": [
+    {
+      "locale": "pt-BR",
+      "file": "06-confirm-a-completed-shot.png",
+      "what": "The completion banner says the shot was recorded and see you next week, and the first history entry is 6 November 2026 at 03:26, but the next-dose card still shows 6 November 2026 at 08:30 as due today. The English completion frame advances to seven days later. The screenshot seed assigns scheduledDate to the event timestamp instead of the planned 08:30 occurrence, so this is an inconsistent demonstration state. The orchestrator must repair the seed and recapture this frame.",
+      "severity": "blocker"
+    },
+    {
+      "locale": "tr",
+      "file": "06-confirm-a-completed-shot.png",
+      "what": "The completion banner says the shot was recorded and see you next week, and the first history entry is 6 November 2026 at 03:29, but the next-dose card still shows 6 November 2026 at 08:30 as due today. The English completion frame advances to seven days later. The screenshot seed assigns scheduledDate to the event timestamp instead of the planned 08:30 occurrence, so this is an inconsistent demonstration state. The orchestrator must repair the seed and recapture this frame.",
+      "severity": "blocker"
+    },
+    {
+      "locale": "pt-BR",
+      "file": "07-tune-proactive-alerts.png",
+      "what": "The selected prediction threshold is visibly truncated to Apenas uma grande chan... . The catalog value for High chance only is Apenas uma grande chance., which also reads awkwardly in this control. Use a short probability label such as Só alta probabilidade and verify it fits before recapturing.",
+      "severity": "blocker"
+    },
+    {
+      "locale": "pt-BR",
+      "file": "07-tune-proactive-alerts.png",
+      "what": "Quiet hours is translated as Horas calmas., an unnatural literal translation for a notification setting. Use Horário de silêncio. Predict from your patterns is Previsão de seus padrões, which suggests predicting the patterns themselves; use a label such as Prever com base no histórico. These are catalog issues visible in the UI, not English leaks.",
+      "severity": "minor"
+    },
+    {
+      "locale": "pt-BR",
+      "file": "04-see-how-your-timing-holds.png",
+      "what": "Schedule adherence is rendered as Esquema de adesão, which means an adherence scheme instead of adherence to the schedule. Use Adesão ao cronograma or another concise equivalent.",
+      "severity": "minor"
+    },
+    {
+      "locale": "pt-BR",
+      "file": "01-know-when-your-next-shot-is-due.png",
+      "what": "Due today appears as Deve ser hoje., which reads as should be today rather than a clear schedule status. Prevista para hoje better describes the recorded plan without sounding like a dosing instruction.",
+      "severity": "minor"
+    },
+    {
+      "locale": "tr",
+      "file": "01-know-when-your-next-shot-is-due.png",
+      "what": "Due today appears as Çünkü bugün, meaning Because today. This fails to communicate when the next scheduled dose is due. Use Bugün planlandı or a concise equivalent referring to the recorded schedule.",
+      "severity": "blocker"
+    },
+    {
+      "locale": "pt-BR",
+      "file": "06-confirm-a-completed-shot.png",
+      "what": "Due today appears as Deve ser hoje., which reads as should be today rather than a clear schedule status. Prevista para hoje better describes the recorded plan without sounding like a dosing instruction.",
+      "severity": "minor"
+    },
+    {
+      "locale": "tr",
+      "file": "06-confirm-a-completed-shot.png",
+      "what": "Due today appears as Çünkü bugün, meaning Because today. This fails to communicate when the next scheduled dose is due. Use Bugün planlandı or a concise equivalent referring to the recorded schedule.",
+      "severity": "blocker"
+    },
+    {
+      "locale": "tr",
+      "file": "04-see-how-your-timing-holds.png",
+      "what": "The adherence value reads 100% programda. Turkish places the percent sign before the number, and programda means in the program rather than on schedule. Use %100 zamanında with the existing numeric placeholder preserved in the catalog.",
+      "severity": "minor"
+    },
+    {
+      "locale": "tr",
+      "file": "07-tune-proactive-alerts.png",
+      "what": "The Status heading reads Durum durumu, redundantly repeating status. Use Durum. The Until row reads olana kadar, an incomplete phrase in isolation; Bitiş pairs naturally with Başlangıç.",
+      "severity": "minor"
+    },
+    {
+      "locale": "tr",
+      "file": "07-tune-proactive-alerts.png",
+      "what": "The prediction controls use literal, unnatural Turkish: kalıplarınızdan önceden tahmin edin, Yüksek şans sadece, and Herhangi bir şans. Use routine/history terminology and probability terminology, for example Geçmişe göre tahmin et, Yalnızca yüksek olasılık, and Tüm olasılıklar, then verify the labels fit. The existing toggle label also changes from the informal voice elsewhere to formal plural.",
+      "severity": "minor"
+    }
+  ],
+  "unsure": [
+    "Header corrections are saved in copy/headers.json only. All affected PNGs still contain the previous headers. tools/reskin.py requires every raw capture and has no mode to reuse the screen in an existing finished frame, so no reskin was attempted. The orchestrator must recompose the corrected headers with one uniform size per locale/set and verify them visually.",
+    "Raw captures are absent. Raw-to-frame checks and the native Swift OCR gate were skipped. No Xcode, simulator, app-code edit, recapture, App Store Connect action, push, or release script was used.",
+    "Reviewed all seven configured phone frames for each target locale in sheets/pt-BR-phone.jpg and sheets/tr-phone.jpg, generated by tools/sheet.py against the fetched live English frames. Because Swift is unavailable, only sheet labels were rendered through a temporary Pillow adapter. Full frames were opened only to confirm identified issues. No English UI leaks, treatment/cure/diagnosis claims, real personal identifiers, header seams or clipping, phone misalignment, or inconsistent header sizes were observed. Dates, decimal and grouping separators otherwise look appropriate. Screenshot seed inspection confirms the visible health values and note are synthetic.",
+    "All seven public-CDN English downloads decode at the configured 1320 x 2868 size and were viewed in the comparison sheets, but their byte MD5s differ from en-live.json. CDN image re-encoding is a possible explanation, not verified. The English reference comparison is visual, not an exact-byte provenance check."
+  ]
+}
