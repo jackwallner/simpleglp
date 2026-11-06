@@ -6,3 +6,5 @@ out/
 tools/headline
 tools/ocr
 __pycache__/
+/pt-BR/
+/tr/

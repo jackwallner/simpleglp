@@ -145,6 +145,8 @@ targets:
     platform: iOS
     sources:
       - path: SimpleGLPUITests
+    resources:
+      - path: SimpleGLPUITests/capture-locales.json
     dependencies:
       - target: SimpleGLP
     settings:

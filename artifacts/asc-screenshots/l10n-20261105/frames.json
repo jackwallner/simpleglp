@@ -1,0 +1,209 @@
+{
+  "english_locale": "en-US",
+  "sets": {
+    "phone": {
+      "canvas": [
+        1320,
+        2868
+      ],
+      "frames": [
+        {
+          "file": "01-know-when-your-next-shot-is-due.png",
+          "base": "en-live/phone/01-know-when-your-next-shot-is-due.png",
+          "raw": "01-know-when-your-next-shot-is-due.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        },
+        {
+          "file": "02-log-a-shot-in-one-tap.png",
+          "base": "en-live/phone/02-log-a-shot-in-one-tap.png",
+          "raw": "02-log-a-shot-in-one-tap.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        },
+        {
+          "file": "03-review-a-recorded-shot.png",
+          "base": "en-live/phone/03-review-a-recorded-shot.png",
+          "raw": "03-review-a-recorded-shot.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        },
+        {
+          "file": "04-see-how-your-timing-holds.png",
+          "base": "en-live/phone/04-see-how-your-timing-holds.png",
+          "raw": "04-see-how-your-timing-holds.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        },
+        {
+          "file": "05-set-a-schedule-that-fits.png",
+          "base": "en-live/phone/05-set-a-schedule-that-fits.png",
+          "raw": "05-set-a-schedule-that-fits.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        },
+        {
+          "file": "06-confirm-a-completed-shot.png",
+          "base": "en-live/phone/06-confirm-a-completed-shot.png",
+          "raw": "06-confirm-a-completed-shot.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        },
+        {
+          "file": "07-tune-proactive-alerts.png",
+          "base": "en-live/phone/07-tune-proactive-alerts.png",
+          "raw": "07-tune-proactive-alerts.png",
+          "screen": [
+            110,
+            590,
+            1100,
+            2063
+          ],
+          "radius": 105,
+          "header_box": [
+            40,
+            77,
+            1240,
+            388
+          ],
+          "font": "HelveticaNeue-Light",
+          "color": [
+            25,
+            53,
+            57
+          ],
+          "max_size": 151,
+          "min_size": 90,
+          "align": "center",
+          "extra_text": []
+        }
+      ]
+    }
+  }
+}

@@ -26,6 +26,7 @@
 		3222AAF94F226B6515F9456B /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008BE86A6ABA09E92A2C103B /* AppTheme.swift */; };
 		32D2F93F474DD1F3D007ED1A /* PlanStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDB19EDB4D888D537799BF2B /* PlanStore.swift */; };
 		33359F76C8F7C36CE9AF1D4A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72BB2053E8DC8186F41B380 /* SettingsView.swift */; };
+		378EB96B1D803F85EDEBFD5D /* capture-locales.json in Resources */ = {isa = PBXBuildFile; fileRef = 812A846D25593F35C9FFBB57 /* capture-locales.json */; };
 		3B765B5194C6C324E8EEBC3F /* ReviewPromptTrackerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */; };
 		3CB495635750C499935D1F28 /* RevenueCat in Frameworks */ = {isa = PBXBuildFile; productRef = 89D51D7C41B4EE64885B9B1C /* RevenueCat */; };
 		40C4E328C9C1B774BCCF75A8 /* LockScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8BB739470EC73FEFB25D8D /* LockScreenWidgetView.swift */; };
@@ -43,6 +44,7 @@
 		54F988EFFA35E56DDE71B454 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
 		581A969FA5943DB620BF86DF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB2CBF9F536FFD8DF927366 /* HomeView.swift */; };
 		596EE8DD3236849382D9FD08 /* LockScreenWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F8BB739470EC73FEFB25D8D /* LockScreenWidgetView.swift */; };
+		5A03CE2E1014A795C168EA14 /* LocalizedStoreScreenshotTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2855ECF2C12ABB8196456 /* LocalizedStoreScreenshotTests.swift */; };
 		5FED014126C39C1020F61215 /* StoreService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125328ACA62290EB451989A /* StoreService.swift */; };
 		65F0C6231DDA2F4A7450B70C /* SimpleGLPApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A94D0C34BE57FCE3E0DDB0C /* SimpleGLPApp.swift */; };
 		6638955CCDFEC5645930EB16 /* MonthAdherenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F0DF52C2C4ADEE0EB462101 /* MonthAdherenceView.swift */; };
@@ -211,6 +213,7 @@
 		7D390C19714B2F9313020B6F /* SimpleGLP.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = SimpleGLP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEngine.swift; sourceTree = "<group>"; };
 		80224F926658DE5F12BDF68F /* DiagnosticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticsService.swift; sourceTree = "<group>"; };
+		812A846D25593F35C9FFBB57 /* capture-locales.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "capture-locales.json"; sourceTree = "<group>"; };
 		82E45ECA8A326A07DCE47612 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallFunnelTests.swift; sourceTree = "<group>"; };
 		892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -218,6 +221,7 @@
 		8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWidget.entitlements; sourceTree = "<group>"; };
 		8FF0051BC21B7D05834D21C3 /* PaywallScreenshotHarness.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallScreenshotHarness.swift; sourceTree = "<group>"; };
 		92258E2A91B4142D81240641 /* PillRoutineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PillRoutineTests.swift; sourceTree = "<group>"; };
+		94D2855ECF2C12ABB8196456 /* LocalizedStoreScreenshotTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedStoreScreenshotTests.swift; sourceTree = "<group>"; };
 		985169F4DEB99C771DE5E295 /* SimpleGLPWidget.appex */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = "wrapper.app-extension"; path = SimpleGLPWidget.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		9B3588F62DEEBD4A60959ED4 /* ShotCaptureCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShotCaptureCoordinator.swift; sourceTree = "<group>"; };
 		9CACE598976ED5713C9175CC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
@@ -382,6 +386,8 @@
 		92B4807179E1C5967C11AAD0 /* SimpleGLPUITests */ = {
 			isa = PBXGroup;
 			children = (
+				812A846D25593F35C9FFBB57 /* capture-locales.json */,
+				94D2855ECF2C12ABB8196456 /* LocalizedStoreScreenshotTests.swift */,
 				70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */,
 				1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */,
 				CD745BE9E731DDC409E61557 /* ReleaseJourneysUITests.swift */,
@@ -548,6 +554,7 @@
 			buildConfigurationList = A1D47C6F712E35BABC8F30D4 /* Build configuration list for PBXNativeTarget "SimpleGLPUITests" */;
 			buildPhases = (
 				4B38D0473B738FE650E5F97E /* Sources */,
+				FF5CBF12F8FEB33703A740B8 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -639,10 +646,10 @@
 			projectRoot = "";
 			targets = (
 				31B2F5C41AC77F7BC5ADA96F /* SimpleGLP */,
+				FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */,
+				DD43B5A9662029B8C35C8B8B /* SimpleGLPWatch */,
 				5A639435245201099AFFB34A /* SimpleGLPTests */,
 				F4287AC2FBC596F8D352CF1F /* SimpleGLPUITests */,
-				DD43B5A9662029B8C35C8B8B /* SimpleGLPWatch */,
-				FD4BC72106554E1C639CC7D2 /* SimpleGLPWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -678,6 +685,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		FF5CBF12F8FEB33703A740B8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				378EB96B1D803F85EDEBFD5D /* capture-locales.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -709,6 +724,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5131388A7F721F33A0D8B4DA /* FleetQA.swift in Sources */,
+				5A03CE2E1014A795C168EA14 /* LocalizedStoreScreenshotTests.swift in Sources */,
 				2C2322F85F15C06535FC5E14 /* OnboardingValidationUITests.swift in Sources */,
 				1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */,
 				E14DB60D98B28C9E7C2A7468 /* ReleaseJourneysUITests.swift in Sources */,
@@ -903,7 +919,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -964,7 +980,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 65;
+				CURRENT_PROJECT_VERSION = 66;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

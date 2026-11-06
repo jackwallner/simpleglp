@@ -16,5 +16,14 @@
     "05-set-a-schedule-that-fits.png": "İğne programını\nkendine göre ayarla",
     "06-confirm-a-completed-shot.png": "İğneni tek dokunuşla\nkaydet",
     "07-tune-proactive-alerts.png": "Proaktif uyarıları\nkendine göre ayarla"
+  },
+  "en-US": {
+    "01-know-when-your-next-shot-is-due.png": "Know when your\nnext shot is due",
+    "02-log-a-shot-in-one-tap.png": "Review every\nrecorded shot",
+    "03-review-a-recorded-shot.png": "Review a recorded\nshot",
+    "04-see-how-your-timing-holds.png": "Keep alerts in your\ncontrol",
+    "05-set-a-schedule-that-fits.png": "Set a schedule\nthat fits",
+    "06-confirm-a-completed-shot.png": "Confirm a\ncompleted shot",
+    "07-tune-proactive-alerts.png": "Tune proactive\nalerts"
   }
 }

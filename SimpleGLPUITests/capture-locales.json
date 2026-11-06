@@ -1,0 +1,31 @@
+{
+  "locales": [
+    {
+      "storeLocale": "en-US",
+      "language": "en",
+      "appleLanguages": "(en)",
+      "appleLocale": "en_US"
+    },
+    {
+      "storeLocale": "pt-BR",
+      "language": "pt",
+      "appleLanguages": "(pt)",
+      "appleLocale": "pt_BR"
+    },
+    {
+      "storeLocale": "tr",
+      "language": "tr",
+      "appleLanguages": "(tr)",
+      "appleLocale": "tr_TR"
+    }
+  ],
+  "scenes": [
+    "01-know-when-your-next-shot-is-due",
+    "02-log-a-shot-in-one-tap",
+    "03-review-a-recorded-shot",
+    "04-see-how-your-timing-holds",
+    "05-set-a-schedule-that-fits",
+    "06-confirm-a-completed-shot",
+    "07-tune-proactive-alerts"
+  ]
+}

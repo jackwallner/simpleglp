@@ -95,6 +95,16 @@ struct HomeView: View {
             SimplePaywallView(paywallImpressionId: "simpleglp_lockscreen_countdown")
                 .environmentObject(store)
         }
+        #if DEBUG
+        .task(id: events.count) {
+            guard ProcessInfo.processInfo.arguments.contains("-GLPScreenshotConfirmation"),
+                  let event = events.first
+            else { return }
+            coordinator.lastCapturedEventID = event.id
+            coordinator.showUndoOption = true
+            coordinator.bannerMessage = String(localized: "You logged your shot. Nice. See you next week.")
+        }
+        #endif
         .sensoryFeedback(.success, trigger: coordinator.lastCapturedEventID) { _, new in new != nil }
     }
 

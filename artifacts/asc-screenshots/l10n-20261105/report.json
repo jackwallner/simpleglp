@@ -1,0 +1,36 @@
+{
+  "locales": [
+    "pt-BR",
+    "tr"
+  ],
+  "frames": 7,
+  "gate": {
+    "pt-BR": "PASS",
+    "tr": "PASS"
+  },
+  "gh_sim_jobs": 5,
+  "app_code_changed": [
+    {
+      "path": "SharedGLP/Localizable.xcstrings",
+      "debug_only": false
+    },
+    {
+      "path": "SimpleGLP/SimpleGLPApp.swift",
+      "debug_only": true
+    },
+    {
+      "path": "SimpleGLP/Views/HistoryView.swift",
+      "debug_only": true
+    },
+    {
+      "path": "SimpleGLP/Views/HomeView.swift",
+      "debug_only": true
+    }
+  ],
+  "defects": [
+    "Localized the DEBUG screenshot demo note for pt-BR and tr.",
+    "Completed the Turkish schedule adherence and proactive alerts translations."
+  ],
+  "left_out": [],
+  "adapter": "xcuitest"
+}

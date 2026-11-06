@@ -108,17 +108,20 @@ def main() -> int:
             failures.append(f'COUNT {key}: expected {len(expected)}, found {len(actual)}; missing={sorted(expected-actual)} extra={sorted(actual-expected)}')
         for frame in group['frames']:
             name = f"{key}/{frame['file']}"
-            text = headers.get(args.locale, {}).get(frame['file'], '')
-            if not text.strip():
-                failures.append(f'HEADER {name}: empty')
-            if len(text.split('\n')) > 2:
-                failures.append(f'HEADER {name}: more than 2 lines')
-            if any(c in text for c in '.。．｡۔'):
-                failures.append(f'HEADER {name}: period')
-            if normalize(text) and normalize(text) == normalize(english.get(frame['file'], '')):
-                failures.append(f'HEADER {name}: unchanged English')
-            if frame['file'] not in english:
-                failures.append(f'HEADER {name}: missing English reference ({english_locale})')
+            text_keys = [frame['file']] + [f"{frame['file']}#{item['key']}" for item in frame.get('extra_text', [])]
+            for text_key in text_keys:
+                text = headers.get(args.locale, {}).get(text_key, '')
+                label = name if text_key == frame['file'] else f"{name}#{text_key.split('#', 1)[1]}"
+                if not text.strip():
+                    failures.append(f'HEADER {label}: empty')
+                if len(text.split('\n')) > 2:
+                    failures.append(f'HEADER {label}: more than 2 lines')
+                if any(c in text for c in '.。．｡۔'):
+                    failures.append(f'HEADER {label}: period')
+                if normalize(text) and normalize(text) == normalize(english.get(text_key, '')):
+                    failures.append(f'HEADER {label}: unchanged English')
+                if text_key not in english:
+                    failures.append(f'HEADER {label}: missing English reference ({english_locale})')
             path = output / frame['file']
             if path.is_file():
                 with Image.open(path) as im:

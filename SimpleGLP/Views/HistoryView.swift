@@ -71,6 +71,15 @@ struct HistoryView: View {
         .sheet(item: $selectedEvent) { event in
             EditEventSheet(event: event)
         }
+        #if DEBUG
+        .task(id: events.count) {
+            guard ProcessInfo.processInfo.arguments.contains("-GLPScreenshotDetails"),
+                  selectedEvent == nil,
+                  let event = events.first
+            else { return }
+            selectedEvent = event
+        }
+        #endif
         .sheet(item: $logEarlierStart) { start in
             LogEarlierSheet(
                 form: plan?.form ?? .injection,

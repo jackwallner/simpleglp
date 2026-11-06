@@ -61,6 +61,8 @@ struct SimpleGLPApp: App {
                 }
                 .environmentObject(shotCoordinator)
                 .environmentObject(storeService)
+            } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotPlan") {
+                SimpleGLPScreenshotPlanHarness()
             } else if let mode = PaywallScreenshotMode.current {
                 PaywallScreenshotHarness(mode: mode)
                     .environmentObject(shotCoordinator)
@@ -227,7 +229,9 @@ private enum SimpleGLPScreenshotData {
 
         let calendar = Calendar.current
         for index in 0..<8 {
-            guard let timestamp = calendar.date(byAdding: .day, value: -(index * 7 + 1), to: now) else { continue }
+            let recentDose = index == 0 && ProcessInfo.processInfo.arguments.contains("-GLPScreenshotConfirmation")
+            let daysAgo = recentDose ? 0 : index * 7 + 1
+            guard let timestamp = calendar.date(byAdding: .day, value: -daysAgo, to: now) else { continue }
             let event = ShotEvent(
                 timestamp: timestamp,
                 medicationName: plan.storedMedicationName,
@@ -304,6 +308,26 @@ private enum SimpleGLPScreenshotData {
         // Publish the glance now: launch's refresh ran before this seed, and the
         // tab icon and "pill" wording read the plan kind from it.
         DoseRoutineService.refresh(in: context, mayPrompt: false)
+    }
+}
+
+@MainActor
+private struct SimpleGLPScreenshotPlanHarness: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var isReady = false
+
+    var body: some View {
+        Group {
+            if isReady {
+                NavigationStack { PlanEditorView() }
+            } else {
+                Color.clear
+            }
+        }
+        .task {
+            SimpleGLPScreenshotData.seedIfRequested(in: modelContext)
+            isReady = true
+        }
     }
 }
 #endif
