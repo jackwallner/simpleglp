@@ -8,7 +8,7 @@
     "pt-BR": "PASS",
     "tr": "PASS"
   },
-  "gh_sim_jobs": 4,
+  "gh_sim_jobs": 7,
   "capture_jobs": [
     {
       "id": "simpleglp-shots@20261105-195836-9d0c-codex-mbpro3603a-1105-201158-22532",
@@ -26,10 +26,22 @@
       "status": "passed",
       "captured_screens": 10,
       "note": "Recaptured the five affected scenes for both target locales."
+    },
+    {
+      "id": "simpleglp-shots@20261105-211934-9a67-codex-mbpro35b8a-1105-212440-8172",
+      "status": "passed",
+      "captured_screens": 2,
+      "note": "Recaptured pt-BR frames 03 and 07. Frame 03 still showed History because selection raced screenshot seeding, so it was replaced by the next capture."
+    },
+    {
+      "id": "simpleglp-shots@20261105-211934-9a67-codex-mbpro35b8a-1105-214659-28464",
+      "status": "passed",
+      "captured_screens": 1,
+      "note": "Recaptured pt-BR frame 03 after routing -GLPScreenshotDetails through a deterministic DEBUG harness that seeds and presents EditEventSheet."
     }
   ],
   "test_job": {
-    "id": "simpleglp-shots@20261105-195836-9d0c-codex-mbpro3603a-1105-210246-5800",
+    "id": "simpleglp-shots@20261105-211934-9a67-codex-mbpro35b8a-1105-215917-25165",
     "status": "passed",
     "unit_tests": {
       "passed": 115,
@@ -50,18 +62,40 @@
     {
       "path": "SimpleGLP/Views/ProAlertsConfigView.swift",
       "debug_only": false
+    },
+    {
+      "path": "SimpleGLP/Views/HistoryView.swift",
+      "debug_only": true
     }
   ],
   "defects": [
     "The completion seed now matches its shot to the planned 08:30 occurrence, so its next-dose card advances one week. Other seeded scenes retain their original due-today demo state.",
     "Portuguese (Brazil) labels now use Prevista para hoje, Adesão ao cronograma, Horário de silêncio, Prever com base no histórico, and Só alta probabilidade. The probability picker keeps labels on one line.",
     "Turkish labels now use Bugün planlandı, %100 zamanında with the numeric placeholder retained, Durum, Bitiş, Geçmişe göre tahmin et, Yalnızca yüksek olasılık, and Tüm olasılıklar. The probability picker keeps labels on one line.",
-    "Recomposed the reviewer-approved headers for pt-BR frame 04 and tr frames 04 and 06."
+    "Recomposed the reviewer-approved headers for pt-BR frame 04 and tr frames 04 and 06.",
+    "pt-BR frame 03 now opens the real Details sheet from a deterministic DEBUG screenshot harness.",
+    "pt-BR frame 07 now uses the corrected Ativar Alertas Proativos catalog value."
   ],
-  "visual_review": "Viewed both final seven-frame locale sheets. Due states, completion state, adherence, picker labels, header sizing, and clipping are correct.",
+  "visual_review": "Viewed both final seven-frame locale sheets. pt-BR frame 03 shows the Details sheet, frame 07 uses Ativar, and headers, layouts, and clipping are correct.",
   "left_out": [],
   "adapter": "gh-sim launch",
   "unsure": [
     "The live English CDN images decode at the configured dimensions, but their byte MD5 values differ from en-live.json. The compositor used those current live images; CDN re-encoding was not confirmed."
+  ],
+  "review_resolution": [
+    {
+      "locale": "pt-BR",
+      "frame": "03-review-a-recorded-shot.png",
+      "status": "fixed",
+      "details": "The DEBUG route seeds screenshot data before presenting the real EditEventSheet. The final capture and locale sheet show Details.",
+      "capture_job": "simpleglp-shots@20261105-211934-9a67-codex-mbpro35b8a-1105-214659-28464"
+    },
+    {
+      "locale": "pt-BR",
+      "frame": "07-tune-proactive-alerts.png",
+      "status": "fixed",
+      "details": "Recaptured the current catalog value Ativar Alertas Proativos.",
+      "capture_job": "simpleglp-shots@20261105-211934-9a67-codex-mbpro35b8a-1105-212440-8172"
+    }
   ]
 }

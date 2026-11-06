@@ -55,6 +55,8 @@ struct SimpleGLPApp: App {
                 NavigationStack { SettingsView() }
                     .environmentObject(shotCoordinator)
                     .environmentObject(storeService)
+            } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotDetails") {
+                SimpleGLPScreenshotDetailsHarness()
             } else if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotAlerts") {
                 NavigationStack {
                     ProAlertsConfigView()
@@ -329,6 +331,27 @@ private struct SimpleGLPScreenshotPlanHarness: View {
             SimpleGLPScreenshotData.seedIfRequested(in: modelContext)
             isReady = true
         }
+    }
+}
+
+@MainActor
+private struct SimpleGLPScreenshotDetailsHarness: View {
+    @Environment(\.modelContext) private var modelContext
+    @State private var selectedEvent: ShotEvent?
+
+    var body: some View {
+        AppTheme.bg
+            .ignoresSafeArea()
+            .sheet(item: $selectedEvent) { event in
+                EditEventSheet(event: event)
+            }
+            .task {
+                SimpleGLPScreenshotData.seedIfRequested(in: modelContext)
+                let descriptor = FetchDescriptor<ShotEvent>(
+                    sortBy: [SortDescriptor(\.timestamp, order: .reverse)]
+                )
+                selectedEvent = try? modelContext.fetch(descriptor).first
+            }
     }
 }
 #endif
