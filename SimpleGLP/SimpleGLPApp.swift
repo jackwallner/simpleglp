@@ -240,7 +240,7 @@ private enum SimpleGLPScreenshotData {
             event.captureCompletedAt = timestamp.addingTimeInterval(60)
             event.healthStatus = .captured
             event.injectionSite = InjectionSite.allCases[index % InjectionSite.allCases.count]
-            event.userNotes = index == 0 ? "Felt steady after the dose" : nil
+            event.userNotes = index == 0 ? localizedScreenshotNote : nil
             event.nausea = index % 3
             event.appetite = 2 + (index % 3)
             event.foodNoise = 1 + (index % 2)
@@ -253,6 +253,14 @@ private enum SimpleGLPScreenshotData {
         }
 
         try? context.save()
+    }
+
+    private static var localizedScreenshotNote: String {
+        switch Locale.current.language.languageCode?.identifier {
+        case "pt": "Me senti estável depois da dose."
+        case "tr": "Dozdan sonra kendimi dengede hissettim."
+        default: "Felt steady after the dose"
+        }
     }
 
     /// A Wegovy pill user eleven days in, with today's pill logged ten minutes ago so Home
