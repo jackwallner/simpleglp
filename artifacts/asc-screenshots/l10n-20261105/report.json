@@ -8,7 +8,36 @@
     "pt-BR": "PASS",
     "tr": "PASS"
   },
-  "gh_sim_jobs": 5,
+  "gh_sim_jobs": 4,
+  "capture_jobs": [
+    {
+      "id": "simpleglp-shots@20261105-195836-9d0c-codex-mbpro3603a-1105-201158-22532",
+      "status": "partial_timeout",
+      "captured_screens": 13,
+      "note": "The 10-minute launch step ended before the remaining scenes; captured raws were reused."
+    },
+    {
+      "id": "simpleglp-shots@20261105-195836-9d0c-codex-mbpro3603a-1105-203417-23666",
+      "status": "passed",
+      "captured_screens": 8
+    },
+    {
+      "id": "simpleglp-shots@20261105-195836-9d0c-codex-mbpro3603a-1105-205225-22516",
+      "status": "passed",
+      "captured_screens": 10,
+      "note": "Recaptured the five affected scenes for both target locales."
+    }
+  ],
+  "test_job": {
+    "id": "simpleglp-shots@20261105-195836-9d0c-codex-mbpro3603a-1105-210246-5800",
+    "status": "passed",
+    "unit_tests": {
+      "passed": 115,
+      "failed": 0,
+      "skipped": 0
+    }
+  },
+  "localization_check": "532 keys, 10 languages, 0 problems",
   "app_code_changed": [
     {
       "path": "SharedGLP/Localizable.xcstrings",
@@ -19,18 +48,20 @@
       "debug_only": true
     },
     {
-      "path": "SimpleGLP/Views/HistoryView.swift",
-      "debug_only": true
-    },
-    {
-      "path": "SimpleGLP/Views/HomeView.swift",
-      "debug_only": true
+      "path": "SimpleGLP/Views/ProAlertsConfigView.swift",
+      "debug_only": false
     }
   ],
   "defects": [
-    "Localized the DEBUG screenshot demo note for pt-BR and tr.",
-    "Completed the Turkish schedule adherence and proactive alerts translations."
+    "The completion seed now matches its shot to the planned 08:30 occurrence, so its next-dose card advances one week. Other seeded scenes retain their original due-today demo state.",
+    "Portuguese (Brazil) labels now use Prevista para hoje, Adesão ao cronograma, Horário de silêncio, Prever com base no histórico, and Só alta probabilidade. The probability picker keeps labels on one line.",
+    "Turkish labels now use Bugün planlandı, %100 zamanında with the numeric placeholder retained, Durum, Bitiş, Geçmişe göre tahmin et, Yalnızca yüksek olasılık, and Tüm olasılıklar. The probability picker keeps labels on one line.",
+    "Recomposed the reviewer-approved headers for pt-BR frame 04 and tr frames 04 and 06."
   ],
+  "visual_review": "Viewed both final seven-frame locale sheets. Due states, completion state, adherence, picker labels, header sizing, and clipping are correct.",
   "left_out": [],
-  "adapter": "xcuitest"
+  "adapter": "gh-sim launch",
+  "unsure": [
+    "The live English CDN images decode at the configured dimensions, but their byte MD5 values differ from en-live.json. The compositor used those current live images; CDN re-encoding was not confirmed."
+  ]
 }
