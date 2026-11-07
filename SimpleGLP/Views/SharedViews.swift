@@ -123,7 +123,7 @@ struct WaitField: View {
                 Spacer()
                 Text(minutes == 0 ? String(localized: "None") : GLPDurationText.format(seconds: TimeInterval(minutes * 60), units: [.minute], style: .abbreviated))
                     .monospacedDigit()
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
     }

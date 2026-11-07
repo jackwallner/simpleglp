@@ -134,7 +134,7 @@ struct HomeView: View {
         Button(action: logDose) {
             ZStack {
                 Circle()
-                    .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brand)
+                    .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill)
                     .frame(width: 220, height: 220)
                     .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
                 VStack(spacing: 8) {

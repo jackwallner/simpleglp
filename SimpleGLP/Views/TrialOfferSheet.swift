@@ -32,7 +32,7 @@ struct TrialOfferSheet: View {
     @State private var restoreMessage: String?
 
     private var brandGradient: LinearGradient {
-        LinearGradient(colors: [AppTheme.brand, AppTheme.calm], startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(colors: [AppTheme.brandFill, AppTheme.calmFill], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 
     private var trialPeriodPhrase: String? {
@@ -222,7 +222,7 @@ struct TrialOfferSheet: View {
 
                         Text(billingDisclosure)
                             .font(.system(.caption2, design: .rounded))
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(AppTheme.muted)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
 
@@ -270,7 +270,7 @@ struct TrialOfferSheet: View {
                         Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
                     }
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(AppTheme.muted)
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 8)

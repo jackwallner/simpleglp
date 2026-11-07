@@ -46,10 +46,10 @@ struct ProAlertsConfigView: View {
                 Toggle("Don’t alert at night", isOn: $prefs.quietHoursEnabled)
                 if prefs.quietHoursEnabled {
                     Stepper(value: $prefs.quietHoursStart, in: 0...23) {
-                        HStack { Text("From"); Spacer(); Text(formatHour(prefs.quietHoursStart)).foregroundStyle(.secondary) }
+                        HStack { Text("From"); Spacer(); Text(formatHour(prefs.quietHoursStart)).foregroundStyle(AppTheme.muted) }
                     }
                     Stepper(value: $prefs.quietHoursEnd, in: 0...23) {
-                        HStack { Text("Until"); Spacer(); Text(formatHour(prefs.quietHoursEnd)).foregroundStyle(.secondary) }
+                        HStack { Text("Until"); Spacer(); Text(formatHour(prefs.quietHoursEnd)).foregroundStyle(AppTheme.muted) }
                     }
                 }
             }
@@ -179,7 +179,7 @@ private struct ProAlertStatusRow: View {
             Image(systemName: icon).foregroundStyle(AppTheme.brand).frame(width: 24)
             Text(title)
             Spacer()
-            Text(value).foregroundStyle(.secondary)
+            Text(value).foregroundStyle(AppTheme.muted)
         }
     }
 }

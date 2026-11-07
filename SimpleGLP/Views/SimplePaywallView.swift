@@ -94,7 +94,7 @@ struct SimplePaywallView: View {
         VStack(spacing: 6) {
             ZStack {
                 Circle()
-                    .fill(AppTheme.brand)
+                    .fill(AppTheme.brandFill)
                     .frame(width: 46, height: 46)
                     .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
                 Image(systemName: "sparkles")
@@ -343,7 +343,7 @@ struct SimplePaywallView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .frame(height: 52)
-                .background(AppTheme.brand, in: Capsule())
+                .background(AppTheme.brandFill, in: Capsule())
                 .shadow(color: AppTheme.brand.opacity(0.35), radius: 14, x: 0, y: 6)
             }
             .buttonStyle(.plain)
@@ -617,7 +617,7 @@ private struct GLPProPlanCard: View {
                         .frame(width: 22, height: 22)
                     if isSelected {
                         Circle()
-                            .fill(AppTheme.brand)
+                            .fill(AppTheme.brandFill)
                             .frame(width: 12, height: 12)
                     }
                 }
@@ -633,14 +633,14 @@ private struct GLPProPlanCard: View {
                                 .foregroundStyle(.white)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(AppTheme.brand, in: Capsule())
+                                .background(AppTheme.brandFill, in: Capsule())
                         } else if isBestValue {
                             Text("BEST VALUE")
                                 .font(.system(size: 9, weight: .heavy))
                                 .foregroundStyle(.white)
                                 .padding(.horizontal, 6)
                                 .padding(.vertical, 2)
-                                .background(AppTheme.brand, in: Capsule())
+                                .background(AppTheme.brandFill, in: Capsule())
                         }
                     }
                     if showsTrialBadge, let trial = package.glpProIntroOfferLabel {

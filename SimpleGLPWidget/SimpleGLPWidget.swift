@@ -138,7 +138,7 @@ struct SimpleGLPWidgetEntryView: View {
         }
         .buttonStyle(.plain)
         .containerBackground(for: .widget) {
-            (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brand)
+            (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill)
         }
     }
 
@@ -163,7 +163,7 @@ struct SimpleGLPWidgetEntryView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(12)
                 .background(
-                    (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brand),
+                    (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill),
                     in: RoundedRectangle(cornerRadius: 18, style: .continuous)
                 )
             }

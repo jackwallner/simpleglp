@@ -16,7 +16,7 @@ struct InsightsView: View {
                     Card {
                         Text("Keep logging to see Insights. Insights unlock after \(ProactiveAlertsEngine.minimumSampleSize) doses. You have \(events.count) logged.")
                             .font(.subheadline)
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppTheme.muted)
                     }
                     .padding(.horizontal)
                 } else {
@@ -47,7 +47,7 @@ struct InsightsView: View {
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(AppTheme.muted)
                             }
                         }
                         .padding(.horizontal)
@@ -69,7 +69,7 @@ struct InsightsView: View {
                                 }
                                 Spacer()
                                 Image(systemName: "chevron.right")
-                                    .foregroundStyle(.secondary)
+                                    .foregroundStyle(AppTheme.muted)
                             }
                         }
                         .padding(.horizontal)
@@ -110,7 +110,7 @@ struct InsightsView: View {
                      ? String(localized: "\(onTime) of \(total) pills logged within the expected window.")
                      : String(localized: "\(onTime) of \(total) shots logged within the expected window."))
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .padding(.horizontal)
@@ -145,7 +145,7 @@ struct InsightsView: View {
         VStack(alignment: .leading, spacing: 2) {
             Text(title)
                 .font(.caption)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.muted)
             Text("\(days) days")
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
@@ -174,7 +174,7 @@ struct InsightsView: View {
                     .font(.title3.weight(.semibold))
                 Text("Median time of day across your logged pills.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .padding(.horizontal)
@@ -194,7 +194,7 @@ struct InsightsView: View {
                     .font(.title3.weight(.semibold))
                 Text("Weekday preference from your history.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .padding(.horizontal)
@@ -289,7 +289,7 @@ struct InsightsView: View {
             HStack(spacing: 12) {
                 ZStack {
                     Circle()
-                        .fill(AppTheme.brand)
+                        .fill(AppTheme.brandFill)
                         .frame(width: 40, height: 40)
                         .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
                     Image(systemName: "lock.fill")
@@ -317,7 +317,7 @@ struct InsightsView: View {
                     .foregroundStyle(.white)
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 13)
-                    .background(AppTheme.brand, in: Capsule())
+                    .background(AppTheme.brandFill, in: Capsule())
                     .shadow(color: AppTheme.brand.opacity(0.35), radius: 10, x: 0, y: 4)
             }
             .buttonStyle(.plain)
@@ -362,7 +362,7 @@ private struct ProLockedPreviewCard: View {
                         .foregroundStyle(AppTheme.text)
                     Text(detail)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 Spacer(minLength: 0)
