@@ -317,10 +317,10 @@ final class StoreService: NSObject, ObservableObject {
     #if DEBUG
     /// Local-only entitlement state for literal screenshot captures. It never
     /// configures RevenueCat and is unavailable to Release builds.
-    func setLocalOverride(isPro: Bool) {
+    func setLocalOverride(isPro: Bool, resolved: Bool = true) {
         isProUnlocked = isPro
         completePendingPurchaseIfUnlocked()
-        hasResolvedEntitlements = true
+        hasResolvedEntitlements = resolved
     }
     #endif
 

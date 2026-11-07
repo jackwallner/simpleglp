@@ -62,10 +62,7 @@ enum ScheduleEngine {
         }
 
         let isClaimed = { (slot: Date) in
-            existingEvents.contains { event in
-                guard let scheduled = event.scheduledDate else { return false }
-                return abs(scheduled.timeIntervalSince(slot)) < 60
-            }
+            isOccurrenceClaimed(slot, by: existingEvents, cadenceDays: plan.cadenceDays, calendar: calendar)
         }
         // A weekly shot 3.5 to 4 days late sits nearer next week's slot, but it is the
         // missed dose: give it to the earlier slot while that one is still unclaimed.
@@ -107,10 +104,7 @@ enum ScheduleEngine {
         else {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }
-        let alreadyClaimed = existingEvents.contains { event in
-            guard let scheduled = event.scheduledDate else { return false }
-            return abs(scheduled.timeIntervalSince(slot)) < 60
-        }
+        let alreadyClaimed = isOccurrenceClaimed(slot, by: existingEvents, cadenceDays: 1, calendar: calendar)
         if alreadyClaimed {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }
@@ -161,12 +155,33 @@ enum ScheduleEngine {
 
     /// True when a logged shot already claimed this scheduled occurrence (same matching
     /// tolerance ScheduleEngine uses), so the late-dose nudge shouldn't fire for it.
-    @MainActor
-    static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent]) -> Bool {
+    static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent], cadenceDays: Int, calendar: Calendar = .current) -> Bool {
         events.contains { event in
             guard let scheduled = event.scheduledDate else { return false }
-            return abs(scheduled.timeIntervalSince(occurrence)) < 60
+            // A daily pill belongs to the calendar day it was taken in the current zone, the
+            // rule `nextDue` (Home, widget, Watch, Siri) reads, so both name the same slot.
+            if cadenceDays == 1 { return calendar.isDate(event.timestamp, inSameDayAs: occurrence) }
+            return claim(scheduled, names: occurrence, cadenceDays: cadenceDays, calendar: calendar)
         }
+    }
+
+    /// Whether a stored claim names this slot. Claims are stored as instants, so after the
+    /// device changes time zone the same planned dose sits a whole zone offset away from the
+    /// slot recomputed in the new zone. A claim that no longer falls on the plan's time of day
+    /// is read as that shift, never as far as half the cadence, so it can't reach a
+    /// neighbouring slot.
+    static func claim(_ scheduled: Date, names slot: Date, cadenceDays: Int, calendar: Calendar = .current) -> Bool {
+        let shift = slot.timeIntervalSince(scheduled)
+        if abs(shift) < 60 { return true }
+        let limit = min(26 * 3600, Double(max(1, cadenceDays)) * 12 * 3600)
+        guard abs(shift) < limit else { return false }
+        // Zone offsets are whole quarter hours.
+        let quarter: TimeInterval = 15 * 60
+        guard abs(shift - (shift / quarter).rounded() * quarter) < 60 else { return false }
+        // Still on the slot's time of day in this zone: a claim on another slot, not a shift.
+        let claimed = calendar.dateComponents([.hour, .minute], from: scheduled)
+        let planned = calendar.dateComponents([.hour, .minute], from: slot)
+        return claimed.hour != planned.hour || claimed.minute != planned.minute
     }
 
     /// Returns the current unclaimed occurrence when a dose is overdue, otherwise the next
@@ -182,7 +197,7 @@ enum ScheduleEngine {
         if let overdue = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
            let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: calendar),
            overdue >= first,
-           !isOccurrenceClaimed(overdue, by: events),
+           !isOccurrenceClaimed(overdue, by: events, cadenceDays: plan.cadenceDays, calendar: calendar),
            // A dose logged since then (say today's pill, taken early after a missed day)
            // means the user has moved on; nudging about the missed one would fire right
            // after they log.
@@ -193,7 +208,7 @@ enum ScheduleEngine {
         guard var next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar) else {
             return nil
         }
-        while isOccurrenceClaimed(next, by: events) {
+        while isOccurrenceClaimed(next, by: events, cadenceDays: plan.cadenceDays, calendar: calendar) {
             guard let following = calendar.date(byAdding: .day, value: plan.cadenceDays, to: next) else {
                 return nil
             }
@@ -381,7 +396,7 @@ enum SupplyMath {
         var slots: [Date] = []
         var cursor = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar)
         while let slot = cursor, slots.count < count {
-            if !ScheduleEngine.isOccurrenceClaimed(slot, by: events) { slots.append(slot) }
+            if !ScheduleEngine.isOccurrenceClaimed(slot, by: events, cadenceDays: plan.cadenceDays, calendar: calendar) { slots.append(slot) }
             cursor = calendar.date(byAdding: .day, value: plan.cadenceDays, to: slot)
         }
         return slots

@@ -175,10 +175,30 @@ struct HomeView: View {
         }
     }
 
-    @ViewBuilder
+    /// Re-derived every minute, so the card turns over at midnight and at the dose time
+    /// while One Tap stays open or the app sits in the background.
     private var nextShotSection: some View {
-        if let plan, let next = ScheduleEngine.nextDue(plan: plan, events: events) {
-            let isOverdue = next <= .now
+        TimelineView(.everyMinute) { timeline in
+            nextShotCard(now: Self.cardClock(tick: timeline.date))
+        }
+    }
+
+    /// `.everyMinute` dates each tick at the start of its minute, so a re-render after a log
+    /// mid-minute would read the clock up to a minute early and still show the dose as due.
+    static func cardClock(tick: Date, now: Date = .now) -> Date {
+        max(tick, now)
+    }
+
+    /// The weekly card's next dose and whether it is overdue at `now`.
+    static func nextShot(plan: MedicationPlan, events: [ShotEvent], now: Date) -> (date: Date, isOverdue: Bool)? {
+        ScheduleEngine.nextDue(plan: plan, events: events, now: now).map { ($0, $0 <= now) }
+    }
+
+    @ViewBuilder
+    private func nextShotCard(now: Date) -> some View {
+        if let plan, let shot = Self.nextShot(plan: plan, events: events, now: now) {
+            let next = shot.date
+            let isOverdue = shot.isOverdue
             Card {
                 HStack {
                     VStack(alignment: .leading, spacing: 4) {
@@ -187,7 +207,7 @@ struct HomeView: View {
                                 Image(systemName: "exclamationmark.triangle.fill")
                                     .font(.caption2)
                             }
-                            Text(Self.headline(for: next))
+                            Text(Self.headline(for: next, now: now))
                                 .font(.caption.weight(.semibold))
                         }
                         .foregroundStyle(isOverdue ? AppTheme.warm : AppTheme.muted)

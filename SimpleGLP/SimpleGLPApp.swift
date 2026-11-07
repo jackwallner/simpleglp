@@ -218,18 +218,22 @@ private enum SimpleGLPScreenshotData {
             seedPill(in: context, now: now)
             return
         }
+        let calendar = Calendar.current
+        // UI tests: today's dose falls due a minute or two after launch, so a test can watch One Tap cross it.
+        let dueSoon = ProcessInfo.processInfo.arguments.contains("-GLPScreenshotDueSoon")
+            ? calendar.dateInterval(of: .minute, for: now.addingTimeInterval(150))?.start
+            : nil
         let plan = MedicationPlan(
             medication: .mounjaro,
             doseMg: 5.0,
-            scheduleStartDate: Calendar.current.date(byAdding: .day, value: -56, to: now) ?? now,
-            preferredHour: 8,
-            preferredMinute: 30,
+            scheduleStartDate: calendar.date(byAdding: .day, value: -56, to: now) ?? now,
+            preferredHour: dueSoon.map { calendar.component(.hour, from: $0) } ?? 8,
+            preferredMinute: dueSoon.map { calendar.component(.minute, from: $0) } ?? 30,
             intervalDays: 7,
             reminderEnabled: true
         )
         context.insert(plan)
 
-        let calendar = Calendar.current
         for index in 0..<8 {
             let recentDose = index == 0 && ProcessInfo.processInfo.arguments.contains("-GLPScreenshotConfirmation")
             let daysAgo = recentDose ? 0 : index * 7 + 1
