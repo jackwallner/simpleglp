@@ -30,7 +30,11 @@ enum DoseRoutineService {
         rebuildRecentShots(in: context)
         // An edited time moves the countdown: the ping and the Lock Screen follow it.
         syncWait(publishGlance(in: context))
-        Task { await rescheduleReminders(in: context, mayPrompt: false) }
+        Task {
+            await rescheduleReminders(in: context, mayPrompt: false)
+            // An undone or deleted dose is owed again: its late-dose nudge comes back.
+            await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context, rearmPastDue: false)
+        }
     }
 
     /// Points the wait ping and the Lock Screen countdown at the wait the glance shows, or
@@ -75,7 +79,12 @@ enum DoseRoutineService {
         // the background couldn't start its Lock Screen countdown; pick it up now. A plan
         // save that changed the wait mid-countdown moves the ping and the countdown with it.
         syncWait(glance)
-        Task { await rescheduleReminders(in: context, mayPrompt: mayPrompt) }
+        Task {
+            await rescheduleReminders(in: context, mayPrompt: mayPrompt)
+            // A plan save moves the late-dose nudge, and permission granted in iOS Settings
+            // reaches it on the next resume.
+            await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context, rearmPastDue: false)
+        }
     }
 
     /// A dose that already covers `date`: today's pill on a daily plan, or a shot within

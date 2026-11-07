@@ -43,8 +43,11 @@ enum ProactiveAlertsEngine {
         alertsEnabled && (isPro || !entitlementsResolved)
     }
 
+    /// `rearmPastDue: false` is for the passes after a resume, a history change or a plan
+    /// save: they schedule a late-dose nudge that is still ahead and leave one whose time has
+    /// passed as it is.
     @MainActor
-    static func schedulePatternAlertsIfEnabled(in context: ModelContext) async {
+    static func schedulePatternAlertsIfEnabled(in context: ModelContext, rearmPastDue: Bool = true) async {
         let prefs = ProAlertPreferenceValues.current()
         let store = StoreService.shared
         guard isActive(alertsEnabled: prefs.alertsEnabled, entitlementsResolved: store.hasResolvedEntitlements, isPro: store.isProUnlocked) else {
@@ -59,7 +62,7 @@ enum ProactiveAlertsEngine {
         } else {
             await cancelPatternNotifications()
         }
-        await rescheduleLateDoseNudge(plan: PlanStore.currentPlan(in: context), events: events, prefs: prefs)
+        await rescheduleLateDoseNudge(plan: PlanStore.currentPlan(in: context), events: events, prefs: prefs, rearmPastDue: rearmPastDue)
     }
 
     /// The "never miss a dose" Pro nudge: if the next planned dose hasn't been logged a few
@@ -70,23 +73,28 @@ enum ProactiveAlertsEngine {
         plan: MedicationPlan?,
         events: [ShotEvent],
         prefs: ProAlertPreferenceValues,
-        calendar: Calendar = .current
+        calendar: Calendar = .current,
+        rearmPastDue: Bool = true
     ) async {
-        cancelLateDoseNudge()
+        let now = Date()
         guard prefs.alertsEnabled,
               let plan,
               let next = nextUnclaimedOccurrence(
-                  now: .now,
+                  now: now,
                   plan: plan,
                   events: events,
                   calendar: calendar
               )
-        else { return }
+        else {
+            cancelLateDoseNudge()
+            return
+        }
+        if !rearmPastDue, lateDoseFireDate(for: next, prefs: prefs, calendar: calendar) <= now { return }
+        cancelLateDoseNudge()
 
         let granted = await ReminderService.ensureAuthorization(mayPrompt: false)
         guard granted else { return }
 
-        let now = Date()
         let fireDate = lateDoseFireDate(for: next, prefs: prefs, notBefore: now.addingTimeInterval(60), calendar: calendar)
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
         let content = UNMutableNotificationContent()

@@ -200,6 +200,156 @@ final class StateMachineNotificationFixTests: XCTestCase {
 
     private func events() throws -> [ShotEvent] { try context.fetch(FetchDescriptor<ShotEvent>()) }
 
+    // MARK: S3 undo and delete restore the late-dose nudge
+
+    func testUndoRestoresTheLateDoseNudgeForTheUnloggedDose() async throws {
+        let (_, _) = try makeDailyPlan(minutesAgo: 30)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let beforeLog = try XCTUnwrap(nudgeFire(), "precondition: nudge scheduled for today's pill")
+
+        let coordinator = ShotCaptureCoordinator()
+        XCTAssertTrue(coordinator.captureShot(in: context, deferHealthContext: true))
+        await DoseRoutineService.settleBackgroundLog(in: context)
+        let afterLog = try XCTUnwrap(nudgeFire(), "precondition: nudge exists after the log")
+        XCTAssertGreaterThan(afterLog.timeIntervalSince(beforeLog), 20 * 3600, "precondition: log moves the nudge to tomorrow")
+
+        coordinator.undoLastCapture(in: context)
+        await settle()
+        XCTAssertEqual(try events().count, 0, "precondition: undo removed the dose")
+
+        let afterUndo = try XCTUnwrap(nudgeFire(), "nudge vanished after undo")
+        XCTAssertEqual(
+            afterUndo.timeIntervalSince(beforeLog), 0, accuracy: 120,
+            "today's pill is unlogged again, nudge should fire at \(beforeLog) but is at \(afterUndo) (log had moved it to \(afterLog))"
+        )
+    }
+
+    func testControlSchedulerRunningAgainRestoresTheNudgeAfterUndo() async throws {
+        _ = try makeDailyPlan(minutesAgo: 30)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let beforeLog = try XCTUnwrap(nudgeFire())
+        let coordinator = ShotCaptureCoordinator()
+        XCTAssertTrue(coordinator.captureShot(in: context, deferHealthContext: true))
+        await DoseRoutineService.settleBackgroundLog(in: context)
+        coordinator.undoLastCapture(in: context)
+        await settle()
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let restored = try XCTUnwrap(nudgeFire())
+        XCTAssertEqual(restored.timeIntervalSince(beforeLog), 0, accuracy: 120)
+    }
+
+    func testDeletingTodaysDoseRestoresTheLateDoseNudge() async throws {
+        _ = try makeDailyPlan(minutesAgo: 30)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let beforeLog = try XCTUnwrap(nudgeFire())
+        let coordinator = ShotCaptureCoordinator()
+        XCTAssertTrue(coordinator.captureShot(in: context, deferHealthContext: true))
+        await DoseRoutineService.settleBackgroundLog(in: context)
+        let afterLog = try XCTUnwrap(nudgeFire())
+        XCTAssertGreaterThan(afterLog.timeIntervalSince(beforeLog), 20 * 3600, "precondition")
+
+        // HistoryView.performPendingDeletion: delete, save, historyDidChange.
+        for event in try events() { context.delete(event) }
+        try context.save()
+        DoseRoutineService.historyDidChange(in: context)
+        await settle()
+        XCTAssertEqual(try events().count, 0, "precondition")
+        let afterDelete = try XCTUnwrap(nudgeFire())
+        XCTAssertEqual(afterDelete.timeIntervalSince(beforeLog), 0, accuracy: 120,
+                       "nudge stays at \(afterDelete), should be \(beforeLog)")
+    }
+
+    // MARK: S5 a plan save retimes the nudge
+
+    func testPlanSaveRetimesTheLateDoseNudge() async throws {
+        let (plan, slot1) = try makeDailyPlan(minutesAgo: 30)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let first = try XCTUnwrap(nudgeFire())
+        XCTAssertEqual(first.timeIntervalSince(slot1), 4 * 3600, accuracy: 120, "precondition")
+
+        // PlanEditorView.save, with the pill time moved 90 minutes earlier.
+        let calendar = Calendar.current
+        let slot2 = Date().addingTimeInterval(-120 * 60)
+        guard calendar.isDate(slot2, inSameDayAs: Date()) else { throw XCTSkip("within two hours after midnight") }
+        plan.preferredHour = calendar.component(.hour, from: slot2)
+        plan.preferredMinute = calendar.component(.minute, from: slot2)
+        plan.updatedAt = .now
+        PlanStore.recalculateScheduleMatches(for: plan, in: context)
+        try context.save()
+        DoseRoutineService.refresh(in: context)
+        await settle()
+
+        let expected = ProactiveAlertsEngine.lateDoseFireDate(
+            for: try XCTUnwrap(ScheduleEngine.scheduledDate(onOrBefore: Date(), plan: plan)),
+            prefs: ProAlertPreferenceValues.current()
+        )
+        XCTAssertGreaterThan(abs(expected.timeIntervalSince(first)), 20 * 60, "precondition: edit changes the right answer")
+        let after = try XCTUnwrap(nudgeFire())
+        XCTAssertEqual(after.timeIntervalSince(expected), 0, accuracy: 120,
+                       "nudge still at \(after) (old slot), plan now says \(expected)")
+    }
+
+    // MARK: S4 permission granted later reaches the nudge
+
+    func testControlDoseReminderReconcilesWhenPermissionIsGrantedLater() async throws {
+        fake.authorizationStatus = .denied
+        _ = try makeDailyPlan(minutesAgo: 30)
+        DoseRoutineService.refresh(in: context, mayPrompt: false)
+        await settle()
+        XCTAssertTrue(fake.pending.isEmpty, "precondition: nothing scheduled while denied")
+        fake.authorizationStatus = .authorized
+        DoseRoutineService.refresh(in: context, mayPrompt: false) // scenePhase == .active
+        await settle()
+        XCTAssertNotNil(fake.pending[ReminderService.shotReminderIdentifier], "dose reminder should reconcile")
+    }
+
+    func testLateDoseNudgeReconcilesWhenPermissionIsGrantedLater() async throws {
+        fake.authorizationStatus = .denied
+        _ = try makeDailyPlan(minutesAgo: 30)
+        DoseRoutineService.refresh(in: context, mayPrompt: false)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        await settle()
+        XCTAssertTrue(fake.pending.isEmpty, "precondition: nothing scheduled while denied")
+        XCTAssertTrue(GLPAppGroup.userDefaults.bool(forKey: GLPStorageKey.proAlertsEnabled.rawValue), "precondition: toggle on")
+
+        fake.authorizationStatus = .authorized
+        DoseRoutineService.refresh(in: context, mayPrompt: false) // what scenePhase == .active runs
+        await settle()
+        XCTAssertNotNil(fake.pending[ReminderService.shotReminderIdentifier], "precondition: dose reminder reconciled")
+        XCTAssertNotNil(nudgeFire(), "enabled Proactive Alerts nudge never scheduled after permission was granted")
+    }
+
+    /// The Home route: "I took my pill", the Health read settles, then "Undo".
+    func testHomeUndoAfterHealthSettlesRestoresTodaysNudge() async throws {
+        _ = try makeDailyPlan(minutesAgo: 30)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let beforeLog = try XCTUnwrap(nudgeFire(), "precondition: nudge scheduled for today's pill")
+
+        let coordinator = ShotCaptureCoordinator()
+        XCTAssertTrue(coordinator.captureShot(in: context))
+        for _ in 0..<50 where coordinator.isCapturing { await settle(0.2) }
+        XCTAssertFalse(coordinator.isCapturing, "precondition: the Health read settled")
+        await settle()
+        let afterLog = try XCTUnwrap(nudgeFire(), "precondition: nudge exists after the log")
+        XCTAssertGreaterThan(afterLog.timeIntervalSince(beforeLog), 20 * 3600, "precondition: log moves the nudge to tomorrow")
+
+        coordinator.undoLastCapture(in: context)
+        await settle()
+        let afterUndo = try XCTUnwrap(nudgeFire())
+        XCTAssertEqual(afterUndo.timeIntervalSince(beforeLog), 0, accuracy: 120,
+                       "after Home Undo the nudge stays at \(afterUndo), today's would be \(beforeLog)")
+    }
+
+    /// A resume or history change while the dose is long overdue does not repeat the nudge
+    /// a minute later (product call 9 stays with the cold-launch pass).
+    func testControlResumeDoesNotRearmAPastDueNudge() async throws {
+        _ = try makeDailyPlan(minutesAgo: 6 * 60, requireSameDay: false)
+        DoseRoutineService.refresh(in: context, mayPrompt: false)
+        await settle()
+        XCTAssertNotNil(fake.pending[ReminderService.shotReminderIdentifier], "precondition: the resume pass ran")
+        XCTAssertNil(nudgeFire(), "a resume re-armed the overdue nudge at now + 60 s")
+    }
+
     // MARK: S2 the late-dose nudge respects quiet hours when re-armed
 
     func testLateDoseNudgeNeverFiresInsideQuietHours() async throws {
