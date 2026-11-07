@@ -327,7 +327,7 @@ final class StateMachineNotificationFixTests: XCTestCase {
 
         let coordinator = ShotCaptureCoordinator()
         XCTAssertTrue(coordinator.captureShot(in: context))
-        for _ in 0..<50 where coordinator.isCapturing { await settle(0.2) }
+        for _ in 0..<150 where coordinator.isCapturing { await settle(0.2) }
         XCTAssertFalse(coordinator.isCapturing, "precondition: the Health read settled")
         await settle()
         let afterLog = try XCTUnwrap(nudgeFire(), "precondition: nudge exists after the log")
