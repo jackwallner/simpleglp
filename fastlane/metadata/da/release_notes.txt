@@ -1,1 +1,1 @@
-Forbedringer bag kulisserne og fejlrettelser, så Simple GLP kører glat. Tak fordi du er her.
+Nu kan du ændre appens sprog fra Indstillinger. Denne opdatering indeholder også rettelser og forbedringer.
