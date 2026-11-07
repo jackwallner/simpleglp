@@ -169,6 +169,7 @@ struct HomeView: View {
                         RecentShotRow(event: event)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier(RecentShotRow.identifier(for: event.timestamp))
                 }
             }
             .padding(.horizontal)
@@ -283,6 +284,13 @@ struct LogEarlierStart: Identifiable {
 
 struct RecentShotRow: View {
     let event: ShotEvent
+
+    /// Names a row by its calendar day (`recentDose-2026-11-07`), the same in every language,
+    /// so UI tests can find a dose without matching translated or locale formatted text.
+    static func identifier(for date: Date, calendar: Calendar = .current) -> String {
+        let parts = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(format: "recentDose-%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
+    }
 
     var body: some View {
         HStack(spacing: 14) {

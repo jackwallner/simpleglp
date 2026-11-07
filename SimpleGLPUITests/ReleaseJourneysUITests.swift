@@ -82,17 +82,19 @@ final class ReleaseJourneysUITests: XCTestCase {
         QA.checkpoint(app, "one-tap-after-relaunch")
     }
 
-    /// The core loop: tap the big button and the dose is recorded. The seed's
-    /// doses are all in the past, so a row dated today appears only once the
-    /// log has saved. (The seed rebuilds its data each launch, so this does not
-    /// assert persistence across a relaunch.)
+    /// The core loop: tap the big button and the dose is recorded. Home names
+    /// each dose row by its calendar day, so the check does not depend on the
+    /// language, on the next-dose card (which also prints a date), or on what the
+    /// store held at launch: it counts today's rows before and after. (The seed
+    /// rebuilds its data each launch, so this does not assert persistence
+    /// across a relaunch.)
     func testCoreLoopLogsDose() {
         let app = XCUIApplication(bundleIdentifier: Self.bundleID)
         QA.launch(app, environment: Self.customer, arguments: ["-uitesting", "-GLPScreenshotSeed", "-rcfunnelprobe"])
         XCTAssertTrue(tab(Self.oneTap, in: app).waitForExistence(timeout: 20))
-        let today = Date.now.formatted(date: .long, time: .omitted)
-        let todayRow = app.staticTexts.matching(NSPredicate(format: "label == %@", today)).firstMatch
-        XCTAssertFalse(todayRow.exists, "a dose dated today is listed before logging")
+        let todayID = "recentDose-" + Self.dayStamp(.now)
+        let todayRows = app.buttons.matching(identifier: todayID)
+        let before = todayRows.count
         QA.checkpoint(app, "core-before-log")
 
         let log = button(["I took my shot", "Ich habe gespritzt."], in: app)
@@ -102,8 +104,17 @@ final class ReleaseJourneysUITests: XCTestCase {
         XCTAssertTrue(confirmation.waitForExistence(timeout: 10), "no confirmation after logging")
         QA.checkpoint(app, "core-logged")
 
-        XCTAssertTrue(todayRow.waitForExistence(timeout: 10), "the new dose is not listed")
+        let listed = NSPredicate { _, _ in todayRows.count == before + 1 }
+        let wait = XCTNSPredicateExpectation(predicate: listed, object: nil)
+        XCTAssertEqual(XCTWaiter().wait(for: [wait], timeout: 10), .completed,
+                       "the new dose is not listed (\(before) rows today before, \(todayRows.count) after)")
         QA.checkpoint(app, "core-listed")
+    }
+
+    /// `yyyy-MM-dd` in the device calendar, matching `RecentShotRow.identifier`.
+    private static func dayStamp(_ date: Date) -> String {
+        let parts = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        return String(format: "%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
     }
 
     private static let oneTap = ["One Tap", "Einmal tippen"]
