@@ -294,8 +294,8 @@ final class SimpleGLPTests: XCTestCase {
             scheduledDate: occurrence,
             scheduleStatus: .onSchedule
         )
-        XCTAssertTrue(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence, by: [logged], cadenceDays: 7))
-        XCTAssertFalse(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence.addingTimeInterval(7 * 86_400), by: [logged], cadenceDays: 7))
+        XCTAssertTrue(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence, by: [logged]))
+        XCTAssertFalse(ProactiveAlertsEngine.isOccurrenceClaimed(occurrence.addingTimeInterval(7 * 86_400), by: [logged]))
     }
 
     @MainActor

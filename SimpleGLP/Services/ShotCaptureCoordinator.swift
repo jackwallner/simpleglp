@@ -92,7 +92,6 @@ final class ShotCaptureCoordinator: ObservableObject {
             return true
         }
         let isFirstShot = events.isEmpty
-        let owedBefore = plan.flatMap { ScheduleEngine.nextDue(plan: $0, events: events) }
         let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: events)
         let event = ShotEvent(
             id: eventID ?? UUID(),
@@ -134,7 +133,7 @@ final class ShotCaptureCoordinator: ObservableObject {
                 doseMg: event.doseMg
             )
         )
-        DoseRoutineService.didLogDose(at: timestamp, plan: plan, owedBefore: owedBefore, in: context)
+        DoseRoutineService.didLogDose(at: timestamp, plan: plan, in: context)
         if deferHealthContext { return true }
 
         isCapturing = true

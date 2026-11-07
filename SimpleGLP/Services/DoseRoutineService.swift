@@ -9,14 +9,10 @@ import WidgetKit
 @MainActor
 enum DoseRoutineService {
     /// Called right after a dose is saved, before Health context, so the countdown starts
-    /// the moment the button is tapped. `owedBefore` is `ScheduleEngine.nextDue` before the
-    /// log: reminders and a snooze are cleared only when the log paid that dose, so a
-    /// backfill for another day leaves them alone.
-    static func didLogDose(at timestamp: Date, plan: MedicationPlan?, owedBefore: Date? = nil, in context: ModelContext) {
-        let glance = publishGlance(in: context)
-        if plan == nil || glance.nextDoseAt != owedBefore {
-            ReminderService.clearDoseNudges()
-        }
+    /// the moment the button is tapped.
+    static func didLogDose(at timestamp: Date, plan: MedicationPlan?, in context: ModelContext) {
+        publishGlance(in: context)
+        ReminderService.clearDoseNudges()
         guard let plan, plan.effectiveWaitMinutes > 0 else { return }
         let endsAt = timestamp.addingTimeInterval(TimeInterval(plan.effectiveWaitMinutes * 60))
         guard endsAt > .now else { return }
@@ -31,21 +27,10 @@ enum DoseRoutineService {
     /// Called after an undo, delete or edit: drops a countdown that no longer has a dose
     /// behind it and refreshes everything derived from history.
     static func historyDidChange(in context: ModelContext) {
-        PlanStore.rematchExtraEvents(in: context)
         rebuildRecentShots(in: context)
-        // An edited time moves the countdown: the ping and the Lock Screen follow it.
-        syncWait(publishGlance(in: context))
-        Task {
-            await rescheduleReminders(in: context, mayPrompt: false)
-            // An undone or deleted dose is owed again: its late-dose nudge comes back.
-            await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context, rearmPastDue: false)
-        }
-    }
-
-    /// Points the wait ping and the Lock Screen countdown at the wait the glance shows, or
-    /// drops them when no wait is running.
-    private static func syncWait(_ glance: GLPGlance) {
+        let glance = publishGlance(in: context)
         if let endsAt = glance.waitEndsAt(), let takenAt = glance.lastDoseAt {
+            // An edited time moves the countdown: the ping and the Lock Screen follow it.
             Task { await ReminderService.scheduleWaitEnd(medicationName: glance.medicationName, waitMinutes: glance.waitMinutes, endsAt: endsAt, takenAt: takenAt, mayPrompt: false) }
             if StoreService.shared.isProUnlocked {
                 LiveActivityService.sync(medicationName: glance.medicationName, takenAt: takenAt, endsAt: endsAt)
@@ -54,6 +39,7 @@ enum DoseRoutineService {
             ReminderService.cancelWaitEnd()
             LiveActivityService.endAll()
         }
+        Task { await rescheduleReminders(in: context, mayPrompt: false) }
     }
 
     /// Rebuilds the shared recent-doses cache from SwiftData so widget and Watch lists
@@ -78,18 +64,12 @@ enum DoseRoutineService {
     /// foreground pass `mayPrompt: false` so an existing user never gets a cold
     /// notification prompt; onboarding and a plan save may ask.
     static func refresh(in context: ModelContext, mayPrompt: Bool = true) {
-        let glance = publishGlance(in: context)
+        publishGlance(in: context)
         LiveActivityService.endFinished()
         // A pill logged from the Watch, widget, Siri or a notification while the app was in
-        // the background couldn't start its Lock Screen countdown; pick it up now. A plan
-        // save that changed the wait mid-countdown moves the ping and the countdown with it.
-        syncWait(glance)
-        Task {
-            await rescheduleReminders(in: context, mayPrompt: mayPrompt)
-            // A plan save moves the late-dose nudge, and permission granted in iOS Settings
-            // reaches it on the next resume.
-            await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context, rearmPastDue: false)
-        }
+        // the background couldn't start its Lock Screen countdown; pick it up now.
+        startLiveActivityIfWaiting(in: context)
+        Task { await rescheduleReminders(in: context, mayPrompt: mayPrompt) }
     }
 
     /// A dose that already covers `date`: today's pill on a daily plan, or a shot within
@@ -151,8 +131,7 @@ enum DoseRoutineService {
         let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
         await ReminderService.scheduleNextShotReminder(for: plan, events: events, mayPrompt: mayPrompt)
         // Before entitlements resolve a Pro user reads as free; leave their refill alert alone.
-        // Pro from cached customer info (an offline launch) is safe to act on.
-        guard StoreService.shared.hasResolvedEntitlements || StoreService.shared.isProUnlocked else { return }
+        guard StoreService.shared.hasResolvedEntitlements else { return }
         await ReminderService.scheduleRefillReminder(for: plan, events: events, isPro: StoreService.shared.isProUnlocked, mayPrompt: mayPrompt)
     }
 

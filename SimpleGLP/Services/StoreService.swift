@@ -317,10 +317,10 @@ final class StoreService: NSObject, ObservableObject {
     #if DEBUG
     /// Local-only entitlement state for literal screenshot captures. It never
     /// configures RevenueCat and is unavailable to Release builds.
-    func setLocalOverride(isPro: Bool, resolved: Bool = true) {
+    func setLocalOverride(isPro: Bool) {
         isProUnlocked = isPro
         completePendingPurchaseIfUnlocked()
-        hasResolvedEntitlements = resolved
+        hasResolvedEntitlements = true
     }
     #endif
 
@@ -616,7 +616,6 @@ final class StoreService: NSObject, ObservableObject {
         do {
             let info = try await Purchases.shared.restorePurchases()
             apply(customerInfo: info)
-            hasResolvedEntitlements = true
             lastError = isProUnlocked ? nil : String(localized: "No previous Simple GLP Pro purchase was found on this Apple ID.")
         } catch {
             logger.error("Restore failed: \(String(describing: error), privacy: .public)")

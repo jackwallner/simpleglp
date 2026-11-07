@@ -471,60 +471,6 @@ final class StateMachineNotificationFixTests: XCTestCase {
         XCTAssertNil(fake.pending[ReminderService.snoozeIdentifier], "the snooze for the dose just logged is stale")
     }
 
-    // MARK: S6 an offline cold start still updates the refill alert for cached Pro
-
-    private func seedStaleRefill() {
-        let content = UNMutableNotificationContent()
-        content.title = "Refill soon"
-        fake.seed(UNNotificationRequest(
-            identifier: ReminderService.refillIdentifier, content: content,
-            trigger: UNTimeIntervalNotificationTrigger(timeInterval: 2 * 86_400, repeats: false)
-        ))
-    }
-
-    /// Pro from cached customer info, the authoritative fetch failed (offline cold start).
-    private func offlineLaunch(isPro: Bool) async throws -> MedicationPlan {
-        setDefault(.refillHeadsUpCycle, nil)
-        setDefault(.refillHeadsUpFireAt, nil)
-        StoreService.shared.setLocalOverride(isPro: isPro, resolved: false)
-        await settle(0.8)
-        let (plan, _) = try makeDailyPlan(minutesAgo: 30)
-        plan.supplyCount = 30
-        plan.supplyUpdatedAt = Calendar.current.date(byAdding: .day, value: -25, to: Date())
-        try context.save()
-        fake.clear()
-        seedStaleRefill()
-        XCTAssertFalse(StoreService.shared.hasResolvedEntitlements, "precondition: entitlements unresolved")
-        return plan
-    }
-
-    func testRefillAfterOfflineLaunchReschedulesTheHeadsUp() async throws {
-        let plan = try await offlineLaunch(isPro: true)
-        // SupplyView "I refilled: set to 30".
-        plan.supplyCount = 30
-        plan.supplyUpdatedAt = .now
-        try context.save()
-        await DoseRoutineService.rescheduleReminders(in: context)
-        let fire = try XCTUnwrap(fake.fireDate(of: ReminderService.refillIdentifier), "refill heads-up missing")
-        XCTAssertGreaterThan(fire.timeIntervalSinceNow, 20 * 86_400, "the old cycle's \"Refill soon\" still fires at \(fire)")
-    }
-
-    func testStopTrackingAfterOfflineLaunchDropsTheHeadsUp() async throws {
-        let plan = try await offlineLaunch(isPro: true)
-        plan.supplyUpdatedAt = nil
-        try context.save()
-        await DoseRoutineService.rescheduleReminders(in: context)
-        XCTAssertNil(fake.pending[ReminderService.refillIdentifier], "an outdated \"Refill soon\" still fires after Stop tracking")
-    }
-
-    func testControlUnresolvedFreeReadingLeavesTheRefillAlone() async throws {
-        let plan = try await offlineLaunch(isPro: false)
-        plan.supplyUpdatedAt = nil
-        try context.save()
-        await DoseRoutineService.rescheduleReminders(in: context)
-        XCTAssertNotNil(fake.pending[ReminderService.refillIdentifier], "a Pro user who reads as free before resolving keeps the alert")
-    }
-
     // MARK: S8 changing the wait mid-countdown retimes the ping
 
     private func changeWaitMidCountdown(from old: Int, to new: Int) async throws -> (homeEnds: Date, ping: Date) {
