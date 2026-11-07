@@ -110,9 +110,8 @@ enum ProactiveAlertsEngine {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: [lateDoseIdentifier])
     }
 
-    @MainActor
-    static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent]) -> Bool {
-        ScheduleEngine.isOccurrenceClaimed(occurrence, by: events)
+    static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent], cadenceDays: Int, calendar: Calendar = .current) -> Bool {
+        ScheduleEngine.isOccurrenceClaimed(occurrence, by: events, cadenceDays: cadenceDays, calendar: calendar)
     }
 
     @MainActor
