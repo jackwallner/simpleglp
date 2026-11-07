@@ -30,7 +30,7 @@ struct ScheduleFields: View {
         CadenceField(intervalDays: $intervalDays)
         Text(GLPScheduleFormat.summary(firstDose: firstDose, intervalDays: intervalDays))
             .font(.footnote)
-            .foregroundStyle(.secondary)
+            .foregroundStyle(AppTheme.muted)
     }
 }
 
