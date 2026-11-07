@@ -28,9 +28,15 @@ enum DoseRoutineService {
     /// behind it and refreshes everything derived from history.
     static func historyDidChange(in context: ModelContext) {
         rebuildRecentShots(in: context)
-        let glance = publishGlance(in: context)
+        // An edited time moves the countdown: the ping and the Lock Screen follow it.
+        syncWait(publishGlance(in: context))
+        Task { await rescheduleReminders(in: context, mayPrompt: false) }
+    }
+
+    /// Points the wait ping and the Lock Screen countdown at the wait the glance shows, or
+    /// drops them when no wait is running.
+    private static func syncWait(_ glance: GLPGlance) {
         if let endsAt = glance.waitEndsAt(), let takenAt = glance.lastDoseAt {
-            // An edited time moves the countdown: the ping and the Lock Screen follow it.
             Task { await ReminderService.scheduleWaitEnd(medicationName: glance.medicationName, waitMinutes: glance.waitMinutes, endsAt: endsAt, takenAt: takenAt, mayPrompt: false) }
             if StoreService.shared.isProUnlocked {
                 LiveActivityService.sync(medicationName: glance.medicationName, takenAt: takenAt, endsAt: endsAt)
@@ -39,7 +45,6 @@ enum DoseRoutineService {
             ReminderService.cancelWaitEnd()
             LiveActivityService.endAll()
         }
-        Task { await rescheduleReminders(in: context, mayPrompt: false) }
     }
 
     /// Rebuilds the shared recent-doses cache from SwiftData so widget and Watch lists
@@ -64,11 +69,12 @@ enum DoseRoutineService {
     /// foreground pass `mayPrompt: false` so an existing user never gets a cold
     /// notification prompt; onboarding and a plan save may ask.
     static func refresh(in context: ModelContext, mayPrompt: Bool = true) {
-        publishGlance(in: context)
+        let glance = publishGlance(in: context)
         LiveActivityService.endFinished()
         // A pill logged from the Watch, widget, Siri or a notification while the app was in
-        // the background couldn't start its Lock Screen countdown; pick it up now.
-        startLiveActivityIfWaiting(in: context)
+        // the background couldn't start its Lock Screen countdown; pick it up now. A plan
+        // save that changed the wait mid-countdown moves the ping and the countdown with it.
+        syncWait(glance)
         Task { await rescheduleReminders(in: context, mayPrompt: mayPrompt) }
     }
 
