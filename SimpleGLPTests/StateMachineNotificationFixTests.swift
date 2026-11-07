@@ -200,6 +200,46 @@ final class StateMachineNotificationFixTests: XCTestCase {
 
     private func events() throws -> [ShotEvent] { try context.fetch(FetchDescriptor<ShotEvent>()) }
 
+    // MARK: S2 the late-dose nudge respects quiet hours when re-armed
+
+    func testLateDoseNudgeNeverFiresInsideQuietHours() async throws {
+        let calendar = Calendar.current
+        let now = Date()
+        let hour = calendar.component(.hour, from: now)
+        let prefs = ProAlertPreferenceValues(
+            alertsEnabled: true, quietHoursEnabled: true,
+            quietHoursStart: hour, quietHoursEnd: (hour + 2) % 24,
+            patternAlertsEnabled: false, patternAlertSensitivity: 0
+        )
+        XCTAssertTrue(prefs.isQuietHour(at: now), "precondition: now is inside quiet hours")
+        let pushed = ProactiveAlertsEngine.lateDoseFireDate(for: now.addingTimeInterval(-(3 * 3600 + 50 * 60)), prefs: prefs)
+        XCTAssertFalse(prefs.isQuietHour(at: pushed), "control: lateDoseFireDate respects quiet hours")
+
+        let (plan, _) = try makeDailyPlan(minutesAgo: 6 * 60, requireSameDay: false)
+        let occurrence = try XCTUnwrap(ProactiveAlertsEngine.nextUnclaimedOccurrence(now: now, plan: plan, events: []))
+        XCTAssertLessThan(occurrence, now.addingTimeInterval(-4 * 3600), "precondition: dose is overdue by more than the grace")
+
+        await ProactiveAlertsEngine.rescheduleLateDoseNudge(plan: plan, events: [], prefs: prefs)
+        let fire = try XCTUnwrap(nudgeFire())
+        XCTAssertFalse(prefs.isQuietHour(at: fire), "nudge scheduled for \(fire), inside quiet hours \(hour):00-\((hour + 2) % 24):00")
+        XCTAssertGreaterThan(fire, now, "the nudge is still ahead")
+    }
+
+    /// The cold-launch pass (`SimpleGLPApp` on resolved entitlements) with quiet hours read
+    /// from the stored preferences.
+    func testColdLaunchPassKeepsTheNudgeOutOfQuietHours() async throws {
+        let hour = Calendar.current.component(.hour, from: Date())
+        setDefault(.proAlertQuietHoursEnabled, true)
+        setDefault(.proAlertQuietStartHour, hour)
+        setDefault(.proAlertQuietEndHour, (hour + 2) % 24)
+        _ = try makeDailyPlan(minutesAgo: 6 * 60, requireSameDay: false)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        let prefs = ProAlertPreferenceValues.current()
+        XCTAssertTrue(prefs.isQuietHour(at: Date()), "precondition: now is inside quiet hours")
+        let fire = try XCTUnwrap(nudgeFire(), "precondition: the overdue dose gets a nudge")
+        XCTAssertFalse(prefs.isQuietHour(at: fire), "scheduled the nudge at \(fire), inside quiet hours")
+    }
+
     // MARK: S8 changing the wait mid-countdown retimes the ping
 
     private func changeWaitMidCountdown(from old: Int, to new: Int) async throws -> (homeEnds: Date, ping: Date) {
