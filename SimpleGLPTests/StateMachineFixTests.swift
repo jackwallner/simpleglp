@@ -81,6 +81,63 @@ final class StateMachineFixTests: XCTestCase {
         XCTAssertEqual(reminders.first, target)
     }
 
+    /// Daily 9:00 pill, started in the given zone.
+    private func dailyPillPlan(_ calendar: Calendar) -> MedicationPlan {
+        MedicationPlan(medication: .wegovyPill, doseMg: 4,
+                       scheduleStartDate: calendar.date(from: DateComponents(year: 2026, month: 10, day: 1))!,
+                       preferredHour: 9, preferredMinute: 0, intervalDays: 1)
+    }
+
+    func testDailyPillOwedInTokyoKeepsItsReminderAndMatch() throws {
+        let ny = calendar("America/New_York")
+        let tokyo = calendar("Asia/Tokyo")
+        let plan = dailyPillPlan(ny)
+        let event = logged(at: ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9, minute: 5))!, plan: plan, calendar: ny)
+        let now = tokyo.date(from: DateComponents(year: 2026, month: 10, day: 23, hour: 7))!
+        let today = tokyo.date(from: DateComponents(year: 2026, month: 10, day: 23, hour: 9))!
+        XCTAssertEqual(ScheduleEngine.nextDue(plan: plan, events: [event], now: now, calendar: tokyo), today,
+                       "precondition: Home says today's pill is due")
+
+        let reminders = ReminderService.upcomingReminderSlots(plan: plan, events: [event], now: now, calendar: tokyo)
+        XCTAssertEqual(reminders.first, today, "today's reminder was dropped as already claimed")
+        let taken = logged(at: today.addingTimeInterval(5 * 60), plan: plan, calendar: tokyo, existing: [event])
+        XCTAssertNotEqual(taken.scheduleStatus, .extra, "today's pill logged in Tokyo reads Manual")
+        XCTAssertEqual(ScheduleEngine.nextUnclaimedOccurrence(now: now, plan: plan, events: [event], calendar: tokyo), today,
+                       "the late-dose nudge skips today's unlogged pill")
+    }
+
+    func testDailyPillOwedAfterFlyingDelhiToNewYorkKeepsItsReminder() throws {
+        let delhi = calendar("Asia/Kolkata")
+        let ny = calendar("America/New_York")
+        let plan = dailyPillPlan(delhi)
+        let event = logged(at: delhi.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9, minute: 5))!, plan: plan, calendar: delhi)
+        let now = ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 7))!
+        let today = ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9))!
+        XCTAssertEqual(ScheduleEngine.nextDue(plan: plan, events: [event], now: now, calendar: ny), today,
+                       "precondition: Home says today's pill is due")
+        let reminders = ReminderService.upcomingReminderSlots(plan: plan, events: [event], now: now, calendar: ny)
+        XCTAssertEqual(reminders.first, today, "today's reminder was dropped as already claimed")
+    }
+
+    /// Existing same-zone daily data reads as before: a pill claims its own day only, and a
+    /// second pill that day stays a manual extra.
+    func testControlSameZoneDailyClaimNamesOnlyItsDay() {
+        let ny = calendar("America/New_York")
+        let plan = dailyPillPlan(ny)
+        let event = logged(at: ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9, minute: 5))!, plan: plan, calendar: ny)
+        let slot = ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9))!
+        XCTAssertEqual(event.scheduledDate, slot)
+        XCTAssertTrue(ScheduleEngine.isOccurrenceClaimed(slot, by: [event], cadenceDays: 1, calendar: ny))
+        for days in [-1, 1] {
+            let other = ny.date(byAdding: .day, value: days, to: slot)!
+            XCTAssertFalse(ScheduleEngine.isOccurrenceClaimed(other, by: [event], cadenceDays: 1, calendar: ny))
+        }
+        let second = logged(at: ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 20))!, plan: plan, calendar: ny, existing: [event])
+        XCTAssertEqual(second.scheduleStatus, .extra)
+        let lateNight = logged(at: ny.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 23, minute: 30))!, plan: plan, calendar: ny)
+        XCTAssertEqual(lateNight.scheduledDate, slot, "an 11:30 PM pill stays on its own day")
+    }
+
     func testControlEastwardTravelKeepsTheClaim() throws {
         let la = calendar("America/Los_Angeles")
         let ny = calendar("America/New_York")
