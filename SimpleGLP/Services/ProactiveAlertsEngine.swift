@@ -87,8 +87,7 @@ enum ProactiveAlertsEngine {
         guard granted else { return }
 
         let now = Date()
-        let requestedFireDate = lateDoseFireDate(for: next, prefs: prefs, calendar: calendar)
-        let fireDate = max(requestedFireDate, now.addingTimeInterval(60))
+        let fireDate = lateDoseFireDate(for: next, prefs: prefs, notBefore: now.addingTimeInterval(60), calendar: calendar)
         let components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: fireDate)
         let content = UNMutableNotificationContent()
         content.title = String(localized: "Dose slipping?")
@@ -119,9 +118,10 @@ enum ProactiveAlertsEngine {
         ScheduleEngine.nextUnclaimedOccurrence(now: now, plan: plan, events: events, calendar: calendar)
     }
 
-    /// Planned time + grace, shifted forward out of quiet hours if needed.
-    static func lateDoseFireDate(for occurrence: Date, prefs: ProAlertPreferenceValues, calendar: Calendar = .current) -> Date {
-        var fire = occurrence.addingTimeInterval(TimeInterval(lateDoseGraceHours) * 3600)
+    /// Planned time + grace (or `notBefore`, if later), shifted forward out of quiet hours
+    /// if needed.
+    static func lateDoseFireDate(for occurrence: Date, prefs: ProAlertPreferenceValues, notBefore: Date? = nil, calendar: Calendar = .current) -> Date {
+        var fire = max(occurrence.addingTimeInterval(TimeInterval(lateDoseGraceHours) * 3600), notBefore ?? .distantPast)
         var guardrail = 0
         while prefs.isQuietHour(at: fire, calendar: calendar), guardrail < 24 {
             fire = fire.addingTimeInterval(3600)
