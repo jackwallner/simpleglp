@@ -102,4 +102,26 @@ final class StateMachineFixTests: XCTestCase {
             XCTAssertFalse(ScheduleEngine.isOccurrenceClaimed(other, by: [event], cadenceDays: 7, calendar: ny))
         }
     }
+
+    // MARK: S10 the weekly Home card follows the clock it is given
+
+    func testWeeklyHomeCardTurnsOverAtMidnightAndAtTheDoseTime() throws {
+        let calendar = Calendar.current
+        let slot = calendar.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9))!
+        let plan = MedicationPlan(medication: .ozempic, doseMg: 0.5,
+                                  scheduleStartDate: slot, preferredHour: 9, preferredMinute: 0, intervalDays: 7)
+        let lateEvening = calendar.date(from: DateComponents(year: 2026, month: 10, day: 21, hour: 23, minute: 59))!
+        let afterMidnight = calendar.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 0, minute: 1))!
+        let afterDoseTime = slot.addingTimeInterval(60)
+
+        let evening = try XCTUnwrap(HomeView.nextShot(plan: plan, events: [], now: lateEvening))
+        XCTAssertEqual(evening.date, slot)
+        XCTAssertEqual(HomeView.headline(for: evening.date, now: lateEvening), String(localized: "Tomorrow"))
+        let morning = try XCTUnwrap(HomeView.nextShot(plan: plan, events: [], now: afterMidnight))
+        XCTAssertEqual(HomeView.headline(for: morning.date, now: afterMidnight), String(localized: "Due today"))
+        XCTAssertFalse(morning.isOverdue)
+        let late = try XCTUnwrap(HomeView.nextShot(plan: plan, events: [], now: afterDoseTime))
+        XCTAssertEqual(late.date, slot)
+        XCTAssertTrue(late.isOverdue, "the overdue mark appears once the dose time passes")
+    }
 }
