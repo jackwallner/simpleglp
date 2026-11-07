@@ -162,6 +162,24 @@ final class StateMachineFixTests: XCTestCase {
 
     // MARK: S10 the weekly Home card follows the clock it is given
 
+    /// A daily shot plan logged mid-minute: the card re-renders before the next minute tick
+    /// and must already read tomorrow.
+    func testDailyShotCardTurnsOverRightAfterAMidMinuteLog() throws {
+        let calendar = Calendar.current
+        let slot = calendar.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9))!
+        let plan = MedicationPlan(medication: .ozempic, doseMg: 0.5,
+                                  scheduleStartDate: calendar.date(byAdding: .day, value: -10, to: slot)!,
+                                  preferredHour: 9, preferredMinute: 0, intervalDays: 1)
+        let tick = slot.addingTimeInterval(5 * 60)
+        let taken = tick.addingTimeInterval(30)
+        let event = logged(at: taken, plan: plan, calendar: calendar)
+        let now = HomeView.cardClock(tick: tick, now: taken.addingTimeInterval(1))
+        let shot = try XCTUnwrap(HomeView.nextShot(plan: plan, events: [event], now: now))
+        XCTAssertEqual(shot.date, calendar.date(byAdding: .day, value: 1, to: slot),
+                       "the card still reads \"\(HomeView.headline(for: shot.date, now: now))\" for today's logged dose")
+        XCTAssertFalse(shot.isOverdue)
+    }
+
     func testWeeklyHomeCardTurnsOverAtMidnightAndAtTheDoseTime() throws {
         let calendar = Calendar.current
         let slot = calendar.date(from: DateComponents(year: 2026, month: 10, day: 22, hour: 9))!

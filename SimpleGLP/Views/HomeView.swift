@@ -179,8 +179,14 @@ struct HomeView: View {
     /// while One Tap stays open or the app sits in the background.
     private var nextShotSection: some View {
         TimelineView(.everyMinute) { timeline in
-            nextShotCard(now: timeline.date)
+            nextShotCard(now: Self.cardClock(tick: timeline.date))
         }
+    }
+
+    /// `.everyMinute` dates each tick at the start of its minute, so a re-render after a log
+    /// mid-minute would read the clock up to a minute early and still show the dose as due.
+    static func cardClock(tick: Date, now: Date = .now) -> Date {
+        max(tick, now)
     }
 
     /// The weekly card's next dose and whether it is overdue at `now`.
