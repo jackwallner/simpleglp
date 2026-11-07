@@ -158,6 +158,9 @@ enum ScheduleEngine {
     static func isOccurrenceClaimed(_ occurrence: Date, by events: [ShotEvent], cadenceDays: Int, calendar: Calendar = .current) -> Bool {
         events.contains { event in
             guard let scheduled = event.scheduledDate else { return false }
+            // A daily pill belongs to the calendar day it was taken in the current zone, the
+            // rule `nextDue` (Home, widget, Watch, Siri) reads, so both name the same slot.
+            if cadenceDays == 1 { return calendar.isDate(event.timestamp, inSameDayAs: occurrence) }
             return claim(scheduled, names: occurrence, cadenceDays: cadenceDays, calendar: calendar)
         }
     }
