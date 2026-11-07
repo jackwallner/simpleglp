@@ -390,6 +390,59 @@ final class StateMachineNotificationFixTests: XCTestCase {
         XCTAssertFalse(prefs.isQuietHour(at: fire), "scheduled the nudge at \(fire), inside quiet hours")
     }
 
+    // MARK: S9 removing the claiming dose hands its slot to the same-week duplicate
+
+    /// Weekly, with this week's slot `hoursAgo` hours ago, and two logs for it.
+    private func weeklyWithDuplicate(hoursAgo: Int) throws -> (first: ShotEvent, second: ShotEvent, coordinator: ShotCaptureCoordinator) {
+        let calendar = Calendar.current
+        let slot = Date().addingTimeInterval(-TimeInterval(hoursAgo * 3600))
+        let plan = MedicationPlan(
+            medication: .ozempic, doseMg: 0.5,
+            scheduleStartDate: calendar.date(byAdding: .day, value: -21, to: slot)!,
+            preferredHour: calendar.component(.hour, from: slot),
+            preferredMinute: calendar.component(.minute, from: slot),
+            intervalDays: 7
+        )
+        context.insert(plan)
+        try context.save()
+        let coordinator = ShotCaptureCoordinator()
+        XCTAssertTrue(coordinator.captureShot(in: context, tapDate: slot.addingTimeInterval(5 * 60), deferHealthContext: true))
+        XCTAssertTrue(coordinator.captureShot(in: context, tapDate: slot.addingTimeInterval(2 * 3600), deferHealthContext: true))
+        let all = try events().sorted { $0.timestamp < $1.timestamp }
+        XCTAssertEqual(all.count, 2, "precondition")
+        XCTAssertEqual(all[0].scheduleStatus, .onSchedule, "precondition: the first log claims the slot")
+        XCTAssertEqual(all[1].scheduleStatus, .extra, "precondition: the second reads Manual")
+        return (all[0], all[1], coordinator)
+    }
+
+    func testDeletingClaimingShotHandsTheSlotToTheSameWeekSibling() async throws {
+        let (first, second, _) = try weeklyWithDuplicate(hoursAgo: 3)
+        // HistoryView.performPendingDeletion
+        context.delete(first)
+        try context.save()
+        DoseRoutineService.historyDidChange(in: context)
+        await settle()
+        XCTAssertEqual(second.scheduleStatus, .onSchedule, "the surviving dose still reads Manual")
+        XCTAssertNotNil(second.scheduledDate)
+    }
+
+    func testUndoOfTheClaimingShotHandsTheSlotToTheSibling() async throws {
+        let (first, second, coordinator) = try weeklyWithDuplicate(hoursAgo: 3)
+        // Undo targets the last capture; point it at the claiming one as a later ingest would not.
+        coordinator.lastCapturedEventID = first.id
+        coordinator.undoLastCapture(in: context)
+        await settle()
+        XCTAssertEqual(second.scheduleStatus, .onSchedule)
+    }
+
+    func testControlExistingClaimsAreLeftAlone() async throws {
+        let (first, second, _) = try weeklyWithDuplicate(hoursAgo: 3)
+        DoseRoutineService.historyDidChange(in: context)
+        await settle()
+        XCTAssertEqual(first.scheduleStatus, .onSchedule)
+        XCTAssertEqual(second.scheduleStatus, .extra, "the slot is still claimed")
+    }
+
     // MARK: S8 changing the wait mid-countdown retimes the ping
 
     private func changeWaitMidCountdown(from old: Int, to new: Int) async throws -> (homeEnds: Date, ping: Date) {

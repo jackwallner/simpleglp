@@ -27,6 +27,7 @@ enum DoseRoutineService {
     /// Called after an undo, delete or edit: drops a countdown that no longer has a dose
     /// behind it and refreshes everything derived from history.
     static func historyDidChange(in context: ModelContext) {
+        PlanStore.rematchExtraEvents(in: context)
         rebuildRecentShots(in: context)
         // An edited time moves the countdown: the ping and the Lock Screen follow it.
         syncWait(publishGlance(in: context))
