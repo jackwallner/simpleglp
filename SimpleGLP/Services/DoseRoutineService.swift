@@ -151,7 +151,8 @@ enum DoseRoutineService {
         let events = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
         await ReminderService.scheduleNextShotReminder(for: plan, events: events, mayPrompt: mayPrompt)
         // Before entitlements resolve a Pro user reads as free; leave their refill alert alone.
-        guard StoreService.shared.hasResolvedEntitlements else { return }
+        // Pro from cached customer info (an offline launch) is safe to act on.
+        guard StoreService.shared.hasResolvedEntitlements || StoreService.shared.isProUnlocked else { return }
         await ReminderService.scheduleRefillReminder(for: plan, events: events, isPro: StoreService.shared.isProUnlocked, mayPrompt: mayPrompt)
     }
 
