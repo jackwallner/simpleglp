@@ -616,7 +616,6 @@ final class StoreService: NSObject, ObservableObject {
         do {
             let info = try await Purchases.shared.restorePurchases()
             apply(customerInfo: info)
-            hasResolvedEntitlements = true
             lastError = isProUnlocked ? nil : String(localized: "No previous Simple GLP Pro purchase was found on this Apple ID.")
         } catch {
             logger.error("Restore failed: \(String(describing: error), privacy: .public)")
