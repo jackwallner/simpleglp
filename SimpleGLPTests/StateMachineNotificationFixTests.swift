@@ -443,6 +443,34 @@ final class StateMachineNotificationFixTests: XCTestCase {
         XCTAssertEqual(second.scheduleStatus, .extra, "the slot is still claimed")
     }
 
+    // MARK: S7 a backdated log keeps today's snoozed reminder
+
+    /// "Remind me in 15 min" on today's pill reminder, through the real handler.
+    private func snoozeTodaysReminder(plan: MedicationPlan) async throws {
+        let content = UNMutableNotificationContent()
+        (content.title, content.body) = ReminderService.doseReminderText(for: plan)
+        await ReminderService.snooze(content)
+        XCTAssertNotNil(fake.pending[ReminderService.snoozeIdentifier], "precondition: snooze pending")
+        XCTAssertNil(ScheduleEngineProbe.todayDose(in: try events()), "precondition: today's pill is not logged")
+    }
+
+    func testBackdatedLogKeepsTodaysSnoozedReminder() async throws {
+        let (plan, _) = try makeDailyPlan(minutesAgo: 30)
+        try await snoozeTodaysReminder(plan: plan)
+        // History > Log a past dose, two days ago.
+        let twoDaysAgo = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
+        XCTAssertTrue(ShotCaptureCoordinator().captureShot(in: context, tapDate: twoDaysAgo, deferHealthContext: true))
+        XCTAssertNil(ScheduleEngineProbe.todayDose(in: try events()), "precondition: still nothing logged today")
+        XCTAssertNotNil(fake.pending[ReminderService.snoozeIdentifier], "today's snoozed reminder was cancelled by a log for another day")
+    }
+
+    func testControlLoggingTodaysDoseClearsTheSnooze() async throws {
+        let (plan, _) = try makeDailyPlan(minutesAgo: 30)
+        try await snoozeTodaysReminder(plan: plan)
+        XCTAssertTrue(ShotCaptureCoordinator().captureShot(in: context, deferHealthContext: true))
+        XCTAssertNil(fake.pending[ReminderService.snoozeIdentifier], "the snooze for the dose just logged is stale")
+    }
+
     // MARK: S8 changing the wait mid-countdown retimes the ping
 
     private func changeWaitMidCountdown(from old: Int, to new: Int) async throws -> (homeEnds: Date, ping: Date) {

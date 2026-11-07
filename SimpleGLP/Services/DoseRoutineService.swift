@@ -9,10 +9,14 @@ import WidgetKit
 @MainActor
 enum DoseRoutineService {
     /// Called right after a dose is saved, before Health context, so the countdown starts
-    /// the moment the button is tapped.
-    static func didLogDose(at timestamp: Date, plan: MedicationPlan?, in context: ModelContext) {
-        publishGlance(in: context)
-        ReminderService.clearDoseNudges()
+    /// the moment the button is tapped. `owedBefore` is `ScheduleEngine.nextDue` before the
+    /// log: reminders and a snooze are cleared only when the log paid that dose, so a
+    /// backfill for another day leaves them alone.
+    static func didLogDose(at timestamp: Date, plan: MedicationPlan?, owedBefore: Date? = nil, in context: ModelContext) {
+        let glance = publishGlance(in: context)
+        if plan == nil || glance.nextDoseAt != owedBefore {
+            ReminderService.clearDoseNudges()
+        }
         guard let plan, plan.effectiveWaitMinutes > 0 else { return }
         let endsAt = timestamp.addingTimeInterval(TimeInterval(plan.effectiveWaitMinutes * 60))
         guard endsAt > .now else { return }
