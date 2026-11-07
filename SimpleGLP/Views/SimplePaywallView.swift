@@ -399,14 +399,20 @@ struct SimplePaywallView: View {
                             Text(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore Purchases"))
                     .font(.caption.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
+                    .frame(minHeight: 44)
+                    .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
             .disabled(isRestoring || isPurchasing)
 
             HStack(spacing: 6) {
                 Link("Terms", destination: PaywallLinks.standardEULA)
-                Text("·").foregroundStyle(AppTheme.muted)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
+                Text("·").foregroundStyle(AppTheme.muted).accessibilityHidden(true)
                 Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
             .font(.caption2)
             .foregroundStyle(AppTheme.muted)
@@ -608,6 +614,31 @@ private struct GLPProPlanCard: View {
     let anchorPriceLabel: String?
     let onTap: () -> Void
 
+    private var planName: some View {
+        Text(package.glpProDisplayName)
+            .font(.subheadline.weight(.bold))
+            .foregroundStyle(AppTheme.text)
+            .fixedSize(horizontal: false, vertical: true)
+    }
+
+    /// The savings or best value badge. The first form stays on one line; the second
+    /// may wrap between words when the card is too narrow, so no word is cut off.
+    @ViewBuilder
+    private func planBadge(wraps: Bool) -> some View {
+        let label: String? = savingsLabel ?? (isBestValue ? String(localized: "BEST VALUE") : nil)
+        if let label {
+            Text(label)
+                .font(.caption2.weight(.heavy))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.leading)
+                .lineLimit(wraps ? 2 : 1)
+                .fixedSize(horizontal: !wraps, vertical: true)
+                .padding(.horizontal, 6)
+                .padding(.vertical, 2)
+                .background(AppTheme.brandFill, in: RoundedRectangle(cornerRadius: wraps ? 8 : 10, style: .continuous))
+        }
+    }
+
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 14) {
@@ -623,24 +654,14 @@ private struct GLPProPlanCard: View {
                 }
 
                 VStack(alignment: .leading, spacing: 4) {
-                    HStack(spacing: 6) {
-                        Text(package.glpProDisplayName)
-                            .font(.subheadline.weight(.bold))
-                            .foregroundStyle(AppTheme.text)
-                        if let savingsLabel {
-                            Text(savingsLabel)
-                                .font(.system(size: 9, weight: .heavy))
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(AppTheme.brandFill, in: Capsule())
-                        } else if isBestValue {
-                            Text("BEST VALUE")
-                                .font(.system(size: 9, weight: .heavy))
-                                .foregroundStyle(.white)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 2)
-                                .background(AppTheme.brandFill, in: Capsule())
+                    ViewThatFits(in: .horizontal) {
+                        HStack(spacing: 6) {
+                            planName
+                            planBadge(wraps: false)
+                        }
+                        VStack(alignment: .leading, spacing: 4) {
+                            planName
+                            planBadge(wraps: true)
                         }
                     }
                     if showsTrialBadge, let trial = package.glpProIntroOfferLabel {

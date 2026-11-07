@@ -130,7 +130,7 @@ struct SimpleGLPWidgetEntryView: View {
                          ? "Planned \(next.formatted(date: .omitted, time: .shortened))"
                          : "\(GLPGlance.dayDistance(to: next, now: entry.date)) · \(next.formatted(.dateTime.weekday(.abbreviated)))")
                         .font(.caption2)
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(.white)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)

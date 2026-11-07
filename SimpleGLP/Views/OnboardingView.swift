@@ -7,6 +7,7 @@ struct OnboardingView: View {
     @AppStorage(GLPStorageKey.hasCompletedOnboarding.rawValue, store: GLPAppGroup.userDefaults) private var hasCompletedOnboarding = false
     @AppStorage(GLPStorageKey.hasSeenTrialOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenTrialOffer = false
     @AppStorage(GLPStorageKey.hasSeenFirstRunOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenFirstRunOffer = false
+    @Environment(\.dynamicTypeSize) private var typeSize
     @State private var step = 0
     @State private var form: DoseForm = .injection
     @State private var medication: GLPMedication = .ozempic
@@ -51,16 +52,30 @@ struct OnboardingView: View {
                     .padding(.top, 8)
                     .padding(.bottom, 20)
 
-                ScrollView(showsIndicators: false) {
-                    contentView
+                if typeSize.isAccessibilitySize {
+                    // At accessibility sizes the pinned bar would leave the content almost
+                    // no room, so the bar scrolls with it and nothing can overlap.
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 24) {
+                            contentView
+                            bottomBar
+                        }
                         .padding(.horizontal, 24)
+                        .padding(.bottom, 20)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                    }
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        contentView
+                            .padding(.horizontal, 24)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
 
-                bottomBar
-                    .padding(.horizontal, 24)
-                    .padding(.top, 12)
-                    .padding(.bottom, 20)
+                    bottomBar
+                        .padding(.horizontal, 24)
+                        .padding(.top, 12)
+                        .padding(.bottom, 20)
+                }
             }
             .background(AppTheme.bg.ignoresSafeArea())
             .navigationTitle("Simple GLP")
@@ -172,10 +187,7 @@ struct OnboardingView: View {
                 title: String(localized: "What are you taking?"),
                 subtitle: String(localized: "Pick how you take it, then your medication and current dose.")
             )
-            HStack(spacing: 12) {
-                formCard(.injection, title: String(localized: "Shot"), detail: String(localized: "Weekly or custom"))
-                formCard(.pill, title: String(localized: "Pill"), detail: String(localized: "Once a day"))
-            }
+            formCards
             VStack(spacing: 14) {
                 HStack {
                     Text("Medication")
@@ -206,6 +218,15 @@ struct OnboardingView: View {
         }
     }
 
+    /// Side by side, stacked once the text is too large for two columns.
+    private var formCards: some View {
+        let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: 12)) : AnyLayout(HStackLayout(spacing: 12))
+        return layout {
+            formCard(.injection, title: String(localized: "Shot"), detail: String(localized: "Weekly or custom"))
+            formCard(.pill, title: String(localized: "Pill"), detail: String(localized: "Once a day"))
+        }
+    }
+
     private func formCard(_ option: DoseForm, title: String, detail: String) -> some View {
         let selected = form == option
         return Button {
@@ -220,7 +241,7 @@ struct OnboardingView: View {
                     .foregroundStyle(selected ? .white : AppTheme.text)
                 Text(detail)
                     .font(.caption)
-                    .foregroundStyle(selected ? .white.opacity(0.85) : AppTheme.muted)
+                    .foregroundStyle(selected ? .white : AppTheme.muted)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
@@ -264,6 +285,7 @@ struct OnboardingView: View {
             }
             Button("Use custom dose") { useCustomDose = true }
                 .font(.footnote)
+                .frame(minHeight: 44)
         } else {
             HStack {
                 Text("Current dose (mg)")
@@ -282,6 +304,7 @@ struct OnboardingView: View {
                     }
                 }
                 .font(.footnote)
+                .frame(minHeight: 44)
             }
         }
     }
@@ -461,17 +484,20 @@ struct OnboardingView: View {
             }
 
             Button(action: handlePrimary) {
-                Group {
+                ZStack {
+                    // The trial label is the longest one and can wrap (German). Every step
+                    // reserves its height, so the button keeps one size from step to step.
+                    ctaLabel(store.onboardingTrialCTALabel)
+                        .hidden()
+                        .accessibilityHidden(true)
                     if isPurchasing {
                         ProgressView().tint(.white)
                     } else {
-                        Text(isTrialStep
-                             ? (store.isPurchasePending ? String(localized: "Refresh status") : store.onboardingTrialCTALabel)
-                             : String(localized: "Continue"))
+                        ctaLabel(isTrialStep
+                                 ? (store.isPurchasePending ? String(localized: "Refresh status") : store.onboardingTrialCTALabel)
+                                 : String(localized: "Continue"))
                     }
                 }
-                .font(.headline.weight(.bold))
-                .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
                 .background(AppTheme.brandFill, in: Capsule())
@@ -484,8 +510,17 @@ struct OnboardingView: View {
 
             // Fixed-height footer slot on EVERY step so the button never moves.
             footerSlot
-                .frame(height: 22)
+                .frame(minHeight: 44)
         }
+    }
+
+    private func ctaLabel(_ text: String) -> some View {
+        Text(text)
+            .font(.headline.weight(.bold))
+            .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 12)
     }
 
     @ViewBuilder
@@ -497,6 +532,8 @@ struct OnboardingView: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
                 .buttonStyle(.plain)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         } else {
             // Reserve the slot on step 0 so the primary button sits at the same y.
             legalFooter
@@ -509,10 +546,16 @@ struct OnboardingView: View {
     private var legalFooter: some View {
         HStack(spacing: 10) {
             Link("Terms", destination: PaywallLinks.standardEULA)
-            Text("·").foregroundStyle(AppTheme.muted)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+            Text("·").accessibilityHidden(true)
             Link("Privacy", destination: PaywallLinks.privacyPolicy)
-            Text("·").foregroundStyle(AppTheme.muted)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+            Text("·").accessibilityHidden(true)
             Button("Restore") { Task { await store.restorePurchases() } }
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         }
         .font(.caption2)
         .foregroundStyle(AppTheme.muted)
@@ -542,6 +585,8 @@ struct OnboardingView: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
                 .buttonStyle(.plain)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
                 .disabled(isPurchasing)
 
             // No disclosure until the package (real price) loads — never a placeholder.

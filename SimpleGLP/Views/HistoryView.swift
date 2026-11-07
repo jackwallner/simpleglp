@@ -133,6 +133,7 @@ struct HistoryView: View {
             }
             Spacer(minLength: 12)
             Text(doseText)
+                .accessibilityLabel(GLPMassFormatter.spokenMilligrams(event.doseMg))
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
                 .foregroundStyle(AppTheme.text)

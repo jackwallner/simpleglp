@@ -233,6 +233,7 @@ struct TrialOfferSheet: View {
                                     .foregroundStyle(AppTheme.brand)
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 6)
+                                    .frame(minHeight: 44)
                             }
                             .buttonStyle(.plain)
                             .disabled(isPurchasing)
@@ -266,8 +267,12 @@ struct TrialOfferSheet: View {
 
                     HStack(spacing: 4) {
                         Link("Terms", destination: PaywallLinks.standardEULA)
-                        Text("·")
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
+                        Text("·").accessibilityHidden(true)
                         Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     }
                     .font(.system(.caption2, design: .rounded))
                     .foregroundStyle(AppTheme.muted)

@@ -56,9 +56,34 @@ struct CadenceField: View {
     }
 
     var body: some View {
+        // The label stays on one line beside the menus when it fits (never broken
+        // mid-word); otherwise it takes its own line and wraps between words.
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                Text("Repeat interval")
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+                Spacer()
+                menus
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Repeat interval")
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    Spacer()
+                    menus
+                }
+            }
+        }
+        .onAppear {
+            let decoded = Unit.decode(intervalDays)
+            count = decoded.count
+            unit = decoded.unit
+        }
+    }
+
+    private var menus: some View {
         HStack {
-            Text("Repeat interval")
-            Spacer()
             Picker("Count", selection: countBinding) {
                 ForEach(1...unit.maxCount, id: \.self) { Text("\($0)").tag($0) }
             }
@@ -70,11 +95,6 @@ struct CadenceField: View {
             }
             .labelsHidden()
             .pickerStyle(.menu)
-        }
-        .onAppear {
-            let decoded = Unit.decode(intervalDays)
-            count = decoded.count
-            unit = decoded.unit
         }
     }
 

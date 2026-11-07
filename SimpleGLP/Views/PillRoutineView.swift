@@ -161,6 +161,8 @@ struct PillRoutineView: View {
             Button("Took it earlier?") { onLogEarlier(.now) }
                 .font(.footnote.weight(.semibold))
                 .foregroundStyle(AppTheme.brand)
+                .frame(minHeight: 44)
+                .contentShape(Rectangle())
                 .disabled(isLogging)
         }
         .padding(.vertical, 8)
