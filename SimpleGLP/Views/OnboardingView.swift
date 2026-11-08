@@ -396,14 +396,17 @@ struct OnboardingView: View {
                     .font(.body)
                 if reminderEnabled {
                     Divider()
-                    Stepper(value: $reminderLeadMinutes, in: 0...180, step: 15) {
-                        HStack {
-                            Text("Lead time")
-                                .font(.body)
-                            Spacer()
-                            Text("\(reminderLeadMinutes) min before")
-                                .foregroundStyle(AppTheme.muted)
-                        }
+                    // The texts stay their own elements: inside the Stepper's label
+                    // they sat outside its accessibility frame.
+                    HStack {
+                        Text("Lead time")
+                            .font(.body)
+                        Spacer()
+                        Text("\(reminderLeadMinutes) min before")
+                            .foregroundStyle(AppTheme.muted)
+                        Stepper("Lead time", value: $reminderLeadMinutes, in: 0...180, step: 15)
+                            .labelsHidden()
+                            .accessibilityValue(Text("\(reminderLeadMinutes) min before"))
                     }
                     Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
