@@ -191,6 +191,8 @@ final class StateMachineNotificationFixTests: XCTestCase {
             waitMinutes: wait,
             reminderEnabled: reminders
         )
+        // Set up when the schedule began: a slot due before setup is never overdue.
+        plan.createdAt = plan.scheduleStartDate
         context.insert(plan)
         try context.save()
         return (plan, slot)

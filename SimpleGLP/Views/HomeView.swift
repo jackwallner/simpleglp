@@ -16,7 +16,7 @@ struct HomeView: View {
     /// Non-nil while the "when did you take it?" sheet is up, holding its starting time.
     @State private var logEarlierStart: LogEarlierStart?
 
-    private var recentEvents: [ShotEvent] { Array(events.prefix(5)) }
+    private var recentEvents: [ShotEvent] { Array(events.prefix(3)) }
     private var plan: MedicationPlan? { plans.first }
     private var form: DoseForm { plan?.form ?? .injection }
 
@@ -46,19 +46,25 @@ struct HomeView: View {
                 } else {
                     nextShotSection
                     shotButton
-                    Button("Took it earlier?") { logEarlierStart = LogEarlierStart(date: .now) }
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(AppTheme.brand)
-                        .frame(minHeight: 44)
-                        .contentShape(Rectangle())
-                        .disabled(coordinator.isCapturing || showConfirmation)
+                    Button { logEarlierStart = LogEarlierStart(date: .now) } label: {
+                        Text("Took it earlier?")
+                            .frame(minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(AppTheme.brand)
+                    .disabled(coordinator.isCapturing || showConfirmation)
                 }
 
                 if coordinator.showUndoOption, coordinator.lastCapturedEventID != nil {
-                    Button("Undo") {
+                    Button {
                         coordinator.undoLastCapture(in: modelContext)
                         showConfirmation = false
                         confirmationTask?.cancel()
+                    } label: {
+                        Text("Undo")
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     }
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
@@ -315,7 +321,7 @@ struct RecentShotRow: View {
             VStack(alignment: .trailing, spacing: 4) {
                 Text(event.scheduleStatus.label)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(tint)
+                    .foregroundStyle(textTint)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(tint.opacity(0.14), in: Capsule())
@@ -334,6 +340,14 @@ struct RecentShotRow: View {
             RoundedRectangle(cornerRadius: 24, style: .continuous)
                 .strokeBorder(AppTheme.surfaceStroke.opacity(0.5), lineWidth: 1)
         )
+    }
+
+    private var textTint: Color {
+        switch event.scheduleStatus {
+        case .onSchedule: AppTheme.brandText
+        case .early, .late: AppTheme.warmText
+        case .extra, .unknown: AppTheme.muted
+        }
     }
 
     private var tint: Color {

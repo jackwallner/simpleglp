@@ -183,7 +183,7 @@ struct TrialOfferSheet: View {
                                 .transition(.opacity)
                         }
                     }
-                    .animation(.easeInOut(duration: 0.18), value: errorMessage)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.18), value: errorMessage)
 
                     VStack(spacing: 10) {
                         Button(action: {

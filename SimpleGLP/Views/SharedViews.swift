@@ -120,11 +120,12 @@ struct CadenceField: View {
 struct StatusPill: View {
     let label: String
     let tint: Color
+    var textTint: Color? = nil
 
     var body: some View {
         Text(label)
             .font(.caption.weight(.semibold))
-            .foregroundStyle(tint)
+            .foregroundStyle(textTint ?? tint)
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(tint.opacity(0.12), in: Capsule())
@@ -164,5 +165,24 @@ struct MedicationPicker: View {
                 }
             }
         }
+    }
+}
+
+/// A legal link with a 44pt target. The frame sits inside the label, where the
+/// accessibility hit area is measured, which a frame around a `Link` does not reach.
+struct LegalLink: View {
+    @Environment(\.openURL) private var openURL
+    let title: LocalizedStringKey
+    let url: URL
+
+    var body: some View {
+        Button { openURL(url) } label: {
+            Text(title)
+                .padding(.horizontal, 2)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(.isLink)
     }
 }

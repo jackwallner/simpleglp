@@ -52,7 +52,7 @@ struct SettingsView: View {
                             Spacer()
                             Text("PRO")
                                 .font(.system(size: 10, weight: .heavy))
-                                .foregroundStyle(AppTheme.brand)
+                                .foregroundStyle(AppTheme.brandText)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
                                 .background(AppTheme.brandSoft, in: Capsule())
@@ -320,11 +320,13 @@ struct PlanEditorView: View {
                     Text(DoseScheduleView.format(value)).tag(value)
                 }
             }
-            Button("Use custom dose") { useCustomDose = true }
-                .font(.footnote)
-                .foregroundStyle(AppTheme.brand)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+            Button { useCustomDose = true } label: {
+                Text("Use custom dose")
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .font(.footnote)
+            .foregroundStyle(AppTheme.brand)
         } else {
             HStack {
                 Text("Dose (mg)")
@@ -517,11 +519,13 @@ struct AddDoseStepSheet: View {
                                 Text(DoseScheduleView.format(value)).tag(value)
                             }
                         }
-                        Button("Use custom dose") { useCustomDose = true }
-                            .font(.footnote)
-                            .foregroundStyle(AppTheme.brand)
-                            .frame(minWidth: 44, minHeight: 44)
-                            .contentShape(Rectangle())
+                        Button { useCustomDose = true } label: {
+                            Text("Use custom dose")
+                                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                .contentShape(Rectangle())
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(AppTheme.brand)
                     } else {
                         HStack {
                             Text("Dose (mg)")

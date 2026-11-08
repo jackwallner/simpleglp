@@ -290,11 +290,13 @@ struct OnboardingView: View {
                 .pickerStyle(.menu)
                 .labelsHidden()
             }
-            Button("Use custom dose") { useCustomDose = true }
-                .font(.footnote)
-                .foregroundStyle(AppTheme.brand)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+            Button { useCustomDose = true } label: {
+                Text("Use custom dose")
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .font(.footnote)
+            .foregroundStyle(AppTheme.brand)
         } else {
             HStack {
                 Text("Current dose (mg)")
@@ -571,18 +573,18 @@ struct OnboardingView: View {
     }
 
     private var legalFooter: some View {
-        HStack(spacing: 10) {
-            Link("Terms", destination: PaywallLinks.standardEULA)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+        HStack(spacing: 0) {
+            LegalLink(title: "Terms", url: PaywallLinks.standardEULA)
             Text("·").accessibilityHidden(true)
-            Link("Privacy", destination: PaywallLinks.privacyPolicy)
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+            LegalLink(title: "Privacy", url: PaywallLinks.privacyPolicy)
             Text("·").accessibilityHidden(true)
-            Button("Restore") { Task { await store.restorePurchases() } }
-                .frame(minWidth: 44, minHeight: 44)
-                .contentShape(Rectangle())
+            Button { Task { await store.restorePurchases() } } label: {
+                Text("Restore")
+                    .padding(.horizontal, 2)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
         }
         .font(.caption2)
         .foregroundStyle(AppTheme.muted)
@@ -594,29 +596,42 @@ struct OnboardingView: View {
     /// so it can never fall below the fold behind the CTA zone (App Review 1.4.1).
     @ViewBuilder
     private var trialAboveButton: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.")
                 .font(.caption2)
                 .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("onboardingMedicalDisclaimer")
+            trialOffer
+        }
+    }
 
+    /// Free exit, billing disclosure and errors. The disclaimer and these sit above the
+    /// primary at normal sizes; at accessibility sizes they scroll with the content so
+    /// the CTA keeps the screen.
+    @ViewBuilder
+    private var trialOffer: some View {
+        // The 44pt "Get Started" target supplies the spacing around itself.
+        VStack(spacing: 0) {
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
-            Button(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started")) {
+            Button {
                 ConversionDiagnostics.record(.freeVersionChosen)
                 store.syncConversionAttributes()
                 finishOnboarding()
+            } label: {
+                Text(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started"))
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(AppTheme.muted)
-                .buttonStyle(.plain)
-                .frame(minHeight: 44)
-                .contentShape(Rectangle())
-                .disabled(isPurchasing)
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(AppTheme.muted)
+            .buttonStyle(.plain)
+            .disabled(isPurchasing)
 
-            // No disclosure until the package (real price) loads — never a placeholder.
+            // No disclosure until the package (real price) loads, never a placeholder.
+            // At accessibility sizes it sits above the bullets instead.
             if !typeSize.isAccessibilitySize, let disclosure = store.onboardingTrialDisclosureText {
                 trialDisclosure(disclosure)
             }
@@ -626,6 +641,7 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
+                    .padding(.top, 8)
             }
 
             if let trialError {
@@ -633,6 +649,7 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(.red)
                     .multilineTextAlignment(.center)
+                    .padding(.top, 8)
             }
         }
     }
