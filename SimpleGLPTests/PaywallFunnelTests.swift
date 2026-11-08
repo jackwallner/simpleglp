@@ -255,3 +255,17 @@ extension TrialEligibilityTests {
         XCTAssertTrue(store.isPurchasePending)
     }
 }
+
+@MainActor
+final class RestoreFeedbackTests: XCTestCase {
+    /// Settings and the onboarding footer used to fire a restore and show nothing, so a
+    /// restore that found no purchase or failed looked like a dead button. The helper they
+    /// now call always returns a message unless Pro came back.
+    func testRestoreThatDoesNotUnlockProReturnsAMessage() async {
+        let store = StoreService(defaults: UserDefaults(suiteName: "restore.tests.\(UUID().uuidString)")!)
+        let message = await store.restorePurchasesForDisplay()
+        XCTAssertFalse(store.isProUnlocked)
+        // Tests run on the simulator, where the store reports why it can't restore.
+        XCTAssertEqual(message, StoreServiceError.unavailableInSimulator.localizedDescription)
+    }
+}

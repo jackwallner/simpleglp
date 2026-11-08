@@ -624,6 +624,14 @@ final class StoreService: NSObject, ObservableObject {
         #endif
     }
 
+    /// Restores, then returns what to tell the user when Pro did not come back: the error,
+    /// or that no purchase was found. nil once Pro is active, which the screen already shows.
+    func restorePurchasesForDisplay() async -> String? {
+        await restorePurchases()
+        guard !isProUnlocked else { return nil }
+        return lastError ?? String(localized: "No previous Simple GLP Pro purchase was found on this Apple ID.")
+    }
+
     func apply(customerInfo: CustomerInfo) {
         self.customerInfo = customerInfo
         let hasPro = customerInfo.hasGLPProEntitlement

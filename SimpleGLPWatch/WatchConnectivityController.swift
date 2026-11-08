@@ -70,8 +70,9 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         recentShots = RecentShotsStore.load()
     }
 
-    fileprivate func applyShots(_ decoded: [RecentShot]) {
-        guard !decoded.isEmpty else { return }
+    /// nil leaves the list alone; an empty list from the phone clears it.
+    fileprivate func applyShots(_ decoded: [RecentShot]?) {
+        guard let decoded else { return }
         recentShots = RecentShotsStore.replaceAll(decoded)
     }
 
@@ -96,19 +97,8 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         applyGlance(GLPGlanceStore.decode(context["glance"] as? Data))
     }
 
-    nonisolated static func decodeShots(from context: [String: Any]) -> [RecentShot] {
-        guard let raw = context["recentShots"] as? [[String: Any]] else { return [] }
-        return raw.compactMap { entry in
-            guard let idString = entry["id"] as? String, let id = UUID(uuidString: idString),
-                  let ts = entry["timestamp"] as? TimeInterval else { return nil }
-            return RecentShot(
-                id: id,
-                timestamp: Date(timeIntervalSince1970: ts),
-                scheduleStatusRaw: entry["scheduleStatusRaw"] as? String ?? "unknown",
-                medicationName: entry["medicationName"] as? String,
-                doseMg: entry["doseMg"] as? Double
-            )
-        }
+    nonisolated static func decodeShots(from context: [String: Any]) -> [RecentShot]? {
+        RecentShotsSync.shots(fromContext: context)
     }
 }
 

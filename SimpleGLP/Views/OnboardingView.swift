@@ -582,7 +582,12 @@ struct OnboardingView: View {
             Text("·").accessibilityHidden(true)
             LegalLink(title: "Privacy", url: PaywallLinks.privacyPolicy)
             Text("·").accessibilityHidden(true)
-            Button { Task { await store.restorePurchases() } } label: {
+            // A restore that unlocks Pro finishes onboarding (onChange above); one that
+            // doesn't says why in the error line, or the tap would look like it did nothing.
+            Button {
+                trialError = nil
+                Task { trialError = await store.restorePurchasesForDisplay() }
+            } label: {
                 Text("Restore")
                     .lineLimit(1)
                     .fixedSize()

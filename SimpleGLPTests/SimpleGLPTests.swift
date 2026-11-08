@@ -181,6 +181,17 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertEqual(records[1][5], note)
     }
 
+    /// A CSV re-saved by Excel, Numbers or Windows uses CRLF line endings, which Swift
+    /// iterates as a single Character. It must still split into one record per line.
+    func testParseCSVSplitsCRLFLineEndings() {
+        let text = "timestamp,medication,dose_mg\r\n2026-11-01T09:00:00Z,Mounjaro,5\r\n2026-11-08T09:00:00Z,\"Note, with\r\nbreak\",7.5\r\n"
+        let records = ImportService.parseCSV(text)
+        XCTAssertEqual(records.count, 3)
+        XCTAssertEqual(records[0], ["timestamp", "medication", "dose_mg"])
+        XCTAssertEqual(records[1], ["2026-11-01T09:00:00Z", "Mounjaro", "5"])
+        XCTAssertEqual(records[2], ["2026-11-08T09:00:00Z", "Note, with\r\nbreak", "7.5"])
+    }
+
     func testNextExpectedDateUsesPreferredTimeWhenStartIsToday() {
         // Regression for "Overdue by -7 days" on home: nextExpectedDate must
         // be the next aligned Saturday 09:00, not the literal start moment.
@@ -354,5 +365,35 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(14), "2 weeks")
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(10), "10 days")
         XCTAssertEqual(GLPScheduleFormat.intervalLabel(0), "day")
+    }
+}
+
+final class RecentShotsSyncTests: XCTestCase {
+    /// The phone sends an empty list after the only dose is undone or deleted. The Watch
+    /// must read that as "no doses", not as "nothing sent", or it keeps showing the dose.
+    func testEmptyListFromPhoneIsAppliedNotIgnored() {
+        let decoded = RecentShotsSync.shots(fromContext: [RecentShotsSync.contextKey: [[String: Any]](), "updatedAt": 1.0])
+        XCTAssertEqual(decoded, [])
+    }
+
+    func testContextWithoutListLeavesWatchListAlone() {
+        XCTAssertNil(RecentShotsSync.shots(fromContext: [:]))
+        XCTAssertNil(RecentShotsSync.shots(fromContext: ["updatedAt": 1.0]))
+    }
+
+    func testDecodesPhoneEntries() throws {
+        let id = UUID()
+        let context: [String: Any] = [RecentShotsSync.contextKey: [[
+            "id": id.uuidString,
+            "timestamp": 1_700_000_000.0,
+            "scheduleStatusRaw": "onSchedule",
+            "medicationName": "Mounjaro",
+            "doseMg": 5.0
+        ]]]
+        let shot = try XCTUnwrap(RecentShotsSync.shots(fromContext: context)?.first)
+        XCTAssertEqual(shot.id, id)
+        XCTAssertEqual(shot.timestamp, Date(timeIntervalSince1970: 1_700_000_000))
+        XCTAssertEqual(shot.medicationName, "Mounjaro")
+        XCTAssertEqual(shot.doseMg, 5.0)
     }
 }

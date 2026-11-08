@@ -20,6 +20,9 @@ struct SettingsView: View {
     @AppStorage(GLPStorageKey.healthContextEnabled.rawValue, store: GLPAppGroup.userDefaults) private var healthContextEnabled = true
     @State private var showPaywall = false
     @State private var showProAlerts = false
+    @State private var isRestoring = false
+    /// Why a restore didn't unlock Pro. A restore that works flips the Pro row instead.
+    @State private var restoreMessage: String?
 
     private static let feedbackMailURL: URL = {
         var components = URLComponents()
@@ -113,9 +116,14 @@ struct SettingsView: View {
                     } else {
                         Button("Upgrade to Pro") { showPaywall = true }
                     }
-                    Button("Restore purchases") {
-                        Task { await store.restorePurchases() }
+                    Button(isRestoring ? String(localized: "Restoring…") : String(localized: "Restore purchases")) {
+                        isRestoring = true
+                        Task {
+                            restoreMessage = await store.restorePurchasesForDisplay()
+                            isRestoring = false
+                        }
                     }
+                    .disabled(isRestoring)
                 }
             }
 
@@ -156,6 +164,17 @@ struct SettingsView: View {
         }
         .sheet(isPresented: $showProAlerts) {
             ProAlertsConfigView()
+        }
+        .alert(
+            "Restore Purchases",
+            isPresented: Binding(
+                get: { restoreMessage != nil },
+                set: { if !$0 { restoreMessage = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) {}
+        } message: {
+            Text(restoreMessage ?? "")
         }
     }
 

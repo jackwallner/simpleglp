@@ -39,7 +39,7 @@ final class PhoneWatchSession: NSObject, ObservableObject {
             return entry
         }
         var context: [String: Any] = [
-            "recentShots": payload,
+            RecentShotsSync.contextKey: payload,
             "updatedAt": Date().timeIntervalSince1970
         ]
         if let glance = GLPGlanceStore.encoded(GLPGlanceStore.load()) {

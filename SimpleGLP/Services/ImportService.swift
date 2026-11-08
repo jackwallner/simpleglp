@@ -128,7 +128,9 @@ enum ImportService {
                     inQuotes = true
                 case ",":
                     commitField()
-                case "\n":
+                // Swift reads a CRLF pair as one Character, so it never matches "\n" or
+                // "\r" alone. Files saved from Excel, Numbers or Windows end lines this way.
+                case "\n", "\r\n":
                     commitRecord()
                 case "\r":
                     if next == "\n" {

@@ -65,3 +65,25 @@ enum RecentShotsStore {
         return load(from: defaults)
     }
 }
+
+/// The recent-doses list the phone sends the Watch in its application context.
+enum RecentShotsSync {
+    static let contextKey = "recentShots"
+
+    /// nil when the context carries no list. An empty list is the phone saying no doses
+    /// remain (the only one was undone or deleted), and the Watch must clear its copy.
+    static func shots(fromContext context: [String: Any]) -> [RecentShot]? {
+        guard let raw = context[contextKey] as? [[String: Any]] else { return nil }
+        return raw.compactMap { entry in
+            guard let idString = entry["id"] as? String, let id = UUID(uuidString: idString),
+                  let ts = entry["timestamp"] as? TimeInterval else { return nil }
+            return RecentShot(
+                id: id,
+                timestamp: Date(timeIntervalSince1970: ts),
+                scheduleStatusRaw: entry["scheduleStatusRaw"] as? String ?? "unknown",
+                medicationName: entry["medicationName"] as? String,
+                doseMg: entry["doseMg"] as? Double
+            )
+        }
+    }
+}
