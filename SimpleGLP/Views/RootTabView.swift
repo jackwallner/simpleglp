@@ -655,15 +655,14 @@ private struct PaneBarInset: ViewModifier {
     let isOn: Bool
     private let gap: CGFloat = 24
 
+    // One branch for both states: an if/else here gave the tab content a new identity on
+    // every fold, which rebuilt its NavigationStack, popped pushed editors and dismissed
+    // their sheets.
     func body(content: Content) -> some View {
-        if isOn {
-            GeometryReader { proxy in
-                content
-                    .padding(.bottom, proxy.safeAreaInsets.bottom + gap)
-                    .ignoresSafeArea(.container, edges: .bottom)
-            }
-        } else {
+        GeometryReader { proxy in
             content
+                .padding(.bottom, isOn ? proxy.safeAreaInsets.bottom + gap : 0)
+                .ignoresSafeArea(.container, edges: isOn ? .bottom : [])
         }
     }
 }
