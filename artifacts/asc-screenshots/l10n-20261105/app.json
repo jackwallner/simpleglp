@@ -7,26 +7,76 @@
  "live_version": "1.2.4",
  "targets": [
   {
-   "rank": 64,
-   "store_locale": "pt-BR",
-   "lang": "pt-BR",
-   "apple_languages": "(pt-BR)",
-   "apple_locale": "pt_BR",
-   "regions": [
-    "Brazil"
-   ],
-   "customers": 10.0
+   "rank": 1,
+   "store_locale": "de-DE",
+   "lang": "de",
+   "apple_languages": "(de)",
+   "apple_locale": "de_DE",
+   "regions": [],
+   "customers": 0
   },
   {
-   "rank": 89,
-   "store_locale": "tr",
-   "lang": "tr",
-   "apple_languages": "(tr)",
-   "apple_locale": "tr_TR",
-   "regions": [
-    "Türkiye"
-   ],
-   "customers": 7.0
+   "rank": 2,
+   "store_locale": "es-MX",
+   "lang": "es",
+   "apple_languages": "(es)",
+   "apple_locale": "es_MX",
+   "regions": [],
+   "customers": 0
+  },
+  {
+   "rank": 3,
+   "store_locale": "fr-FR",
+   "lang": "fr",
+   "apple_languages": "(fr)",
+   "apple_locale": "fr_FR",
+   "regions": [],
+   "customers": 0
+  },
+  {
+   "rank": 4,
+   "store_locale": "hu",
+   "lang": "hu",
+   "apple_languages": "(hu)",
+   "apple_locale": "hu_HU",
+   "regions": [],
+   "customers": 0
+  },
+  {
+   "rank": 5,
+   "store_locale": "it",
+   "lang": "it",
+   "apple_languages": "(it)",
+   "apple_locale": "it_IT",
+   "regions": [],
+   "customers": 0
+  },
+  {
+   "rank": 6,
+   "store_locale": "pl",
+   "lang": "pl",
+   "apple_languages": "(pl)",
+   "apple_locale": "pl_PL",
+   "regions": [],
+   "customers": 0
+  },
+  {
+   "rank": 7,
+   "store_locale": "ru",
+   "lang": "ru",
+   "apple_languages": "(ru)",
+   "apple_locale": "ru_RU",
+   "regions": [],
+   "customers": 0
+  },
+  {
+   "rank": 8,
+   "store_locale": "zh-Hant",
+   "lang": "zh-Hant",
+   "apple_languages": "(zh-Hant)",
+   "apple_locale": "zh_TW",
+   "regions": [],
+   "customers": 0
   }
  ],
  "store_locales_missing": [],
