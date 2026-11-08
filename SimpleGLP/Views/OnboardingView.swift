@@ -403,10 +403,8 @@ struct OnboardingView: View {
                             Spacer()
                             Text("\(reminderLeadMinutes) min before")
                                 .foregroundStyle(AppTheme.muted)
-                                .accessibilityHidden(true)
                         }
                     }
-                    .accessibilityValue(Text("\(reminderLeadMinutes) min before"))
                     Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
                         .foregroundStyle(AppTheme.muted)
