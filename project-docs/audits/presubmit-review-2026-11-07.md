@@ -37,3 +37,12 @@ Checked and clean:
 | --- | --- | --- | --- |
 | P2 | `SimpleGLP/Services/ProactiveAlertsEngine.swift:92` | With `rearmPastDue: false` (plan save, resume, history change) a past-due occurrence returns before `cancelLateDoseNudge()`. If a Pro user with alerts on moves today's dose earlier on a plan save, past the 4 hour grace (say 6:00 PM to 8:00 AM at 2:00 PM), the nudge already queued for 10:00 PM still fires and names the old time. | Not fixed: needs alerts on, a same-day time edit and grace already passed. It still fires for a dose that really isn't logged. Choosing between dropping it or re-arming it now is a product call. |
 | P2 | `SimpleGLP/Services/DoseRoutineService.swift:91`, `ProactiveAlertsEngine.swift:53` | New in 1.2.5: the launch `refresh` runs `schedulePatternAlertsIfEnabled`, and before entitlements resolve `isActive` treats the user as Pro. The check runs once, then the task awaits several times before adding requests. If RevenueCat resolves a lapsed Pro user as free during those awaits, the resolve-time cancel can run first and the launch task re-adds pattern alerts or the late-dose nudge afterwards. | Not fixed: only lapsed Pro users who left alerts on are affected, and it depends on task timing. Not reproduced. A safe fix is to check `isActive` again just before each `add`. |
+
+## Tests
+
+Not run. I submitted `gh-sim test --scheme SimpleGLP --only SimpleGLPTests` (run
+`simpleglp@20261107-230040-cb3f-claude-mbpro37291-1107-230951-8278`, GitHub Actions
+42457644047) at 07:09 UTC. It was still queued after the 90 minute limit: GitHub's Macs
+showed 0 of 5 free, with runs stuck in progress since 07:20 and 24 runs queued. No app code
+changed in this review, so the result applies to origin/main as is. Fetch it later with
+`gh-sim get <id>`.
