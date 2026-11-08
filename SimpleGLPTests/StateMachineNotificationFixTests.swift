@@ -321,6 +321,12 @@ final class StateMachineNotificationFixTests: XCTestCase {
 
     /// The Home route: "I took my pill", the Health read settles, then "Undo".
     func testHomeUndoAfterHealthSettlesRestoresTodaysNudge() async throws {
+        // A unit-test host has no UI to answer the Health permission sheet, so a live read never
+        // settles. With Health context off the read returns at once, the same ordering as a settled read.
+        let healthKey = GLPStorageKey.healthContextEnabled.rawValue
+        let previousHealth = GLPAppGroup.userDefaults.object(forKey: healthKey)
+        GLPAppGroup.userDefaults.set(false, forKey: healthKey)
+        addTeardownBlock { GLPAppGroup.userDefaults.set(previousHealth, forKey: healthKey) }
         _ = try makeDailyPlan(minutesAgo: 30)
         await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
         let beforeLog = try XCTUnwrap(nudgeFire(), "precondition: nudge scheduled for today's pill")
