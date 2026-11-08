@@ -322,6 +322,9 @@ struct PlanEditorView: View {
             }
             Button("Use custom dose") { useCustomDose = true }
                 .font(.footnote)
+                .foregroundStyle(AppTheme.brand)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         } else {
             HStack {
                 Text("Dose (mg)")
@@ -516,6 +519,9 @@ struct AddDoseStepSheet: View {
                         }
                         Button("Use custom dose") { useCustomDose = true }
                             .font(.footnote)
+                            .foregroundStyle(AppTheme.brand)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     } else {
                         HStack {
                             Text("Dose (mg)")

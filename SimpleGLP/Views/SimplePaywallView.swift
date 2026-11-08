@@ -158,8 +158,7 @@ struct SimplePaywallView: View {
                     Text(benefit.title)
                         .font(.footnote.weight(.medium))
                         .foregroundStyle(AppTheme.text)
-                        .lineLimit(2)
-                        .minimumScaleFactor(0.85)
+                        .fixedSize(horizontal: false, vertical: true)
                     Spacer(minLength: 0)
                 }
             }

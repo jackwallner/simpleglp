@@ -189,13 +189,20 @@ struct OnboardingView: View {
             )
             formCards
             VStack(spacing: 14) {
-                HStack {
-                    Text("Medication")
-                        .font(.body)
-                    Spacer()
-                    MedicationPicker(medication: $medication, forms: [form])
-                        .pickerStyle(.menu)
-                        .labelsHidden()
+                ViewThatFits(in: .horizontal) {
+                    HStack {
+                        Text("Medication")
+                            .font(.body)
+                            .lineLimit(1)
+                            .fixedSize()
+                        Spacer()
+                        medicationMenu
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Medication")
+                            .font(.body)
+                        medicationMenu
+                    }
                 }
                 .onChange(of: medication) { _, newValue in
                     let presets = newValue.standardDoseStepsMg
@@ -285,7 +292,9 @@ struct OnboardingView: View {
             }
             Button("Use custom dose") { useCustomDose = true }
                 .font(.footnote)
-                .frame(minHeight: 44)
+                .foregroundStyle(AppTheme.brand)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         } else {
             HStack {
                 Text("Current dose (mg)")
@@ -307,6 +316,12 @@ struct OnboardingView: View {
                 .frame(minHeight: 44)
             }
         }
+    }
+
+    private var medicationMenu: some View {
+        MedicationPicker(medication: $medication, forms: [form])
+            .pickerStyle(.menu)
+            .labelsHidden()
     }
 
     private static func format(_ value: Double) -> String {
@@ -387,6 +402,7 @@ struct OnboardingView: View {
                             Text("\(reminderLeadMinutes) min before")
                                 .foregroundStyle(AppTheme.muted)
                         }
+                        .accessibilityElement(children: .combine)
                     }
                     Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
@@ -438,6 +454,10 @@ struct OnboardingView: View {
                 title: form == .pill ? String(localized: "Make the daily routine effortless") : String(localized: "Keep your shot schedule in view"),
                 subtitle: String(localized: "Simple GLP Pro takes care of the parts that are easy to forget.")
             )
+            if typeSize.isAccessibilitySize, let disclosure = store.onboardingTrialDisclosureText {
+                // The bullets run long at accessibility sizes and push the price off screen.
+                trialDisclosure(disclosure)
+            }
             VStack(alignment: .leading, spacing: 14) {
                 ForEach(ProFeatures.bullets(isPill: form == .pill), id: \.title) { bullet in
                     trialBullet(icon: bullet.icon, text: bullet.line)
@@ -448,6 +468,14 @@ struct OnboardingView: View {
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .onAppear(perform: handleTrialStepAppear)
+    }
+
+    private func trialDisclosure(_ text: String) -> some View {
+        Text(text)
+            .font(.caption2)
+            .foregroundStyle(AppTheme.muted)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private func trialBullet(icon: String, text: String) -> some View {
@@ -590,12 +618,8 @@ struct OnboardingView: View {
                 .disabled(isPurchasing)
 
             // No disclosure until the package (real price) loads — never a placeholder.
-            if let disclosure = store.onboardingTrialDisclosureText {
-                Text(disclosure)
-                    .font(.caption2)
-                    .foregroundStyle(AppTheme.muted)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
+            if !typeSize.isAccessibilitySize, let disclosure = store.onboardingTrialDisclosureText {
+                trialDisclosure(disclosure)
             }
 
             if store.isPurchasePending {
