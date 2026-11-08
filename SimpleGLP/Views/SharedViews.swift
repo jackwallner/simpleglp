@@ -56,9 +56,34 @@ struct CadenceField: View {
     }
 
     var body: some View {
+        // The label stays on one line beside the menus when it fits (never broken
+        // mid-word); otherwise it takes its own line and wraps between words.
+        ViewThatFits(in: .horizontal) {
+            HStack {
+                Text("Repeat interval")
+                    .lineLimit(1)
+                    .fixedSize(horizontal: true, vertical: false)
+                Spacer()
+                menus
+            }
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Repeat interval")
+                    .fixedSize(horizontal: false, vertical: true)
+                HStack {
+                    Spacer()
+                    menus
+                }
+            }
+        }
+        .onAppear {
+            let decoded = Unit.decode(intervalDays)
+            count = decoded.count
+            unit = decoded.unit
+        }
+    }
+
+    private var menus: some View {
         HStack {
-            Text("Repeat interval")
-            Spacer()
             Picker("Count", selection: countBinding) {
                 ForEach(1...unit.maxCount, id: \.self) { Text("\($0)").tag($0) }
             }
@@ -70,11 +95,6 @@ struct CadenceField: View {
             }
             .labelsHidden()
             .pickerStyle(.menu)
-        }
-        .onAppear {
-            let decoded = Unit.decode(intervalDays)
-            count = decoded.count
-            unit = decoded.unit
         }
     }
 
@@ -100,11 +120,12 @@ struct CadenceField: View {
 struct StatusPill: View {
     let label: String
     let tint: Color
+    var textTint: Color? = nil
 
     var body: some View {
         Text(label)
             .font(.caption.weight(.semibold))
-            .foregroundStyle(tint)
+            .foregroundStyle(textTint ?? tint)
             .padding(.horizontal, 10)
             .padding(.vertical, 6)
             .background(tint.opacity(0.12), in: Capsule())
@@ -123,7 +144,7 @@ struct WaitField: View {
                 Spacer()
                 Text(minutes == 0 ? String(localized: "None") : GLPDurationText.format(seconds: TimeInterval(minutes * 60), units: [.minute], style: .abbreviated))
                     .monospacedDigit()
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
     }
@@ -144,5 +165,24 @@ struct MedicationPicker: View {
                 }
             }
         }
+    }
+}
+
+/// A legal link with a 44pt target. The frame sits inside the label, where the
+/// accessibility hit area is measured, which a frame around a `Link` does not reach.
+struct LegalLink: View {
+    @Environment(\.openURL) private var openURL
+    let title: LocalizedStringKey
+    let url: URL
+
+    var body: some View {
+        Button { openURL(url) } label: {
+            Text(title)
+                .padding(.horizontal, 2)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
+        }
+        .buttonStyle(.plain)
+        .accessibilityAddTraits(.isLink)
     }
 }

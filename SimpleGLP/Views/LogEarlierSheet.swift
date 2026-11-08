@@ -71,7 +71,7 @@ struct LogEarlierSheet: View {
                         .frame(maxWidth: .infinity)
                         .padding(.vertical, 8)
                         .foregroundStyle(selected ? .white : AppTheme.text)
-                        .background(selected ? AppTheme.brand : AppTheme.brandSoft, in: Capsule())
+                        .background(selected ? AppTheme.brandFill : AppTheme.brandSoft, in: Capsule())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel(String(localized: "\(quickPickDuration(minutes)) ago"))

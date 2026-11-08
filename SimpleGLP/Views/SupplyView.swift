@@ -26,7 +26,7 @@ struct SupplyCard: View {
                     Spacer(minLength: 0)
                     Image(systemName: "chevron.right")
                         .font(.caption.weight(.semibold))
-                        .foregroundStyle(.tertiary)
+                        .foregroundStyle(AppTheme.muted)
                 }
             }
         }
@@ -66,7 +66,7 @@ struct SupplyView: View {
                         Text(Self.countLabel(remaining, form: form))
                         Spacer()
                         Text("about \(SupplyMath.daysLeft(remaining: remaining, plan: plan)) days")
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppTheme.muted)
                     }
                 }
             }
@@ -77,7 +77,7 @@ struct SupplyView: View {
                         Spacer()
                         Text("\(count)")
                             .monospacedDigit()
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppTheme.muted)
                     }
                 }
                 Button(plan?.supplyUpdatedAt == nil

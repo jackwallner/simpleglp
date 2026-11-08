@@ -632,7 +632,7 @@ private struct PaneBarBand: ViewModifier {
     let color: Color
 
     func body(content: Content) -> some View {
-        content.overlay(alignment: .bottom) {
+        content.modifier(PaneBarInset(isOn: isOn)).overlay(alignment: .bottom) {
             if isOn {
                 GeometryReader { proxy in
                     let inset = proxy.safeAreaInsets.bottom
@@ -644,6 +644,26 @@ private struct PaneBarBand: ViewModifier {
                 .allowsHitTesting(false)
                 .accessibilityHidden(true)
             }
+        }
+    }
+}
+
+/// Ends the screen above the floating bar instead of under it, so no row sits behind
+/// the bar's icons. The small gap keeps a half-scrolled row's frame from reaching
+/// the bar's buttons.
+private struct PaneBarInset: ViewModifier {
+    let isOn: Bool
+    private let gap: CGFloat = 24
+
+    func body(content: Content) -> some View {
+        if isOn {
+            GeometryReader { proxy in
+                content
+                    .padding(.bottom, proxy.safeAreaInsets.bottom + gap)
+                    .ignoresSafeArea(.container, edges: .bottom)
+            }
+        } else {
+            content
         }
     }
 }

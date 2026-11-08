@@ -64,7 +64,7 @@ struct WatchRootView: View {
             .frame(maxWidth: .infinity)
             .padding(.vertical, 18)
             .background(
-                (controller.showConfirmation ? AppTheme.brandPressed : AppTheme.brand),
+                (controller.showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill),
                 in: RoundedRectangle(cornerRadius: 22, style: .continuous)
             )
         }

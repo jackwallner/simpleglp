@@ -16,7 +16,7 @@ struct HomeView: View {
     /// Non-nil while the "when did you take it?" sheet is up, holding its starting time.
     @State private var logEarlierStart: LogEarlierStart?
 
-    private var recentEvents: [ShotEvent] { Array(events.prefix(5)) }
+    private var recentEvents: [ShotEvent] { Array(events.prefix(3)) }
     private var plan: MedicationPlan? { plans.first }
     private var form: DoseForm { plan?.form ?? .injection }
 
@@ -46,20 +46,30 @@ struct HomeView: View {
                 } else {
                     nextShotSection
                     shotButton
-                    Button("Took it earlier?") { logEarlierStart = LogEarlierStart(date: .now) }
-                        .font(.footnote.weight(.semibold))
-                        .foregroundStyle(AppTheme.brand)
-                        .disabled(coordinator.isCapturing || showConfirmation)
+                    Button { logEarlierStart = LogEarlierStart(date: .now) } label: {
+                        Text("Took it earlier?")
+                            .frame(minHeight: 44)
+                            .contentShape(Rectangle())
+                    }
+                    .font(.footnote.weight(.semibold))
+                    .foregroundStyle(AppTheme.brand)
+                    .disabled(coordinator.isCapturing || showConfirmation)
                 }
 
                 if coordinator.showUndoOption, coordinator.lastCapturedEventID != nil {
-                    Button("Undo") {
+                    Button {
                         coordinator.undoLastCapture(in: modelContext)
                         showConfirmation = false
                         confirmationTask?.cancel()
+                    } label: {
+                        Text("Undo")
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     }
                     .font(.subheadline.weight(.semibold))
                     .foregroundStyle(AppTheme.muted)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
                 }
 
                 if let plan, store.isProUnlocked, plan.supplyUpdatedAt != nil {
@@ -134,7 +144,7 @@ struct HomeView: View {
         Button(action: logDose) {
             ZStack {
                 Circle()
-                    .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brand)
+                    .fill(showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill)
                     .frame(width: 220, height: 220)
                     .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
                 VStack(spacing: 8) {
@@ -169,16 +179,18 @@ struct HomeView: View {
                         RecentShotRow(event: event)
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier(RecentShotRow.identifier(for: event.timestamp))
                 }
             }
             .padding(.horizontal)
         }
     }
 
-    /// Re-derived every minute, so the card turns over at midnight and at the dose time
-    /// while One Tap stays open or the app sits in the background.
+    /// Re-derived at midnight and at the dose time of day, the only moments the card turns
+    /// over while One Tap stays open or the app sits in the background. A schedule that
+    /// ticked every minute redrew an idle screen for nothing.
     private var nextShotSection: some View {
-        TimelineView(.everyMinute) { timeline in
+        TimelineView(DoseClockSchedule(hour: plan?.preferredHour ?? 0, minute: plan?.preferredMinute ?? 0)) { timeline in
             nextShotCard(now: Self.cardClock(tick: timeline.date))
         }
     }
@@ -223,6 +235,7 @@ struct HomeView: View {
                             .font(.caption.weight(.semibold))
                             .foregroundStyle(AppTheme.muted)
                         Text(DoseScheduleView.format(ScheduleEngine.dose(on: next, plan: plan)))
+                            .accessibilityLabel(GLPMassFormatter.spokenMilligrams(ScheduleEngine.dose(on: next, plan: plan)))
                             .font(.headline)
                         if let site = lastSite {
                             Text("Last site: \(site.localizedName)")
@@ -284,6 +297,13 @@ struct LogEarlierStart: Identifiable {
 struct RecentShotRow: View {
     let event: ShotEvent
 
+    /// Names a row by its calendar day (`recentDose-2026-11-07`), the same in every language,
+    /// so UI tests can find a dose without matching translated or locale formatted text.
+    static func identifier(for date: Date, calendar: Calendar = .current) -> String {
+        let parts = calendar.dateComponents([.year, .month, .day], from: date)
+        return String(format: "recentDose-%04d-%02d-%02d", parts.year ?? 0, parts.month ?? 0, parts.day ?? 0)
+    }
+
     var body: some View {
         HStack(spacing: 14) {
             Image(systemName: "checkmark.circle.fill")
@@ -301,7 +321,7 @@ struct RecentShotRow: View {
             VStack(alignment: .trailing, spacing: 4) {
                 Text(event.scheduleStatus.label)
                     .font(.caption.weight(.semibold))
-                    .foregroundStyle(tint)
+                    .foregroundStyle(textTint)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 6)
                     .background(tint.opacity(0.14), in: Capsule())
@@ -322,11 +342,36 @@ struct RecentShotRow: View {
         )
     }
 
+    private var textTint: Color {
+        switch event.scheduleStatus {
+        case .onSchedule: AppTheme.brandText
+        case .early, .late: AppTheme.warmText
+        case .extra, .unknown: AppTheme.muted
+        }
+    }
+
     private var tint: Color {
         switch event.scheduleStatus {
         case .onSchedule: AppTheme.brand
         case .early, .late: AppTheme.warm
         case .extra, .unknown: AppTheme.muted
         }
+    }
+}
+
+/// Ticks at each local midnight and at the plan's time of day: when "due today" turns
+/// into "overdue", and when the card moves to the next day.
+struct DoseClockSchedule: TimelineSchedule {
+    let hour: Int
+    let minute: Int
+
+    func entries(from start: Date, mode: Mode) -> AnySequence<Date> {
+        AnySequence(sequence(first: start) { next(after: $0) })
+    }
+
+    func next(after date: Date, calendar: Calendar = .current) -> Date? {
+        let midnight = calendar.nextDate(after: date, matching: DateComponents(hour: 0, minute: 0, second: 0), matchingPolicy: .nextTime)
+        let dose = calendar.nextDate(after: date, matching: DateComponents(hour: hour, minute: minute, second: 0), matchingPolicy: .nextTime)
+        return [midnight, dose].compactMap { $0 }.min()
     }
 }

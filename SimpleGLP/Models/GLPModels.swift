@@ -481,6 +481,18 @@ enum GLPMassFormatter {
     }
 }
 
+extension GLPMassFormatter {
+    /// "0.25 milligrams" for VoiceOver, where the short form reads as "0.25mg".
+    static func spokenMilligrams(_ value: Double) -> String {
+        let formatter = MeasurementFormatter()
+        formatter.unitOptions = .providedUnit
+        formatter.unitStyle = .long
+        formatter.numberFormatter.minimumFractionDigits = 0
+        formatter.numberFormatter.maximumFractionDigits = 2
+        return formatter.string(from: Measurement(value: value, unit: UnitMass.milligrams))
+    }
+}
+
 enum GLPHealthCopy {
     static func localizedMessage(_ message: String?) -> String? {
         guard let message else { return nil }

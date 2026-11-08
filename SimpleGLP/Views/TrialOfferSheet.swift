@@ -32,7 +32,7 @@ struct TrialOfferSheet: View {
     @State private var restoreMessage: String?
 
     private var brandGradient: LinearGradient {
-        LinearGradient(colors: [AppTheme.brand, AppTheme.calm], startPoint: .topLeading, endPoint: .bottomTrailing)
+        LinearGradient(colors: [AppTheme.brandFill, AppTheme.calmFill], startPoint: .topLeading, endPoint: .bottomTrailing)
     }
 
     private var trialPeriodPhrase: String? {
@@ -183,7 +183,7 @@ struct TrialOfferSheet: View {
                                 .transition(.opacity)
                         }
                     }
-                    .animation(.easeInOut(duration: 0.18), value: errorMessage)
+                    .animation(reduceMotion ? nil : .easeInOut(duration: 0.18), value: errorMessage)
 
                     VStack(spacing: 10) {
                         Button(action: {
@@ -222,7 +222,7 @@ struct TrialOfferSheet: View {
 
                         Text(billingDisclosure)
                             .font(.system(.caption2, design: .rounded))
-                            .foregroundStyle(.tertiary)
+                            .foregroundStyle(AppTheme.muted)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
 
@@ -233,6 +233,7 @@ struct TrialOfferSheet: View {
                                     .foregroundStyle(AppTheme.brand)
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 6)
+                                    .frame(minHeight: 44)
                             }
                             .buttonStyle(.plain)
                             .disabled(isPurchasing)
@@ -266,11 +267,15 @@ struct TrialOfferSheet: View {
 
                     HStack(spacing: 4) {
                         Link("Terms", destination: PaywallLinks.standardEULA)
-                        Text("·")
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
+                        Text("·").accessibilityHidden(true)
                         Link("Privacy Policy", destination: PaywallLinks.privacyPolicy)
+                            .frame(minWidth: 44, minHeight: 44)
+                            .contentShape(Rectangle())
                     }
                     .font(.system(.caption2, design: .rounded))
-                    .foregroundStyle(.tertiary)
+                    .foregroundStyle(AppTheme.muted)
                 }
                 .padding(.horizontal, 24)
                 .padding(.top, 8)

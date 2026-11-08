@@ -121,6 +121,7 @@ struct HistoryView: View {
 
     private func historyRow(event: ShotEvent) -> some View {
         let pillTint: Color = event.scheduleStatus == .onSchedule ? AppTheme.brand : AppTheme.warm
+        let pillText: Color = event.scheduleStatus == .onSchedule ? AppTheme.brandText : AppTheme.warmText
         let doseText = DoseScheduleView.format(event.doseMg)
         return HStack(spacing: 12) {
             VStack(alignment: .leading, spacing: 4) {
@@ -133,11 +134,12 @@ struct HistoryView: View {
             }
             Spacer(minLength: 12)
             Text(doseText)
+                .accessibilityLabel(GLPMassFormatter.spokenMilligrams(event.doseMg))
                 .font(.subheadline.weight(.semibold))
                 .monospacedDigit()
                 .foregroundStyle(AppTheme.text)
             VStack(alignment: .trailing, spacing: 2) {
-                StatusPill(label: event.scheduleStatus.label, tint: pillTint)
+                StatusPill(label: event.scheduleStatus.label, tint: pillTint, textTint: pillText)
                 if let rationale = event.scheduleRationale {
                     Text(rationale)
                         .font(.caption2)

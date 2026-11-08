@@ -52,7 +52,7 @@ struct SettingsView: View {
                             Spacer()
                             Text("PRO")
                                 .font(.system(size: 10, weight: .heavy))
-                                .foregroundStyle(AppTheme.brand)
+                                .foregroundStyle(AppTheme.brandText)
                                 .padding(.horizontal, 8)
                                 .padding(.vertical, 4)
                                 .background(AppTheme.brandSoft, in: Capsule())
@@ -144,7 +144,7 @@ struct SettingsView: View {
             Section("About") {
                 Text("Simple GLP does not provide medical advice. Always follow your prescriber’s instructions.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
         }
         .listStyle(.insetGrouped)
@@ -218,7 +218,7 @@ struct PlanEditorView: View {
                             Text("Lead time")
                             Spacer()
                             Text("\(reminderLeadMinutes) min")
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(AppTheme.muted)
                         }
                     }
                     if notificationsDenied {
@@ -299,7 +299,7 @@ struct PlanEditorView: View {
                     .font(.subheadline.weight(.semibold))
                 Text("Reminders won't fire until you turn on notifications for Simple GLP in iOS Settings.")
                     .font(.caption)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
                 Button("Open Settings") {
                     if let url = URL(string: UIApplication.openSettingsURLString) {
@@ -320,8 +320,13 @@ struct PlanEditorView: View {
                     Text(DoseScheduleView.format(value)).tag(value)
                 }
             }
-            Button("Use custom dose") { useCustomDose = true }
-                .font(.footnote)
+            Button { useCustomDose = true } label: {
+                Text("Use custom dose")
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .font(.footnote)
+            .foregroundStyle(AppTheme.brand)
         } else {
             HStack {
                 Text("Dose (mg)")
@@ -401,7 +406,7 @@ struct DoseScheduleView: View {
             Section {
                 Text("Add dose changes from your prescriber in advance. On each step's start date, new logs use that step's dose by default.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
 
             if let plan {
@@ -410,7 +415,7 @@ struct DoseScheduleView: View {
                         Text(plan.scheduleStartDate, style: .date)
                         Spacer()
                         Text(Self.format(plan.doseMg))
-                            .foregroundStyle(.secondary)
+                            .foregroundStyle(AppTheme.muted)
                     }
                 }
             }
@@ -419,14 +424,14 @@ struct DoseScheduleView: View {
                 if steps.isEmpty {
                     Text("No scheduled changes yet.")
                         .font(.subheadline)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                 } else {
                     ForEach(steps) { step in
                         HStack {
                             Text(step.startDate, style: .date)
                             Spacer()
                             Text(Self.format(step.doseMg))
-                                .foregroundStyle(.secondary)
+                                .foregroundStyle(AppTheme.muted)
                         }
                     }
                     .onDelete(perform: deleteSteps)
@@ -514,8 +519,13 @@ struct AddDoseStepSheet: View {
                                 Text(DoseScheduleView.format(value)).tag(value)
                             }
                         }
-                        Button("Use custom dose") { useCustomDose = true }
-                            .font(.footnote)
+                        Button { useCustomDose = true } label: {
+                            Text("Use custom dose")
+                                .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                                .contentShape(Rectangle())
+                        }
+                        .font(.footnote)
+                        .foregroundStyle(AppTheme.brand)
                     } else {
                         HStack {
                             Text("Dose (mg)")
@@ -599,7 +609,7 @@ struct ExportView: View {
             Section {
                 Text("Export every logged dose as a CSV file you can share or back up.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
             Section {
                 if let fileURL {
@@ -608,7 +618,7 @@ struct ExportView: View {
                     }
                     Text(fileURL.lastPathComponent)
                         .font(.caption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                 } else {
                     Button {
                         generate()
@@ -649,7 +659,7 @@ struct ImportView: View {
             Section {
                 Text("Import a Simple GLP CSV export to restore your dose history. Imported doses are added; they don't replace existing entries.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
             }
             Section {
                 Button {

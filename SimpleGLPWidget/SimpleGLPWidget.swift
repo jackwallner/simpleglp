@@ -130,7 +130,7 @@ struct SimpleGLPWidgetEntryView: View {
                          ? "Planned \(next.formatted(date: .omitted, time: .shortened))"
                          : "\(GLPGlance.dayDistance(to: next, now: entry.date)) · \(next.formatted(.dateTime.weekday(.abbreviated)))")
                         .font(.caption2)
-                        .foregroundStyle(.white.opacity(0.85))
+                        .foregroundStyle(.white)
                 }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -138,7 +138,7 @@ struct SimpleGLPWidgetEntryView: View {
         }
         .buttonStyle(.plain)
         .containerBackground(for: .widget) {
-            (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brand)
+            (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill)
         }
     }
 
@@ -163,7 +163,7 @@ struct SimpleGLPWidgetEntryView: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
                 .padding(12)
                 .background(
-                    (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brand),
+                    (entry.showConfirmation ? AppTheme.brandPressed : AppTheme.brandFill),
                     in: RoundedRectangle(cornerRadius: 18, style: .continuous)
                 )
             }

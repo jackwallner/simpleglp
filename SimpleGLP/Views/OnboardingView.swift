@@ -7,6 +7,7 @@ struct OnboardingView: View {
     @AppStorage(GLPStorageKey.hasCompletedOnboarding.rawValue, store: GLPAppGroup.userDefaults) private var hasCompletedOnboarding = false
     @AppStorage(GLPStorageKey.hasSeenTrialOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenTrialOffer = false
     @AppStorage(GLPStorageKey.hasSeenFirstRunOffer.rawValue, store: GLPAppGroup.userDefaults) private var hasSeenFirstRunOffer = false
+    @Environment(\.dynamicTypeSize) private var typeSize
     @State private var step = 0
     @State private var form: DoseForm = .injection
     @State private var medication: GLPMedication = .ozempic
@@ -51,16 +52,30 @@ struct OnboardingView: View {
                     .padding(.top, 8)
                     .padding(.bottom, 20)
 
-                ScrollView(showsIndicators: false) {
-                    contentView
+                if typeSize.isAccessibilitySize {
+                    // At accessibility sizes the pinned bar would leave the content almost
+                    // no room, so the bar scrolls with it and nothing can overlap.
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 24) {
+                            contentView
+                            bottomBar
+                        }
                         .padding(.horizontal, 24)
+                        .padding(.bottom, 20)
                         .frame(maxWidth: .infinity, alignment: .leading)
-                }
+                    }
+                } else {
+                    ScrollView(showsIndicators: false) {
+                        contentView
+                            .padding(.horizontal, 24)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
 
-                bottomBar
-                    .padding(.horizontal, 24)
-                    .padding(.top, 12)
-                    .padding(.bottom, 20)
+                    bottomBar
+                        .padding(.horizontal, 24)
+                        .padding(.top, 12)
+                        .padding(.bottom, 20)
+                }
             }
             .background(AppTheme.bg.ignoresSafeArea())
             .navigationTitle("Simple GLP")
@@ -124,14 +139,14 @@ struct OnboardingView: View {
         }
     }
 
-    private func stepHeader(icon: String, iconColor: Color, title: String, subtitle: String?) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+    private func stepHeader(icon: String, iconColor: Color, title: String, subtitle: String?, compact: Bool = false) -> some View {
+        VStack(alignment: .leading, spacing: compact ? 10 : 16) {
             ZStack {
                 Circle()
                     .fill(iconColor.opacity(0.15))
-                    .frame(width: 76, height: 76)
+                    .frame(width: compact ? 48 : 76, height: compact ? 48 : 76)
                 Image(systemName: icon)
-                    .font(.system(size: 36, weight: .bold))
+                    .font(.system(size: compact ? 22 : 36, weight: .bold))
                     .foregroundStyle(iconColor)
             }
             Text(title)
@@ -172,18 +187,22 @@ struct OnboardingView: View {
                 title: String(localized: "What are you taking?"),
                 subtitle: String(localized: "Pick how you take it, then your medication and current dose.")
             )
-            HStack(spacing: 12) {
-                formCard(.injection, title: String(localized: "Shot"), detail: String(localized: "Weekly or custom"))
-                formCard(.pill, title: String(localized: "Pill"), detail: String(localized: "Once a day"))
-            }
+            formCards
             VStack(spacing: 14) {
-                HStack {
-                    Text("Medication")
-                        .font(.body)
-                    Spacer()
-                    MedicationPicker(medication: $medication, forms: [form])
-                        .pickerStyle(.menu)
-                        .labelsHidden()
+                ViewThatFits(in: .horizontal) {
+                    HStack {
+                        Text("Medication")
+                            .font(.body)
+                            .lineLimit(1)
+                            .fixedSize()
+                        Spacer()
+                        medicationMenu
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Medication")
+                            .font(.body)
+                        medicationMenu
+                    }
                 }
                 .onChange(of: medication) { _, newValue in
                     let presets = newValue.standardDoseStepsMg
@@ -206,6 +225,15 @@ struct OnboardingView: View {
         }
     }
 
+    /// Side by side, stacked once the text is too large for two columns.
+    private var formCards: some View {
+        let layout = typeSize.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: 12)) : AnyLayout(HStackLayout(spacing: 12))
+        return layout {
+            formCard(.injection, title: String(localized: "Shot"), detail: String(localized: "Weekly or custom"))
+            formCard(.pill, title: String(localized: "Pill"), detail: String(localized: "Once a day"))
+        }
+    }
+
     private func formCard(_ option: DoseForm, title: String, detail: String) -> some View {
         let selected = form == option
         return Button {
@@ -220,11 +248,11 @@ struct OnboardingView: View {
                     .foregroundStyle(selected ? .white : AppTheme.text)
                 Text(detail)
                     .font(.caption)
-                    .foregroundStyle(selected ? .white.opacity(0.85) : AppTheme.muted)
+                    .foregroundStyle(selected ? .white : AppTheme.muted)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(16)
-            .background(selected ? AppTheme.brand : AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .background(selected ? AppTheme.brandFill : AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .strokeBorder(selected ? Color.clear : AppTheme.surfaceStroke.opacity(0.6), lineWidth: 1)
@@ -262,8 +290,13 @@ struct OnboardingView: View {
                 .pickerStyle(.menu)
                 .labelsHidden()
             }
-            Button("Use custom dose") { useCustomDose = true }
-                .font(.footnote)
+            Button { useCustomDose = true } label: {
+                Text("Use custom dose")
+                    .frame(maxWidth: .infinity, minHeight: 44, alignment: .leading)
+                    .contentShape(Rectangle())
+            }
+            .font(.footnote)
+            .foregroundStyle(AppTheme.brand)
         } else {
             HStack {
                 Text("Current dose (mg)")
@@ -282,8 +315,15 @@ struct OnboardingView: View {
                     }
                 }
                 .font(.footnote)
+                .frame(minHeight: 44)
             }
         }
+    }
+
+    private var medicationMenu: some View {
+        MedicationPicker(medication: $medication, forms: [form])
+            .pickerStyle(.menu)
+            .labelsHidden()
     }
 
     private static func format(_ value: Double) -> String {
@@ -315,7 +355,7 @@ struct OnboardingView: View {
                      ? String(localized: "Tapping “I took my pill” starts a \(waitMinutes)-minute countdown and pings you when it’s done. Match it to your prescriber’s instructions.")
                      : String(localized: "No countdown. Set one if your instructions include a wait before food or drink."))
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .font(.body)
@@ -356,18 +396,21 @@ struct OnboardingView: View {
                     .font(.body)
                 if reminderEnabled {
                     Divider()
-                    Stepper(value: $reminderLeadMinutes, in: 0...180, step: 15) {
-                        HStack {
-                            Text("Lead time")
-                                .font(.body)
-                            Spacer()
-                            Text("\(reminderLeadMinutes) min before")
-                                .foregroundStyle(.secondary)
-                        }
+                    // The texts stay their own elements: inside the Stepper's label
+                    // they sat outside its accessibility frame.
+                    HStack {
+                        Text("Lead time")
+                            .font(.body)
+                        Spacer()
+                        Text("\(reminderLeadMinutes) min before")
+                            .foregroundStyle(AppTheme.muted)
+                        Stepper("Lead time", value: $reminderLeadMinutes, in: 0...180, step: 15)
+                            .labelsHidden()
+                            .accessibilityValue(Text("\(reminderLeadMinutes) min before"))
                     }
                     Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppTheme.muted)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -389,11 +432,11 @@ struct OnboardingView: View {
                     .font(.body)
                 Text("Simple GLP can read weight, glucose, activity, sleep, and more when you log a dose. If you skip this or deny permission, you can turn it on later in Settings.")
                     .font(.footnote)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
                 Text("This adds context to your log. It isn't medical advice.")
                     .font(.caption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppTheme.muted)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .padding(18)
@@ -413,18 +456,31 @@ struct OnboardingView: View {
                 icon: "sparkles",
                 iconColor: AppTheme.brand,
                 title: form == .pill ? String(localized: "Make the daily routine effortless") : String(localized: "Keep your shot schedule in view"),
-                subtitle: String(localized: "Simple GLP Pro takes care of the parts that are easy to forget.")
+                subtitle: String(localized: "Simple GLP Pro takes care of the parts that are easy to forget."),
+                compact: true
             )
-            VStack(alignment: .leading, spacing: 14) {
+            if typeSize.isAccessibilitySize, let disclosure = store.onboardingTrialDisclosureText {
+                // The bullets run long at accessibility sizes and push the price off screen.
+                trialDisclosure(disclosure)
+            }
+            VStack(alignment: .leading, spacing: 10) {
                 ForEach(ProFeatures.bullets(isPill: form == .pill), id: \.title) { bullet in
                     trialBullet(icon: bullet.icon, text: bullet.line)
                 }
                 trialBullet(icon: "lock.shield", text: String(localized: "Your data stays private, on your device"))
             }
-            .padding(18)
+            .padding(14)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .onAppear(perform: handleTrialStepAppear)
+    }
+
+    private func trialDisclosure(_ text: String) -> some View {
+        Text(text)
+            .font(.caption2)
+            .foregroundStyle(AppTheme.muted)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
     }
 
     private func trialBullet(icon: String, text: String) -> some View {
@@ -434,7 +490,7 @@ struct OnboardingView: View {
                 .foregroundStyle(AppTheme.brand)
                 .frame(width: 24)
             Text(text)
-                .font(.body)
+                .font(.subheadline)
                 .foregroundStyle(AppTheme.text)
             Spacer(minLength: 0)
         }
@@ -461,20 +517,23 @@ struct OnboardingView: View {
             }
 
             Button(action: handlePrimary) {
-                Group {
+                ZStack {
+                    // The trial label is the longest one and can wrap (German). Every step
+                    // reserves its height, so the button keeps one size from step to step.
+                    ctaLabel(store.onboardingTrialCTALabel)
+                        .hidden()
+                        .accessibilityHidden(true)
                     if isPurchasing {
                         ProgressView().tint(.white)
                     } else {
-                        Text(isTrialStep
-                             ? (store.isPurchasePending ? String(localized: "Refresh status") : store.onboardingTrialCTALabel)
-                             : String(localized: "Continue"))
+                        ctaLabel(isTrialStep
+                                 ? (store.isPurchasePending ? String(localized: "Refresh status") : store.onboardingTrialCTALabel)
+                                 : String(localized: "Continue"))
                     }
                 }
-                .font(.headline.weight(.bold))
-                .foregroundStyle(.white)
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 16)
-                .background(AppTheme.brand, in: Capsule())
+                .background(AppTheme.brandFill, in: Capsule())
                 .shadow(color: AppTheme.brand.opacity(0.3), radius: 12, x: 0, y: 6)
             }
             .buttonStyle(.plain)
@@ -484,8 +543,17 @@ struct OnboardingView: View {
 
             // Fixed-height footer slot on EVERY step so the button never moves.
             footerSlot
-                .frame(height: 22)
+                .frame(minHeight: 44)
         }
+    }
+
+    private func ctaLabel(_ text: String) -> some View {
+        Text(text)
+            .font(.headline.weight(.bold))
+            .foregroundStyle(.white)
+            .multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
+            .padding(.horizontal, 12)
     }
 
     @ViewBuilder
@@ -497,6 +565,8 @@ struct OnboardingView: View {
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(AppTheme.muted)
                 .buttonStyle(.plain)
+                .frame(minWidth: 44, minHeight: 44)
+                .contentShape(Rectangle())
         } else {
             // Reserve the slot on step 0 so the primary button sits at the same y.
             legalFooter
@@ -507,15 +577,23 @@ struct OnboardingView: View {
     }
 
     private var legalFooter: some View {
-        HStack(spacing: 10) {
-            Link("Terms", destination: PaywallLinks.standardEULA)
-            Text("·").foregroundStyle(.tertiary)
-            Link("Privacy", destination: PaywallLinks.privacyPolicy)
-            Text("·").foregroundStyle(.tertiary)
-            Button("Restore") { Task { await store.restorePurchases() } }
+        HStack(spacing: 0) {
+            LegalLink(title: "Terms", url: PaywallLinks.standardEULA)
+            Text("·").accessibilityHidden(true)
+            LegalLink(title: "Privacy", url: PaywallLinks.privacyPolicy)
+            Text("·").accessibilityHidden(true)
+            Button { Task { await store.restorePurchases() } } label: {
+                Text("Restore")
+                    .lineLimit(1)
+                    .fixedSize()
+                    .padding(.horizontal, 2)
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
         }
         .font(.caption2)
-        .foregroundStyle(.tertiary)
+        .foregroundStyle(AppTheme.muted)
     }
 
     /// Trial-only content that sits ABOVE the primary CTA (absorbed by the ScrollView
@@ -524,33 +602,44 @@ struct OnboardingView: View {
     /// so it can never fall below the fold behind the CTA zone (App Review 1.4.1).
     @ViewBuilder
     private var trialAboveButton: some View {
-        VStack(spacing: 10) {
+        VStack(spacing: 0) {
             Text("Tracking only. Simple GLP isn't medical advice and doesn't diagnose or treat any condition.")
                 .font(.caption2)
-                .foregroundStyle(.secondary)
+                .foregroundStyle(AppTheme.muted)
                 .multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("onboardingMedicalDisclaimer")
+            trialOffer
+        }
+    }
 
+    /// Free exit, billing disclosure and errors. The disclaimer and these sit above the
+    /// primary at normal sizes; at accessibility sizes they scroll with the content so
+    /// the CTA keeps the screen.
+    @ViewBuilder
+    private var trialOffer: some View {
+        // The 44pt "Get Started" target supplies the spacing around itself.
+        VStack(spacing: 0) {
             // Soft free exit ABOVE the primary (Rev A: "Get Started", visually
             // secondary) so the trial button owns the Continue thumb slot.
-            Button(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started")) {
+            Button {
                 ConversionDiagnostics.record(.freeVersionChosen)
                 store.syncConversionAttributes()
                 finishOnboarding()
+            } label: {
+                Text(store.isPurchasePending ? String(localized: "Continue free") : String(localized: "Get Started"))
+                    .frame(minWidth: 44, minHeight: 44)
+                    .contentShape(Rectangle())
             }
-                .font(.subheadline.weight(.semibold))
-                .foregroundStyle(AppTheme.muted)
-                .buttonStyle(.plain)
-                .disabled(isPurchasing)
+            .font(.subheadline.weight(.semibold))
+            .foregroundStyle(AppTheme.muted)
+            .buttonStyle(.plain)
+            .disabled(isPurchasing)
 
-            // No disclosure until the package (real price) loads — never a placeholder.
-            if let disclosure = store.onboardingTrialDisclosureText {
-                Text(disclosure)
-                    .font(.caption2)
-                    .foregroundStyle(.tertiary)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
+            // No disclosure until the package (real price) loads, never a placeholder.
+            // At accessibility sizes it sits above the bullets instead.
+            if !typeSize.isAccessibilitySize, let disclosure = store.onboardingTrialDisclosureText {
+                trialDisclosure(disclosure)
             }
 
             if store.isPurchasePending {
@@ -558,6 +647,7 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(AppTheme.muted)
                     .multilineTextAlignment(.center)
+                    .padding(.top, 8)
             }
 
             if let trialError {
@@ -565,6 +655,7 @@ struct OnboardingView: View {
                     .font(.caption)
                     .foregroundStyle(.red)
                     .multilineTextAlignment(.center)
+                    .padding(.top, 8)
             }
         }
     }
@@ -685,7 +776,7 @@ struct OnboardingFoldPanel: View {
     var body: some View {
         VStack(spacing: 28) {
             Circle()
-                .fill(AppTheme.brand)
+                .fill(AppTheme.brandFill)
                 .frame(width: 200, height: 200)
                 .shadow(color: AppTheme.brand.opacity(0.28), radius: 22, x: 0, y: 12)
                 .overlay {
