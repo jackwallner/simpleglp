@@ -139,14 +139,14 @@ struct OnboardingView: View {
         }
     }
 
-    private func stepHeader(icon: String, iconColor: Color, title: String, subtitle: String?) -> some View {
-        VStack(alignment: .leading, spacing: 16) {
+    private func stepHeader(icon: String, iconColor: Color, title: String, subtitle: String?, compact: Bool = false) -> some View {
+        VStack(alignment: .leading, spacing: compact ? 10 : 16) {
             ZStack {
                 Circle()
                     .fill(iconColor.opacity(0.15))
-                    .frame(width: 76, height: 76)
+                    .frame(width: compact ? 48 : 76, height: compact ? 48 : 76)
                 Image(systemName: icon)
-                    .font(.system(size: 36, weight: .bold))
+                    .font(.system(size: compact ? 22 : 36, weight: .bold))
                     .foregroundStyle(iconColor)
             }
             Text(title)
@@ -403,8 +403,10 @@ struct OnboardingView: View {
                             Spacer()
                             Text("\(reminderLeadMinutes) min before")
                                 .foregroundStyle(AppTheme.muted)
+                                .accessibilityHidden(true)
                         }
                     }
+                    .accessibilityValue(Text("\(reminderLeadMinutes) min before"))
                     Text("We'll ask permission to send notifications. If you decline, reminders won't fire. You can enable them later in iOS Settings.")
                         .font(.caption2)
                         .foregroundStyle(AppTheme.muted)
@@ -453,19 +455,20 @@ struct OnboardingView: View {
                 icon: "sparkles",
                 iconColor: AppTheme.brand,
                 title: form == .pill ? String(localized: "Make the daily routine effortless") : String(localized: "Keep your shot schedule in view"),
-                subtitle: String(localized: "Simple GLP Pro takes care of the parts that are easy to forget.")
+                subtitle: String(localized: "Simple GLP Pro takes care of the parts that are easy to forget."),
+                compact: true
             )
             if typeSize.isAccessibilitySize, let disclosure = store.onboardingTrialDisclosureText {
                 // The bullets run long at accessibility sizes and push the price off screen.
                 trialDisclosure(disclosure)
             }
-            VStack(alignment: .leading, spacing: 14) {
+            VStack(alignment: .leading, spacing: 10) {
                 ForEach(ProFeatures.bullets(isPill: form == .pill), id: \.title) { bullet in
                     trialBullet(icon: bullet.icon, text: bullet.line)
                 }
                 trialBullet(icon: "lock.shield", text: String(localized: "Your data stays private, on your device"))
             }
-            .padding(18)
+            .padding(14)
             .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         }
         .onAppear(perform: handleTrialStepAppear)
@@ -486,7 +489,7 @@ struct OnboardingView: View {
                 .foregroundStyle(AppTheme.brand)
                 .frame(width: 24)
             Text(text)
-                .font(.body)
+                .font(.subheadline)
                 .foregroundStyle(AppTheme.text)
             Spacer(minLength: 0)
         }
@@ -580,6 +583,8 @@ struct OnboardingView: View {
             Text("·").accessibilityHidden(true)
             Button { Task { await store.restorePurchases() } } label: {
                 Text("Restore")
+                    .lineLimit(1)
+                    .fixedSize()
                     .padding(.horizontal, 2)
                     .frame(minWidth: 44, minHeight: 44)
                     .contentShape(Rectangle())
