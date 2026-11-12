@@ -8,7 +8,7 @@ Web page: https://jackwallner.com/ios/simpleglp/
 
 Simple GLP is a GLP-1 dose tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill, keep your schedule in view, and add optional Health context when it helps.
 
-iPhone · Apple Watch · Widget · HealthKit
+Free · No account · iPhone, Apple Watch and widget
 
 [Download on the App Store](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-home&mt=8)
 
@@ -105,6 +105,10 @@ Dose logging, schedule, history, insights, HealthKit context, the widget, and Ap
 ## Questions
 
 Quick answers about the GLP-1 shot tracker app.
+
+## What's a good app to track weekly GLP-1 shots?
+
+Simple GLP logs a weekly GLP-1 shot, such as Zepbound, Mounjaro, Wegovy or Ozempic, in one tap from the app, a Home Screen widget or the Apple Watch, with the dose and injection site. Each shot is marked early, on time or late against your schedule. Reminders and dose history are free, and it needs no account.
 
 ## Is there a free GLP-1 shot tracker app for iPhone?
 
