@@ -1,16 +1,16 @@
 # Best GLP-1 Tracker App for iPhone (5 Compared)
 
-> Five iPhone GLP-1 tracker apps compared: Shotsy, MeAgain, GlucoPal, Glapp and Simple GLP. Doses, reminders, Apple Watch and accounts, as of October 2026.
+> Five iPhone GLP-1 tracker apps compared: Shotsy, MeAgain, GlucoPal, Glapp and Simple GLP. Doses, reminders, Apple Watch and accounts, as of November 2026.
 
 Web page: https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html
 
 ## Best GLP-1 Tracker App for iPhone
 
-By Jack Wallner · Last updated October 29, 2026
+By Jack Wallner · Last updated November 11, 2026
 
 **Best for medication-level charts and a large user base: Shotsy. Best for food, protein and photo tracking alongside doses: MeAgain or GlucoPal. Best for check-ins, trial-data comparisons and supply tracking: Glapp. Best for logging a dose in one tap with no account: Simple GLP.** A GLP-1 tracker is an app that records your GLP-1 doses and the reminders you set, and some also track food, weight or supply. The apps differ mostly in how much they track beyond the dose itself.
 
-**How we compared.** We read each app's App Store listing, including its description and device list, and pulled rating, rating count and update date on October 12, 2026. This comparison is based on the listings and not on hands-on testing. **Disclosure:** Jack Wallner makes Simple GLP: GLP-1 Dose Tracker, so read its entry with that in mind.
+**How we compared.** We read each app's App Store listing, including its description and device list, and pulled rating, rating count and update date on November 11, 2026. This comparison is based on the listings and not on hands-on testing. **Disclosure:** Jack Wallner makes Simple GLP: GLP-1 Dose Tracker, so read its entry with that in mind.
 
 General information, not medical advice. These apps record what you tell them. They do not give dosing instructions or treatment recommendations, and neither does this page. Follow your prescriber's guidance.
 
@@ -20,13 +20,13 @@ Shotsy adds medication-level charts, MeAgain and GlucoPal add food and photos, G
 
 | App | Best for | Price model | Apple Watch | iPad | Account | Rating (count) | Last updated |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Shotsy GLP-1 Tracker](https://apps.apple.com/us/app/id6499510249) | Medication-level charts and multiple medications | Free + subscription | Not listed | Not listed | Not stated | 4.83 (33,400) | Sep 15, 2026 |
-| [MeAgain: GLP-1 Tracker App](https://apps.apple.com/us/app/id6744178534) | Food, protein and progress photos | Free + subscription | Not listed | Not listed | Not stated | 4.79 (37,093) | Sep 10, 2026 |
-| [Zepbound & Mounjaro Tracker (GlucoPal)](https://apps.apple.com/us/app/id6670317407) | Injection-site map, meals and PDF reports | Free + subscription | Not listed | Not listed | None required (per listing) | 4.81 (3,220) | Oct 12, 2026 |
-| [Glapp: Smart GLP-1 Tracker](https://apps.apple.com/us/app/id6756984097) | Daily check-ins, supply tracking and trial comparisons | Free + subscription | Yes | Not listed | Not stated | 4.75 (995) | Oct 9, 2026 |
-| [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/id6770137909?pt=128748779&ct=jw-simpleglp-best-glp-1-tracker-app&mt=8) | Fast, private dose log | Free + subscription or lifetime | Yes | Not listed | None | 5.0 (1) | Oct 1, 2026 |
+| [Shotsy GLP-1 Tracker](https://apps.apple.com/us/app/id6499510249) | Medication-level charts and multiple medications | Free + subscription | Not listed | Not listed | Not stated | 4.83 (34,787) | Nov 7, 2026 |
+| [MeAgain: GLP-1 Tracker App](https://apps.apple.com/us/app/id6744178534) | Food, protein and progress photos | Free + subscription | Not listed | Not listed | Not stated | 4.79 (40,692) | Nov 11, 2026 |
+| [Zepbound & Mounjaro Tracker (GlucoPal)](https://apps.apple.com/us/app/id6670317407) | Injection-site map, meals and PDF reports | Free + subscription | Not listed | Not listed | None required (per listing) | 4.81 (3,415) | Oct 16, 2026 |
+| [Glapp: Smart GLP-1 Tracker](https://apps.apple.com/us/app/id6756984097) | Daily check-ins, supply tracking and trial comparisons | Free + subscription | Yes | Not listed | Not stated | 4.76 (1,085) | Nov 10, 2026 |
+| [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/id6770137909?pt=128748779&ct=jw-simpleglp-best-glp-1-tracker-app&mt=8) | Fast, private dose log | Free + subscription or lifetime | Yes | Not listed | None | 5.0 (2) | Nov 10, 2026 |
 
-Ratings and update dates are from each app's App Store listing as of October 12, 2026. Apple Watch and iPad show the devices each listing names; "Not listed" means the listing does not name them. Price models describe the structure only, because prices vary by region and change.
+Ratings and update dates are from each app's App Store listing as of November 11, 2026. Apple Watch and iPad show the devices each listing names; "Not listed" means the listing does not name them. Price models describe the structure only, because prices vary by region and change.
 
 ## The apps, one by one
 
@@ -48,7 +48,7 @@ Glapp is the broadest in features. The listing describes a daily check-in for si
 
 ### Simple GLP: GLP-1 Dose Tracker
 
-Jack Wallner's app. It logs a weekly shot or daily pill in one tap from the app, a Home Screen widget or Apple Watch, with reminders, history, a pill wait timer, an injection-site note and optional Apple Health context, all free and on your device. Pro adds Lock Screen and Dynamic Island countdowns, supply tracking and missed-dose alerts. Limits: no food log, no progress photos, no medication-level charts, and no iCloud sync, so your history lives on the device. It has 1 rating, so its score says little yet.
+Jack Wallner's app. It logs a weekly shot or daily pill in one tap from the app, a Home Screen widget or Apple Watch, with reminders, history, a pill wait timer, an injection-site note and optional Apple Health context, all free and on your device. Pro adds Lock Screen and Dynamic Island countdowns, supply tracking and missed-dose alerts. Limits: no food log, no progress photos, no medication-level charts, and no iCloud sync, so your history lives on the device. It has 2 ratings, so its score says little yet.
 
 ## Which should you pick?
 
