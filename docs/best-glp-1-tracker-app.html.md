@@ -6,11 +6,11 @@ Web page: https://jackwallner.com/ios/simpleglp/best-glp-1-tracker-app.html
 
 ## Best GLP-1 Tracker App for iPhone
 
-By Jack Wallner · Last updated November 11, 2026
+By Jack Wallner · Last updated November 12, 2026
 
 **Best for medication-level charts and a large user base: Shotsy. Best for food, protein and photo tracking alongside doses: MeAgain or GlucoPal. Best for check-ins, trial-data comparisons and supply tracking: Glapp. Best for logging a dose in one tap with no account: Simple GLP.** A GLP-1 tracker is an app that records your GLP-1 doses and the reminders you set, and some also track food, weight or supply. The apps differ mostly in how much they track beyond the dose itself.
 
-**How we compared.** We read each app's App Store listing, including its description and device list, and pulled rating, rating count and update date on November 11, 2026. This comparison is based on the listings and not on hands-on testing. **Disclosure:** Jack Wallner makes Simple GLP: GLP-1 Dose Tracker, so read its entry with that in mind.
+**How we compared.** We read each app's App Store listing, including its description and device list, and pulled rating, rating count and update date on November 12, 2026. This comparison is based on the listings and not on hands-on testing. **Disclosure:** Jack Wallner makes Simple GLP: GLP-1 Dose Tracker, so read its entry with that in mind.
 
 General information, not medical advice. These apps record what you tell them. They do not give dosing instructions or treatment recommendations, and neither does this page. Follow your prescriber's guidance.
 
@@ -20,13 +20,13 @@ Shotsy adds medication-level charts, MeAgain and GlucoPal add food and photos, G
 
 | App | Best for | Price model | Apple Watch | iPad | Account | Rating (count) | Last updated |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| [Shotsy GLP-1 Tracker](https://apps.apple.com/us/app/id6499510249) | Medication-level charts and multiple medications | Free + subscription | Not listed | Not listed | Not stated | 4.83 (34,787) | Nov 7, 2026 |
-| [MeAgain: GLP-1 Tracker App](https://apps.apple.com/us/app/id6744178534) | Food, protein and progress photos | Free + subscription | Not listed | Not listed | Not stated | 4.79 (40,692) | Nov 11, 2026 |
-| [Zepbound & Mounjaro Tracker (GlucoPal)](https://apps.apple.com/us/app/id6670317407) | Injection-site map, meals and PDF reports | Free + subscription | Not listed | Not listed | None required (per listing) | 4.81 (3,415) | Oct 16, 2026 |
-| [Glapp: Smart GLP-1 Tracker](https://apps.apple.com/us/app/id6756984097) | Daily check-ins, supply tracking and trial comparisons | Free + subscription | Yes | Not listed | Not stated | 4.76 (1,085) | Nov 10, 2026 |
+| [Shotsy GLP-1 Tracker](https://apps.apple.com/us/app/id6499510249) | Medication-level charts and multiple medications | Free + subscription | Not listed | Not listed | Not stated | 4.83 (34,830) | Nov 7, 2026 |
+| [MeAgain: GLP-1 Tracker App](https://apps.apple.com/us/app/id6744178534) | Food, protein and progress photos | Free + subscription | Not listed | Not listed | Not stated | 4.79 (40,742) | Nov 11, 2026 |
+| [Zepbound & Mounjaro Tracker (GlucoPal)](https://apps.apple.com/us/app/id6670317407) | Injection-site map, meals and PDF reports | Free + subscription | Not listed | Not listed | None required (per listing) | 4.81 (3,414) | Oct 16, 2026 |
+| [Glapp: Smart GLP-1 Tracker](https://apps.apple.com/us/app/id6756984097) | Daily check-ins, supply tracking and trial comparisons | Free + subscription | Yes | Not listed | Not stated | 4.76 (1,087) | Nov 10, 2026 |
 | [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/id6770137909?pt=128748779&ct=jw-simpleglp-best-glp-1-tracker-app&mt=8) | Fast, private dose log | Free + subscription or lifetime | Yes | Not listed | None | 5.0 (2) | Nov 10, 2026 |
 
-Ratings and update dates are from each app's App Store listing as of November 11, 2026. Apple Watch and iPad show the devices each listing names; "Not listed" means the listing does not name them. Price models describe the structure only, because prices vary by region and change.
+Ratings and update dates are from each app's App Store listing as of November 12, 2026. Apple Watch and iPad show the devices each listing names; "Not listed" means the listing does not name them. Price models describe the structure only, because prices vary by region and change.
 
 ## The apps, one by one
 
@@ -36,7 +36,7 @@ Shotsy is the most established dedicated GLP-1 tracker here. Its listing describ
 
 ### MeAgain: GLP-1 Tracker App
 
-MeAgain adds a food log with photo, barcode and search, protein, fiber and water goals, a side-effect journal, progress photos and a home screen widget. It suits people who want one app for meals and doses. The listing says some features require a subscription, and that breadth means more to set up than a dose log needs.
+MeAgain adds a food log with photo, barcode and search, protein, fiber and water goals, a side-effect journal, progress photos and a home screen widget. It suits people who want one app for meals and doses. The listing says some features require a subscription.
 
 ### Zepbound & Mounjaro Tracker (GlucoPal)
 
@@ -44,7 +44,7 @@ GlucoPal combines dose logging with an injection-site body map, weight trends, p
 
 ### Glapp: Smart GLP-1 Tracker
 
-Glapp is the broadest in features. The listing describes a daily check-in for side effects, mood and sleep, a medication-level curve, a weekly progress report, comparison with clinical-trial data, nutrition tips and supply tracking that deducts each dose from your pens or vials. It also lists an Apple Watch app. It is the most to learn of the group.
+Glapp is the broadest in features. The listing describes a daily check-in for side effects, mood and sleep, a medication-level curve, a weekly progress report, comparison with clinical-trial data, nutrition tips and supply tracking that deducts each dose from your pens or vials. It also lists an Apple Watch app.
 
 ### Simple GLP: GLP-1 Dose Tracker
 
@@ -54,7 +54,7 @@ Jack Wallner's app. It logs a weekly shot or daily pill in one tap from the app,
 
 For estimated medication-level charts, pick Shotsy. For a fast dose log with no account, pick Simple GLP.
 
-- You want estimated medication-level charts and the biggest user base: Shotsy.
+- You want estimated medication-level charts and a large user base: Shotsy.
 - You want meals, protein and photos in the same app as your doses: MeAgain or GlucoPal.
 - You want daily check-ins, trial-data comparisons and pen or vial tracking: Glapp.
 - You want a fast dose log on your wrist and widget, with no account and nothing else to maintain: [Simple GLP](https://jackwallner.com/ios/simpleglp/).
@@ -64,7 +64,7 @@ For estimated medication-level charts, pick Shotsy. For a fast dose log with no 
 
 ### What app should I use for GLP-1 tracking?
 
-It depends on how much you want to track. For estimated medication-level charts and the largest user base, Shotsy. For food, protein and photos next to your doses, MeAgain or GlucoPal. For daily check-ins and supply tracking, Glapp. For a one-tap log of a weekly shot or daily pill with reminders, a pill wait timer, and Apple Watch and widget logging, free with no account, Simple GLP.
+It depends on how much you want to track. For estimated medication-level charts and a large user base, Shotsy. For food, protein and photos next to your doses, MeAgain or GlucoPal. For daily check-ins and supply tracking, Glapp. For a one-tap log of a weekly shot or daily pill with reminders, a pill wait timer, and Apple Watch and widget logging, free with no account, Simple GLP.
 
 ### What is the best GLP-1 tracker app for iPhone?
 
@@ -72,7 +72,7 @@ Shotsy is the most established dose tracker, MeAgain and GlucoPal add food and p
 
 ### Do GLP-1 tracker apps give dosing advice?
 
-No. These apps record doses and reminders you set. Dosing and treatment decisions belong to your prescriber, and the listings for these apps say as much.
+No. These apps record doses and reminders you set. Dosing and treatment decisions belong to your prescriber, and most of these apps' listings say as much.
 
 ### Do I need an account for a GLP-1 tracker?
 
