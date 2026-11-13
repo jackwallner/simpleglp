@@ -33,7 +33,7 @@ for locale in "${locales[@]}"; do
   last=7; [[ "$locale" == hu || "$locale" == ru ]] && last=6
   names=()
   id_file="$(mktemp)"
-  gh_args=(launch --scheme SimpleGLP --device "iPad Pro 13-inch (M5)" --wait 14 --record-seconds 1
+  gh_args=(launch --scheme SimpleGLP --device "iPad Pro 13-inch (M5)" --wait "${GH_SIM_WAIT:-14}" --record-seconds 1
            --args "-uitesting -GLPScreenshotSeed" --id-file "$id_file")
   for entry in "${SCENES[@]:0:last}"; do
     scene="${entry%%|*}"; args="${entry#*|}"

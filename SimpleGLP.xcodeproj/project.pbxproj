@@ -66,6 +66,7 @@
 		7C81D0C92DD78672DA44D97E /* StateMachineNotificationFixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0343EBA12B4F29DCC47F403 /* StateMachineNotificationFixTests.swift */; };
 		81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADB560B88F76955016CB54 /* WatchRootView.swift */; };
 		842F394A2FDFF256CE375F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7E3863B993311209064780D /* Assets.xcassets */; };
+		84E1A301A81F1FA65B573858 /* IPadStoreShotsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A6005C86B868D0C8ED33AC39 /* IPadStoreShotsTests.swift */; };
 		8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45946CD3F5007081C43A4A8 /* AppAppearance.swift */; };
 		8884FF7A79749AE428CA1D54 /* TrialOfferSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */; };
 		8C167B317D477E68C9420934 /* SimpleGLPWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -234,6 +235,7 @@
 		9CACE598976ED5713C9175CC /* InsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightsView.swift; sourceTree = "<group>"; };
 		9E81A89482A1A17FB1F5076A /* SimpleGLPWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleGLPWidget.swift; sourceTree = "<group>"; };
 		A121744A9855ED496FE6DC4A /* SimpleGLPUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6005C86B868D0C8ED33AC39 /* IPadStoreShotsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadStoreShotsTests.swift; sourceTree = "<group>"; };
 		A729A153DBB53E949B3A9716 /* ProFeatures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProFeatures.swift; sourceTree = "<group>"; };
 		A971E826B1D07DAAEBB0A89D /* RootTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabView.swift; sourceTree = "<group>"; };
 		AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentShotsStore.swift; sourceTree = "<group>"; };
@@ -400,6 +402,7 @@
 			children = (
 				812A846D25593F35C9FFBB57 /* capture-locales.json */,
 				49AFB2454B8DDBB7664EDB26 /* IPadLayoutTourTests.swift */,
+				A6005C86B868D0C8ED33AC39 /* IPadStoreShotsTests.swift */,
 				94D2855ECF2C12ABB8196456 /* LocalizedStoreScreenshotTests.swift */,
 				70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */,
 				1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */,
@@ -740,6 +743,7 @@
 			files = (
 				5131388A7F721F33A0D8B4DA /* FleetQA.swift in Sources */,
 				8F07F08EDEAA2D44B09497C4 /* IPadLayoutTourTests.swift in Sources */,
+				84E1A301A81F1FA65B573858 /* IPadStoreShotsTests.swift in Sources */,
 				5A03CE2E1014A795C168EA14 /* LocalizedStoreScreenshotTests.swift in Sources */,
 				2C2322F85F15C06535FC5E14 /* OnboardingValidationUITests.swift in Sources */,
 				1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */,
@@ -939,7 +943,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1000,7 +1004,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 74;
+				CURRENT_PROJECT_VERSION = 75;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
