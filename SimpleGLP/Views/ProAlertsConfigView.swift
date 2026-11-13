@@ -75,7 +75,9 @@ struct ProAlertsConfigView: View {
                 Text("All analysis runs on your device.")
             }
         }
+        .readableWidth()
         .navigationTitle("Proactive Alerts")
+        .padInlineTitle()
         .task {
             if isScreenshotMode {
                 prefs.alertsEnabled = true

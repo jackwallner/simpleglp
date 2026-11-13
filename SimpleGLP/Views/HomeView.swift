@@ -15,6 +15,7 @@ struct HomeView: View {
     @State private var showPaywall = false
     /// Non-nil while the "when did you take it?" sheet is up, holding its starting time.
     @State private var logEarlierStart: LogEarlierStart?
+    @State private var viewportHeight: CGFloat = 0
 
     private var recentEvents: [ShotEvent] { Array(events.prefix(3)) }
     private var plan: MedicationPlan? { plans.first }
@@ -84,10 +85,13 @@ struct HomeView: View {
 
                 recentShotsSection
 
-                Spacer(minLength: 32)
+                Color.clear.frame(height: 32)
             }
             .padding(.top, 12)
+            .centeredInScroll(viewportHeight: viewportHeight)
         }
+        .measuredHeight($viewportHeight)
+        .readableWidth()
         .background(AppTheme.bg.ignoresSafeArea())
         .sheet(item: $selectedEvent) { event in
             EditEventSheet(event: event)

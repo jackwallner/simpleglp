@@ -156,8 +156,10 @@ struct SettingsView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .readableWidth()
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("Settings")
+        .padInlineTitle()
         .sheet(isPresented: $showPaywall) {
             SimplePaywallView(paywallImpressionId: "simpleglp_settings_sheet")
                 .environmentObject(store)
@@ -252,6 +254,7 @@ struct PlanEditorView: View {
                 }
             }
         }
+        .readableWidth()
         .navigationTitle("Medication plan")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -463,6 +466,7 @@ struct DoseScheduleView: View {
             }
         }
         .listStyle(.insetGrouped)
+        .readableWidth()
         .navigationTitle("Dose schedule")
         .navigationBarTitleDisplayMode(.inline)
         .alert(
@@ -652,7 +656,9 @@ struct ExportView: View {
                 }
             }
         }
+        .readableWidth()
         .navigationTitle("Export")
+        .padInlineTitle()
     }
 
     private func generate() {
@@ -693,7 +699,9 @@ struct ImportView: View {
                 }
             }
         }
+        .readableWidth()
         .navigationTitle("Import")
+        .padInlineTitle()
         .fileImporter(
             isPresented: $showPicker,
             allowedContentTypes: [.commaSeparatedText, .plainText],

@@ -77,6 +77,8 @@ struct OnboardingView: View {
                         .padding(.bottom, 20)
                 }
             }
+            .frame(maxWidth: 560, maxHeight: UIUserInterfaceIdiom.isPad ? 760 : .infinity)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(AppTheme.bg.ignoresSafeArea())
             .navigationTitle("Simple GLP")
             .navigationBarTitleDisplayMode(.inline)

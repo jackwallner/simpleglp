@@ -52,6 +52,7 @@
 		68D824C248A40FD0BFDEEE27 /* HealthKitService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82E45ECA8A326A07DCE47612 /* HealthKitService.swift */; };
 		6979784B6EDA92FE61041C0F /* RecentShotsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = AADB132C6389F8005BCE3F48 /* RecentShotsStore.swift */; };
 		69CB6A3015D875CDDF875255 /* ReviewPromptTracker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */; };
+		6A1C3CD0936ED921DBBBE6C0 /* ReadableWidth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88AF4E76A761B4171F08785E /* ReadableWidth.swift */; };
 		6CFB200192C027513212F8D8 /* ProFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A729A153DBB53E949B3A9716 /* ProFeatures.swift */; };
 		6F693C5F54297E4117D4F6E1 /* PaywallFunnelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */; };
 		7098FEB1D8E6A35B6C8E569D /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D64E7FA322F1ACC0CD09D5 /* OnboardingView.swift */; };
@@ -62,6 +63,7 @@
 		766BA777284D5C9A638DC548 /* InsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CACE598976ED5713C9175CC /* InsightsView.swift */; };
 		78E2C974D8DF1344D2D12D1B /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
 		797EEEF5E4C611DE7FE5E90C /* AppStoreReviewLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */; };
+		7C81D0C92DD78672DA44D97E /* StateMachineNotificationFixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0343EBA12B4F29DCC47F403 /* StateMachineNotificationFixTests.swift */; };
 		81178CA6C5EDC0503FCFD73E /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DADB560B88F76955016CB54 /* WatchRootView.swift */; };
 		842F394A2FDFF256CE375F97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D7E3863B993311209064780D /* Assets.xcassets */; };
 		8558E6584A671A1F07CA3F24 /* AppAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B45946CD3F5007081C43A4A8 /* AppAppearance.swift */; };
@@ -69,6 +71,7 @@
 		8C167B317D477E68C9420934 /* SimpleGLPWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8C8AA50D01B0CC1E0D06558A /* RootTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A971E826B1D07DAAEBB0A89D /* RootTabView.swift */; };
 		8CA67D29F54C70F50B3E998D /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */; };
+		8F07F08EDEAA2D44B09497C4 /* IPadLayoutTourTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49AFB2454B8DDBB7664EDB26 /* IPadLayoutTourTests.swift */; };
 		9088FB634ABFC6A93658E3FB /* AppStoreReviewLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */; };
 		911A7CEBC2DDC9A040D743E5 /* GLPModelStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8D51AD66946F59E77221EE /* GLPModelStore.swift */; };
 		954FB3BB4C23E8C1259235F9 /* ScheduleEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7DD092817B9665668DDCA6CE /* ScheduleEngine.swift */; };
@@ -89,6 +92,7 @@
 		BCCF302932E3459DF0010239 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = ED5BFC7B9265B4B1C1B621CA /* PrivacyInfo.xcprivacy */; };
 		BE81029BC2092B504AF10457 /* UnfoldedSplit.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1E6B14247FA67AAF69E40CB /* UnfoldedSplit.swift */; };
 		C058743214114ACA323C20E3 /* SimpleGLPWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC46D236C32D7F5BE34CCAF /* SimpleGLPWatchApp.swift */; };
+		C6CBEB670D5C2D442DA30618 /* StateMachineFixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD30955CCD992EF4693FFE30 /* StateMachineFixTests.swift */; };
 		C73AA3A0A5250AD094BF55EA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39AACFDD06D2297830B382BD /* Localizable.xcstrings */; };
 		C7D7B9E869D5595FDAC17DC5 /* OvernightAuditTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */; };
 		C802B9FC2CEE84E3992A473F /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = CEE0352E8E4F8CABC5C00026 /* PrivacyInfo.xcprivacy */; };
@@ -107,6 +111,7 @@
 		E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */; };
 		E658BD595B6DB73ACC16E862 /* SimplePaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */; };
 		E988C35DDB1894A62F8AC125 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39AACFDD06D2297830B382BD /* Localizable.xcstrings */; };
+		EA18B980704DE9152345792F /* WeeklyHomeClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF2B9AA3A0CBA6830E35E9 /* WeeklyHomeClockUITests.swift */; };
 		EA96773E480A686C74C0E88E /* PhoneWatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */; };
 		ED6140C151900191E0F43AF6 /* GLPAppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */; };
 		F0B996BE6BBC4F5C7D93B090 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5AC085A89924894C85B1ED76 /* Assets.xcassets */; };
@@ -196,6 +201,7 @@
 		3E7D005F349F97C0D11B64C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3F8BB739470EC73FEFB25D8D /* LockScreenWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LockScreenWidgetView.swift; sourceTree = "<group>"; };
 		423148D3B21BF730934FCC05 /* ImportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportService.swift; sourceTree = "<group>"; };
+		49AFB2454B8DDBB7664EDB26 /* IPadLayoutTourTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPadLayoutTourTests.swift; sourceTree = "<group>"; };
 		4CBA3CCBA276D61F1B119DA6 /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		544294FDB50D547F2B513D36 /* ReviewPromptTracker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptTracker.swift; sourceTree = "<group>"; };
 		59BCD0B8C21771506297243B /* ProactiveAlertsEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProactiveAlertsEngine.swift; sourceTree = "<group>"; };
@@ -216,6 +222,7 @@
 		812A846D25593F35C9FFBB57 /* capture-locales.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "capture-locales.json"; sourceTree = "<group>"; };
 		82E45ECA8A326A07DCE47612 /* HealthKitService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitService.swift; sourceTree = "<group>"; };
 		8438D44494DD84AA290261A0 /* PaywallFunnelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallFunnelTests.swift; sourceTree = "<group>"; };
+		88AF4E76A761B4171F08785E /* ReadableWidth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReadableWidth.swift; sourceTree = "<group>"; };
 		892E84BB43302B8AABFEC16D /* SimpleGLPTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SimpleGLPTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8ABE3CB50BD1B5D610B89D3A /* AppStoreReviewLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreReviewLinks.swift; sourceTree = "<group>"; };
 		8AD3A5D43F56B63315FC0939 /* SimpleGLPWidget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SimpleGLPWidget.entitlements; sourceTree = "<group>"; };
@@ -240,6 +247,7 @@
 		BDF755224D34BFDDF8989136 /* GLPGlance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPGlance.swift; sourceTree = "<group>"; };
 		BFBD6C4A9CBB53F11D112D8D /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		C1B87891F3FE471993E42C3C /* ExportService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportService.swift; sourceTree = "<group>"; };
+		C5FF2B9AA3A0CBA6830E35E9 /* WeeklyHomeClockUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeeklyHomeClockUITests.swift; sourceTree = "<group>"; };
 		C6B87D4CDBD34D4F2B7DDF19 /* GLPWidgetEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPWidgetEntry.swift; sourceTree = "<group>"; };
 		C74F52B06817B33A427E2044 /* SimpleGLPWatch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleGLPWatch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C782DD95B537949B676A62DA /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
@@ -253,6 +261,7 @@
 		D56C1E8F1528EA58CA8A0394 /* GLPModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPModels.swift; sourceTree = "<group>"; };
 		D7E3863B993311209064780D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DA87CB8A9C39FE4BD2076296 /* OvernightAuditTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OvernightAuditTests.swift; sourceTree = "<group>"; };
+		DD30955CCD992EF4693FFE30 /* StateMachineFixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineFixTests.swift; sourceTree = "<group>"; };
 		DFAF25058269A15633726D47 /* SupplyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyView.swift; sourceTree = "<group>"; };
 		E125328ACA62290EB451989A /* StoreService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreService.swift; sourceTree = "<group>"; };
 		E57C8AE40BD9AF75BBAA64B9 /* RegressionCheckTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegressionCheckTests.swift; sourceTree = "<group>"; };
@@ -261,6 +270,7 @@
 		EDCE2957177D2AB2471F910D /* GLPWaitActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPWaitActivity.swift; sourceTree = "<group>"; };
 		EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneWatchSession.swift; sourceTree = "<group>"; };
 		EDFB777E78C37145BF6AF42B /* UnfoldedSplitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnfoldedSplitTests.swift; sourceTree = "<group>"; };
+		F0343EBA12B4F29DCC47F403 /* StateMachineNotificationFixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StateMachineNotificationFixTests.swift; sourceTree = "<group>"; };
 		F3E965069DAB46F2FADF4DE9 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
 		F6BF0C892ACE252EE509E701 /* ConversionDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionDiagnostics.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -377,6 +387,8 @@
 				E57C8AE40BD9AF75BBAA64B9 /* RegressionCheckTests.swift */,
 				0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */,
 				6FF48BF4E8928DA50A27EB71 /* SimpleGLPTests.swift */,
+				DD30955CCD992EF4693FFE30 /* StateMachineFixTests.swift */,
+				F0343EBA12B4F29DCC47F403 /* StateMachineNotificationFixTests.swift */,
 				72A4F192BECBA0121C729F21 /* StoreQuarantineTests.swift */,
 				EDFB777E78C37145BF6AF42B /* UnfoldedSplitTests.swift */,
 			);
@@ -387,10 +399,12 @@
 			isa = PBXGroup;
 			children = (
 				812A846D25593F35C9FFBB57 /* capture-locales.json */,
+				49AFB2454B8DDBB7664EDB26 /* IPadLayoutTourTests.swift */,
 				94D2855ECF2C12ABB8196456 /* LocalizedStoreScreenshotTests.swift */,
 				70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */,
 				1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */,
 				CD745BE9E731DDC409E61557 /* ReleaseJourneysUITests.swift */,
+				C5FF2B9AA3A0CBA6830E35E9 /* WeeklyHomeClockUITests.swift */,
 				C197C4C662394DB138EE8D3B /* FleetQA */,
 			);
 			path = SimpleGLPUITests;
@@ -427,6 +441,7 @@
 				008BE86A6ABA09E92A2C103B /* AppTheme.swift */,
 				7642962625DDC83DD536C6CA /* PaywallScreenshotMode.swift */,
 				A729A153DBB53E949B3A9716 /* ProFeatures.swift */,
+				88AF4E76A761B4171F08785E /* ReadableWidth.swift */,
 				B1E6B14247FA67AAF69E40CB /* UnfoldedSplit.swift */,
 				D44613F9CBB9492522D11E44 /* WidgetScreenshotHarness.swift */,
 			);
@@ -724,10 +739,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5131388A7F721F33A0D8B4DA /* FleetQA.swift in Sources */,
+				8F07F08EDEAA2D44B09497C4 /* IPadLayoutTourTests.swift in Sources */,
 				5A03CE2E1014A795C168EA14 /* LocalizedStoreScreenshotTests.swift in Sources */,
 				2C2322F85F15C06535FC5E14 /* OnboardingValidationUITests.swift in Sources */,
 				1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */,
 				E14DB60D98B28C9E7C2A7468 /* ReleaseJourneysUITests.swift in Sources */,
+				EA18B980704DE9152345792F /* WeeklyHomeClockUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -789,6 +806,7 @@
 				E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */,
 				6CFB200192C027513212F8D8 /* ProFeatures.swift in Sources */,
 				991F84537D01D0D58C4EC1DB /* ProactiveAlertsEngine.swift in Sources */,
+				6A1C3CD0936ED921DBBBE6C0 /* ReadableWidth.swift in Sources */,
 				4DAD2C329B140D3648C5E827 /* RecentShotsStore.swift in Sources */,
 				22660E0696E3291176C0B1F7 /* ReminderService.swift in Sources */,
 				50B7C83B435EB3DF0A133D8E /* ReviewPromptTracker.swift in Sources */,
@@ -819,6 +837,8 @@
 				08F126EF042A435FC4ECECA1 /* RegressionCheckTests.swift in Sources */,
 				3B765B5194C6C324E8EEBC3F /* ReviewPromptTrackerTests.swift in Sources */,
 				AC7CC04B725CB2A2AAD7A71C /* SimpleGLPTests.swift in Sources */,
+				C6CBEB670D5C2D442DA30618 /* StateMachineFixTests.swift in Sources */,
+				7C81D0C92DD78672DA44D97E /* StateMachineNotificationFixTests.swift in Sources */,
 				B3F413CB28D74B364C7B6F5B /* StoreQuarantineTests.swift in Sources */,
 				99C458AEBA43979AFA33A7BC /* UnfoldedSplitTests.swift in Sources */,
 			);
@@ -919,7 +939,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 73;
+				CURRENT_PROJECT_VERSION = 74;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -934,7 +954,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.2.5;
+				MARKETING_VERSION = 1.2.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -980,7 +1000,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 73;
+				CURRENT_PROJECT_VERSION = 74;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1001,7 +1021,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				GENERATE_INFOPLIST_FILE = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				MARKETING_VERSION = 1.2.5;
+				MARKETING_VERSION = 1.2.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1062,7 +1082,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp;
 				PRODUCT_NAME = SimpleGLP;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -1127,7 +1147,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.jackwallner.glp;
 				PRODUCT_NAME = SimpleGLP;
 				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

@@ -280,7 +280,7 @@ struct TrialOfferSheet: View {
                 .padding(.horizontal, 24)
                 .padding(.top, 8)
                 .padding(.bottom, 28)
-                .frame(maxWidth: .infinity)
+                .centeredColumn(520)
             }
         }
         .onAppear {

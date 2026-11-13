@@ -92,7 +92,7 @@ struct RootTabView: View {
     private var split: UnfoldedSplit? {
         UnfoldedSplit.make(
             width: paneGeometry.width,
-            isRegularWidth: horizontalSizeClass == .regular,
+            isRegularWidth: horizontalSizeClass == .regular && !UIUserInterfaceIdiom.isPad,
             fold: paneGeometry.fold
         )
     }

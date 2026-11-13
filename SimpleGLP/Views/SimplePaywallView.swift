@@ -34,6 +34,7 @@ struct SimplePaywallView: View {
     @State private var isPurchasing = false
     @State private var errorMessage: String?
     @State private var restoreMessage: String?
+    @State private var viewportHeight: CGFloat = 0
     @State private var isRestoring = false
 
     private var benefits: [(icon: String, title: String)] {
@@ -44,8 +45,12 @@ struct SimplePaywallView: View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            if isLargeText {
-                ScrollView(showsIndicators: false) { paywallContent }
+            if scrolls {
+                ScrollView(showsIndicators: false) {
+                    paywallContent.centeredInScroll(viewportHeight: viewportHeight)
+                }
+                .measuredHeight($viewportHeight)
+                .scrollBounceBehavior(.basedOnSize)
             } else {
                 paywallContent
             }
@@ -70,6 +75,9 @@ struct SimplePaywallView: View {
     /// At accessibility sizes nothing fits one screen: scroll, wrap, never truncate.
     private var isLargeText: Bool { dynamicTypeSize.isAccessibilitySize }
 
+    /// iPad shows this in a form sheet or full screen with a height that varies, so it scrolls too.
+    private var scrolls: Bool { isLargeText || UIUserInterfaceIdiom.isPad }
+
     /// Single viewport — personalized hero, benefits, plans, and CTA together.
     private var paywallContent: some View {
         VStack(spacing: 8) {
@@ -82,7 +90,7 @@ struct SimplePaywallView: View {
             } else {
                 planCards
             }
-            Spacer(minLength: 0)
+            if !scrolls { Spacer(minLength: 0) }
             purchaseSection
             if isLargeText { benefitList }
             footerLinks
@@ -90,7 +98,8 @@ struct SimplePaywallView: View {
         .padding(.horizontal, 22)
         .padding(.top, displayCloseButton ? 36 : 16)
         .padding(.bottom, 14)
-        .frame(maxHeight: isLargeText ? nil : .infinity)
+        .frame(maxHeight: scrolls ? nil : .infinity)
+        .centeredColumn()
     }
 
     // MARK: - Personalized hero

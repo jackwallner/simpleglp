@@ -96,6 +96,7 @@ struct SupplyView: View {
                 }
             }
         }
+        .readableWidth()
         .navigationTitle("Supply & refills")
         .navigationBarTitleDisplayMode(.inline)
         .onAppear(perform: load)

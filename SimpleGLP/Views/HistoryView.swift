@@ -55,10 +55,12 @@ struct HistoryView: View {
                     }
                 }
                 .listStyle(.insetGrouped)
+                .readableWidth()
             }
         }
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("History")
+        .padInlineTitle()
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button {

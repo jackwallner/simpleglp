@@ -1,0 +1,108 @@
+{
+  "pt-BR": {
+    "01-know-when-your-next-shot-is-due": "Saiba quando será\na próxima injeção",
+    "02-log-a-shot-in-one-tap": "Veja o histórico\nde injeções",
+    "03-review-a-recorded-shot": "Confira os detalhes\nde cada injeção",
+    "04-see-how-your-timing-holds": "Mantenha o controle\ndos alertas",
+    "05-set-a-schedule-that-fits": "Monte sua agenda\nde injeções",
+    "06-confirm-a-completed-shot": "Confirme a injeção\ncom um toque",
+    "07-tune-proactive-alerts": "Ajuste os alertas\nproativos"
+  },
+  "de-DE": {
+    "01-know-when-your-next-shot-is-due": "Immer wissen, wann die\nnächste Spritze ansteht",
+    "02-log-a-shot-in-one-tap": "Jede erfasste Spritze\nim Verlauf",
+    "03-review-a-recorded-shot": "Details zu jeder\nerfassten Spritze",
+    "04-see-how-your-timing-holds": "Warnungen unter\ndeiner Kontrolle",
+    "05-set-a-schedule-that-fits": "Ein Zeitplan, der\nzu dir passt",
+    "06-confirm-a-completed-shot": "Spritze mit einem\nTipp bestätigen",
+    "07-tune-proactive-alerts": "Proaktive Warnungen\nfein einstellen"
+  },
+  "hu": {
+    "01-know-when-your-next-shot-is-due": "Tudd, mikor esedékes\na következő injekció",
+    "02-log-a-shot-in-one-tap": "Minden rögzített\ninjekció egy helyen",
+    "03-review-a-recorded-shot": "A rögzített injekciók\nrészletei",
+    "04-see-how-your-timing-holds": "A figyelmeztetések\nfeletted állnak",
+    "05-set-a-schedule-that-fits": "Ütemezés, ami\nhozzád igazodik",
+    "06-confirm-a-completed-shot": "Erősítsd meg az\ninjekciót egy érintéssel"
+  },
+  "zh-Hant": {
+    "01-know-when-your-next-shot-is-due": "隨時掌握\n下次注射時間",
+    "02-log-a-shot-in-one-tap": "每次注射紀錄\n一覽無遺",
+    "03-review-a-recorded-shot": "查看每筆\n注射紀錄詳情",
+    "04-see-how-your-timing-holds": "警告提醒\n由你掌控",
+    "05-set-a-schedule-that-fits": "設定符合你\n注射時間表",
+    "06-confirm-a-completed-shot": "一鍵確認\n完成注射",
+    "07-tune-proactive-alerts": "依需求調整\n主動警告"
+  },
+  "tr": {
+    "01-know-when-your-next-shot-is-due": "Sonraki iğnenin\nzamanını öğren",
+    "02-log-a-shot-in-one-tap": "İğne geçmişini\nbir bakışta gör",
+    "03-review-a-recorded-shot": "İğne kayıtlarının\nayrıntılarını incele",
+    "04-see-how-your-timing-holds": "Uyarılarını\nkendin yönet",
+    "05-set-a-schedule-that-fits": "İğne programını\nkendine göre ayarla",
+    "06-confirm-a-completed-shot": "Tek dokunuşla\niğneni kaydet",
+    "07-tune-proactive-alerts": "Proaktif uyarıları\nkendine göre ayarla"
+  },
+  "es-ES": {
+    "01-know-when-your-next-shot-is-due": "Ve cuándo toca\ntu próxima inyección",
+    "02-log-a-shot-in-one-tap": "Revisa cada\ninyección registrada",
+    "03-review-a-recorded-shot": "Los detalles de cada\ninyección registrada",
+    "04-see-how-your-timing-holds": "Tus alertas, bajo\ntu control",
+    "05-set-a-schedule-that-fits": "Un calendario que\nse ajusta a ti",
+    "06-confirm-a-completed-shot": "Confirma tu inyección\ncon un toque",
+    "07-tune-proactive-alerts": "Ajusta las alertas\nproactivas"
+  },
+  "pl": {
+    "01-know-when-your-next-shot-is-due": "Wiedz, kiedy\nnastępny zastrzyk",
+    "02-log-a-shot-in-one-tap": "Przeglądaj każdy\nzapisany zastrzyk",
+    "03-review-a-recorded-shot": "Szczegóły każdego\nzapisanego zastrzyku",
+    "04-see-how-your-timing-holds": "Alerty pod\ntwoją kontrolą",
+    "05-set-a-schedule-that-fits": "Harmonogram\ndopasowany do ciebie",
+    "06-confirm-a-completed-shot": "Potwierdź zastrzyk\njednym dotknięciem",
+    "07-tune-proactive-alerts": "Dostosuj alerty\nproaktywne"
+  },
+  "es-MX": {
+    "01-know-when-your-next-shot-is-due": "Ve cuándo toca\ntu próxima inyección",
+    "02-log-a-shot-in-one-tap": "Revisa cada\ninyección registrada",
+    "03-review-a-recorded-shot": "Los detalles de cada\ninyección registrada",
+    "04-see-how-your-timing-holds": "Tus alertas, bajo\ntu control",
+    "05-set-a-schedule-that-fits": "Un calendario que\nse ajusta a ti",
+    "06-confirm-a-completed-shot": "Confirma tu inyección\ncon un toque",
+    "07-tune-proactive-alerts": "Ajusta las alertas\nproactivas"
+  },
+  "fr-FR": {
+    "01-know-when-your-next-shot-is-due": "Sachez quand a lieu\nla prochaine injection",
+    "02-log-a-shot-in-one-tap": "Retrouvez chaque\ninjection enregistrée",
+    "03-review-a-recorded-shot": "Les détails de chaque\ninjection enregistrée",
+    "04-see-how-your-timing-holds": "Gardez la main\nsur vos alertes",
+    "05-set-a-schedule-that-fits": "Un calendrier\nqui vous convient",
+    "06-confirm-a-completed-shot": "Confirmez l'injection\nd'une simple touche",
+    "07-tune-proactive-alerts": "Réglez les alertes\nproactives"
+  },
+  "ru": {
+    "01-know-when-your-next-shot-is-due": "Знайте, когда\nследующий укол",
+    "02-log-a-shot-in-one-tap": "Все записанные\nуколы в истории",
+    "03-review-a-recorded-shot": "Подробности каждого\nзаписанного укола",
+    "04-see-how-your-timing-holds": "Предупреждения\nпод вашим контролем",
+    "05-set-a-schedule-that-fits": "Расписание,\nкоторое вам подходит",
+    "06-confirm-a-completed-shot": "Подтвердите укол\nодним касанием"
+  },
+  "en-US": {
+    "01-know-when-your-next-shot-is-due": "Know when your\nnext shot is due",
+    "02-log-a-shot-in-one-tap": "Review every\nrecorded shot",
+    "03-review-a-recorded-shot": "Review a recorded\nshot",
+    "04-see-how-your-timing-holds": "Keep alerts in your\ncontrol",
+    "05-set-a-schedule-that-fits": "Set a schedule\nthat fits",
+    "06-confirm-a-completed-shot": "Confirm a\ncompleted shot",
+    "07-tune-proactive-alerts": "Tune proactive\nalerts"
+  },
+  "it": {
+    "01-know-when-your-next-shot-is-due": "Scopri quando è\nla prossima iniezione",
+    "02-log-a-shot-in-one-tap": "Rivedi ogni\niniezione registrata",
+    "03-review-a-recorded-shot": "I dettagli di ogni\niniezione registrata",
+    "04-see-how-your-timing-holds": "Gli avvisi sotto\nil tuo controllo",
+    "05-set-a-schedule-that-fits": "Un programma\nche fa per te",
+    "06-confirm-a-completed-shot": "Conferma l'iniezione\ncon un tocco",
+    "07-tune-proactive-alerts": "Regola gli avvisi\nproattivi"
+  }
+}

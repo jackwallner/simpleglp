@@ -61,7 +61,7 @@ struct UnfoldedLeadingPane<Trailing: View>: ViewModifier {
     let trailing: Trailing
 
     private var split: UnfoldedSplit? {
-        UnfoldedSplit.make(width: geometry.width, isRegularWidth: horizontalSizeClass == .regular, fold: geometry.fold)
+        UnfoldedSplit.make(width: geometry.width, isRegularWidth: horizontalSizeClass == .regular && !UIUserInterfaceIdiom.isPad, fold: geometry.fold)
     }
 
     func body(content: Content) -> some View {

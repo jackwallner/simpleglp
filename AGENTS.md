@@ -95,6 +95,7 @@ ratings, gotchas): the global agent rules + the `ios-dev` skill.
 ## Area rules
 
 - [Android](.claude/rules/android.md): native port, parity contracts, remote emulator, billing, and platform gaps.
+- [iPad layout](.claude/rules/ipad-layout.md): readable width helpers, no Duo split on iPad, sheets, and iPad captures.
 - [iPhone Duo](.claude/rules/iphone-duo.md): One Tap beside History when unfolded, split math, and the capture tour.
 - [Localization](.claude/rules/localization.md): string catalogs, language coverage, translation checks, and screenshot proof.
 - [Screenshots](.claude/rules/screenshots.md): localized App Store frame capture, composition, gating, and storage.

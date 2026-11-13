@@ -84,8 +84,10 @@ struct InsightsView: View {
             }
             .padding(.top, 16)
         }
+        .readableWidth()
         .background(AppTheme.bg.ignoresSafeArea())
         .navigationTitle("Patterns")
+        .padInlineTitle()
         .onAppear {
             NotificationCenter.default.post(name: .glpPatternsDidAppear, object: nil)
         }
