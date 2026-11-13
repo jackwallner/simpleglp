@@ -8,11 +8,14 @@ KIT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ROOT="$(git -C "$KIT" rev-parse --show-toplevel)"
 cd "$ROOT"
 
-declare -A LANGS=(
-  [en-US]="(en) en_US" [pt-BR]="(pt-BR) pt_BR" [de-DE]="(de) de_DE" [hu]="(hu) hu_HU"
-  [zh-Hant]="(zh-Hant) zh_TW" [tr]="(tr) tr_TR" [es-ES]="(es) es_ES" [pl]="(pl) pl_PL"
-  [es-MX]="(es-MX) es_MX" [fr-FR]="(fr) fr_FR" [ru]="(ru) ru_RU" [it]="(it) it_IT"
-)
+lang_of() {
+  case "$1" in
+    en-US) echo "(en) en_US";; pt-BR) echo "(pt-BR) pt_BR";; de-DE) echo "(de) de_DE";; hu) echo "(hu) hu_HU";;
+    zh-Hant) echo "(zh-Hant) zh_TW";; tr) echo "(tr) tr_TR";; es-ES) echo "(es) es_ES";; pl) echo "(pl) pl_PL";;
+    es-MX) echo "(es-MX) es_MX";; fr-FR) echo "(fr) fr_FR";; ru) echo "(ru) ru_RU";; it) echo "(it) it_IT";;
+    *) echo "unknown locale $1" >&2; return 1;;
+  esac
+}
 SCENES=(
   "01-know-when-your-next-shot-is-due|-GLPDuoScreen oneTap"
   "02-log-a-shot-in-one-tap|-GLPDuoScreen history"
@@ -26,14 +29,13 @@ locales=("$@")
 ((${#locales[@]})) || locales=(en-US pt-BR de-DE hu zh-Hant tr es-ES pl es-MX fr-FR ru it)
 
 for locale in "${locales[@]}"; do
-  read -r languages apple_locale <<<"${LANGS[$locale]}"
+  read -r languages apple_locale <<<"$(lang_of "$locale")" || continue
   last=7; [[ "$locale" == hu || "$locale" == ru ]] && last=6
-  declare -a names=() gh_args=()
   names=()
+  id_file="$(mktemp)"
   gh_args=(launch --scheme SimpleGLP --device "iPad Pro 13-inch (M5)" --wait 14 --record-seconds 1
-           --args "-uitesting -GLPScreenshotSeed" --id-file "$(mktemp)")
-  id_file="${gh_args[-1]}"
-  for entry in "${SCENES[@]:0:$last}"; do
+           --args "-uitesting -GLPScreenshotSeed" --id-file "$id_file")
+  for entry in "${SCENES[@]:0:last}"; do
     scene="${entry%%|*}"; args="${entry#*|}"
     [[ -f "$KIT/raw/$locale/ipad/$scene.png" && "${GH_SIM_FORCE:-}" != 1 ]] && continue
     names+=("$scene")
