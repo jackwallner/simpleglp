@@ -6,6 +6,7 @@ import UserNotifications
 @preconcurrency import RevenueCat
 
 struct RootTabView: View {
+    @Environment(\.dynamicTypeSize) private var dynamicTypeSize
     @EnvironmentObject private var store: StoreService
     @Environment(\.scenePhase) private var scenePhase
     @AppStorage(GLPStorageKey.appearance.rawValue, store: GLPAppGroup.userDefaults) private var appearanceRaw = AppAppearance.system.rawValue
@@ -271,18 +272,22 @@ struct RootTabView: View {
         }
     }
 
+    /// Split panes and accessibility text sizes end the screen above the floating bar,
+    /// so tall rows never sit behind its icons.
+    private var barInsetOn: Bool { split != nil || dynamicTypeSize.isAccessibilitySize }
+
     private var tabs: some View {
         TabView(selection: $selectedTab) {
             NavigationStack { HomeView() }
                 .environment(\.horizontalSizeClass, paneSizeClass)
-                .modifier(PaneBarBand(isOn: split != nil, color: AppTheme.bg))
+                .modifier(PaneBarBand(isOn: barInsetOn, color: AppTheme.bg))
                 .tabItem { Label("One Tap", systemImage: isPillPlan ? "pills.fill" : "syringe.fill") }
                 .tag(0)
 
             if split == nil {
                 NavigationStack { HistoryView(shownMonth: $historyMonth) }
                     .environment(\.horizontalSizeClass, paneSizeClass)
-                    .modifier(PaneBarBand(isOn: split != nil, color: AppTheme.bg))
+                    .modifier(PaneBarBand(isOn: barInsetOn, color: AppTheme.bg))
                     .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }
                     .tag(1)
             }
@@ -296,13 +301,13 @@ struct RootTabView: View {
                     }
             }
             .environment(\.horizontalSizeClass, paneSizeClass)
-            .modifier(PaneBarBand(isOn: split != nil, color: patternsPath.isEmpty ? AppTheme.bg : Color(.systemGroupedBackground)))
+            .modifier(PaneBarBand(isOn: barInsetOn, color: patternsPath.isEmpty ? AppTheme.bg : Color(.systemGroupedBackground)))
             .tabItem { Label("Patterns", systemImage: "chart.bar.xaxis") }
             .tag(2)
 
             NavigationStack { SettingsView() }
                 .environment(\.horizontalSizeClass, paneSizeClass)
-                .modifier(PaneBarBand(isOn: split != nil, color: Color(.systemGroupedBackground)))
+                .modifier(PaneBarBand(isOn: barInsetOn, color: Color(.systemGroupedBackground)))
                 .tabItem { Label("Settings", systemImage: "slider.horizontal.3") }
                 .tag(3)
         }
