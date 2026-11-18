@@ -137,12 +137,8 @@ final class ReleaseJourneysUITests: XCTestCase {
         app.buttons.matching(NSPredicate(format: "label IN %@", labels)).firstMatch
     }
 
-    /// A tab, found as a button so it also resolves in the Duo's vertical bar.
     private func tab(_ labels: [String], in app: XCUIApplication) -> XCUIElement {
-        let bar = app.tabBars.firstMatch
-        let scope = bar.exists ? bar : app.otherElements.firstMatch
-        let inBar = scope.buttons.matching(NSPredicate(format: "label IN %@", labels)).firstMatch
-        return inBar.exists ? inBar : button(labels, in: app)
+        QA.tab(app, labels)
     }
 
     /// A tap can miss on the unfolded Duo; a short press on the button's own
