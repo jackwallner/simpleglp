@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="256x256" href="icon_256.png">
+    <link rel="apple-touch-icon" href="icon_256.png">
+    <title>Weight Loss Percentage Calculator</title>
+    <meta name="description" content="Free weight loss percentage calculator. Enter your starting and current weight to see the percent of body weight lost, the amount lost and progress to a goal weight.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://jackwallner.com/ios/simpleglp/weight-loss-percentage-calculator.html">
+    <meta http-equiv="refresh" content="0; url=https://jackwallner.com/ios/simpleglp/weight-loss-percentage-calculator.html">
+    <script>if(location.hostname==="jackwallner.github.io"){var c=document.querySelector('link[rel="canonical"]');if(c&&c.href.indexOf("https://jackwallner.com/")===0)location.replace(c.href)}</script>
+    <meta property="og:title" content="Weight Loss Percentage Calculator">
+    <meta property="og:description" content="Free weight loss percentage calculator. Enter your starting and current weight to see the percent of body weight lost, the amount lost and progress to a goal weight.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://jackwallner.com/ios/simpleglp/weight-loss-percentage-calculator.html">
+    <meta property="og:image" content="https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png">
+    <meta property="og:site_name" content="Jack Wallner">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Weight Loss Percentage Calculator">
+    <meta name="twitter:description" content="Free weight loss percentage calculator. Enter your starting and current weight to see the percent of body weight lost, the amount lost and progress to a goal weight.">
+    <meta name="twitter:image" content="https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png">
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebApplication",
+      "name": "Weight Loss Percentage Calculator",
+      "url": "https://jackwallner.com/ios/simpleglp/weight-loss-percentage-calculator.html",
+      "description": "Free weight loss percentage calculator. Enter your starting and current weight to see the percent of body weight lost, the amount lost and progress to a goal weight.",
+      "applicationCategory": "HealthApplication",
+      "operatingSystem": "Any",
+      "browserRequirements": "Requires JavaScript",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "author": {
+        "@type": "Person",
+        "name": "Jack Wallner",
+        "url": "https://jackwallner.com/"
+      },
+      "datePublished": "2026-11-18",
+      "dateModified": "2026-11-18",
+      "image": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
+      "isPartOf": {
+        "@type": "WebPage",
+        "@id": "https://jackwallner.com/ios/simpleglp/",
+        "name": "Simple GLP: GLP-1 Dose Tracker",
+        "url": "https://jackwallner.com/ios/simpleglp/"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "How do I calculate my weight loss percentage?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Subtract your current weight from your starting weight, divide by your starting weight and multiply by 100. From 240 lb to 220 lb is 20 divided by 240, or 8.3 percent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How many pounds is 5 percent of my body weight?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Multiply your starting weight by 0.05. That is 12 lb at 240 lb, 10 lb at 200 lb and 7.5 lb at 150 lb."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Is the percentage different in kilograms?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. A percentage has no unit, so 100 kg to 90 kg and 220.5 lb to 198.4 lb both come to 10 percent."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Does this page save what I enter?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No. The math runs in your browser. Nothing you enter is sent anywhere or stored, and it is gone when you close the page."
+          }
+        }
+      ]
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Jack Wallner",
+          "item": "https://jackwallner.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "iOS apps",
+          "item": "https://jackwallner.com/ios/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Simple GLP: GLP-1 Dose Tracker",
+          "item": "https://jackwallner.com/ios/simpleglp/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
+          "name": "Weight Loss Percentage Calculator",
+          "item": "https://jackwallner.com/ios/simpleglp/weight-loss-percentage-calculator.html"
+        }
+      ]
+    }
+  ]
+}
+    </script>
+    <style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --bg: #faf8f4; --fg: #1a1a1a; --muted: #6e6e73; --card: #f2eee5; --line: rgba(0,0,0,0.08); --accent: #157a49; --accent-fg: #ffffff; --link: #157a49; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", sans-serif; color: var(--fg); background: var(--bg); -webkit-font-smoothing: antialiased; line-height: 1.7; }
+nav { padding: 16px 0; border-bottom: 1px solid var(--line); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+nav .container { max-width: 980px; display: flex; align-items: center; justify-content: space-between; }
+.nav-brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--fg); }
+.nav-brand img { width: 32px; height: 32px; border-radius: 7px; }
+.nav-brand span { font-size: 15px; font-weight: 600; }
+.nav-link { font-size: 14px; text-decoration: none; background: var(--accent); color: var(--accent-fg); padding: 8px 18px; border-radius: 980px; font-weight: 500; }
+.container { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+article { padding: 56px 0 72px; }
+article h1 { font-size: 36px; font-weight: 700; letter-spacing: -1px; line-height: 1.15; margin-bottom: 12px; }
+.meta { font-size: 14px; color: var(--muted); margin-bottom: 28px; }
+.answer { background: var(--card); border-left: 4px solid var(--accent); border-radius: 8px; padding: 18px 22px; margin-bottom: 32px; }
+.answer p { margin: 0; font-size: 18px; }
+article h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.3px; line-height: 1.3; margin: 40px 0 12px; }
+article h3 { font-size: 18px; font-weight: 600; margin: 24px 0 6px; }
+article p { font-size: 17px; margin-bottom: 18px; }
+article ul, article ol { margin: 0 0 20px 24px; font-size: 17px; }
+article li { margin-bottom: 8px; }
+article a { color: var(--link); }
+.table-wrap { overflow-x: auto; margin: 0 0 24px; }
+table { border-collapse: collapse; width: 100%; font-size: 15px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); font-weight: 600; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+.caption { font-size: 14px; color: var(--muted); margin: -8px 0 24px; }
+.note { font-size: 14px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 16px; margin-top: 40px; }
+.sources li { font-size: 15px; margin-bottom: 6px; }
+.cta-box { background: var(--card); border-radius: 16px; padding: 28px; margin: 40px 0; text-align: center; }
+.cta-box h2 { margin: 0 0 8px; font-size: 20px; }
+.cta-box p { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+.cta-box a.btn { display: inline-block; background: var(--accent); color: var(--accent-fg); font-size: 15px; font-weight: 500; padding: 12px 28px; border-radius: 980px; text-decoration: none; }
+footer { text-align: center; padding: 20px 24px; font-size: 12px; color: var(--muted); border-top: 1px solid var(--line); }
+footer a { display: inline-block; padding: 6px 0; color: var(--muted); text-decoration: none; margin: 0 10px; }
+@media (max-width: 768px) { article h1 { font-size: 28px; } article { padding: 36px 0 56px; } }
+.calc { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 24px; margin: 0 0 32px; }
+.calc .row { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; margin-bottom: 12px; align-items: end; }
+.calc .row.dated { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+.calc .row.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.calc label, .calc .label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; line-height: 1.3; }
+.calc input { width: 100%; min-width: 0; height: 46px; font: inherit; font-size: 17px; padding: 0 12px; border: 1px solid rgba(0,0,0,0.14); border-radius: 10px; background: var(--bg); color: var(--fg); -webkit-appearance: none; appearance: none; }
+.calc input:focus-visible, .calc button:focus-visible, .calc a:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.calc .seg { display: flex; gap: 8px; margin-bottom: 12px; }
+.calc .seg button { flex: 1; height: 40px; font: inherit; font-size: 15px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.14); background: var(--bg); color: var(--fg); cursor: pointer; }
+.calc .seg button[aria-pressed="true"] { background: var(--fg); color: #fff; border-color: var(--fg); }
+.result { margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--line); }
+.result .big { font-size: 40px; font-weight: 700; letter-spacing: -1px; line-height: 1.1; font-variant-numeric: tabular-nums; }
+.result .big small { font-size: 16px; font-weight: 500; color: var(--muted); letter-spacing: 0; margin-left: 6px; }
+.result .sub { font-size: 15px; color: var(--muted); margin: 8px 0 16px; }
+.result tr:last-child td { border-bottom: 0; }
+.result .bar { height: 8px; border-radius: 4px; background: var(--card); overflow: hidden; margin: 0 0 4px; }
+.result .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+.result .add { display: inline-block; margin-top: 16px; background: var(--accent); color: var(--accent-fg); font-size: 15px; font-weight: 500; padding: 11px 24px; border-radius: 980px; text-decoration: none; }
+@media (max-width: 480px) { .calc { padding: 18px; } .result .big { font-size: 32px; } .result .big.date { font-size: 28px; } }
+</style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <a class="nav-brand" href="./" aria-label="Simple GLP">
+                <img src="icon_64.webp" alt="" width="32" height="32">
+                <span>Simple GLP</span>
+            </a>
+            <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weight-loss-percentage-calc&amp;mt=8">Download</a>
+        </div>
+    </nav>
+
+    <article>
+        <div class="container">
+            <h1>Weight Loss Percentage Calculator</h1>
+            <p class="meta">By Jack Wallner. Last updated <time datetime="2026-11-18" data-updated>November 18, 2026</time>.</p>
+
+            <div class="answer">
+                <p>Enter your starting weight and your weight today. The calculator shows the percent of your starting weight you have lost and the amount in pounds or kilograms. Add a goal weight to see how far along you are.</p>
+            </div>
+
+            <form class="calc" id="calc" onsubmit="return false" aria-label="Weight loss percentage calculator">
+                <div class="seg" role="group" aria-label="Unit">
+                    <button type="button" data-unit="lb" aria-pressed="true">Pounds</button>
+                    <button type="button" data-unit="kg" aria-pressed="false">Kilograms</button>
+                </div>
+                <div class="row three">
+                    <div>
+                        <label for="start">Start</label>
+                        <input id="start" type="number" inputmode="decimal" min="0" step="0.1" value="240">
+                    </div>
+                    <div>
+                        <label for="current">Current</label>
+                        <input id="current" type="number" inputmode="decimal" min="0" step="0.1" value="220">
+                    </div>
+                    <div>
+                        <label for="goal">Goal</label>
+                        <input id="goal" type="number" inputmode="decimal" min="0" step="0.1">
+                    </div>
+                </div>
+                <div class="result" aria-live="polite">
+                    <div class="big" id="big"></div>
+                    <p class="sub" id="sub"></p>
+                    <div id="goal-out" hidden>
+                        <div class="bar"><i id="bar"></i></div>
+                        <p class="sub" id="goal-sub"></p>
+                    </div>
+                </div>
+            </form>
+
+            <h2>What is the formula?</h2>
+            <p>Starting weight minus current weight, divided by starting weight, times 100. From 240 lb to 220 lb is 20 lb lost, and 20 divided by 240 is 8.3 percent. The answer is the same in pounds or kilograms, as long as both weights use the same unit.</p>
+
+            <h2>Why use a percentage?</h2>
+            <p>A percentage puts the change in proportion to where you started: 20 lb is 8.3 percent of 240 lb and 13.3 percent of 150 lb. Studies of weight management medicines report results the same way, as percent change from starting weight.</p>
+
+            <h2>How is progress to a goal worked out?</h2>
+            <p>The amount lost so far divided by the total you set out to lose. Starting at 240 lb with a goal of 180 lb is 60 lb in all. At 220 lb you have lost 20 of them, which is 33 percent of the way, with 40 lb to go.</p>
+
+            <h2>How Simple GLP helps</h2>
+            <p><a href="./">Simple GLP</a> logs each GLP-1 dose in one tap and reminds you on shot day. If you allow it, the app reads your weight from Apple Health and shows it next to your doses. It is free on iPhone and Apple Watch, with no account.</p>
+
+            <div class="cta-box">
+                <h2>Keep your doses and weight in one place</h2>
+                <p>Free on iPhone and Apple Watch. Your log stays on your device, no account.</p>
+                <a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weight-loss-percentage-calc&amp;mt=8">Download Simple GLP</a>
+            </div>
+
+            <h2>Frequently asked questions</h2>
+            <h3>How do I calculate my weight loss percentage?</h3>
+            <p>Subtract your current weight from your starting weight, divide by your starting weight and multiply by 100. From 240 lb to 220 lb is 20 divided by 240, or 8.3 percent.</p>
+            <h3>How many pounds is 5 percent of my body weight?</h3>
+            <p>Multiply your starting weight by 0.05. That is 12 lb at 240 lb, 10 lb at 200 lb and 7.5 lb at 150 lb.</p>
+            <h3>Is the percentage different in kilograms?</h3>
+            <p>No. A percentage has no unit, so 100 kg to 90 kg and 220.5 lb to 198.4 lb both come to 10 percent.</p>
+            <h3>Does this page save what I enter?</h3>
+            <p>No. The math runs in your browser. Nothing you enter is sent anywhere or stored, and it is gone when you close the page.</p>
+
+            <p>Related: the <a href="glp-1-shot-calendar.html">GLP-1 shot calendar</a> and <a href="best-glp-1-tracker-app.html">GLP-1 tracker apps compared</a>.</p>
+
+            <p class="note">This page is general information, not medical advice. It does arithmetic only and gives no dosing guidance. Follow the instructions that came with your medicine and talk to your prescriber or pharmacist. Simple GLP is an independent app and is not affiliated with Novo Nordisk or Eli Lilly.</p>
+        </div>
+    </article>
+
+    <footer>
+        <div>&copy; 2026 Jack Wallner</div>
+        <div>
+            <a href="./">Simple GLP</a>
+            <a href="support.html">Support</a>
+            <a href="privacy-policy.html">Privacy</a>
+            <a href="https://jackwallner.com/ios/">More apps by Jack Wallner</a>
+        </div>
+    </footer>
+    <script>
+(function () {
+  var $ = function (id) { return document.getElementById(id); };
+  var start = $("start"), current = $("current"), goal = $("goal");
+  var unit = "lb";
+  var num = function (el) { var v = parseFloat(el.value); return isFinite(v) && v > 0 ? v : 0; };
+  var fmt = function (v) { return (Math.round(v * 10) / 10).toLocaleString("en-US"); };
+  var amount = function (v) { return fmt(v) + " " + unit; };
+
+  function draw() {
+    var s = num(start), c = num(current), g = num(goal);
+    $("goal-out").hidden = true;
+    if (!s || !c) { $("big").textContent = ""; $("sub").textContent = ""; return; }
+    var lost = s - c, pct = lost / s * 100;
+    $("big").innerHTML = fmt(Math.abs(pct)) + "%<small>" + (lost < 0 ? "gained" : "lost") + "</small>";
+    $("sub").textContent = lost === 0 ? "No change from " + amount(s) + "."
+      : amount(Math.abs(lost)) + (lost < 0 ? " up from " : " down from ") + amount(s) + ".";
+    if (!g || g >= s) return;
+    var done = Math.max(0, Math.min(1, lost / (s - g)));
+    $("goal-out").hidden = false;
+    $("bar").style.width = done * 100 + "%";
+    $("goal-sub").textContent = c <= g ? "Goal of " + amount(g) + " reached."
+      : Math.round(done * 100) + "% of the way to " + amount(g) + ", " + amount(c - g) + " to go.";
+  }
+
+  document.querySelectorAll(".seg button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      unit = b.dataset.unit;
+      document.querySelectorAll(".seg button").forEach(function (o) { o.setAttribute("aria-pressed", String(o === b)); });
+      draw();
+    });
+  });
+  [start, current, goal].forEach(function (el) { el.addEventListener("input", draw); });
+  draw();
+})();
+    </script>
+</body>
+</html>
