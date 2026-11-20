@@ -11,6 +11,7 @@ Developer notes and historical audits for this repository. The published site re
 - [state-machines-2026-11-06-fixes.md](audits/state-machines-2026-11-06-fixes.md): fixes for the reviewed claims: 10 fixed, 0 skipped, 3 decisions held for Jack; verify round fixed the S1 daily pill regression and the S10 one-minute lag; full suite 147 passed.
 - [state-machines-2026-11-06-verify.md](audits/state-machines-2026-11-06-verify.md): independent check of those fixes (second round): PASS, all 10 work with no regression, fail-without-fix proved for S1, S8 and S3; full suite 147 passed.
 - [presubmit-review-2026-11-07.md](audits/presubmit-review-2026-11-07.md): pre-submit review of 1.2.5 against live 1.2.4: 0 P0/P1, 2 P2 notification risks left open. Second pass (build 73): 1 P1 fixed (Duo fold rebuilt tab state), 1 new P2 open, 148 unit tests passed.
+- [2026-11-20-bug-ux.html](audits/2026-11-20-bug-ux.html): Bug and UX catalog, 2026-11-20: 15 bugs (1 high, 3 medium, 11 low; 9 confirmed), 15 UX items, October audit items rechecked. Catalog only, nothing fixed.
 
 ## Marketing
 
