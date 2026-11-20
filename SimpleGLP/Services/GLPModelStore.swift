@@ -1,69 +1,95 @@
 import Foundation
+import Observation
 import SwiftData
+import os
 
 enum GLPModelStore {
     static let appGroupID = "group.com.jackwallner.glp"
 
-    static let sharedModelContainer: ModelContainer = {
-        let schema = Schema([ShotEvent.self, MedicationPlan.self, DoseStep.self])
-        let url = storeURL
+    nonisolated(unsafe) static let schema = Schema([ShotEvent.self, MedicationPlan.self, DoseStep.self])
 
-        if let container = makeContainer(schema: schema, url: url) {
-            return container
-        }
+    /// The open store. Read through `GLPStoreState` so a Try Again that
+    /// reaches the real file reaches every screen too.
+    static var sharedModelContainer: ModelContainer { GLPStoreState.shared.container }
 
-        // A failed migration or half-written file can leave the store unopenable.
-        // Shot history exists nowhere else, so move it aside instead of deleting it.
-        quarantineStore(at: url)
+    /// False while the real file cannot be opened. Nothing may be logged into
+    /// the empty stand-in: it would vanish, and the history would look lost.
+    static var isAvailable: Bool { GLPStoreState.shared.status != .unavailable }
 
-        if let container = makeContainer(schema: schema, url: url) {
-            return container
-        }
-
-        let inMemory = ModelConfiguration("SimpleGLP", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
-        do {
-            return try ModelContainer(for: schema, configurations: [inMemory])
-        } catch {
-            fatalError("GLPModelStore could not initialize: \(error)")
-        }
-    }()
-
-    /// Renames the store and its SQLite sidecars to `<name>.corrupt-<uuid>` so a
-    /// fresh store can open at `url`. Returns the quarantined copies.
-    @discardableResult
-    static func quarantineStore(at url: URL, fileManager: FileManager = .default) -> [URL] {
-        let suffix = ".corrupt-\(UUID().uuidString)"
-        let candidates = [
-            url,
-            URL(fileURLWithPath: url.path + "-wal"),
-            URL(fileURLWithPath: url.path + "-shm"),
-            url.appendingPathExtension("wal"),
-            url.appendingPathExtension("shm")
-        ]
-        var moved: [URL] = []
-        for file in candidates where fileManager.fileExists(atPath: file.path) {
-            let destination = URL(fileURLWithPath: file.path + suffix)
-            if (try? fileManager.moveItem(at: file, to: destination)) != nil {
-                moved.append(destination)
-            }
-        }
-        return moved
+    /// Opens the store. Shot history exists nowhere else, so a failed open
+    /// never trades it for an empty file.
+    static func openStore(countsAsLaunch: Bool = true) -> (container: ModelContainer, status: LocalStoreStatus) {
+        storeOpener(url: storeURL).run(countsAsLaunch: countsAsLaunch)
     }
 
-    private static func makeContainer(schema: Schema, url: URL) -> ModelContainer? {
-        let config = ModelConfiguration(
-            "SimpleGLP",
-            schema: schema,
+    static func storeOpener(url: URL, defaults: UserDefaults = .standard) -> LocalStoreOpener {
+        LocalStoreOpener(
             url: url,
-            cloudKitDatabase: .none
+            open: { try makeContainer(url: $0) },
+            hasUserData: hasUserData(in:),
+            makeStandIn: {
+                let inMemory = ModelConfiguration("SimpleGLP", schema: schema, isStoredInMemoryOnly: true, cloudKitDatabase: .none)
+                return try ModelContainer(for: schema, configurations: [inMemory])
+            },
+            protectedDataAvailable: { GLPStoreState.protectedDataAvailable() },
+            defaults: defaults,
+            failureCountKey: "storeOpenFailedLaunches",
+            logger: Logger(subsystem: "com.jackwallner.glp", category: "GLPModelStore")
         )
-        return try? ModelContainer(for: schema, configurations: [config])
     }
 
-    private static var storeURL: URL {
+    static func makeContainer(url: URL) throws -> ModelContainer {
+        let config = ModelConfiguration("SimpleGLP", schema: schema, url: url, cloudKitDatabase: .none)
+        return try ModelContainer(for: schema, configurations: [config])
+    }
+
+    static func hasUserData(in container: ModelContainer) -> Bool {
+        let context = ModelContext(container)
+        let shots = (try? context.fetchCount(FetchDescriptor<ShotEvent>())) ?? 0
+        let plans = (try? context.fetchCount(FetchDescriptor<MedicationPlan>())) ?? 0
+        return shots + plans > 0
+    }
+
+    static var storeURL: URL {
         let base = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupID)
             ?? FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first
             ?? FileManager.default.temporaryDirectory
         return base.appendingPathComponent("SimpleGLP.store")
+    }
+}
+
+/// The store every screen reads, and what happened when it was opened. While
+/// the real file cannot be opened, `status` is `.unavailable` and the app
+/// shows `StoreUnavailableView` instead of the empty stand-in.
+@Observable
+final class GLPStoreState: @unchecked Sendable {
+    static let shared = GLPStoreState()
+
+    /// Whether the device is unlocked. The app sets this before the store is
+    /// first opened; extensions keep the default, so they never count a launch.
+    nonisolated(unsafe) static var protectedDataAvailable: () -> Bool = { false }
+
+    private(set) var container: ModelContainer
+    private(set) var status: LocalStoreStatus
+    /// Set when a launch set the file aside or put a copy back; shown once.
+    var notice: LocalStoreStatus?
+
+    private init() {
+        let result = GLPModelStore.openStore()
+        container = result.container
+        status = result.status
+        if result.status == .movedAside || result.status == .recovered { notice = result.status }
+    }
+
+    /// Tries the real file again. Returns true once it is open.
+    @discardableResult
+    func retry() -> Bool {
+        guard status == .unavailable else { return true }
+        let result = GLPModelStore.openStore(countsAsLaunch: false)
+        guard result.status != .unavailable else { return false }
+        container = result.container
+        status = result.status
+        if result.status == .movedAside || result.status == .recovered { notice = result.status }
+        return true
     }
 }

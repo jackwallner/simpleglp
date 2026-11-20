@@ -12,6 +12,9 @@ struct LogDoseIntent: AppIntent, LiveActivityIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        guard GLPModelStore.isAvailable else {
+            return .result(dialog: "Simple GLP can't open your dose history right now. Open the app to try again.")
+        }
         let context = GLPModelStore.sharedModelContainer.mainContext
         guard GLPOnboardingStore.hasCompletedOnboarding, let plan = PlanStore.currentPlan(in: context) else {
             return .result(dialog: "Open Simple GLP to set up your medication first.")
@@ -40,6 +43,9 @@ struct DoseStatusIntent: AppIntent {
 
     @MainActor
     func perform() async throws -> some IntentResult & ProvidesDialog {
+        guard GLPModelStore.isAvailable else {
+            return .result(dialog: "Simple GLP can't open your dose history right now. Open the app to try again.")
+        }
         let context = GLPModelStore.sharedModelContainer.mainContext
         guard let plan = PlanStore.currentPlan(in: context), GLPOnboardingStore.hasCompletedOnboarding else {
             return .result(dialog: "Open Simple GLP to set up your medication first.")

@@ -98,6 +98,7 @@ targets:
       - path: SharedGLP
       - path: SimpleGLP/Models/GLPModels.swift
       - path: SimpleGLP/Services/GLPModelStore.swift
+      - path: SimpleGLP/Services/LocalStoreOpener.swift
       - path: SimpleGLP/Services/ScheduleEngine.swift
       - path: SimpleGLP/Utilities/AppTheme.swift
     settings:

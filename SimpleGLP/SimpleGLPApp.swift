@@ -1,5 +1,6 @@
 import SwiftData
 import SwiftUI
+import UIKit
 import UserNotifications
 
 @main
@@ -9,6 +10,9 @@ struct SimpleGLPApp: App {
     @StateObject private var storeService = StoreService.shared
 
     init() {
+        // Before anything opens the store: a failed open only counts toward
+        // setting the file aside while the phone is unlocked.
+        GLPStoreState.protectedDataAvailable = { UIApplication.shared.isProtectedDataAvailable }
         StoreService.shared.start()
         #if DEBUG
         if ProcessInfo.processInfo.arguments.contains("-GLPScreenshotPro") {
@@ -70,12 +74,12 @@ struct SimpleGLPApp: App {
                     .environmentObject(shotCoordinator)
                     .environmentObject(storeService)
             } else {
-                SimpleGLPRootContent()
+                GLPStoreGate()
                     .environmentObject(shotCoordinator)
                     .environmentObject(storeService)
             }
             #else
-            SimpleGLPRootContent()
+            GLPStoreGate()
                 .environmentObject(shotCoordinator)
                 .environmentObject(storeService)
             #endif
@@ -91,12 +95,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil
     ) -> Bool {
+        GLPStoreState.protectedDataAvailable = { UIApplication.shared.isProtectedDataAvailable }
         UNUserNotificationCenter.current().delegate = self
         ReminderService.registerCategories()
         DiagnosticsService.shared.start()
         let fallbackCoordinator = backgroundShotCoordinator
         PhoneWatchSession.shared.start()
         PhoneWatchSession.shared.onWatchRequestedCapture = { date, eventID in
+            guard GLPModelStore.isAvailable else { return }
             let context = ModelContext(GLPModelStore.sharedModelContainer)
             DoseRoutineService.captureWatchLog(at: date, eventID: eventID, coordinator: fallbackCoordinator, in: context)
         }
@@ -127,6 +133,9 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
         Task { @MainActor in
             switch action {
             case ReminderService.tookItAction:
+                // A dose written to the stand-in would vanish; the reminder
+                // stays so the dose can be logged once the store opens.
+                guard GLPModelStore.isAvailable else { break }
                 let context = GLPModelStore.sharedModelContainer.mainContext
                 // A stale reminder for a dose already logged elsewhere must not double it.
                 if DoseRoutineService.alreadyLogged(at: tappedAt, in: context) == nil {
@@ -148,6 +157,76 @@ private struct UncheckedCompletion: @unchecked Sendable {
     let handler: () -> Void
     init(_ handler: @escaping () -> Void) { self.handler = handler }
     func call() { handler() }
+}
+
+/// Shows the app only on the real store. While the saved history cannot be
+/// opened, the empty stand-in would read as lost doses, so this screen says
+/// the data is safe and keeps trying.
+private struct GLPStoreGate: View {
+    @State private var state = GLPStoreState.shared
+
+    var body: some View {
+        Group {
+            if state.status == .unavailable {
+                StoreUnavailableView { reopen() }
+            } else {
+                SimpleGLPRootContent()
+                    .modelContainer(state.container)
+            }
+        }
+        .alert(
+            state.notice == .recovered ? String(localized: "Your history is back") : String(localized: "Your history couldn't be read"),
+            isPresented: Binding(
+                get: { state.notice != nil },
+                set: { if !$0 { state.notice = nil } }
+            )
+        ) {
+            Button("OK", role: .cancel) { state.notice = nil }
+        } message: {
+            Text(state.notice == .recovered
+                ? String(localized: "Simple GLP found your earlier doses on this iPhone and restored them.")
+                : String(localized: "Simple GLP kept a copy of the unreadable file on this iPhone and started fresh. Send feedback from Settings and we'll help recover it."))
+        }
+        .onReceive(NotificationCenter.default.publisher(for: UIApplication.protectedDataDidBecomeAvailableNotification)) { _ in
+            reopen()
+        }
+    }
+
+    private func reopen() {
+        guard state.status == .unavailable else { return }
+        state.retry()
+    }
+}
+
+private struct StoreUnavailableView: View {
+    let onRetry: () -> Void
+
+    var body: some View {
+        VStack(spacing: 16) {
+            Spacer()
+            Image(systemName: "lock.shield")
+                .font(.system(size: 44))
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+            Text("Your doses are safe")
+                .font(.title2.bold())
+            Text("Simple GLP couldn't open your saved history right now. Nothing was deleted.")
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+            Spacer()
+            Button(action: onRetry) {
+                Text("Try Again")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, minHeight: 50)
+            }
+            .buttonStyle(.borderedProminent)
+            Text("If this keeps happening, free up storage and restart your iPhone.")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(24)
+    }
 }
 
 private struct SimpleGLPRootContent: View {
