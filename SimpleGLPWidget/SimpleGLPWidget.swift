@@ -72,7 +72,7 @@ struct SimpleGLPWidgetEntryView: View {
         if let end = entry.waitEndsAt {
             waitBody(end: end)
                 .containerBackground(AppTheme.bg, for: .widget)
-        } else if entry.pillDoneToday {
+        } else if entry.doneToday {
             doneBody
                 .containerBackground(AppTheme.bg, for: .widget)
         } else {
@@ -147,7 +147,7 @@ struct SimpleGLPWidgetEntryView: View {
         if let end = entry.waitEndsAt {
             waitBody(end: end)
                 .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-        } else if entry.pillDoneToday {
+        } else if entry.doneToday {
             doneBody
                 .background(AppTheme.surface, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
         } else {

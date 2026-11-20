@@ -10,6 +10,8 @@ struct SimpleGLPWidgetEntry: TimelineEntry {
     var glance = GLPGlance()
 
     var waitEndsAt: Date? { glance.waitEndsAt(now: date) }
-    var pillDoneToday: Bool { glance.isPill && glance.takenToday(now: date) }
+    /// A dose already logged today, pill or shot. The log button stays hidden
+    /// so a second tap can't write a second dose.
+    var doneToday: Bool { glance.takenToday(now: date) }
 }
 #endif

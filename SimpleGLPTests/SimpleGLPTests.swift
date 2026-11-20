@@ -340,6 +340,22 @@ final class SimpleGLPTests: XCTestCase {
         XCTAssertEqual(occurrence, cal.date(from: DateComponents(year: 2026, month: 6, day: 13, hour: 9))!)
     }
 
+    /// Setting up at 2 PM on shot day with the default 9 AM first dose: that
+    /// dose has not been taken, so it is owed, not next week's.
+    @MainActor
+    func testSettingUpOnShotDayAfterThePlannedTimeLeavesTodaysDoseOwed() {
+        let cal = Calendar.current
+        let start = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 9))!
+        let setup = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 14))!
+        let now = cal.date(from: DateComponents(year: 2026, month: 6, day: 9, hour: 14, minute: 5))!
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0)
+        plan.createdAt = setup
+
+        let occurrence = ProactiveAlertsEngine.nextUnclaimedOccurrence(now: now, plan: plan, events: [], calendar: cal)
+
+        XCTAssertEqual(occurrence, start)
+    }
+
     @MainActor
     func testNextUnclaimedOccurrenceMovesForwardWhenCurrentDoseIsClaimed() {
         let cal = Calendar.current

@@ -197,9 +197,11 @@ enum ScheduleEngine {
         if let overdue = ScheduleEngine.scheduledDate(onOrBefore: now, plan: plan, calendar: calendar),
            let first = ScheduleEngine.firstScheduledDate(plan: plan, calendar: calendar),
            overdue >= first,
-           // A dose due before the plan was set up was not missed: someone already
-           // mid-regimen enters their last dose as the first one.
-           !(overdue < plan.createdAt && plan.createdAt <= now),
+           // A dose due on a day before the plan was set up was not missed: someone
+           // already mid-regimen enters their last dose as the first one. A dose due
+           // earlier on the setup day itself is still owed (setup defaults to today
+           // 9:00 AM, and a 2 PM setup has not taken it yet).
+           !(calendar.startOfDay(for: overdue) < calendar.startOfDay(for: plan.createdAt) && plan.createdAt <= now),
            !isOccurrenceClaimed(overdue, by: events, cadenceDays: plan.cadenceDays, calendar: calendar),
            // A dose logged since then (say today's pill, taken early after a missed day)
            // means the user has moved on; nudging about the missed one would fire right

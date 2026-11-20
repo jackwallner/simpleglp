@@ -9,6 +9,8 @@ final class WatchConnectivityController: NSObject, ObservableObject {
     @Published var glance = GLPGlanceStore.load()
     /// A dose logged here that the phone may not have seen yet.
     private var pendingLocalDoseAt: Date?
+    /// Every dose logged here until the phone lists it, sent or not.
+    private var outbox = WatchShotOutbox.load()
 
     private let session = WCSession.default
     private var confirmationTask: Task<Void, Never>?
@@ -40,21 +42,28 @@ final class WatchConnectivityController: NSObject, ObservableObject {
         pendingLocalDoseAt = now
         GLPGlanceStore.save(glance)
 
-        let payload: [String: Any] = [
-            "type": "logShot",
-            "timestamp": now.timeIntervalSince1970,
-            "id": optimistic.id.uuidString
-        ]
+        outbox.add(id: optimistic.id, timestamp: now)
+        outbox.save()
         guard session.activationState == .activated else {
+            // Held in the outbox and sent the moment the session activates.
             statusMessage = String(localized: "Saved on Watch. Open iPhone to sync.")
             return
         }
-        // transferUserInfo queues and delivers in the background even when the phone
-        // isn't reachable right now, so a shot logged offline still reaches the iPhone.
-        session.transferUserInfo(payload)
+        flushOutbox()
         statusMessage = session.isReachable
             ? String(localized: "Sent to iPhone.")
             : String(localized: "Saved. It will sync to iPhone.")
+    }
+
+    /// transferUserInfo queues and delivers in the background even when the phone
+    /// isn't reachable right now, so a shot logged offline still reaches the iPhone.
+    fileprivate func flushOutbox() {
+        guard session.activationState == .activated else { return }
+        for entry in outbox.unsent {
+            session.transferUserInfo(WatchShotOutbox.payload(for: entry))
+            outbox.markSent(entry.id)
+        }
+        outbox.save()
     }
 
     private func triggerConfirmation() {
@@ -73,7 +82,10 @@ final class WatchConnectivityController: NSObject, ObservableObject {
     /// nil leaves the list alone; an empty list from the phone clears it.
     fileprivate func applyShots(_ decoded: [RecentShot]?) {
         guard let decoded else { return }
-        recentShots = RecentShotsStore.replaceAll(decoded)
+        // The phone's list wins, except for doses logged here it hasn't seen yet.
+        let merged = outbox.merge(phone: decoded)
+        outbox.save()
+        recentShots = RecentShotsStore.replaceAll(merged)
     }
 
     fileprivate func applyGlance(_ decoded: GLPGlance?) {
@@ -107,6 +119,7 @@ extension WatchConnectivityController: WCSessionDelegate {
         let shots = Self.decodeShots(from: session.receivedApplicationContext)
         let glance = GLPGlanceStore.decode(session.receivedApplicationContext["glance"] as? Data)
         Task { @MainActor in
+            self.flushOutbox()
             self.applyShots(shots)
             self.applyGlance(glance)
         }

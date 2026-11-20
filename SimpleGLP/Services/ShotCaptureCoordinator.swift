@@ -24,6 +24,13 @@ final class ShotCaptureCoordinator: ObservableObject {
             return true
         }
 
+        // A second widget tap for a dose already logged is a repeat, not a dose.
+        if DoseRoutineService.alreadyLogged(at: pending.timestamp, in: context) != nil {
+            GLPAppGroup.acknowledgeWidgetShot(id: pending.id)
+            rebuildRecentShots(in: context)
+            return false
+        }
+
         let captured = captureShot(in: context, tapDate: pending.timestamp, eventID: pending.id)
         if captured {
             GLPAppGroup.acknowledgeWidgetShot(id: pending.id)

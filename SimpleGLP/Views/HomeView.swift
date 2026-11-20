@@ -9,6 +9,7 @@ struct HomeView: View {
     @Query(sort: \ShotEvent.timestamp, order: .reverse) private var events: [ShotEvent]
     @Query(sort: \MedicationPlan.updatedAt, order: .reverse) private var plans: [MedicationPlan]
     @AppStorage(GLPStorageKey.promptForDetails.rawValue, store: GLPAppGroup.userDefaults) private var promptForDetails = false
+    @State private var alreadyLoggedAt: Date?
     @State private var showConfirmation = false
     @State private var confirmationTask: Task<Void, Never>?
     @State private var selectedEvent: ShotEvent?
@@ -47,6 +48,16 @@ struct HomeView: View {
                 } else {
                     nextShotSection
                     shotButton
+                        .alert(
+                            alreadyLoggedAt.map { String(localized: "Already logged at \($0.formatted(date: .omitted, time: .shortened))") } ?? "",
+                            isPresented: Binding(get: { alreadyLoggedAt != nil }, set: { if !$0 { alreadyLoggedAt = nil } })
+                        ) {
+                            Button("Log Another") {
+                                alreadyLoggedAt = nil
+                                logDose(at: nil)
+                            }
+                            Button("Cancel", role: .cancel) { alreadyLoggedAt = nil }
+                        }
                     Button { logEarlierStart = LogEarlierStart(date: .now) } label: {
                         Text("Took it earlier?")
                             .frame(minHeight: 44)
@@ -123,6 +134,12 @@ struct HomeView: View {
     }
 
     private func logDose() {
+        // The big button stays tappable after a log; a second tap must ask
+        // before it writes a second dose.
+        if let existing = DoseRoutineService.alreadyLogged(in: modelContext) {
+            alreadyLoggedAt = existing
+            return
+        }
         logDose(at: nil)
     }
 
