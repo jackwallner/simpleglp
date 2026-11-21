@@ -80,12 +80,16 @@ final class BugCatalogFixTests: XCTestCase {
 /// Regressions for the 2026-11-20 bug catalog's low items.
 @MainActor
 final class LowBugFixTests: XCTestCase {
+    /// The container must outlive its context, so the test keeps it.
+    private var container: ModelContainer?
+
     private func memoryContext() throws -> ModelContext {
-        let container = try ModelContainer(
+        let made = try ModelContainer(
             for: GLPModelStore.schema,
             configurations: ModelConfiguration(isStoredInMemoryOnly: true)
         )
-        return container.mainContext
+        container = made
+        return made.mainContext
     }
 
     // MARK: - B5 a past dose the app could not save is reported, not dropped
@@ -99,7 +103,7 @@ final class LowBugFixTests: XCTestCase {
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<ShotEvent>()), 0)
     }
 
-    func testB5_BackdatedLogThatSavesReportsNoFailure() throws {
+    func testB5_BackdatedLogThatSavesReportsNoFailure() async throws {
         let context = try memoryContext()
         let coordinator = ShotCaptureCoordinator()
         let healthKey = GLPStorageKey.healthContextEnabled.rawValue
@@ -108,6 +112,7 @@ final class LowBugFixTests: XCTestCase {
         addTeardownBlock { GLPAppGroup.userDefaults.set(previous, forKey: healthKey) }
         XCTAssertNil(coordinator.captureBackdatedShot(in: context, at: Date().addingTimeInterval(-3600)))
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<ShotEvent>()), 1)
+        for _ in 0..<50 where coordinator.isCapturing { try await Task.sleep(nanoseconds: 100_000_000) }
     }
 
     // MARK: - B6 empty Health reads stay absent
@@ -307,9 +312,12 @@ final class LowBugPerformanceTests: XCTestCase {
 /// B12: a Watch log made while the phone is locked.
 @MainActor
 final class LowBugWatchLogTests: XCTestCase {
-    func testB12_WatchLogWhileTheAppIsNotActiveKeepsItsHealthContextPending() throws {
-        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
-        let context = container.mainContext
+    private var container: ModelContainer?
+
+    func testB12_WatchLogWhileTheAppIsNotActiveKeepsItsHealthContextPending() async throws {
+        let made = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        container = made
+        let context = made.mainContext
         let coordinator = ShotCaptureCoordinator()
         DoseRoutineService.captureWatchLog(at: Date().addingTimeInterval(-30), eventID: UUID(), coordinator: coordinator, in: context, appIsActive: false)
 
@@ -319,17 +327,21 @@ final class LowBugWatchLogTests: XCTestCase {
         XCTAssertEqual(events.first?.healthStatus, .pending, "left pending so the next foreground pass fills it in")
         let pending = try context.fetch(ShotCaptureCoordinator.pendingCaptureFetchDescriptor())
         XCTAssertEqual(pending.count, 1, "enrichPendingCapturesIfNeeded finds it")
+        // The deferred log's reminder pass runs in a task; let it finish before the store goes.
+        try await Task.sleep(nanoseconds: 1_500_000_000)
     }
 
-    func testB12_ControlWatchLogWithTheAppInFrontReadsHealthAtOnce() throws {
+    func testB12_ControlWatchLogWithTheAppInFrontReadsHealthAtOnce() async throws {
         let healthKey = GLPStorageKey.healthContextEnabled.rawValue
         let previous = GLPAppGroup.userDefaults.object(forKey: healthKey)
         GLPAppGroup.userDefaults.set(false, forKey: healthKey)
         addTeardownBlock { GLPAppGroup.userDefaults.set(previous, forKey: healthKey) }
-        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let made = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        container = made
         let coordinator = ShotCaptureCoordinator()
-        DoseRoutineService.captureWatchLog(at: Date().addingTimeInterval(-30), eventID: UUID(), coordinator: coordinator, in: container.mainContext, appIsActive: true)
+        DoseRoutineService.captureWatchLog(at: Date().addingTimeInterval(-30), eventID: UUID(), coordinator: coordinator, in: made.mainContext, appIsActive: true)
         XCTAssertTrue(coordinator.isCapturing)
+        for _ in 0..<50 where coordinator.isCapturing { try await Task.sleep(nanoseconds: 100_000_000) }
     }
 }
 
