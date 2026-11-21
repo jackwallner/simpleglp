@@ -19,7 +19,8 @@ and the Watch app are untouched), all four orientations
   background and its indicators still span the window. Never frame a List or
   Form to a width: the grouped background would stop at the frame.
 - **Fixed screens** (onboarding, paywall) use `.centeredColumn()` (560 pt). The
-  paywall scrolls on iPad (`scrolls`) because its sheet height varies.
+  paywall always sits in a ScrollView that bounces only when the content is taller
+  than the sheet (iPad sheet heights vary, a small phone or large text overflows).
 - **No Duo split on iPad.** `UnfoldedSplit` and `unfoldedLeadingPane` are for the
   unfolded iPhone Duo; call sites pass `!UIUserInterfaceIdiom.isPad`, otherwise a
   wide iPad window would split into two phone panes.

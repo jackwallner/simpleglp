@@ -45,15 +45,14 @@ struct SimplePaywallView: View {
         ZStack {
             AppTheme.bg.ignoresSafeArea()
 
-            if scrolls {
-                ScrollView(showsIndicators: false) {
-                    paywallContent.centeredInScroll(viewportHeight: viewportHeight)
-                }
-                .measuredHeight($viewportHeight)
-                .scrollBounceBehavior(.basedOnSize)
-            } else {
-                paywallContent
+            // Always scrollable: a small phone or a large text size can make the content taller
+            // than the sheet, and then the buy button and footer links must stay reachable. When
+            // it fits, it fills the sheet and does not bounce.
+            ScrollView(showsIndicators: false) {
+                paywallContent.frame(minHeight: viewportHeight, alignment: .center)
             }
+            .measuredHeight($viewportHeight)
+            .scrollBounceBehavior(.basedOnSize)
 
             if displayCloseButton {
                 closeButton
@@ -75,8 +74,9 @@ struct SimplePaywallView: View {
     /// At accessibility sizes nothing fits one screen: scroll, wrap, never truncate.
     private var isLargeText: Bool { dynamicTypeSize.isAccessibilitySize }
 
-    /// iPad shows this in a form sheet or full screen with a height that varies, so it scrolls too.
-    private var scrolls: Bool { isLargeText || UIUserInterfaceIdiom.isPad }
+    /// On a phone at ordinary text sizes the buy button and links sit at the bottom of the
+    /// sheet. At accessibility sizes and on iPad the content keeps its natural height.
+    private var pinsToBottom: Bool { !isLargeText && !UIUserInterfaceIdiom.isPad }
 
     /// Single viewport — personalized hero, benefits, plans, and CTA together.
     private var paywallContent: some View {
@@ -90,7 +90,7 @@ struct SimplePaywallView: View {
             } else {
                 planCards
             }
-            if !scrolls { Spacer(minLength: 0) }
+            if pinsToBottom { Spacer(minLength: 0) }
             purchaseSection
             if isLargeText { benefitList }
             footerLinks
@@ -98,7 +98,6 @@ struct SimplePaywallView: View {
         .padding(.horizontal, 22)
         .padding(.top, displayCloseButton ? 36 : 16)
         .padding(.bottom, 14)
-        .frame(maxHeight: scrolls ? nil : .infinity)
         .centeredColumn()
     }
 
