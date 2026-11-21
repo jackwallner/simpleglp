@@ -260,6 +260,7 @@ private struct SimpleGLPRootContent: View {
         }
         .onChange(of: scenePhase) { _, phase in
             if phase == .active {
+                Task { await store.resolveEntitlementsIfNeeded() }
                 shotCoordinator.ingestPendingWidgetShot(in: modelContext)
                 shotCoordinator.enrichPendingCapturesIfNeeded(in: modelContext)
                 DoseRoutineService.refresh(in: modelContext, mayPrompt: false)

@@ -1,4 +1,5 @@
 import HealthKit
+import RevenueCat
 import SwiftData
 import XCTest
 @testable import SimpleGLP
@@ -132,6 +133,42 @@ final class LowBugFixTests: XCTestCase {
         let samples = [sample(.asleepCore, hours: 4), sample(.asleepREM, hours: 2), sample(.inBed, hours: 9)]
         XCTAssertEqual(try XCTUnwrap(HealthKitService.sleepHours(from: samples)), 6, accuracy: 0.001)
         XCTAssertEqual(HealthKitService.workoutCount(from: samples), 3, "any returned sample counts")
+    }
+}
+
+/// B8 and B9: store state that has no connection or an Ask to Buy approver in the way.
+@MainActor
+final class LowBugStoreTests: XCTestCase {
+    private func package() -> Package {
+        let product = TestStoreProduct(
+            localizedTitle: "Yearly", price: 29.99, currencyCode: "USD", localizedPriceString: "$29.99",
+            productIdentifier: GLPProProduct.yearly, productType: .autoRenewableSubscription,
+            localizedDescription: "Yearly Pro", subscriptionPeriod: .init(value: 1, unit: .year),
+            introductoryDiscount: nil, locale: Locale(identifier: "en_US")
+        ).toStoreProduct()
+        return Package(identifier: "$rc_annual", packageType: .annual, storeProduct: product,
+                       offeringIdentifier: "test", webCheckoutUrl: nil)
+    }
+
+    func testB8_ActiveAgainRetriesEntitlementsThatNeverResolved() async {
+        let store = StoreService(defaults: UserDefaults(suiteName: UUID().uuidString)!)
+        XCTAssertFalse(store.hasResolvedEntitlements, "precondition: a launch with no connection")
+        await store.resolveEntitlementsIfNeeded()
+        XCTAssertTrue(store.hasResolvedEntitlements, "the retry never ran, so the session stays unresolved")
+    }
+
+    func testB9_AskToBuyIsPendingNotAFailure() {
+        XCTAssertTrue(StoreService.isPaymentDeferred(ErrorCode.paymentPendingError))
+        XCTAssertFalse(StoreService.isPaymentDeferred(ErrorCode.purchaseCancelledError))
+        XCTAssertFalse(StoreService.isPaymentDeferred(ErrorCode.networkError))
+        XCTAssertFalse(StoreService.isPaymentDeferred(StoreServiceError.unresolvedIntroEligibility))
+
+        let defaults = UserDefaults(suiteName: UUID().uuidString)!
+        let store = StoreService(defaults: defaults)
+        XCTAssertFalse(store.isPurchasePending)
+        store.recordPendingPurchase(package())
+        XCTAssertTrue(store.isPurchasePending, "the Refresh status / Continue free state needs the pending flag")
+        XCTAssertTrue(StoreService(defaults: defaults).isPurchasePending, "and it survives a relaunch")
     }
 }
 

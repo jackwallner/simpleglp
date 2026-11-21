@@ -282,6 +282,7 @@ final class StoreService: NSObject, ObservableObject {
 
     private let logger = Logger(subsystem: "com.jackwallner.glp", category: "Store")
     private var isConfigured = false
+    private var isResolvingEntitlements = false
     private var paywallImpressionsThisSession: Set<String> = []
 
     private static let pendingPurchaseKey = "glp.pendingPurchase"
@@ -528,9 +529,18 @@ final class StoreService: NSObject, ObservableObject {
         defer { purchaseInFlight = false }
         // Synthesized fallback packages point at an offering that doesn't exist on the
         // dashboard, so purchase the underlying product directly in that case.
-        let result = usingFallbackProducts
-            ? try await Purchases.shared.purchase(product: package.storeProduct)
-            : try await Purchases.shared.purchase(package: package)
+        let result: PurchaseResultData
+        do {
+            result = usingFallbackProducts
+                ? try await Purchases.shared.purchase(product: package.storeProduct)
+                : try await Purchases.shared.purchase(package: package)
+        } catch where Self.isPaymentDeferred(error) {
+            // Ask to Buy: Apple holds the purchase for the approver. It is pending, not failed;
+            // approval arrives through the delegate and unlocks Pro.
+            recordPendingPurchase(package)
+            Task { await refreshPendingPurchaseStatus() }
+            return .pending
+        }
         apply(customerInfo: result.customerInfo)
         let state = completePurchase(package, userCancelled: result.userCancelled)
         if state == .pending {
@@ -539,8 +549,18 @@ final class StoreService: NSObject, ObservableObject {
         return state
     }
 
+    nonisolated static func isPaymentDeferred(_ error: Error) -> Bool {
+        (error as? ErrorCode) == .paymentPendingError
+    }
+
     func completePurchase(_ package: Package, userCancelled: Bool) -> PurchaseState {
         guard !userCancelled else { return .cancelled }
+        recordPendingPurchase(package)
+        completePendingPurchaseIfUnlocked()
+        return isProUnlocked ? .purchased : .pending
+    }
+
+    func recordPendingPurchase(_ package: Package) {
         pendingPurchase = PendingPurchase(
             productID: package.storeProduct.productIdentifier,
             startedTrial: isEligibleForIntroOffer(package),
@@ -549,8 +569,6 @@ final class StoreService: NSObject, ObservableObject {
         if let data = try? JSONEncoder().encode(pendingPurchase) {
             defaults.set(data, forKey: Self.pendingPurchaseKey)
         }
-        completePendingPurchaseIfUnlocked()
-        return isProUnlocked ? .purchased : .pending
     }
 
     private func completePendingPurchaseIfUnlocked() {
@@ -578,6 +596,15 @@ final class StoreService: NSObject, ObservableObject {
             guard isPurchasePending, !Task.isCancelled else { return }
             await updateCustomerProductStatus(fetchPolicy: .fetchCurrent)
         }
+    }
+
+    /// A launch with no connection leaves entitlements unresolved for good, because nothing
+    /// else refetches. Called when the app becomes active again.
+    func resolveEntitlementsIfNeeded() async {
+        guard !hasResolvedEntitlements, !isResolvingEntitlements else { return }
+        isResolvingEntitlements = true
+        defer { isResolvingEntitlements = false }
+        await updateCustomerProductStatus(fetchPolicy: .fetchCurrent)
     }
 
     func updateCustomerProductStatus(fetchPolicy: CacheFetchPolicy = .default) async {
