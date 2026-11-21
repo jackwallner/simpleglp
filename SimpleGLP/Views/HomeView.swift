@@ -143,9 +143,11 @@ struct HomeView: View {
         logDose(at: nil)
     }
 
-    private func logDose(at date: Date?) {
+    /// Returns nil once the dose is saved, or why it was not, for the log-earlier sheet.
+    @discardableResult
+    private func logDose(at date: Date?) -> String? {
         let ok = coordinator.captureShot(in: modelContext, tapDate: date)
-        guard ok else { return }
+        guard ok else { return coordinator.bannerMessage ?? ShotCaptureCoordinator.couldNotSaveMessage }
         triggerConfirmation()
         if promptForDetails, let id = coordinator.lastCapturedEventID {
             // The @Query array hasn't refreshed yet in this run loop turn, so
@@ -154,6 +156,7 @@ struct HomeView: View {
             descriptor.fetchLimit = 1
             selectedEvent = try? modelContext.fetch(descriptor).first
         }
+        return nil
     }
 
     /// The latest dose logged on that day, opened for editing.

@@ -74,3 +74,37 @@ final class BugCatalogFixTests: XCTestCase {
         XCTAssertEqual(WatchShotOutbox.load(from: defaults), outbox)
     }
 }
+
+/// Regressions for the 2026-11-20 bug catalog's low items.
+@MainActor
+final class LowBugFixTests: XCTestCase {
+    private func memoryContext() throws -> ModelContext {
+        let container = try ModelContainer(
+            for: GLPModelStore.schema,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+        return container.mainContext
+    }
+
+    // MARK: - B5 a past dose the app could not save is reported, not dropped
+
+    func testB5_BackdatedLogWhileACaptureRunsReportsWhyAndWritesNothing() throws {
+        let context = try memoryContext()
+        let coordinator = ShotCaptureCoordinator()
+        coordinator.isCapturing = true
+        let failure = coordinator.captureBackdatedShot(in: context, at: Date().addingTimeInterval(-3600))
+        XCTAssertNotNil(failure, "the sheet needs a reason to stay open")
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<ShotEvent>()), 0)
+    }
+
+    func testB5_BackdatedLogThatSavesReportsNoFailure() throws {
+        let context = try memoryContext()
+        let coordinator = ShotCaptureCoordinator()
+        let healthKey = GLPStorageKey.healthContextEnabled.rawValue
+        let previous = GLPAppGroup.userDefaults.object(forKey: healthKey)
+        GLPAppGroup.userDefaults.set(false, forKey: healthKey)
+        addTeardownBlock { GLPAppGroup.userDefaults.set(previous, forKey: healthKey) }
+        XCTAssertNil(coordinator.captureBackdatedShot(in: context, at: Date().addingTimeInterval(-3600)))
+        XCTAssertEqual(try context.fetchCount(FetchDescriptor<ShotEvent>()), 1)
+    }
+}

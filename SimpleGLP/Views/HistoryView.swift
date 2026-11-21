@@ -80,7 +80,7 @@ struct HistoryView: View {
                 doseDates: events.map(\.timestamp),
                 initialDate: start.date
             ) { date in
-                coordinator.captureShot(in: modelContext, tapDate: date)
+                coordinator.captureBackdatedShot(in: modelContext, at: date)
             }
         }
         .confirmationDialog(

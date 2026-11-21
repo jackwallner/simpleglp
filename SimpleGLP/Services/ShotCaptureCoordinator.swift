@@ -120,7 +120,7 @@ final class ShotCaptureCoordinator: ObservableObject {
             // the next successful save writes both.
             context.rollback()
             lastCapturedEventID = nil
-            bannerMessage = String(localized: "Could not save that. Try again.")
+            bannerMessage = Self.couldNotSaveMessage
             return false
         }
 
@@ -183,6 +183,14 @@ final class ShotCaptureCoordinator: ObservableObject {
         }
 
         return true
+    }
+
+    static var couldNotSaveMessage: String { String(localized: "Could not save that. Try again.") }
+
+    /// For a sheet that logs a past dose: nil once it is saved, otherwise why it was not
+    /// (a capture still running, or a failed save), so the sheet can stay open and say so.
+    func captureBackdatedShot(in context: ModelContext, at date: Date) -> String? {
+        captureShot(in: context, tapDate: date) ? nil : (bannerMessage ?? Self.couldNotSaveMessage)
     }
 
     func undoLastCapture(in context: ModelContext) {

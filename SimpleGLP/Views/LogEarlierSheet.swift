@@ -8,13 +8,15 @@ struct LogEarlierSheet: View {
     let waitMinutes: Int
     /// Logged dose times, used to flag a day that already has one.
     let doseDates: [Date]
-    let onLog: (Date) -> Void
+    /// Returns nil once the dose is saved, or why it was not. The sheet stays open on a failure.
+    let onLog: (Date) -> String?
 
     @State private var when: Date
+    @State private var logError: String?
     /// The picker's upper bound, fixed when the sheet opens so chips and the picker agree.
     private let openedAt: Date
 
-    init(form: DoseForm, waitMinutes: Int, doseDates: [Date], initialDate: Date, now: Date = .now, onLog: @escaping (Date) -> Void) {
+    init(form: DoseForm, waitMinutes: Int, doseDates: [Date], initialDate: Date, now: Date = .now, onLog: @escaping (Date) -> String?) {
         self.form = form
         self.waitMinutes = waitMinutes
         self.doseDates = doseDates
@@ -43,11 +45,25 @@ struct LogEarlierSheet: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Log") {
-                        onLog(when)
-                        dismiss()
+                        if let failure = onLog(when) {
+                            logError = failure
+                        } else {
+                            dismiss()
+                        }
                     }
                     .fontWeight(.semibold)
                 }
+            }
+            .alert(
+                "Couldn't save",
+                isPresented: Binding(
+                    get: { logError != nil },
+                    set: { if !$0 { logError = nil } }
+                )
+            ) {
+                Button("OK", role: .cancel) {}
+            } message: {
+                Text(logError ?? String(localized: "Try again."))
             }
         }
         .presentationDetents([.medium, .large])
