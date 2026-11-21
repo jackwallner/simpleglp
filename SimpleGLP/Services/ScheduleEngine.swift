@@ -353,6 +353,14 @@ enum DailyAdherence {
     static func todaysDose(doseDates: [Date], now: Date = .now, calendar: Calendar = .current) -> Date? {
         doseDates.filter { calendar.isDate($0, inSameDayAs: now) && $0 <= now }.max()
     }
+
+    /// The wait the latest dose started, while it is still running. Not limited to today: a
+    /// pill taken at 11:50 PM keeps counting past midnight, as the widget and Watch do.
+    static func runningWait(doseDates: [Date], waitMinutes: Int, now: Date = .now) -> (taken: Date, end: Date)? {
+        guard waitMinutes > 0, let taken = doseDates.filter({ $0 <= now }).max() else { return nil }
+        let end = taken.addingTimeInterval(TimeInterval(waitMinutes * 60))
+        return end > now ? (taken, end) : nil
+    }
 }
 
 /// Doses on hand, derived from the last refill count and what's been logged since.

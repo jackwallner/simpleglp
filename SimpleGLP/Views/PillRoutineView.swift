@@ -21,13 +21,13 @@ struct PillRoutineView: View {
     @State private var notificationsDenied = false
 
     var body: some View {
-        let waiting = waitEnd(now: .now) != nil
+        let waiting = runningWait(now: .now) != nil
         TimelineView(.periodic(from: .now, by: waiting ? 1 : 30)) { context in
             VStack(spacing: 20) {
                 todayCard(now: context.date)
                     .padding(.horizontal)
                 routineButton(now: context.date)
-                if waitEnd(now: context.date) != nil, !isPro {
+                if runningWait(now: context.date) != nil, !isPro {
                     lockScreenUpsell
                         .padding(.horizontal)
                 }
@@ -42,10 +42,8 @@ struct PillRoutineView: View {
         DailyAdherence.todaysDose(doseDates: doseDates, now: now)
     }
 
-    private func waitEnd(now: Date) -> Date? {
-        guard plan.effectiveWaitMinutes > 0, let taken = todaysDose(now: now) else { return nil }
-        let end = taken.addingTimeInterval(TimeInterval(plan.effectiveWaitMinutes * 60))
-        return end > now ? end : nil
+    private func runningWait(now: Date) -> (taken: Date, end: Date)? {
+        DailyAdherence.runningWait(doseDates: doseDates, waitMinutes: plan.effectiveWaitMinutes, now: now)
     }
 
     private var plannedTime: Date {
@@ -122,8 +120,8 @@ struct PillRoutineView: View {
 
     @ViewBuilder
     private func routineButton(now: Date) -> some View {
-        if let end = waitEnd(now: now), let taken = todaysDose(now: now) {
-            countdown(taken: taken, end: end, now: now)
+        if let wait = runningWait(now: now) {
+            countdown(taken: wait.taken, end: wait.end, now: now)
         } else if todaysDose(now: now) != nil {
             doneCircle
         } else {

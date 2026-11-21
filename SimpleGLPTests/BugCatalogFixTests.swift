@@ -136,6 +136,28 @@ final class LowBugFixTests: XCTestCase {
     }
 }
 
+/// B10: the pill wait across midnight.
+@MainActor
+final class LowBugWaitTests: XCTestCase {
+    func testB10_PillWaitStillRunsAfterMidnightOnHome() throws {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: "America/Los_Angeles"))
+        let taken = try XCTUnwrap(calendar.date(from: DateComponents(year: 2026, month: 5, day: 12, hour: 23, minute: 50)))
+        let now = taken.addingTimeInterval(15 * 60) // 00:05 the next day
+
+        XCTAssertNil(DailyAdherence.todaysDose(doseDates: [taken], now: now, calendar: calendar), "precondition: Home's today has no dose yet")
+        let wait = try XCTUnwrap(DailyAdherence.runningWait(doseDates: [taken], waitMinutes: 30, now: now))
+        XCTAssertEqual(wait.taken, taken)
+        XCTAssertEqual(wait.end, taken.addingTimeInterval(30 * 60))
+
+        let glance = GLPGlance(isPill: true, waitMinutes: 30, lastDoseAt: taken)
+        XCTAssertEqual(glance.waitEndsAt(now: now), wait.end, "Home and the widget and Watch agree")
+        XCTAssertNil(DailyAdherence.runningWait(doseDates: [taken], waitMinutes: 30, now: taken.addingTimeInterval(31 * 60)))
+        XCTAssertNil(DailyAdherence.runningWait(doseDates: [taken], waitMinutes: 0, now: now))
+        XCTAssertNil(DailyAdherence.runningWait(doseDates: [taken.addingTimeInterval(3600)], waitMinutes: 30, now: now), "a dose still ahead starts no wait")
+    }
+}
+
 /// B8 and B9: store state that has no connection or an Ask to Buy approver in the way.
 @MainActor
 final class LowBugStoreTests: XCTestCase {
