@@ -1,3 +1,4 @@
+import HealthKit
 import SwiftData
 import XCTest
 @testable import SimpleGLP
@@ -106,5 +107,30 @@ final class LowBugFixTests: XCTestCase {
         addTeardownBlock { GLPAppGroup.userDefaults.set(previous, forKey: healthKey) }
         XCTAssertNil(coordinator.captureBackdatedShot(in: context, at: Date().addingTimeInterval(-3600)))
         XCTAssertEqual(try context.fetchCount(FetchDescriptor<ShotEvent>()), 1)
+    }
+
+    // MARK: - B6 empty Health reads stay absent
+
+    func testB6_EmptyHealthReadsAreNotStoredAsZero() throws {
+        XCTAssertNil(HealthKitService.sleepHours(from: []), "no sleep samples is no data, not 0 hr")
+        XCTAssertNil(HealthKitService.sleepHours(from: nil))
+        XCTAssertNil(HealthKitService.workoutCount(from: []))
+        XCTAssertNil(HealthKitService.workoutCount(from: nil))
+        let snapshot = HealthSnapshot(
+            sleepHoursLastNight: HealthKitService.sleepHours(from: []),
+            workoutsLast24h: HealthKitService.workoutCount(from: [])
+        )
+        XCTAssertFalse(snapshot.hasMeaningfulValue, "an all-empty read must not count as captured")
+    }
+
+    func testB6_RealSleepAndWorkoutsAreStillCounted() throws {
+        let type = try XCTUnwrap(HKObjectType.categoryType(forIdentifier: .sleepAnalysis))
+        let end = Date()
+        func sample(_ value: HKCategoryValueSleepAnalysis, hours: Double) -> HKCategorySample {
+            HKCategorySample(type: type, value: value.rawValue, start: end.addingTimeInterval(-hours * 3600), end: end)
+        }
+        let samples = [sample(.asleepCore, hours: 4), sample(.asleepREM, hours: 2), sample(.inBed, hours: 9)]
+        XCTAssertEqual(try XCTUnwrap(HealthKitService.sleepHours(from: samples)), 6, accuracy: 0.001)
+        XCTAssertEqual(HealthKitService.workoutCount(from: samples), 3, "any returned sample counts")
     }
 }

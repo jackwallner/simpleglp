@@ -194,20 +194,7 @@ actor HealthKitService {
         let predicate = HKQuery.predicateForSamples(withStart: start, end: date, options: .strictStartDate)
         return await withCheckedContinuation { continuation in
             let query = HKSampleQuery(sampleType: type, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, _ in
-                let total = samples?
-                    .compactMap { $0 as? HKCategorySample }
-                    .filter { sample in
-                        if #available(iOS 16.0, *) {
-                            return sample.value == HKCategoryValueSleepAnalysis.asleepCore.rawValue
-                                || sample.value == HKCategoryValueSleepAnalysis.asleepDeep.rawValue
-                                || sample.value == HKCategoryValueSleepAnalysis.asleepREM.rawValue
-                                || sample.value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue
-                        } else {
-                            return sample.value == HKCategoryValueSleepAnalysis.asleep.rawValue
-                        }
-                    }
-                    .reduce(0) { $0 + $1.endDate.timeIntervalSince($1.startDate) }
-                continuation.resume(returning: total.map { $0 / 3600 })
+                continuation.resume(returning: Self.sleepHours(from: samples))
             }
             store.execute(query)
         }
@@ -217,9 +204,29 @@ actor HealthKitService {
         let predicate = HKQuery.predicateForSamples(withStart: start, end: end, options: .strictStartDate)
         return await withCheckedContinuation { continuation in
             let query = HKSampleQuery(sampleType: HKObjectType.workoutType(), predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, samples, _ in
-                continuation.resume(returning: samples?.count)
+                continuation.resume(returning: Self.workoutCount(from: samples))
             }
             store.execute(query)
         }
+    }
+
+    /// HealthKit hands back an empty array, not nil, when nothing matched (no Watch, or read
+    /// access declined). Absent data stays nil so it is never stored or exported as 0 hours.
+    nonisolated static func sleepHours(from samples: [HKSample]?) -> Double? {
+        let asleep = (samples ?? [])
+            .compactMap { $0 as? HKCategorySample }
+            .filter { sample in
+                sample.value == HKCategoryValueSleepAnalysis.asleepCore.rawValue
+                    || sample.value == HKCategoryValueSleepAnalysis.asleepDeep.rawValue
+                    || sample.value == HKCategoryValueSleepAnalysis.asleepREM.rawValue
+                    || sample.value == HKCategoryValueSleepAnalysis.asleepUnspecified.rawValue
+            }
+        guard !asleep.isEmpty else { return nil }
+        return asleep.reduce(0) { $0 + $1.endDate.timeIntervalSince($1.startDate) } / 3600
+    }
+
+    nonisolated static func workoutCount(from samples: [HKSample]?) -> Int? {
+        guard let count = samples?.count, count > 0 else { return nil }
+        return count
     }
 }
