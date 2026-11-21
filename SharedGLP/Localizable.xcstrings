@@ -43144,6 +43144,716 @@
           }
         }
       }
+    },
+    "Your history is back": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your history is back"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Verlauf ist wieder da"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu historial ha vuelto"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Votre historique est de retour"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Visszakerültek az előzményeid"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "La tua cronologia è tornata"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoja historia wróciła"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu histórico voltou"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваша история вернулась"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmişin geri geldi"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的紀錄已恢復"
+          }
+        }
+      }
+    },
+    "Your history couldn't be read": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your history couldn't be read"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dein Verlauf konnte nicht gelesen werden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudo leer tu historial"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible de lire votre historique"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nem sikerült beolvasni az előzményeidet"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile leggere la tua cronologia"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nie udało się odczytać twojej historii"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível ler seu histórico"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось прочитать вашу историю"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Geçmişin okunamadı"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "無法讀取你的紀錄"
+          }
+        }
+      }
+    },
+    "Simple GLP found your earlier doses on this iPhone and restored them.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP found your earlier doses on this iPhone and restored them."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP hat deine früheren Dosen auf diesem iPhone gefunden und wiederhergestellt."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP encontró tus dosis anteriores en este iPhone y las restauró."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP a retrouvé vos doses précédentes sur cet iPhone et les a restaurées."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Simple GLP megtalálta a korábbi adagjaidat ezen az iPhone-on, és visszaállította őket."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP ha trovato le tue dosi precedenti su questo iPhone e le ha ripristinate."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP znalazł na tym iPhonie twoje wcześniejsze dawki i je przywrócił."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Simple GLP encontrou suas doses anteriores neste iPhone e as restaurou."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP нашёл на этом iPhone ваши прежние дозы и восстановил их."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP önceki dozlarını bu iPhone'da buldu ve geri yükledi."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP 在這部 iPhone 上找到你之前的劑量，並已恢復。"
+          }
+        }
+      }
+    },
+    "Simple GLP kept a copy of the unreadable file on this iPhone and started fresh. Send feedback from Settings and we'll help recover it.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP kept a copy of the unreadable file on this iPhone and started fresh. Send feedback from Settings and we'll help recover it."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP hat eine Kopie der unlesbaren Datei auf diesem iPhone behalten und neu begonnen. Sende uns in den Einstellungen Feedback, dann helfen wir dir, sie wiederherzustellen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP guardó en este iPhone una copia del archivo que no se podía leer y empezó de cero. Envíanos comentarios desde Ajustes y te ayudaremos a recuperarlo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP a gardé sur cet iPhone une copie du fichier illisible et est reparti de zéro. Envoyez-nous un avis depuis les Réglages et nous vous aiderons à le récupérer."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Simple GLP megtartotta az olvashatatlan fájl másolatát ezen az iPhone-on, és újrakezdte. Küldj visszajelzést a Beállításokból, és segítünk visszaállítani."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP ha conservato su questo iPhone una copia del file illeggibile e ha ricominciato da capo. Inviaci un feedback dalle Impostazioni e ti aiuteremo a recuperarlo."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP zachował na tym iPhonie kopię nieczytelnego pliku i zaczął od nowa. Wyślij opinię w Ustawieniach, a pomożemy go odzyskać."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Simple GLP guardou neste iPhone uma cópia do arquivo ilegível e começou do zero. Envie feedback pelas Configurações e ajudaremos a recuperá-lo."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP сохранил на этом iPhone копию нечитаемого файла и начал заново. Отправьте отзыв из настроек, и мы поможем его восстановить."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP okunamayan dosyanın bir kopyasını bu iPhone'da sakladı ve baştan başladı. Ayarlar'dan geri bildirim gönder, kurtarmana yardım edelim."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP 已在這部 iPhone 上保留無法讀取的檔案副本，並重新開始。請從「設定」傳送意見，我們會協助你復原。"
+          }
+        }
+      }
+    },
+    "Your doses are safe": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your doses are safe"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Dosen sind sicher"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tus dosis están a salvo"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos doses sont en sécurité"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Az adagjaid biztonságban vannak"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Le tue dosi sono al sicuro"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Twoje dawki są bezpieczne"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suas doses estão seguras"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ваши дозы в безопасности"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dozların güvende"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的劑量資料很安全"
+          }
+        }
+      }
+    },
+    "Simple GLP couldn't open your saved history right now. Nothing was deleted.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP couldn't open your saved history right now. Nothing was deleted."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP kann deinen gespeicherten Verlauf gerade nicht öffnen. Es wurde nichts gelöscht."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP no puede abrir tu historial guardado ahora mismo. No se ha borrado nada."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP ne peut pas ouvrir votre historique enregistré pour le moment. Rien n’a été supprimé."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Simple GLP most nem tudja megnyitni a mentett előzményeidet. Semmi sem törlődött."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP non riesce ad aprire la cronologia salvata in questo momento. Non è stato eliminato nulla."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP nie może teraz otworzyć zapisanej historii. Nic nie zostało usunięte."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Simple GLP não consegue abrir seu histórico salvo agora. Nada foi excluído."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP сейчас не может открыть вашу сохранённую историю. Ничего не удалено."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP kayıtlı geçmişini şu anda açamıyor. Hiçbir şey silinmedi."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP 暫時無法開啟你儲存的紀錄。沒有任何資料被刪除。"
+          }
+        }
+      }
+    },
+    "If this keeps happening, free up storage and restart your iPhone.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "If this keeps happening, free up storage and restart your iPhone."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Wenn das immer wieder passiert, schaffe Speicherplatz frei und starte dein iPhone neu."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si sigue pasando, libera espacio y reinicia el iPhone."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si cela se reproduit, libérez de l’espace et redémarrez votre iPhone."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ha ez továbbra is előfordul, szabadíts fel tárhelyet, és indítsd újra az iPhone-odat."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se continua a succedere, libera spazio e riavvia l’iPhone."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Jeśli to się powtarza, zwolnij miejsce i uruchom ponownie iPhone’a."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se isso continuar acontecendo, libere espaço e reinicie o iPhone."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Если это повторяется, освободите место в хранилище и перезапустите iPhone."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bu tekrar ederse depolama alanı aç ve iPhone'unu yeniden başlat."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "如果這種情況一再發生，請釋放儲存空間並重新啟動 iPhone。"
+          }
+        }
+      }
+    },
+    "Simple GLP can't open your dose history right now. Open the app to try again.": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP can't open your dose history right now. Open the app to try again."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP kann deinen Dosisverlauf gerade nicht öffnen. Öffne die App, um es erneut zu versuchen."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP no puede abrir tu historial de dosis ahora mismo. Abre la app para intentarlo de nuevo."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP ne peut pas ouvrir votre historique de doses pour le moment. Ouvrez l’app pour réessayer."
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A Simple GLP most nem tudja megnyitni az adagelőzményeidet. Nyisd meg az appot, és próbáld újra."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP non riesce ad aprire la cronologia delle dosi in questo momento. Apri l’app per riprovare."
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP nie może teraz otworzyć historii dawek. Otwórz aplikację, aby spróbować ponownie."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Simple GLP não consegue abrir seu histórico de doses agora. Abra o app para tentar novamente."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP сейчас не может открыть историю доз. Откройте приложение, чтобы попробовать снова."
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP doz geçmişini şu anda açamıyor. Yeniden denemek için uygulamayı aç."
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Simple GLP 暫時無法開啟你的劑量紀錄。請開啟 App 再試一次。"
+          }
+        }
+      }
+    },
+    "Already logged at %@": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Already logged at %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bereits um %1$@ erfasst"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ya registrada a las %1$@"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Déjà enregistrée à %1$@"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Már rögzítve ekkor: %1$@"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Già registrata alle %1$@"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Już zapisano o %1$@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já registrada às %1$@"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Уже записано в %1$@"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ saatinde zaten kaydedildi"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已於 %1$@ 記錄"
+          }
+        }
+      }
+    },
+    "Log Another": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Log Another"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Weitere erfassen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registrar otra"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "En enregistrer une autre"
+          }
+        },
+        "hu": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Újabb rögzítése"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registra un’altra"
+          }
+        },
+        "pl": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zapisz kolejną"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Registrar outra"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Записать ещё"
+          }
+        },
+        "tr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bir tane daha kaydet"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再記錄一次"
+          }
+        }
+      }
     }
   },
   "version": "1.1"
