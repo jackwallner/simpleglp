@@ -45,12 +45,36 @@ enum ScheduleEngine {
     /// A daily dose within this much of its planned time counts as on schedule.
     static let dailyOnScheduleWindow: TimeInterval = 3 * 60 * 60
 
-    static func match(timestamp: Date, plan: MedicationPlan?, existingEvents: [ShotEvent] = [], calendar: Calendar = .current) -> Match {
+    /// The calendar days that already hold a dose matched to a slot. A daily plan reads this
+    /// instead of scanning every earlier event, so matching a long history (a plan save, a CSV
+    /// import) is linear, not quadratic. Build it from `events`, then `add` each match made.
+    struct ClaimedDays {
+        private var days: Set<Date> = []
+        private let calendar: Calendar
+
+        init(events: [ShotEvent] = [], calendar: Calendar = .current) {
+            self.calendar = calendar
+            for event in events where event.scheduledDate != nil {
+                days.insert(calendar.startOfDay(for: event.timestamp))
+            }
+        }
+
+        mutating func add(timestamp: Date) {
+            days.insert(calendar.startOfDay(for: timestamp))
+        }
+
+        func contains(slot: Date) -> Bool {
+            days.contains(calendar.startOfDay(for: slot))
+        }
+    }
+
+    /// `claimedDays`, when given, stands in for `existingEvents` on a daily plan.
+    static func match(timestamp: Date, plan: MedicationPlan?, existingEvents: [ShotEvent] = [], calendar: Calendar = .current, claimedDays: ClaimedDays? = nil) -> Match {
         guard let plan else {
             return Match(scheduledDate: nil, doseMg: 0, status: .unknown, minutesFromSchedule: nil)
         }
         if plan.cadenceDays == 1 {
-            return dailyMatch(timestamp: timestamp, plan: plan, existingEvents: existingEvents, calendar: calendar)
+            return dailyMatch(timestamp: timestamp, plan: plan, existingEvents: existingEvents, calendar: calendar, claimedDays: claimedDays)
         }
 
         let nearby = expectedDates(around: timestamp, plan: plan, calendar: calendar)
@@ -96,7 +120,7 @@ enum ScheduleEngine {
 
     /// Daily doses belong to their calendar day. Nearest-slot matching would hand a late
     /// 11 PM pill to tomorrow morning's slot and mark it "early".
-    private static func dailyMatch(timestamp: Date, plan: MedicationPlan, existingEvents: [ShotEvent], calendar: Calendar) -> Match {
+    private static func dailyMatch(timestamp: Date, plan: MedicationPlan, existingEvents: [ShotEvent], calendar: Calendar, claimedDays: ClaimedDays?) -> Match {
         let day = calendar.startOfDay(for: timestamp)
         guard let first = firstScheduledDate(plan: plan, calendar: calendar),
               day >= calendar.startOfDay(for: first),
@@ -104,7 +128,7 @@ enum ScheduleEngine {
         else {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }
-        let alreadyClaimed = isOccurrenceClaimed(slot, by: existingEvents, cadenceDays: 1, calendar: calendar)
+        let alreadyClaimed = claimedDays?.contains(slot: slot) ?? isOccurrenceClaimed(slot, by: existingEvents, cadenceDays: 1, calendar: calendar)
         if alreadyClaimed {
             return Match(scheduledDate: nil, doseMg: dose(on: timestamp, plan: plan), status: .extra, minutesFromSchedule: nil)
         }

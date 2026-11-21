@@ -54,16 +54,19 @@ enum PlanStore {
         let descriptor = FetchDescriptor<ShotEvent>(sortBy: [SortDescriptor(\.timestamp, order: .forward)])
         let events = (try? context.fetch(descriptor)) ?? []
         var processed: [ShotEvent] = []
+        var claimedDays = ScheduleEngine.ClaimedDays()
         for event in events {
             let match = ScheduleEngine.match(
                 timestamp: event.timestamp,
                 plan: plan,
-                existingEvents: processed
+                existingEvents: processed,
+                claimedDays: claimedDays
             )
             event.scheduledDate = match.scheduledDate
             event.scheduleStatus = match.status
             event.minutesFromSchedule = match.minutesFromSchedule
             processed.append(event)
+            if match.scheduledDate != nil { claimedDays.add(timestamp: event.timestamp) }
         }
     }
 }

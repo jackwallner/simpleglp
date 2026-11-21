@@ -25,6 +25,8 @@ enum ImportService {
         let plan = PlanStore.currentPlan(in: context)
         // Seed with existing shots so same-week duplicates are flagged as extra.
         var known = (try? context.fetch(FetchDescriptor<ShotEvent>())) ?? []
+        var claimedDays = ScheduleEngine.ClaimedDays(events: known)
+        var seen = SeenDoses(events: known)
         var count = 0
 
         for cols in records {
@@ -32,11 +34,11 @@ enum ImportService {
             let medication = cols[1].isEmpty ? "GLP-1" : cols[1]
             let dose = Double(cols[2]) ?? 0
             // The export has second precision: a row matching a stored dose is already here.
-            if known.contains(where: { $0.medicationName == medication && abs($0.timestamp.timeIntervalSince(timestamp)) < 1 }) {
+            if seen.contains(medication: medication, near: timestamp) {
                 continue
             }
 
-            let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: known)
+            let match = ScheduleEngine.match(timestamp: timestamp, plan: plan, existingEvents: known, claimedDays: claimedDays)
             let event = ShotEvent(
                 timestamp: timestamp,
                 medicationName: medication,
@@ -74,6 +76,8 @@ enum ImportService {
             event.finalizeCapture()
             context.insert(event)
             known.append(event)
+            seen.add(medication: medication, at: timestamp)
+            if match.scheduledDate != nil { claimedDays.add(timestamp: timestamp) }
             count += 1
         }
 
@@ -84,6 +88,28 @@ enum ImportService {
             throw error
         }
         return count
+    }
+
+    /// Stored doses by medication and whole second, so a row is checked against its own second
+    /// and the two beside it, not every earlier dose.
+    struct SeenDoses {
+        private var buckets: [String: [Int: [Date]]] = [:]
+
+        init(events: [ShotEvent] = []) {
+            for event in events { add(medication: event.medicationName, at: event.timestamp) }
+        }
+
+        mutating func add(medication: String, at date: Date) {
+            buckets[medication, default: [:]][Int(date.timeIntervalSince1970.rounded(.down)), default: []].append(date)
+        }
+
+        func contains(medication: String, near date: Date) -> Bool {
+            guard let bySecondBucket = buckets[medication] else { return false }
+            let second = Int(date.timeIntervalSince1970.rounded(.down))
+            return (second - 1...second + 1).contains { bucket in
+                bySecondBucket[bucket]?.contains { abs($0.timeIntervalSince(date)) < 1 } ?? false
+            }
+        }
     }
 
     /// Minimal RFC 4180 parser: handles quoted fields containing commas, newlines, and

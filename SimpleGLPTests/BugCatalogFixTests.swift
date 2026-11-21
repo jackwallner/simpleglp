@@ -136,6 +136,82 @@ final class LowBugFixTests: XCTestCase {
     }
 }
 
+/// B13: long daily histories.
+@MainActor
+final class LowBugPerformanceTests: XCTestCase {
+    private func dailyPlan(in context: ModelContext, days: Int) -> MedicationPlan {
+        let plan = MedicationPlan(
+            medication: .wegovyPill, doseMg: 4,
+            scheduleStartDate: Calendar.current.date(byAdding: .day, value: -(days + 5), to: .now)!,
+            preferredHour: 9, preferredMinute: 0, intervalDays: 1, waitMinutes: 30, reminderEnabled: false
+        )
+        context.insert(plan)
+        return plan
+    }
+
+    func testB13_PlanSaveRecalculationWithAThousandDailyDosesIsFast() throws {
+        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        let plan = dailyPlan(in: context, days: 1000)
+        let calendar = Calendar.current
+        let first = calendar.startOfDay(for: calendar.date(byAdding: .day, value: -1000, to: .now)!)
+        for day in 0..<1000 {
+            let at = calendar.date(byAdding: .day, value: day, to: first)!.addingTimeInterval(9 * 3600 + 120)
+            context.insert(ShotEvent(timestamp: at, doseMg: 4))
+        }
+        // A second dose on one day stays a manual extra.
+        context.insert(ShotEvent(timestamp: first.addingTimeInterval(9 * 3600 + 3600), doseMg: 4))
+        try context.save()
+
+        let started = Date()
+        PlanStore.recalculateScheduleMatches(for: plan, in: context)
+        let elapsed = Date().timeIntervalSince(started)
+        XCTAssertLessThan(elapsed, 2, "recalculation took \(elapsed) s on the main actor")
+
+        let events = try context.fetch(FetchDescriptor<ShotEvent>(sortBy: [SortDescriptor(\.timestamp)]))
+        XCTAssertEqual(events.count, 1001)
+        XCTAssertEqual(events.filter { $0.scheduleStatus == .extra }.count, 1)
+        XCTAssertEqual(events.filter { $0.scheduledDate != nil }.count, 1000)
+    }
+
+    func testB13_CSVImportOfAThousandDailyDosesIsFastAndSkipsDuplicates() throws {
+        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        _ = dailyPlan(in: context, days: 1000)
+        try context.save()
+        let calendar = Calendar.current
+        let first = calendar.startOfDay(for: calendar.date(byAdding: .day, value: -1000, to: .now)!)
+        let formatter = ISO8601DateFormatter()
+        var csv = "timestamp,medication,dose_mg\n"
+        for day in 0..<1000 {
+            let at = calendar.date(byAdding: .day, value: day, to: first)!.addingTimeInterval(9 * 3600 + 120)
+            csv += "\(formatter.string(from: at)),Wegovy pill,4\n"
+        }
+        let url = FileManager.default.temporaryDirectory.appendingPathComponent("b13-\(UUID().uuidString).csv")
+        try csv.write(to: url, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: url) }
+
+        let started = Date()
+        let imported = try ImportService.importEvents(from: url, into: context)
+        let elapsed = Date().timeIntervalSince(started)
+        XCTAssertEqual(imported, 1000)
+        XCTAssertLessThan(elapsed, 2, "import took \(elapsed) s on the main actor")
+        XCTAssertEqual(try ImportService.importEvents(from: url, into: context), 0, "rows already stored are skipped")
+        let events = try context.fetch(FetchDescriptor<ShotEvent>())
+        XCTAssertEqual(events.filter { $0.scheduledDate != nil }.count, 1000)
+    }
+
+    func testB13_DuplicateIndexMatchesWithinOneSecondOnly() {
+        var seen = ImportService.SeenDoses()
+        let at = Date(timeIntervalSince1970: 1_800_000_000.4)
+        seen.add(medication: "A", at: at)
+        XCTAssertTrue(seen.contains(medication: "A", near: at.addingTimeInterval(0.9)))
+        XCTAssertTrue(seen.contains(medication: "A", near: at.addingTimeInterval(-0.9)))
+        XCTAssertFalse(seen.contains(medication: "A", near: at.addingTimeInterval(1.1)))
+        XCTAssertFalse(seen.contains(medication: "B", near: at))
+    }
+}
+
 /// B12: a Watch log made while the phone is locked.
 @MainActor
 final class LowBugWatchLogTests: XCTestCase {
