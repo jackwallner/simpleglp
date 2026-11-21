@@ -16,12 +16,19 @@ final class FakeNotificationCenter: @unchecked Sendable {
     private var addedAt: [String: Date] = [:]
     private var status: UNAuthorizationStatus = .authorized
     private var saved: [(Method, IMP)] = []
+    private var settingsDelay: TimeInterval = 0
 
     var pending: [String: UNNotificationRequest] { lock.withLock { requests } }
     func added(_ id: String) -> Date? { lock.withLock { addedAt[id] } }
     var authorizationStatus: UNAuthorizationStatus {
         get { lock.withLock { status } }
         set { lock.withLock { status = newValue } }
+    }
+
+    /// Seconds before the settings answer arrives, so a scheduler pass really suspends on it.
+    var settingsAnswerDelay: TimeInterval {
+        get { lock.withLock { settingsDelay } }
+        set { lock.withLock { settingsDelay = newValue } }
     }
 
     /// When a request would fire, from its trigger.
@@ -90,8 +97,16 @@ final class FakeNotificationCenter: @unchecked Sendable {
         }
         swap("getPendingNotificationRequestsWithCompletionHandler:", unsafeBitCast(getPending, to: AnyObject.self))
 
-        let getSettings: @convention(block) (AnyObject, @convention(block) (UNNotificationSettings) -> Void) -> Void = { _, done in
-            done(FakeSettings.make(status: center.authorizationStatus))
+        let getSettings: @convention(block) (AnyObject, @escaping @convention(block) (UNNotificationSettings) -> Void) -> Void = { _, done in
+            let delay = center.settingsAnswerDelay
+            let settings = FakeSettings.make(status: center.authorizationStatus)
+            if delay > 0 {
+                nonisolated(unsafe) let answer = done
+                nonisolated(unsafe) let fakeSettings = settings
+                DispatchQueue.global().asyncAfter(deadline: .now() + delay) { answer(fakeSettings) }
+            } else {
+                done(settings)
+            }
         }
         swap("getNotificationSettingsWithCompletionHandler:", unsafeBitCast(getSettings, to: AnyObject.self))
 
@@ -102,6 +117,7 @@ final class FakeNotificationCenter: @unchecked Sendable {
     }
 
     func uninstall() {
+        settingsAnswerDelay = 0
         for (method, imp) in saved { _ = method_setImplementation(method, imp) }
         saved = []
     }
