@@ -1,6 +1,7 @@
 import ActivityKit
 import Foundation
 import SwiftData
+import UIKit
 import WidgetKit
 
 /// Everything that follows a logged or removed dose outside the database: the wait
@@ -113,14 +114,26 @@ enum DoseRoutineService {
         return events.contains { abs($0.timestamp.timeIntervalSince(date)) < window }
     }
 
-    /// Logs a dose the Watch sent, unless it repeats one already stored.
-    static func captureWatchLog(at date: Date, eventID: UUID?, coordinator: ShotCaptureCoordinator, in context: ModelContext) {
+    /// Logs a dose the Watch sent, unless it repeats one already stored. With the app not in
+    /// front (a locked phone), Health reads fail, so the context is left pending for the next
+    /// foreground pass, as for Siri and notification logs.
+    static func captureWatchLog(
+        at date: Date,
+        eventID: UUID?,
+        coordinator: ShotCaptureCoordinator,
+        in context: ModelContext,
+        appIsActive: Bool = UIApplication.shared.applicationState == .active
+    ) {
         guard !hasDose(near: date, in: context) else {
             // Drop the Watch's optimistic copy.
             rebuildRecentShots(in: context)
             return
         }
-        coordinator.captureShot(in: context, tapDate: date, eventID: eventID)
+        let deferHealth = !appIsActive
+        let captured = coordinator.captureShot(in: context, tapDate: date, eventID: eventID, deferHealthContext: deferHealth)
+        if captured, deferHealth {
+            Task { await settleBackgroundLog(in: context) }
+        }
     }
 
     /// The tail of a log made with no UI in front (a notification action, Siri): the app may

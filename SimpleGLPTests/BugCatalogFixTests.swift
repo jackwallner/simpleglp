@@ -136,6 +136,35 @@ final class LowBugFixTests: XCTestCase {
     }
 }
 
+/// B12: a Watch log made while the phone is locked.
+@MainActor
+final class LowBugWatchLogTests: XCTestCase {
+    func testB12_WatchLogWhileTheAppIsNotActiveKeepsItsHealthContextPending() throws {
+        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        let coordinator = ShotCaptureCoordinator()
+        DoseRoutineService.captureWatchLog(at: Date().addingTimeInterval(-30), eventID: UUID(), coordinator: coordinator, in: context, appIsActive: false)
+
+        XCTAssertFalse(coordinator.isCapturing, "a read made on a locked phone returns nothing and finalizes the dose as unavailable")
+        let events = try context.fetch(FetchDescriptor<ShotEvent>())
+        XCTAssertEqual(events.count, 1)
+        XCTAssertEqual(events.first?.healthStatus, .pending, "left pending so the next foreground pass fills it in")
+        let pending = try context.fetch(ShotCaptureCoordinator.pendingCaptureFetchDescriptor())
+        XCTAssertEqual(pending.count, 1, "enrichPendingCapturesIfNeeded finds it")
+    }
+
+    func testB12_ControlWatchLogWithTheAppInFrontReadsHealthAtOnce() throws {
+        let healthKey = GLPStorageKey.healthContextEnabled.rawValue
+        let previous = GLPAppGroup.userDefaults.object(forKey: healthKey)
+        GLPAppGroup.userDefaults.set(false, forKey: healthKey)
+        addTeardownBlock { GLPAppGroup.userDefaults.set(previous, forKey: healthKey) }
+        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let coordinator = ShotCaptureCoordinator()
+        DoseRoutineService.captureWatchLog(at: Date().addingTimeInterval(-30), eventID: UUID(), coordinator: coordinator, in: container.mainContext, appIsActive: true)
+        XCTAssertTrue(coordinator.isCapturing)
+    }
+}
+
 /// B10: the pill wait across midnight.
 @MainActor
 final class LowBugWaitTests: XCTestCase {
