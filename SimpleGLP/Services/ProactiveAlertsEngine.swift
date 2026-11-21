@@ -89,7 +89,12 @@ enum ProactiveAlertsEngine {
             cancelLateDoseNudge()
             return
         }
-        if !rearmPastDue, lateDoseFireDate(for: next, prefs: prefs, calendar: calendar) <= now { return }
+        if !rearmPastDue, lateDoseFireDate(for: next, prefs: prefs, calendar: calendar) <= now {
+            // Nothing new to arm, but a nudge still pending for a different planned time (the
+            // plan moved earlier) would name a dose time the user no longer has.
+            await cancelLateDoseNudge(unlessFor: next)
+            return
+        }
         cancelLateDoseNudge()
 
         let granted = await ReminderService.ensureAuthorization(mayPrompt: false)
@@ -108,9 +113,38 @@ enum ProactiveAlertsEngine {
         content.sound = .default
         content.threadIdentifier = "pro-alerts"
         content.categoryIdentifier = ReminderService.doseCategory
+        content.userInfo = [lateDoseOccurrenceKey: next.timeIntervalSince1970]
         let trigger = UNCalendarNotificationTrigger(dateMatching: components, repeats: false)
         let request = UNNotificationRequest(identifier: lateDoseIdentifier, content: content, trigger: trigger)
+        // The entitlement can resolve to free while the authorization check above is awaited.
+        guard alertsStillActive() else { return }
         try? await UNUserNotificationCenter.current().add(request)
+    }
+
+    static let lateDoseOccurrenceKey = "occurrence"
+
+    /// Removes the pending late-dose nudge unless it is for `occurrence` (a cold-launch re-arm
+    /// of a past-due dose stays until it fires).
+    private static func cancelLateDoseNudge(unlessFor occurrence: Date) async {
+        let pending = await UNUserNotificationCenter.current().pendingNotificationRequests()
+        guard let request = pending.first(where: { $0.identifier == lateDoseIdentifier }) else { return }
+        if let planned = request.content.userInfo[lateDoseOccurrenceKey] as? Double,
+           abs(planned - occurrence.timeIntervalSince1970) < 1 {
+            return
+        }
+        cancelLateDoseNudge()
+    }
+
+    /// The same gate `schedulePatternAlertsIfEnabled` applies, read again right before a
+    /// request is added: a lapsed customer can resolve to free while a pass is suspended.
+    @MainActor
+    private static func alertsStillActive() -> Bool {
+        let store = StoreService.shared
+        return isActive(
+            alertsEnabled: ProAlertPreferenceValues.current().alertsEnabled,
+            entitlementsResolved: store.hasResolvedEntitlements,
+            isPro: store.isProUnlocked
+        )
     }
 
     static func cancelLateDoseNudge() {
@@ -150,6 +184,7 @@ enum ProactiveAlertsEngine {
         return fire
     }
 
+    @MainActor
     static func reschedulePatternNotifications(clusters: [PatternCluster], prefs: ProAlertPreferenceValues, isPill: Bool = false, doseDates: [Date] = []) async {
         let center = UNUserNotificationCenter.current()
         await cancelPatternNotifications()
@@ -169,6 +204,7 @@ enum ProactiveAlertsEngine {
             content.threadIdentifier = "pro-alerts"
             let trigger = UNCalendarNotificationTrigger(dateMatching: fireComponents, repeats: false)
             let request = UNNotificationRequest(identifier: "glp-pattern-\(cluster.weekdayIndex)", content: content, trigger: trigger)
+            guard alertsStillActive() else { return }
             try? await center.add(request)
         }
     }

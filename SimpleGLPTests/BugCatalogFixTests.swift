@@ -134,3 +134,125 @@ final class LowBugFixTests: XCTestCase {
         XCTAssertEqual(HealthKitService.workoutCount(from: samples), 3, "any returned sample counts")
     }
 }
+
+/// B7 and B14: the late-dose nudge against the fake notification center.
+@MainActor
+final class LowBugNudgeTests: XCTestCase {
+    private var container: ModelContainer!
+    private var context: ModelContext!
+    private let fake = FakeNotificationCenter.shared
+    private var savedDefaults: [String: Any] = [:]
+    private var absentDefaults: Set<String> = []
+
+    override func setUp() async throws {
+        try await super.setUp()
+        container = try ModelContainer(
+            for: ShotEvent.self, MedicationPlan.self, DoseStep.self,
+            configurations: ModelConfiguration(isStoredInMemoryOnly: true)
+        )
+        context = ModelContext(container)
+        fake.install(status: .authorized)
+        StoreService.shared.setLocalOverride(isPro: true)
+        setDefault(.proAlertsEnabled, true)
+        setDefault(.proAlertQuietHoursEnabled, false)
+        setDefault(.patternAlertsEnabled, false)
+        await settle(0.8)
+        fake.clear()
+    }
+
+    override func tearDown() async throws {
+        fake.uninstall()
+        for (key, value) in savedDefaults { GLPAppGroup.userDefaults.set(value, forKey: key) }
+        for key in absentDefaults { GLPAppGroup.userDefaults.removeObject(forKey: key) }
+        StoreService.shared.setLocalOverride(isPro: false)
+        try await super.tearDown()
+    }
+
+    private func setDefault(_ key: GLPStorageKey, _ value: Any?) {
+        let defaults = GLPAppGroup.userDefaults
+        if savedDefaults[key.rawValue] == nil, !absentDefaults.contains(key.rawValue) {
+            if let old = defaults.object(forKey: key.rawValue) { savedDefaults[key.rawValue] = old } else { absentDefaults.insert(key.rawValue) }
+        }
+        if let value { defaults.set(value, forKey: key.rawValue) } else { defaults.removeObject(forKey: key.rawValue) }
+    }
+
+    private func settle(_ seconds: Double = 1.5) async {
+        try? await Task.sleep(nanoseconds: UInt64(seconds * 1_000_000_000))
+    }
+
+    /// A daily pill plan whose slot was `minutesAgo` minutes ago (today, or yesterday just after midnight).
+    private func makeDailyPlan(minutesAgo: Int) throws -> MedicationPlan {
+        let calendar = Calendar.current
+        let now = Date()
+        let slot = now.addingTimeInterval(-TimeInterval(minutesAgo * 60))
+        let plan = MedicationPlan(
+            medication: .wegovyPill,
+            doseMg: 4,
+            scheduleStartDate: calendar.date(byAdding: .day, value: -10, to: now)!,
+            preferredHour: calendar.component(.hour, from: slot),
+            preferredMinute: calendar.component(.minute, from: slot),
+            intervalDays: 1,
+            waitMinutes: 0,
+            reminderEnabled: true
+        )
+        plan.createdAt = plan.scheduleStartDate
+        context.insert(plan)
+        try context.save()
+        return plan
+    }
+
+    private func nudgeFire() -> Date? { fake.fireDate(of: ProactiveAlertsEngine.lateDoseIdentifier) }
+
+    // MARK: B7 a plan save that moves today's dose earlier drops the old nudge
+
+    func testB7_PlanSaveMovingTheDoseFarEarlierCancelsTheOldNudge() async throws {
+        let plan = try makeDailyPlan(minutesAgo: 30)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        XCTAssertNotNil(nudgeFire(), "precondition: a nudge is pending for the first planned time")
+
+        // PlanEditorView.save, with the pill time moved to 5 hours ago: its nudge time has passed.
+        let moved = Date().addingTimeInterval(-5 * 3600)
+        plan.preferredHour = Calendar.current.component(.hour, from: moved)
+        plan.preferredMinute = Calendar.current.component(.minute, from: moved)
+        plan.updatedAt = .now
+        PlanStore.recalculateScheduleMatches(for: plan, in: context)
+        try context.save()
+        DoseRoutineService.refresh(in: context)
+        await settle()
+
+        XCTAssertNil(nudgeFire(), "the old nudge still names the planned time the customer moved")
+    }
+
+    func testB7_ControlAColdLaunchRearmSurvivesTheResumePassThatFollows() async throws {
+        _ = try makeDailyPlan(minutesAgo: 6 * 60)
+        await ProactiveAlertsEngine.schedulePatternAlertsIfEnabled(in: context)
+        XCTAssertNotNil(nudgeFire(), "precondition: the cold-launch pass re-armed the overdue nudge")
+
+        DoseRoutineService.refresh(in: context, mayPrompt: false)
+        await settle()
+        XCTAssertNotNil(nudgeFire(), "a resume pass must not cancel the re-armed nudge for the same dose")
+    }
+
+    // MARK: B14 a pass suspended on the permission check does not add a nudge after the customer lapsed
+
+    func testB14_LateDoseNudgeIsNotAddedAfterTheCustomerResolvesToFree() async throws {
+        let plan = try makeDailyPlan(minutesAgo: 30)
+        // Launch: entitlements unresolved, so alerts read as on for a Pro-looking customer.
+        StoreService.shared.setLocalOverride(isPro: false, resolved: false)
+        await settle(0.8)
+        fake.clear()
+        fake.settingsAnswerDelay = 0.6
+
+        let prefs = ProAlertPreferenceValues.current()
+        let pass = Task { @MainActor in
+            await ProactiveAlertsEngine.rescheduleLateDoseNudge(plan: plan, events: [], prefs: prefs)
+        }
+        await settle(0.2)
+        // RevenueCat resolves free while the launch pass waits on the permission answer.
+        StoreService.shared.setLocalOverride(isPro: false, resolved: true)
+        await pass.value
+        await settle(1.5)
+
+        XCTAssertNil(nudgeFire(), "a lapsed customer got the Pro nudge back")
+    }
+}
