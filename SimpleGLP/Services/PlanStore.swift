@@ -23,7 +23,15 @@ enum PlanStore {
     /// run on every launch; only writes when a plan's anchor actually changes.
     static func migrateLegacySchedules(in context: ModelContext) {
         let plans = (try? context.fetch(FetchDescriptor<MedicationPlan>())) ?? []
-        let changed = plans.reduce(false) { $0 || $1.normalizeScheduleAnchor() }
+        var changed = false
+        for plan in plans {
+            if plan.normalizeScheduleAnchor() { changed = true }
+            // A plan saved before the start zone was recorded: take this launch's zone.
+            if plan.startTimeZoneID == nil {
+                plan.startTimeZoneID = TimeZone.current.identifier
+                changed = true
+            }
+        }
         if changed { try? context.save() }
     }
 

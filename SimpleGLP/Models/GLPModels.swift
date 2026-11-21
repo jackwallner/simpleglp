@@ -184,6 +184,10 @@ final class MedicationPlan {
     /// The anchor for the whole schedule: the day of the first dose. Combined with
     /// `preferredHour`/`preferredMinute` and `intervalDays` this fully describes the cadence.
     var scheduleStartDate: Date
+    /// The time zone `scheduleStartDate` was chosen in. The start day is read in this zone so
+    /// travel does not move an every-N-days dose to another day. nil reads in the current zone.
+    /// Optional, so SwiftData migrates existing plans without a default.
+    var startTimeZoneID: String? = nil
     /// Legacy: kept in sync as the weekday of `scheduleStartDate` for back-compat, but the
     /// schedule no longer reads it — the dose day is derived from `scheduleStartDate`.
     var preferredWeekday: Int
@@ -246,13 +250,12 @@ final class MedicationPlan {
     /// Setting it decomposes back into the stored fields and keeps the legacy weekday in sync.
     var firstDoseAnchor: Date {
         get {
-            let cal = Calendar.current
-            let startDay = cal.startOfDay(for: scheduleStartDate)
-            return cal.date(bySettingHour: preferredHour, minute: preferredMinute, second: 0, of: startDay) ?? scheduleStartDate
+            ScheduleEngine.firstScheduledDate(plan: self) ?? scheduleStartDate
         }
         set {
             let comps = Calendar.current.dateComponents([.hour, .minute, .weekday], from: newValue)
             scheduleStartDate = newValue
+            startTimeZoneID = TimeZone.current.identifier
             preferredHour = comps.hour ?? preferredHour
             preferredMinute = comps.minute ?? preferredMinute
             preferredWeekday = comps.weekday ?? preferredWeekday
@@ -266,7 +269,7 @@ final class MedicationPlan {
     @discardableResult
     func normalizeScheduleAnchor(calendar: Calendar = .current) -> Bool {
         guard isWeekly else { return false }
-        let startDay = calendar.startOfDay(for: scheduleStartDate)
+        let startDay = ScheduleEngine.startDay(of: self, calendar: calendar)
         guard calendar.component(.weekday, from: startDay) != preferredWeekday else { return false }
         var candidate = startDay
         for _ in 0..<7 {
@@ -275,6 +278,7 @@ final class MedicationPlan {
             candidate = next
         }
         scheduleStartDate = candidate
+        startTimeZoneID = calendar.timeZone.identifier
         return true
     }
 

@@ -136,6 +136,98 @@ final class LowBugFixTests: XCTestCase {
     }
 }
 
+/// B11 and B15: the dose day and time of day across a zone change and a DST gap.
+@MainActor
+final class LowBugScheduleTests: XCTestCase {
+    private func calendar(_ id: String) throws -> Calendar {
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = try XCTUnwrap(TimeZone(identifier: id))
+        return calendar
+    }
+
+    private func parts(_ date: Date?, _ calendar: Calendar) throws -> DateComponents {
+        calendar.dateComponents([.year, .month, .day, .hour, .minute, .weekday], from: try XCTUnwrap(date))
+    }
+
+    // MARK: B11 every-N-days doses keep their day when the phone changes time zone
+
+    func testB11_FortnightlyDoseKeepsItsDayWhenTheZoneMovesEast() throws {
+        let la = try calendar("America/Los_Angeles")
+        let ny = try calendar("America/New_York")
+        let start = try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 9, day: 1, hour: 22))) // Tuesday
+        let plan = MedicationPlan(medication: .ozempic, doseMg: 1, scheduleStartDate: start, preferredWeekday: 3, preferredHour: 22, preferredMinute: 0, intervalDays: 14)
+        plan.startTimeZoneID = "America/Los_Angeles"
+
+        for after in [1_790_000_000.0, 1_795_000_000.0, 1_800_000_000.0].map(Date.init(timeIntervalSince1970:)) {
+            let home = try parts(ScheduleEngine.nextExpectedDate(after: after, plan: plan, calendar: la), la)
+            let away = try parts(ScheduleEngine.nextExpectedDate(after: after, plan: plan, calendar: ny), ny)
+            XCTAssertEqual(home.weekday, 3)
+            XCTAssertEqual(home.hour, 22)
+            XCTAssertEqual(away.weekday, 3, "the dose moved to another day after the flight east")
+            XCTAssertEqual([away.year, away.month, away.day, away.hour, away.minute], [home.year, home.month, home.day, home.hour, home.minute])
+        }
+        XCTAssertEqual(try parts(ScheduleEngine.firstScheduledDate(plan: plan, calendar: ny), ny).day, 1)
+    }
+
+    func testB11_WeeklyPlanKeepsItsFirstDoseWhenOpenedInAnotherZone() throws {
+        let la = try calendar("America/Los_Angeles")
+        let ny = try calendar("America/New_York")
+        let start = try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 12, day: 1, hour: 22))) // Tuesday, still ahead
+        let plan = MedicationPlan(medication: .ozempic, doseMg: 1, scheduleStartDate: start, preferredWeekday: 3, preferredHour: 22, preferredMinute: 0, intervalDays: 7)
+        plan.startTimeZoneID = "America/Los_Angeles"
+
+        XCTAssertFalse(plan.normalizeScheduleAnchor(calendar: ny), "the launch re-pin must not rewrite a plan that only changed zone")
+        XCTAssertEqual(plan.scheduleStartDate, start, "the first dose was pushed days forward")
+    }
+
+    func testB11_LaunchStampsAPlanSavedBeforeTheZoneWasRecorded() throws {
+        let container = try ModelContainer(for: GLPModelStore.schema, configurations: ModelConfiguration(isStoredInMemoryOnly: true))
+        let context = container.mainContext
+        let plan = MedicationPlan(intervalDays: 14)
+        context.insert(plan)
+        try context.save()
+        PlanStore.migrateLegacySchedules(in: context)
+        XCTAssertEqual(plan.startTimeZoneID, TimeZone.current.identifier)
+    }
+
+    // MARK: B15 a daily dose inside the skipped spring-forward hour keeps its time
+
+    func testB15_DailyDoseInsideTheSkippedHourKeepsItsTimeAfterSpringForward() throws {
+        let la = try calendar("America/Los_Angeles")
+        let start = try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 2, day: 2, hour: 2, minute: 30)))
+        let plan = MedicationPlan(medication: .wegovyPill, doseMg: 4, scheduleStartDate: start, preferredHour: 2, preferredMinute: 30, intervalDays: 1)
+
+        // The gap is Sunday 2026-03-08: 02:30 does not exist that day, the next day it does.
+        let afterGap = try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 3, day: 8, hour: 12)))
+        let next = try parts(ScheduleEngine.nextExpectedDate(after: afterGap, plan: plan, calendar: la), la)
+        XCTAssertEqual([next.day, next.hour, next.minute], [9, 2, 30], "the slot after the change drifted an hour later")
+
+        let latest = try parts(ScheduleEngine.scheduledDate(onOrBefore: try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 3, day: 10, hour: 12))), plan: plan, calendar: la), la)
+        XCTAssertEqual([latest.day, latest.hour, latest.minute], [10, 2, 30])
+
+        let slots = ReminderService.upcomingReminderSlots(plan: plan, events: [], now: try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 3, day: 7, hour: 12))), calendar: la)
+        let later = try slots.dropFirst(2).map { try parts($0, la) }
+        XCTAssertFalse(later.isEmpty)
+        XCTAssertTrue(later.allSatisfy { $0.hour == 2 && $0.minute == 30 }, "every reminder after the change should stay at 02:30")
+
+        let around = try ScheduleEngine.expectedDates(around: XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 3, day: 11, hour: 12))), plan: plan, calendar: la).map { try parts($0, la) }
+        XCTAssertTrue(around.allSatisfy { $0.hour == 2 && $0.minute == 30 })
+    }
+
+    func testB15_ControlEveryNDayCadenceStillCountsFromTheAnchorAcrossManyDays() throws {
+        let la = try calendar("America/Los_Angeles")
+        let start = try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 1, day: 1, hour: 9)))
+        let plan = MedicationPlan(scheduleStartDate: start, preferredHour: 9, preferredMinute: 0, intervalDays: 7)
+        let after = try XCTUnwrap(la.date(from: DateComponents(year: 2026, month: 6, day: 1, hour: 12)))
+        let next = try parts(ScheduleEngine.nextExpectedDate(after: after, plan: plan, calendar: la), la)
+        XCTAssertEqual([next.month, next.day, next.hour], [6, 4, 9]) // Thursdays: 1 Jan + 22 weeks
+        let before = try XCTUnwrap(ScheduleEngine.nextExpectedDate(after: start.addingTimeInterval(-86_400), plan: plan, calendar: la))
+        XCTAssertEqual(before, start, "a first dose still ahead is the next one")
+        let exactly = try XCTUnwrap(ScheduleEngine.nextExpectedDate(after: start, plan: plan, calendar: la))
+        XCTAssertEqual(try parts(exactly, la).day, 8, "a dose at exactly `after` is not after it")
+    }
+}
+
 /// B13: long daily histories.
 @MainActor
 final class LowBugPerformanceTests: XCTestCase {

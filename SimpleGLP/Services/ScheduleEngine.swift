@@ -146,18 +146,45 @@ enum ScheduleEngine {
     /// The whole schedule is just this anchor plus `cadenceDays` — the weekday is simply
     /// whatever day the start date falls on (weekly is `cadenceDays == 7`).
     static func firstScheduledDate(plan: MedicationPlan, calendar: Calendar = .current) -> Date? {
-        let startDay = calendar.startOfDay(for: plan.scheduleStartDate)
-        return calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: startDay)
+        calendar.date(bySettingHour: plan.preferredHour, minute: plan.preferredMinute, second: 0, of: startDay(of: plan, calendar: calendar))
+    }
+
+    /// The start date's calendar day. It is read in the zone the plan was set up in, then
+    /// laid on `calendar`, so a phone that changes time zone keeps the dose on the same
+    /// day of its owner's routine. Read in the new zone, a Tuesday 22:00 start in Los Angeles
+    /// is Wednesday 01:00 in New York and every later dose moves a day with it.
+    static func startDay(of plan: MedicationPlan, calendar: Calendar = .current) -> Date {
+        let local = calendar.startOfDay(for: plan.scheduleStartDate)
+        guard let id = plan.startTimeZoneID, let zone = TimeZone(identifier: id), zone != calendar.timeZone else { return local }
+        var origin = calendar
+        origin.timeZone = zone
+        let day = origin.dateComponents([.year, .month, .day], from: plan.scheduleStartDate)
+        return calendar.date(from: day) ?? local
+    }
+
+    /// The nth planned dose counted from the first one. Always one step from that anchor,
+    /// never from the previous dose: a dose a daylight saving gap pushed off its time of day
+    /// must not drag every later dose with it.
+    static func occurrence(_ index: Int, plan: MedicationPlan, calendar: Calendar = .current) -> Date? {
+        guard let first = firstScheduledDate(plan: plan, calendar: calendar) else { return nil }
+        return calendar.date(byAdding: .day, value: index * plan.cadenceDays, to: first)
+    }
+
+    /// The first planned dose after `date`, with its number from the first dose.
+    static func nextExpectedOccurrence(after date: Date = .now, plan: MedicationPlan?, calendar: Calendar = .current) -> (index: Int, date: Date)? {
+        guard let plan, let first = firstScheduledDate(plan: plan, calendar: calendar) else { return nil }
+        var index = max(0, Int((date.timeIntervalSince(first) / (Double(plan.cadenceDays) * 86_400)).rounded(.down)) - 1)
+        // Land close arithmetically, then correct in both directions for DST drift.
+        while index > 0, let previous = occurrence(index - 1, plan: plan, calendar: calendar), previous > date { index -= 1 }
+        while let candidate = occurrence(index, plan: plan, calendar: calendar) {
+            if candidate > date { return (index, candidate) }
+            index += 1
+        }
+        return nil
     }
 
     static func nextExpectedDate(after date: Date = .now, plan: MedicationPlan?, calendar: Calendar = .current) -> Date? {
-        guard let plan, var candidate = firstScheduledDate(plan: plan, calendar: calendar) else { return nil }
-        let cadence = plan.cadenceDays
-        while candidate <= date {
-            guard let next = calendar.date(byAdding: .day, value: cadence, to: candidate) else { return nil }
-            candidate = next
-        }
-        return candidate
+        nextExpectedOccurrence(after: date, plan: plan, calendar: calendar)?.date
     }
 
     /// The planned dose the user still owes. Daily: today's slot until a pill is logged
@@ -234,11 +261,14 @@ enum ScheduleEngine {
             return overdue
         }
 
-        guard var next = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar) else {
+        guard let upcoming = ScheduleEngine.nextExpectedOccurrence(after: now, plan: plan, calendar: calendar) else {
             return nil
         }
+        var index = upcoming.index
+        var next = upcoming.date
         while isOccurrenceClaimed(next, by: events, cadenceDays: plan.cadenceDays, calendar: calendar) {
-            guard let following = calendar.date(byAdding: .day, value: plan.cadenceDays, to: next) else {
+            index += 1
+            guard let following = occurrence(index, plan: plan, calendar: calendar) else {
                 return nil
             }
             next = following
@@ -253,31 +283,26 @@ enum ScheduleEngine {
     }
 
     static func expectedDates(around date: Date, plan: MedicationPlan, calendar: Calendar = .current) -> [Date] {
-        let cadence = plan.cadenceDays
-        guard let anchor = scheduledDate(onOrBefore: date, plan: plan, calendar: calendar) else {
+        guard let index = occurrenceIndex(onOrBefore: date, plan: plan, calendar: calendar) else {
             return [firstScheduledDate(plan: plan, calendar: calendar) ?? plan.scheduleStartDate]
         }
-        return (-2...2).compactMap { calendar.date(byAdding: .day, value: $0 * cadence, to: anchor) }
+        return ((index - 2)...(index + 2)).compactMap { occurrence($0, plan: plan, calendar: calendar) }
     }
 
     /// The most recent scheduled dose on or before `date`, or nil if the first dose is still ahead.
     static func scheduledDate(onOrBefore date: Date, plan: MedicationPlan, calendar: Calendar = .current) -> Date? {
-        guard let first = firstScheduledDate(plan: plan, calendar: calendar) else { return nil }
-        if first > date { return nil }
-        let cadence = plan.cadenceDays
+        occurrenceIndex(onOrBefore: date, plan: plan, calendar: calendar).flatMap { occurrence($0, plan: plan, calendar: calendar) }
+    }
+
+    private static func occurrenceIndex(onOrBefore date: Date, plan: MedicationPlan, calendar: Calendar) -> Int? {
+        guard let first = firstScheduledDate(plan: plan, calendar: calendar), first <= date else { return nil }
         // Jump close arithmetically, then correct for any DST drift in both directions so the
         // result is the largest occurrence <= date.
-        let secondsPerStep = Double(cadence) * 86_400
-        let approxSteps = max(0, Int((date.timeIntervalSince(first) / secondsPerStep).rounded(.down)))
-        var candidate = calendar.date(byAdding: .day, value: approxSteps * cadence, to: first) ?? first
-        while let next = calendar.date(byAdding: .day, value: cadence, to: candidate), next <= date {
-            candidate = next
-        }
-        while candidate > date {
-            guard let prev = calendar.date(byAdding: .day, value: -cadence, to: candidate) else { break }
-            candidate = prev
-        }
-        return candidate > date ? nil : candidate
+        let secondsPerStep = Double(plan.cadenceDays) * 86_400
+        var index = max(0, Int((date.timeIntervalSince(first) / secondsPerStep).rounded(.down)))
+        while let next = occurrence(index + 1, plan: plan, calendar: calendar), next <= date { index += 1 }
+        while index > 0, let candidate = occurrence(index, plan: plan, calendar: calendar), candidate > date { index -= 1 }
+        return index
     }
 }
 
@@ -431,10 +456,13 @@ enum SupplyMath {
     @MainActor
     private static func upcomingSlots(count: Int, plan: MedicationPlan, events: [ShotEvent], now: Date, calendar: Calendar) -> [Date] {
         var slots: [Date] = []
-        var cursor = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar)
+        guard let upcoming = ScheduleEngine.nextExpectedOccurrence(after: now, plan: plan, calendar: calendar) else { return slots }
+        var index = upcoming.index
+        var cursor: Date? = upcoming.date
         while let slot = cursor, slots.count < count {
             if !ScheduleEngine.isOccurrenceClaimed(slot, by: events, cadenceDays: plan.cadenceDays, calendar: calendar) { slots.append(slot) }
-            cursor = calendar.date(byAdding: .day, value: plan.cadenceDays, to: slot)
+            index += 1
+            cursor = ScheduleEngine.occurrence(index, plan: plan, calendar: calendar)
         }
         return slots
     }

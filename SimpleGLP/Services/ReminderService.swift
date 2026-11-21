@@ -101,12 +101,15 @@ enum ReminderService {
     static func upcomingReminderSlots(plan: MedicationPlan, events: [ShotEvent], now: Date = .now, calendar: Calendar = .current) -> [Date] {
         let limit = plan.cadenceDays == 1 ? dailyReminderSlots : longReminderSlots
         var slots: [Date] = []
-        var cursor = ScheduleEngine.nextExpectedDate(after: now, plan: plan, calendar: calendar)
+        guard let upcoming = ScheduleEngine.nextExpectedOccurrence(after: now, plan: plan, calendar: calendar) else { return slots }
+        var index = upcoming.index
+        var cursor: Date? = upcoming.date
         while let slot = cursor, slots.count < limit {
             if !ProactiveAlertsEngine.isOccurrenceClaimed(slot, by: events, cadenceDays: plan.cadenceDays, calendar: calendar) {
                 slots.append(slot)
             }
-            cursor = calendar.date(byAdding: .day, value: plan.cadenceDays, to: slot)
+            index += 1
+            cursor = ScheduleEngine.occurrence(index, plan: plan, calendar: calendar)
         }
         return slots
     }
