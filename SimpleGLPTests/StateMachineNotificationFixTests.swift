@@ -97,12 +97,13 @@ final class FakeNotificationCenter: @unchecked Sendable {
         }
         swap("getPendingNotificationRequestsWithCompletionHandler:", unsafeBitCast(getPending, to: AnyObject.self))
 
-        let getSettings: @convention(block) (AnyObject, @convention(block) (UNNotificationSettings) -> Void) -> Void = { _, done in
+        let getSettings: @convention(block) (AnyObject, @escaping @convention(block) (UNNotificationSettings) -> Void) -> Void = { _, done in
             let delay = center.settingsAnswerDelay
             let settings = FakeSettings.make(status: center.authorizationStatus)
             if delay > 0 {
                 nonisolated(unsafe) let answer = done
-                DispatchQueue.global().asyncAfter(deadline: .now() + delay) { answer(settings) }
+                nonisolated(unsafe) let fakeSettings = settings
+                DispatchQueue.global().asyncAfter(deadline: .now() + delay) { answer(fakeSettings) }
             } else {
                 done(settings)
             }
