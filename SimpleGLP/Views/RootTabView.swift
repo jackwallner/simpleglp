@@ -126,6 +126,11 @@ struct RootTabView: View {
         .onChange(of: split != nil) { _, isSplit in
             if isSplit, selectedTab == 1 { selectedTab = 0 }
         }
+        // `simpleglp://today`, the App Store in-app event link, opens the dose screen.
+        .onOpenURL { url in
+            guard url.scheme?.lowercased() == "simpleglp" else { return }
+            selectedTab = 0
+        }
         #if DEBUG
         .task {
             applyDuoScreen()
