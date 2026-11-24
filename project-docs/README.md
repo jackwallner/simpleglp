@@ -16,6 +16,7 @@ Developer notes and historical audits for this repository. The published site re
 
 ## Marketing
 
+- [new-year-event-2027](marketing/new-year-event-2027/README.md): New Year 2027 in-app event: copy, media, schedule and review status
 - [aso-plan.md](marketing/aso-plan.md): aso-plan.md: Simple GLP ASO Plan
 
 ## ASO
