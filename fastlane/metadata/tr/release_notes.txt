@@ -1,1 +1,1 @@
-Artık uygulamanın dilini Ayarlar'dan değiştirebilirsiniz. Bu güncelleme düzeltmeler ve iyileştirmeler de içeriyor.
+Hata düzeltmeleri ve iyileştirmeler.

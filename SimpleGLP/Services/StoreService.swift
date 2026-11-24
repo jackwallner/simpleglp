@@ -236,6 +236,28 @@ extension Offerings {
     }
 }
 
+/// The onboarding trial button's plan, switched without a release by the
+/// `default` offering's `onboarding_plan` metadata: `monthly` (or missing) or
+/// `yearly`. Sent to RevenueCat as the `onboarding_plan` attribute so the closed
+/// group can be read by arm.
+enum OnboardingPlan {
+    static let metadataKey = "onboarding_plan"
+    static let attributeKey = "onboarding_plan"
+
+    static func kind(from metadata: [String: Any]?) -> GLPProPackageKind {
+        (metadata?[metadataKey] as? String) == "yearly" ? .yearly : .monthly
+    }
+
+    #if DEBUG
+    /// `-GLPOnboardingPlan yearly|monthly` pins the plan for tests and captures.
+    static var launchOverride: GLPProPackageKind? {
+        let args = ProcessInfo.processInfo.arguments
+        guard let index = args.firstIndex(of: "-GLPOnboardingPlan"), index + 1 < args.count else { return nil }
+        return args[index + 1] == "yearly" ? .yearly : .monthly
+    }
+    #endif
+}
+
 @MainActor
 final class StoreService: NSObject, ObservableObject {
     static let shared = StoreService()
@@ -256,6 +278,8 @@ final class StoreService: NSObject, ObservableObject {
     @Published private(set) var usingFallbackProducts: Bool = false
     @Published var lastError: String?
     @Published private(set) var introEligibility: [String: IntroEligibilityStatus] = [:]
+    /// Which plan the onboarding trial button buys, from offering metadata.
+    @Published private(set) var onboardingPlanConfig: GLPProPackageKind = .monthly
     /// Flips true only after an explicit `customerInfo` fetch resolves. The delegate's
     /// initial push can carry stale/cached non-Pro info; promo surfaces that present on
     /// it get yanked when the authoritative result lands — a blank sheet flash on cold
@@ -351,6 +375,7 @@ final class StoreService: NSObject, ObservableObject {
             let packages = offering?.glpProSortedPackages ?? []
             if !packages.isEmpty {
                 currentOffering = offering
+                onboardingPlanConfig = OnboardingPlan.kind(from: offering?.metadata)
                 usingFallbackProducts = false
                 products = packages
                 lastError = nil
@@ -424,24 +449,39 @@ final class StoreService: NSObject, ObservableObject {
 
     // MARK: - Onboarding trial CTA (StatScout / Headaches pattern)
 
-    /// One-tap conversion target for the onboarding trial step: the eligible yearly
-    /// trial package, falling back to any eligible trial-bearing package, then the
-    /// plain yearly package. Bought directly (Apple confirm); the full paywall is only
-    /// the fallback when this is nil (products not loaded). Mirrors the package
-    /// selection RootTabView uses for its post-onboarding trial sheet so the label,
-    /// disclosure, and purchase all reference the same product.
-    var directTrialPackage: Package? {
+    /// The `default` offering's `onboarding_plan` switch (`OnboardingPlan`).
+    var onboardingPlan: GLPProPackageKind {
+        #if DEBUG
+        if let pinned = OnboardingPlan.launchOverride { return pinned }
+        #endif
+        return onboardingPlanConfig
+    }
+
+    /// One-tap conversion target for the onboarding trial step: the plan
+    /// `onboardingPlan` names (monthly unless the offering says yearly), falling back
+    /// to any eligible trial-bearing package, then the yearly package. Bought directly
+    /// (Apple confirm); the full paywall is only the fallback when this is nil
+    /// (products not loaded). The label and disclosure read the same package, so
+    /// the price on screen is the price the tap charges.
+    ///
+    /// Monthly by default because a new user reacts to the recurring figure on
+    /// Apple's sheet: from 2026-10-16 to 11-24 all 12 taps on the $39.99/year
+    /// sheet were cancelled. The paywall and RootTabView's later trial sheet keep
+    /// leading with yearly.
+    var onboardingTrialPackage: Package? {
+        let plan = onboardingPlan
         let eligible = products.filter { isEligibleForIntroOffer($0) }
-        return eligible.first { $0.glpProPackageKind == .yearly }
+        return eligible.first { $0.glpProPackageKind == plan }
+            ?? products.first { $0.glpProPackageKind == plan }
             ?? eligible.first
             ?? yearlyPackage
     }
 
-    /// CTA label for the one-tap yearly conversion. Leads with the free-trial offer
+    /// CTA label for the one-tap onboarding conversion. Leads with the free-trial offer
     /// when eligible, price-forward otherwise so the price is never hidden
     /// (Apple 3.1.2 — nothing implies Pro is free forever).
     var onboardingTrialCTALabel: String {
-        guard let pkg = directTrialPackage else { return String(localized: "Unlock Simple GLP Pro") }
+        guard let pkg = onboardingTrialPackage else { return String(localized: "Unlock Simple GLP Pro") }
         if isIntroEligibilityUnknown(pkg) { return isLoadingProducts ? String(localized: "Checking offer…") : String(localized: "Try Again") }
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
             return String(localized: "Start \(trial)")
@@ -455,7 +495,7 @@ final class StoreService: NSObject, ObservableObject {
     ///
     /// Returns nil until a package loads so no placeholder price is ever rendered.
     var onboardingTrialDisclosureText: String? {
-        guard let pkg = directTrialPackage, !isIntroEligibilityUnknown(pkg) else { return nil }
+        guard let pkg = onboardingTrialPackage, !isIntroEligibilityUnknown(pkg) else { return nil }
         let renew = String(localized: "Auto-renews unless cancelled at least 24 hours before the end of the current period. Manage or cancel in Settings > Apple ID > Subscriptions.")
         if isEligibleForIntroOffer(pkg), let trial = pkg.glpProIntroOfferLabel {
             return String(localized: "\(GLPProPriceText.sentenceLead(trial)), then \(pkg.glpProPriceLabel). \(renew)")
@@ -509,6 +549,7 @@ final class StoreService: NSObject, ObservableObject {
         if let offering = currentOffering?.identifier {
             attributes["offering_id"] = offering
         }
+        attributes[OnboardingPlan.attributeKey] = onboardingPlan == .yearly ? "yearly" : "monthly"
         Purchases.shared.attribution.setAttributes(attributes)
     }
 

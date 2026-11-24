@@ -685,7 +685,7 @@ struct OnboardingView: View {
         store.trackPaywallImpression(id: "simpleglp_onboarding_trial", oncePerSession: true)
     }
 
-    /// One-tap conversion: buy the yearly trial in place (Apple confirm). Products
+    /// One-tap conversion: buy the onboarding plan's trial in place (Apple confirm). Products
     /// failing to load presents the full paywall rather than a dead button; a
     /// successful purchase or the emergency paywall both finish onboarding.
     private func startTrialPurchase() {
@@ -697,7 +697,7 @@ struct OnboardingView: View {
             Task { await store.refreshPendingPurchaseStatus() }
             return
         }
-        guard let package = store.directTrialPackage else {
+        guard let package = store.onboardingTrialPackage else {
             showPaywallFallback = true
             return
         }

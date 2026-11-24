@@ -1,1 +1,1 @@
-Ahora puedes cambiar el idioma de la app desde Ajustes. Esta actualización también incluye correcciones y mejoras.
+Corrección de errores y mejoras.
