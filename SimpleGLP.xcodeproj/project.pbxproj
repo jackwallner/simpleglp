@@ -117,6 +117,7 @@
 		E2F65F221821351EAA1918EE /* ProAlertsConfigView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CA475C2609D1EEC3F74F07F /* ProAlertsConfigView.swift */; };
 		E658BD595B6DB73ACC16E862 /* SimplePaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74C4703C76222A954D00BEF9 /* SimplePaywallView.swift */; };
 		E988C35DDB1894A62F8AC125 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 39AACFDD06D2297830B382BD /* Localizable.xcstrings */; };
+		E99A1F2A7B448393771938E8 /* OnboardingTrialPlanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11981F202556FCE789C6F306 /* OnboardingTrialPlanUITests.swift */; };
 		EA18B980704DE9152345792F /* WeeklyHomeClockUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FF2B9AA3A0CBA6830E35E9 /* WeeklyHomeClockUITests.swift */; };
 		EA96773E480A686C74C0E88E /* PhoneWatchSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE46100E97F1120AD1873DE /* PhoneWatchSession.swift */; };
 		EB0A29F89F06213810AE768F /* LocalStoreOpener.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22AD2CEE53C2C6DBC2120103 /* LocalStoreOpener.swift */; };
@@ -190,6 +191,7 @@
 		0AE6DC832EA029F3D3C3BFD7 /* LiveActivityService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityService.swift; sourceTree = "<group>"; };
 		0D6737A71551FB6C890E8206 /* ReviewPromptTrackerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReviewPromptTrackerTests.swift; sourceTree = "<group>"; };
 		0DADB560B88F76955016CB54 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
+		11981F202556FCE789C6F306 /* OnboardingTrialPlanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingTrialPlanUITests.swift; sourceTree = "<group>"; };
 		14FB9DE7694EACE2FFD1B838 /* LogEarlierSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogEarlierSheet.swift; sourceTree = "<group>"; };
 		15473DE519AC5667FC9E0C97 /* TrialOfferSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialOfferSheet.swift; sourceTree = "<group>"; };
 		181A4ABCFBB3DA345DE4059D /* GLPAppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GLPAppGroup.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 				49AFB2454B8DDBB7664EDB26 /* IPadLayoutTourTests.swift */,
 				A6005C86B868D0C8ED33AC39 /* IPadStoreShotsTests.swift */,
 				94D2855ECF2C12ABB8196456 /* LocalizedStoreScreenshotTests.swift */,
+				11981F202556FCE789C6F306 /* OnboardingTrialPlanUITests.swift */,
 				70D15110DC50DFD1BF866CA4 /* OnboardingValidationUITests.swift */,
 				1889ADAEEB51E3CCC22014AD /* PaywallFunnelUITests.swift */,
 				CD745BE9E731DDC409E61557 /* ReleaseJourneysUITests.swift */,
@@ -759,6 +762,7 @@
 				8F07F08EDEAA2D44B09497C4 /* IPadLayoutTourTests.swift in Sources */,
 				84E1A301A81F1FA65B573858 /* IPadStoreShotsTests.swift in Sources */,
 				5A03CE2E1014A795C168EA14 /* LocalizedStoreScreenshotTests.swift in Sources */,
+				E99A1F2A7B448393771938E8 /* OnboardingTrialPlanUITests.swift in Sources */,
 				2C2322F85F15C06535FC5E14 /* OnboardingValidationUITests.swift in Sources */,
 				1281537112E7EFAADECA4C76 /* PaywallFunnelUITests.swift in Sources */,
 				E14DB60D98B28C9E7C2A7468 /* ReleaseJourneysUITests.swift in Sources */,
@@ -961,7 +965,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1022,7 +1026,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 79;
+				CURRENT_PROJECT_VERSION = 80;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = YXG4MP6W39;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

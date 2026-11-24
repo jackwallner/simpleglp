@@ -61,6 +61,13 @@ Group.
   subscriptions `com.jackwallner.glp.pro.monthly` /
   `.pro.yearly` plus the non-consumable `.pro.lifetime`
   (`SimpleGLP/Services/Products.storekit`).
+- **Onboarding trial plan.** The last onboarding page buys monthly with its free
+  week (`StoreService.onboardingTrialPackage`), because all 12 taps on the
+  $39.99/year sheet from 2026-10-16 to 11-24 were cancelled. The `default`
+  offering's `onboarding_plan` metadata (`yearly`) switches it back without a
+  release; the arm rides to RevenueCat as the `onboarding_plan` attribute. The
+  paywall and RootTabView's trial sheet keep yearly. `-GLPOnboardingPlan yearly`
+  pins it in DEBUG.
 - **Never present a promo or trial sheet before entitlements resolve.**
   `RootTabView` gates every sheet on resolved entitlements and `!isProUnlocked`,
   because a recent purchase can flip Pro a beat after launch and pull a sheet out

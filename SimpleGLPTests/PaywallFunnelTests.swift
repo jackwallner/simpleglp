@@ -269,3 +269,53 @@ final class RestoreFeedbackTests: XCTestCase {
         XCTAssertEqual(message, StoreServiceError.unavailableInSimulator.localizedDescription)
     }
 }
+
+@MainActor
+final class OnboardingPlanTests: XCTestCase {
+    private func defaults() -> UserDefaults {
+        UserDefaults(suiteName: "onboarding.plan.tests.\(UUID().uuidString)")!
+    }
+
+    private func package(_ kind: GLPProPackageKind) -> Package {
+        let monthly = kind == .monthly
+        let discount = TestStoreProductDiscount(
+            identifier: "trial", price: 0, localizedPriceString: "$0", paymentMode: .freeTrial,
+            subscriptionPeriod: .init(value: 1, unit: .week), numberOfPeriods: 1, type: .introductory
+        )
+        let product = TestStoreProduct(
+            localizedTitle: monthly ? "Monthly" : "Yearly", price: monthly ? 9.99 : 39.99, currencyCode: "USD",
+            localizedPriceString: monthly ? "$9.99" : "$39.99",
+            productIdentifier: monthly ? GLPProProduct.monthly : GLPProProduct.yearly,
+            productType: .autoRenewableSubscription, localizedDescription: "Pro",
+            subscriptionPeriod: .init(value: 1, unit: monthly ? .month : .year),
+            introductoryDiscount: discount, locale: Locale(identifier: "en_US")
+        ).toStoreProduct()
+        return Package(identifier: monthly ? "$rc_monthly" : "$rc_annual", packageType: monthly ? .monthly : .annual,
+                       storeProduct: product, offeringIdentifier: "test", webCheckoutUrl: nil)
+    }
+
+    func testMetadataDefaultsToMonthly() {
+        XCTAssertEqual(OnboardingPlan.kind(from: nil), .monthly)
+        XCTAssertEqual(OnboardingPlan.kind(from: [:]), .monthly)
+        XCTAssertEqual(OnboardingPlan.kind(from: ["onboarding_plan": "monthly"]), .monthly)
+        XCTAssertEqual(OnboardingPlan.kind(from: ["onboarding_plan": "nonsense"]), .monthly)
+        XCTAssertEqual(OnboardingPlan.kind(from: ["onboarding_plan": "yearly"]), .yearly)
+    }
+
+    func testOnboardingButtonBuysMonthlyAndNamesItsPrice() {
+        let eligible: [String: IntroEligibilityStatus] = [GLPProProduct.monthly: .eligible, GLPProProduct.yearly: .eligible]
+        let store = StoreService(products: [package(.yearly), package(.monthly)], introEligibility: eligible, defaults: defaults())
+        XCTAssertEqual(store.onboardingTrialPackage?.storeProduct.productIdentifier, GLPProProduct.monthly)
+        XCTAssertTrue(store.onboardingTrialCTALabel.contains("free trial"))
+        let disclosure = store.onboardingTrialDisclosureText ?? ""
+        XCTAssertTrue(disclosure.contains("$9.99"), disclosure)
+        XCTAssertFalse(disclosure.contains("$39.99"), disclosure)
+    }
+
+    func testUsedMonthlyTrialStillQuotesMonthlyPrice() {
+        let eligibility: [String: IntroEligibilityStatus] = [GLPProProduct.monthly: .ineligible, GLPProProduct.yearly: .eligible]
+        let store = StoreService(products: [package(.yearly), package(.monthly)], introEligibility: eligibility, defaults: defaults())
+        XCTAssertEqual(store.onboardingTrialPackage?.storeProduct.productIdentifier, GLPProProduct.monthly)
+        XCTAssertTrue(store.onboardingTrialCTALabel.contains("$9.99"))
+    }
+}
