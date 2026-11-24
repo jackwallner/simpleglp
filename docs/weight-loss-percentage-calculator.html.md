@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/weight-loss-percentage-calculato
 
 ## Weight Loss Percentage Calculator
 
-By Jack Wallner. Last updated November 18, 2026.
+By Jack Wallner. Last updated November 24, 2026.
 
 Enter your starting weight and your weight today. The calculator shows the percent of your starting weight you have lost and the amount in pounds or kilograms. Add a goal weight to see how far along you are.
 
@@ -28,7 +28,7 @@ The amount lost so far divided by the total you set out to lose. Starting at 240
 
 ## Keep your doses and weight in one place
 
-Free on iPhone and Apple Watch. Your log stays on your device, no account.
+Free on iPhone, Apple Watch and Android. Your log stays on your device, no account.
 
 [Download Simple GLP](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-weight-loss-percentage-calc&mt=8)
 

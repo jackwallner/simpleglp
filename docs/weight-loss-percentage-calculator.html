@@ -44,7 +44,7 @@
         "url": "https://jackwallner.com/"
       },
       "datePublished": "2026-11-18",
-      "dateModified": "2026-11-18",
+      "dateModified": "2026-11-24",
       "image": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
       "isPartOf": {
         "@type": "WebPage",
@@ -178,6 +178,14 @@ footer a { display: inline-block; padding: 6px 0; color: var(--muted); text-deco
 .result .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
 .result .add { display: inline-block; margin-top: 16px; background: var(--accent); color: var(--accent-fg); font-size: 15px; font-weight: 500; padding: 11px 24px; border-radius: 980px; text-decoration: none; }
 @media (max-width: 480px) { .calc { padding: 18px; } .result .big { font-size: 32px; } .result .big.date { font-size: 28px; } }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.store-badges.start { justify-content: flex-start; }
+.play-badge { display: inline-flex; transition: opacity 0.15s; }
+.play-badge:hover { opacity: 0.85; }
+.play-badge img { display: block; height: 46px; width: auto; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions .play-badge img { height: 36px; }
+@media (max-width: 480px) { .nav-actions .play-badge { display: none; } }
 </style>
 </head>
 <body>
@@ -187,14 +195,15 @@ footer a { display: inline-block; padding: 6px 0; color: var(--muted); text-deco
                 <img src="icon_64.webp" alt="" width="32" height="32">
                 <span>Simple GLP</span>
             </a>
-            <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weight-loss-percentage-calc&amp;mt=8">Download</a>
+            <div class="nav-actions"><a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weight-loss-percentage-calc&amp;mt=8">Download</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="121" height="36"></a></div>
         </div>
     </nav>
 
     <article>
         <div class="container">
             <h1>Weight Loss Percentage Calculator</h1>
-            <p class="meta">By Jack Wallner. Last updated <time datetime="2026-11-18" data-updated>November 18, 2026</time>.</p>
+            <p class="meta">By Jack Wallner. Last updated <time datetime="2026-11-24" data-updated>November 24, 2026</time>.</p>
 
             <div class="answer">
                 <p>Enter your starting weight and your weight today. The calculator shows the percent of your starting weight you have lost and the amount in pounds or kilograms. Add a goal weight to see how far along you are.</p>
@@ -243,8 +252,9 @@ footer a { display: inline-block; padding: 6px 0; color: var(--muted); text-deco
 
             <div class="cta-box">
                 <h2>Keep your doses and weight in one place</h2>
-                <p>Free on iPhone and Apple Watch. Your log stays on your device, no account.</p>
-                <a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weight-loss-percentage-calc&amp;mt=8">Download Simple GLP</a>
+                <p>Free on iPhone, Apple Watch and Android. Your log stays on your device, no account.</p>
+                <div class="store-badges"><a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weight-loss-percentage-calc&amp;mt=8">Download Simple GLP</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="155" height="46"></a></div>
             </div>
 
             <h2>Frequently asked questions</h2>

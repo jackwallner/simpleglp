@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/wegovy-pill-rybelsus-dose-log-ap
 
 ## Is there a daily dose log app for the Wegovy pill and Rybelsus?
 
-By Jack Wallner · Last updated October 30, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **[Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-wegovy-pill-rybelsus-log&mt=8) logs your daily Wegovy pill or Rybelsus in one tap and keeps a streak and a month view of the days you logged.** It can also start a wait timer when you log, set to match your label or prescriber. It is free on iPhone and Apple Watch and needs no account.
 

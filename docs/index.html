@@ -34,17 +34,17 @@
   "@graph": [
     {
       "@type": "MobileApplication",
-      "dateModified": "2026-11-18",
+      "dateModified": "2026-11-24",
       "@id": "https://jackwallner.com/ios/simpleglp/#app",
       "name": "Simple GLP: GLP-1 Dose Tracker",
       "description": "Simple GLP: GLP-1 Dose Tracker is a free GLP-1 shot tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill in one tap from the Home Screen widget, review your dose history, and add optional read-only Apple Health context. It is a logging tool and does not give medical advice or dosing instructions.",
       "applicationCategory": "HealthApplication",
-      "operatingSystem": "iOS 17+, watchOS 10+",
+      "operatingSystem": "iOS 17+, watchOS 10+, Android 8.0+",
       "url": "https://jackwallner.com/ios/simpleglp/",
       "alternateName": "Simple GLP",
-      "downloadUrl": "https://apps.apple.com/us/app/id6770137909",
-      "installUrl": "https://apps.apple.com/us/app/id6770137909",
-      "sameAs": "https://apps.apple.com/us/app/id6770137909",
+      "downloadUrl": ["https://apps.apple.com/us/app/id6770137909", "https://play.google.com/store/apps/details?id=com.jackwallner.glp"],
+      "installUrl": ["https://apps.apple.com/us/app/id6770137909", "https://play.google.com/store/apps/details?id=com.jackwallner.glp"],
+      "sameAs": ["https://apps.apple.com/us/app/id6770137909", "https://play.google.com/store/apps/details?id=com.jackwallner.glp"],
       "screenshot": [
         "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
         "https://jackwallner.github.io/simpleglp/screenshot-2-history.png",
@@ -357,6 +357,14 @@
             color: #1a864d;
         }
             summary > h2.faq-q { display: inline; margin: 0; font: inherit; letter-spacing: inherit; color: inherit; }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.store-badges.start { justify-content: flex-start; }
+.play-badge { display: inline-flex; transition: opacity 0.15s; }
+.play-badge:hover { opacity: 0.85; }
+.play-badge img { display: block; height: 46px; width: auto; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions .play-badge img { height: 36px; }
+@media (max-width: 480px) { .nav-actions .play-badge { display: none; } }
 </style>
 </head>
 <body>
@@ -366,7 +374,8 @@
                 <img src="icon_64.webp" alt="" width="32" height="32">
                 <span>Simple GLP</span>
             </a>
-            <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download</a>
+            <div class="nav-actions"><a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="121" height="36"></a></div>
         </div>
     </nav>
 
@@ -374,8 +383,9 @@
         <img src="icon_256.webp" alt="Simple GLP app icon">
         <h1>A GLP-1 shot tracker app, <span>one tap away</span></h1>
         <p class="tagline">Simple GLP is a GLP-1 dose tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill, keep your schedule in view, and add optional Health context when it helps.</p>
-        <p class="platforms">Free &middot; No account &middot; iPhone, Apple Watch and widget</p>
-        <a class="download-btn" id="download" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download on the App Store</a>
+        <p class="platforms">Free &middot; No account &middot; iPhone, Apple Watch, Android and widget</p>
+        <div class="store-badges"><a class="download-btn" id="download" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download on the App Store</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="155" height="46"></a></div>
     </section>
 
     <section class="showcase">
@@ -545,11 +555,12 @@
     <section class="cta">
         <h2>Made for real routines</h2>
         <p>One tap to record a weekly shot or daily pill, with context when it matters.</p>
-        <a class="download-btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download on the App Store</a>
+        <div class="store-badges"><a class="download-btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-home&amp;mt=8">Download on the App Store</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="155" height="46"></a></div>
     </section>
 
     <footer>
-        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-11-18" data-updated>November 18, 2026</time></div>
+        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-11-24" data-updated>November 24, 2026</time></div>
         <div>
             <a href="glp-1-injection-site-rotation.html">Injection site rotation guide</a>
             <a href="glp-1-shot-calendar.html">Shot calendar</a>

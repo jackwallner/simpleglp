@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/ozempic-wegovy-shot-tracker-app.
 
 ## Is there a shot tracker app for Ozempic and Wegovy?
 
-By Jack Wallner · Last updated October 30, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **[Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-ozempic-wegovy-tracker&mt=8) has Ozempic and Wegovy in its medication picker and logs each weekly shot in one tap.** You set your shot day once, get a reminder, and tap Took it or use the widget or Apple Watch to log. It is free on iPhone and Apple Watch and needs no account.
 

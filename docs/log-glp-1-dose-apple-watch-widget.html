@@ -41,13 +41,13 @@
         "url": "https://jackwallner.com/"
       },
       "datePublished": "2026-10-29",
-      "dateModified": "2026-10-29",
+      "dateModified": "2026-11-24",
       "mainEntityOfPage": "https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widget.html",
       "image": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
       "about": {
         "@type": "SoftwareApplication",
         "name": "Simple GLP: GLP-1 Dose Tracker",
-        "operatingSystem": "iOS, watchOS",
+        "operatingSystem": "iOS, watchOS, Android 8.0+",
         "applicationCategory": "HealthApplication",
         "url": "https://apps.apple.com/us/app/id6770137909",
         "offers": {
@@ -195,6 +195,14 @@ p.answer { background: var(--card); border-left: 4px solid var(--accent); border
 .disclosure { font-size: 15px; color: #515154; margin-bottom: 18px; }
 article h3 a { color: inherit; }
 .tw.fit table { min-width: 0; }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.store-badges.start { justify-content: flex-start; }
+.play-badge { display: inline-flex; transition: opacity 0.15s; }
+.play-badge:hover { opacity: 0.85; }
+.play-badge img { display: block; height: 46px; width: auto; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions .play-badge img { height: 36px; }
+@media (max-width: 480px) { .nav-actions .play-badge { display: none; } }
 </style>
 </head>
 <body>
@@ -204,14 +212,15 @@ article h3 a { color: inherit; }
                 <img src="icon_64.webp" alt="" width="32" height="32">
                 <span>Simple GLP</span>
             </a>
-            <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-log-glp-1-dose-apple-watch-&amp;mt=8">Download</a>
+            <div class="nav-actions"><a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-log-glp-1-dose-apple-watch-&amp;mt=8">Download</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="121" height="36"></a></div>
         </div>
     </nav>
 
     <article>
         <div class="container">
             <h1>Can I log my GLP-1 dose from my Apple Watch or a Home Screen widget?</h1>
-            <p class="meta">By Jack Wallner &middot; Last updated <time datetime="2026-10-29" data-updated>October 29, 2026</time></p>
+            <p class="meta">By Jack Wallner &middot; Last updated <time datetime="2026-11-24" data-updated>November 24, 2026</time></p>
             <p class="answer"><strong>Yes. <a href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-log-glp-1-dose-apple-watch-&amp;mt=8">Simple GLP: GLP-1 Dose Tracker</a> logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or its Home Screen widget.</strong> Both are free and need no account. The widget and the Watch also show your next dose, and for a daily pill, the wait countdown.</p>
             <h2>How do I log from the Home Screen widget?</h2>
             <ol>
@@ -248,7 +257,8 @@ article h3 a { color: inherit; }
             </ul>
             <div class="cta-box">
                 <h2>Log from your wrist or Home Screen</h2>
-                <a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-log-glp-1-dose-apple-watch-&amp;mt=8">Download on the App Store</a>
+                <div class="store-badges"><a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-log-glp-1-dose-apple-watch-&amp;mt=8">Download on the App Store</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="155" height="46"></a></div>
             </div>
             <h2>Frequently asked questions</h2>
 <h3>Is logging from the widget and Apple Watch free?</h3>

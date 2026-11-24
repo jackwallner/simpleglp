@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/glp-1-shot-calendar.html
 
 ## GLP-1 Shot Calendar: Find Your Next Injection Days
 
-By Jack Wallner. Last updated November 18, 2026.
+By Jack Wallner. Last updated November 24, 2026.
 
 Pick the day of your last shot and how many days apart your shots are. The calendar lists your next injection days and can add them to your phone's calendar as a repeating event. It does date math only. Your prescriber sets the schedule.
 
@@ -32,7 +32,7 @@ It makes a calendar file on your device with one repeating all-day event, starti
 
 ## Get the reminder on shot day
 
-Free on iPhone and Apple Watch. Your log stays on your device, no account.
+Free on iPhone, Apple Watch and Android. Your log stays on your device, no account.
 
 [Download Simple GLP](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-glp-1-shot-calendar&mt=8)
 

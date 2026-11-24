@@ -41,13 +41,13 @@
         "url": "https://jackwallner.com/"
       },
       "datePublished": "2026-10-29",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-11-24",
       "mainEntityOfPage": "https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.html",
       "image": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
       "about": {
         "@type": "SoftwareApplication",
         "name": "Simple GLP: GLP-1 Dose Tracker",
-        "operatingSystem": "iOS, watchOS",
+        "operatingSystem": "iOS, watchOS, Android 8.0+",
         "applicationCategory": "HealthApplication",
         "url": "https://apps.apple.com/us/app/id6770137909",
         "offers": {
@@ -195,6 +195,14 @@ p.answer { background: var(--card); border-left: 4px solid var(--accent); border
 .disclosure { font-size: 15px; color: #515154; margin-bottom: 18px; }
 article h3 a { color: inherit; }
 .tw.fit table { min-width: 0; }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.store-badges.start { justify-content: flex-start; }
+.play-badge { display: inline-flex; transition: opacity 0.15s; }
+.play-badge:hover { opacity: 0.85; }
+.play-badge img { display: block; height: 46px; width: auto; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions .play-badge img { height: 36px; }
+@media (max-width: 480px) { .nav-actions .play-badge { display: none; } }
 </style>
 </head>
 <body>
@@ -204,14 +212,15 @@ article h3 a { color: inherit; }
                 <img src="icon_64.webp" alt="" width="32" height="32">
                 <span>Simple GLP</span>
             </a>
-            <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weekly-glp-1-shot-reminder-&amp;mt=8">Download</a>
+            <div class="nav-actions"><a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weekly-glp-1-shot-reminder-&amp;mt=8">Download</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="121" height="36"></a></div>
         </div>
     </nav>
 
     <article>
         <div class="container">
             <h1>What app can remind me to take my weekly GLP-1 shot?</h1>
-            <p class="meta">By Jack Wallner &middot; Last updated <time datetime="2026-10-30" data-updated>October 30, 2026</time></p>
+            <p class="meta">By Jack Wallner &middot; Last updated <time datetime="2026-11-24" data-updated>November 24, 2026</time></p>
             <p class="answer"><strong><a href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weekly-glp-1-shot-reminder-&amp;mt=8">Simple GLP: GLP-1 Dose Tracker</a> reminds you on your weekly shot day and lets you log the shot right from the reminder.</strong> Set your shot day and time once, choose how early the reminder comes, and tap Took it when you are done. The reminder is free, needs no account, and is skipped when you already logged that shot.</p>
             <h2>How does the weekly shot reminder work?</h2>
             <ol>
@@ -243,7 +252,8 @@ article h3 a { color: inherit; }
             <p>Apple's Health app has a Medications feature that can remind you on a schedule and let you mark a dose as taken on iPhone or Apple Watch, and a repeating event in Reminders or Calendar works too. Simple GLP is built around the GLP-1 shot itself: one-tap logging from a widget or your wrist, a history of when each shot actually happened, an optional injection site with each log (see <a href="glp-1-injection-site-rotation.html">injection site rotation</a>), and the same app for a daily pill if your plan changes.</p>
             <div class="cta-box">
                 <h2>Get a reminder on shot day</h2>
-                <a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weekly-glp-1-shot-reminder-&amp;mt=8">Download on the App Store</a>
+                <div class="store-badges"><a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-weekly-glp-1-shot-reminder-&amp;mt=8">Download on the App Store</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="155" height="46"></a></div>
             </div>
             <h2>Frequently asked questions</h2>
 <h3>Can Simple GLP remind me every two weeks or on a custom schedule?</h3>

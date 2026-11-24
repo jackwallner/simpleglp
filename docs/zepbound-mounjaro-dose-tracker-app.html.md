@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/zepbound-mounjaro-dose-tracker-a
 
 ## Is there a dose tracker app for Zepbound and Mounjaro?
 
-By Jack Wallner · Last updated October 30, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **[Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-zepbound-mounjaro-tracker&mt=8) has Zepbound and Mounjaro in its medication picker and logs each weekly shot in one tap.** Every log keeps the time, the dose you set and whether the shot was early, on time or late. It is free on iPhone and Apple Watch and needs no account.
 

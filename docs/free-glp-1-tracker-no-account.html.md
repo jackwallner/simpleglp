@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/free-glp-1-tracker-no-account.ht
 
 ## Is there a free GLP-1 tracker that needs no account and keeps my data private?
 
-By Jack Wallner · Last updated October 30, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **Yes. [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-free-glp-1-tracker-no-accou&mt=8) is free on iPhone and Apple Watch and needs no account.** Open it, pick your medication and start logging. Logging, reminders, history, Insights, the Home Screen widget, Apple Watch logging and the pill wait timer are free. Your dose history is stored on your iPhone, with no ads and no third-party analytics.
 

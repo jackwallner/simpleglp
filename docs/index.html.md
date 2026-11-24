@@ -8,7 +8,7 @@ Web page: https://jackwallner.com/ios/simpleglp/
 
 Simple GLP is a GLP-1 dose tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill, keep your schedule in view, and add optional Health context when it helps.
 
-Free · No account · iPhone, Apple Watch and widget
+Free · No account · iPhone, Apple Watch, Android and widget
 
 [Download on the App Store](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-home&mt=8)
 

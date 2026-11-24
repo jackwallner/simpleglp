@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/log-glp-1-dose-apple-watch-widge
 
 ## Can I log my GLP-1 dose from my Apple Watch or a Home Screen widget?
 
-By Jack Wallner · Last updated October 29, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **Yes. [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-log-glp-1-dose-apple-watch-&mt=8) logs a weekly GLP-1 shot or daily pill in one tap from its Apple Watch app or its Home Screen widget.** Both are free and need no account. The widget and the Watch also show your next dose, and for a daily pill, the wait countdown.
 

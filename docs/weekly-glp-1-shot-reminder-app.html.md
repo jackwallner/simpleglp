@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/weekly-glp-1-shot-reminder-app.h
 
 ## What app can remind me to take my weekly GLP-1 shot?
 
-By Jack Wallner · Last updated October 30, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **[Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-weekly-glp-1-shot-reminder-&mt=8) reminds you on your weekly shot day and lets you log the shot right from the reminder.** Set your shot day and time once, choose how early the reminder comes, and tap Took it when you are done. The reminder is free, needs no account, and is skipped when you already logged that shot.
 

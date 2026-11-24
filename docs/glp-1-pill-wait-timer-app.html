@@ -41,13 +41,13 @@
         "url": "https://jackwallner.com/"
       },
       "datePublished": "2026-10-29",
-      "dateModified": "2026-10-30",
+      "dateModified": "2026-11-24",
       "mainEntityOfPage": "https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html",
       "image": "https://jackwallner.github.io/simpleglp/screenshot-1-onetap.png",
       "about": {
         "@type": "SoftwareApplication",
         "name": "Simple GLP: GLP-1 Dose Tracker",
-        "operatingSystem": "iOS, watchOS",
+        "operatingSystem": "iOS, watchOS, Android 8.0+",
         "applicationCategory": "HealthApplication",
         "url": "https://apps.apple.com/us/app/id6770137909",
         "offers": {
@@ -195,6 +195,14 @@ p.answer { background: var(--card); border-left: 4px solid var(--accent); border
 .disclosure { font-size: 15px; color: #515154; margin-bottom: 18px; }
 article h3 a { color: inherit; }
 .tw.fit table { min-width: 0; }
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px; }
+.store-badges.start { justify-content: flex-start; }
+.play-badge { display: inline-flex; transition: opacity 0.15s; }
+.play-badge:hover { opacity: 0.85; }
+.play-badge img { display: block; height: 46px; width: auto; }
+.nav-actions { display: flex; align-items: center; gap: 10px; }
+.nav-actions .play-badge img { height: 36px; }
+@media (max-width: 480px) { .nav-actions .play-badge { display: none; } }
 </style>
 </head>
 <body>
@@ -204,14 +212,15 @@ article h3 a { color: inherit; }
                 <img src="icon_64.webp" alt="" width="32" height="32">
                 <span>Simple GLP</span>
             </a>
-            <a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-glp-1-pill-wait-timer-app&amp;mt=8">Download</a>
+            <div class="nav-actions"><a class="nav-link" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-glp-1-pill-wait-timer-app&amp;mt=8">Download</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="121" height="36"></a></div>
         </div>
     </nav>
 
     <article>
         <div class="container">
             <h1>Is there an app that times the wait after my daily GLP-1 pill?</h1>
-            <p class="meta">By Jack Wallner &middot; Last updated <time datetime="2026-10-30" data-updated>October 30, 2026</time></p>
+            <p class="meta">By Jack Wallner &middot; Last updated <time datetime="2026-11-24" data-updated>November 24, 2026</time></p>
             <p class="answer"><strong>Yes. <a href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-glp-1-pill-wait-timer-app&amp;mt=8">Simple GLP: GLP-1 Dose Tracker</a> starts a wait timer the moment you log your daily GLP-1 pill and sends a notification when the wait is over.</strong> You set the length to whatever your label or prescriber gives you. The in-app countdown, the notification, and the countdown on the Home Screen widget and Apple Watch are free, with no account.</p>
             <h2>How does the pill wait timer work?</h2>
             <ol>
@@ -245,7 +254,8 @@ article h3 a { color: inherit; }
             <p>Yes. A Clock timer counts down just as well. Simple GLP starts the timer and the log with the same tap, so you also get a record of when you took each pill, and the daily reminder knows whether today's pill is done.</p>
             <div class="cta-box">
                 <h2>Time your wait with one tap</h2>
-                <a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-glp-1-pill-wait-timer-app&amp;mt=8">Download on the App Store</a>
+                <div class="store-badges"><a class="btn" href="https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&amp;ct=jw-simpleglp-glp-1-pill-wait-timer-app&amp;mt=8">Download on the App Store</a>
+<a class="play-badge" href="https://play.google.com/store/apps/details?id=com.jackwallner.glp" rel="noopener"><img src="google-play-badge.webp" alt="Get it on Google Play" width="155" height="46"></a></div>
             </div>
             <h2>Frequently asked questions</h2>
 <h3>How long should I wait after my GLP-1 pill?</h3>

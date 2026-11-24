@@ -6,7 +6,7 @@ Web page: https://jackwallner.com/ios/simpleglp/glp-1-pill-wait-timer-app.html
 
 ## Is there an app that times the wait after my daily GLP-1 pill?
 
-By Jack Wallner · Last updated October 30, 2026
+By Jack Wallner · Last updated November 24, 2026
 
 **Yes. [Simple GLP: GLP-1 Dose Tracker](https://apps.apple.com/us/app/simple-glp-glp-1-dose-tracker/id6770137909?pt=128748779&ct=jw-simpleglp-glp-1-pill-wait-timer-app&mt=8) starts a wait timer the moment you log your daily GLP-1 pill and sends a notification when the wait is over.** You set the length to whatever your label or prescriber gives you. The in-app countdown, the notification, and the countdown on the Home Screen widget and Apple Watch are free, with no account.
 
