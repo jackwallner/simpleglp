@@ -34,7 +34,7 @@
   "@graph": [
     {
       "@type": "MobileApplication",
-      "dateModified": "2026-11-24",
+      "dateModified": "2026-11-25",
       "@id": "https://jackwallner.com/ios/simpleglp/#app",
       "name": "Simple GLP: GLP-1 Dose Tracker",
       "description": "Simple GLP: GLP-1 Dose Tracker is a free GLP-1 shot tracker app for iPhone and Apple Watch. Log a weekly shot or daily pill in one tap from the Home Screen widget, review your dose history, and add optional read-only Apple Health context. It is a logging tool and does not give medical advice or dosing instructions.",
@@ -60,7 +60,9 @@
         "Dose history with notes and optional injection site",
         "Optional read-only Apple Health context",
         "CSV export of your dose history",
-        "No account, data stays on device"
+        "No account, data stays on device",
+        "Onboarding free trial starts on the monthly plan for eligible users",
+        "New Year Dose Routine App Store event link opens the main dose screen"
       ],
       "offers": {
         "@type": "Offer",
@@ -149,6 +151,22 @@
           "acceptedAnswer": {
             "@type": "Answer",
             "text": "No. Simple GLP is a logging tool, not a medical device, and it does not give medical advice, dosing instructions, diagnosis or treatment recommendations. Follow your prescriber for anything about your medication."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Which plan does the onboarding free-trial button start?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "For eligible users, the onboarding button starts a 7-day free trial on the monthly Simple GLP Pro plan. The full paywall offers monthly, yearly and lifetime options; prices appear before purchase."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What happens when I tap the New Year Dose Routine event on the App Store?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "The event link opens Simple GLP to the main dose screen."
           }
         }
       ]
@@ -502,6 +520,8 @@
                     <h3>What Mattered</h3>
                     <p><strong>One tap from the Home Screen.</strong> The widget stamps the dose at the time of your tap through an interactive App Intent, and the app opens to save it.</p>
                     <p><strong>What's free.</strong> Logging, reminders, the pill wait timer, injection sites, symptoms, history, Insights, Health context, the widgets and the Apple Watch app are free from the first launch. Simple GLP Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, supply tracking with refill reminders, and a second reminder for a missed dose.</p>
+                    <p><strong>Onboarding trial.</strong> For eligible users, the onboarding button starts a 7-day free trial on the monthly Simple GLP Pro plan. The full paywall offers monthly, yearly and lifetime options; prices appear before purchase.</p>
+                    <p><strong>New Year event link.</strong> The New Year Dose Routine event link on the App Store opens Simple GLP to the main dose screen.</p>
                     <p><strong>Health is optional.</strong> HealthKit access is read-only and can be skipped entirely; the core logging flow never depends on it.</p>
                     <p><strong>Privacy.</strong> No accounts, no third-party analytics or ad SDKs. The only network activity is App Store purchase validation for Pro. Dose history lives in SwiftData behind an App Group, shared only with the widget and watch app.</p>
                 </div>
@@ -548,6 +568,14 @@
                     <summary><h2 class="faq-q">Does Simple GLP give medical advice or dosing instructions?</h2></summary>
                     <p>No. Simple GLP is a logging tool, not a medical device, and it does not give medical advice, dosing instructions, diagnosis or treatment recommendations. Follow your prescriber for anything about your medication.</p>
                 </details>
+                <details class="faq-item" open>
+                    <summary><h2 class="faq-q">Which plan does the onboarding free-trial button start?</h2></summary>
+                    <p>For eligible users, the onboarding button starts a 7-day free trial on the monthly Simple GLP Pro plan. The full paywall offers monthly, yearly and lifetime options; prices appear before purchase.</p>
+                </details>
+                <details class="faq-item" open>
+                    <summary><h2 class="faq-q">What happens when I tap the New Year Dose Routine event on the App Store?</h2></summary>
+                    <p>The event link opens Simple GLP to the main dose screen.</p>
+                </details>
             </div>
         </div>
     </section>
@@ -560,7 +588,7 @@
     </section>
 
     <footer>
-        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-11-24" data-updated>November 24, 2026</time></div>
+        <div>&copy; 2026 Jack Wallner · Last updated <time datetime="2026-11-25" data-updated>November 25, 2026</time></div>
         <div>
             <a href="glp-1-injection-site-rotation.html">Injection site rotation guide</a>
             <a href="glp-1-shot-calendar.html">Shot calendar</a>

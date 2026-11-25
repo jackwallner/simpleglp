@@ -98,6 +98,10 @@ Dose logging, schedule, history, insights, HealthKit context, the widget, and Ap
 
 **What's free.** Logging, reminders, the pill wait timer, injection sites, symptoms, history, Insights, Health context, the widgets and the Apple Watch app are free from the first launch. Simple GLP Pro adds the wait countdown on the Lock Screen and in the Dynamic Island, supply tracking with refill reminders, and a second reminder for a missed dose.
 
+**Onboarding trial.** For eligible users, the onboarding button starts a 7-day free trial on the monthly Simple GLP Pro plan. The full paywall offers monthly, yearly and lifetime options; prices appear before purchase.
+
+**New Year event link.** The New Year Dose Routine event link on the App Store opens Simple GLP to the main dose screen.
+
 **Health is optional.** HealthKit access is read-only and can be skipped entirely; the core logging flow never depends on it.
 
 **Privacy.** No accounts, no third-party analytics or ad SDKs. The only network activity is App Store purchase validation for Pro. Dose history lives in SwiftData behind an App Group, shared only with the widget and watch app.
@@ -137,6 +141,14 @@ No account is needed, and your dose history is stored on your device. You can ex
 ## Does Simple GLP give medical advice or dosing instructions?
 
 No. Simple GLP is a logging tool, not a medical device, and it does not give medical advice, dosing instructions, diagnosis or treatment recommendations. Follow your prescriber for anything about your medication.
+
+## Which plan does the onboarding free-trial button start?
+
+For eligible users, the onboarding button starts a 7-day free trial on the monthly Simple GLP Pro plan. The full paywall offers monthly, yearly and lifetime options; prices appear before purchase.
+
+## What happens when I tap the New Year Dose Routine event on the App Store?
+
+The event link opens Simple GLP to the main dose screen.
 
 ## Made for real routines
 
