@@ -4,12 +4,12 @@ App Store Connect event `6838894249` (New Year 2027 Dose Routine).
 
 ## Status
 
-Held as a DRAFT. App Store Connect refuses to submit an event without a deep link (ENTITY_ERROR.ATTRIBUTE.REQUIRED: deepLink), and this app has no URL scheme or universal link. To ship it: add a URL scheme that opens the main screen, release a version with it, set the event's deepLink, and submit the event with that version. An empty draft review submission (`71738ef4-5ab2-4534-ae57-8e0cf440b717`, READY_FOR_REVIEW, not cancellable) is left for the next submission to reuse.
+WAITING_FOR_REVIEW (2026-11-24), submitted with version 1.2.8 (build 81) in review submission `b5900208`. The version adds the `simpleglp` URL scheme, which opens the first tab. Release type MANUAL.
 
 ## Settings
 
 - Badge: Special Event
-- Deep link: none (see status)
+- Deep link: `simpleglp://today`
 - Purpose: appropriate for all users. Priority: high. Purchase: no cost.
 - Shows on the App Store from 2026-12-18 (Apple's limit is 14 days before the start).
 - Runs 2027-01-01 to 2027-01-31 (UTC times 2027-01-01T08:00:00Z to 2027-02-01T07:59:00Z), same 175 territories as Sober's Dry January event.
